@@ -1,3 +1,4 @@
 omnipose==1.0.6
+natsort==8.4.0
 shapely==2.0.1
 pandas==2.1.3
