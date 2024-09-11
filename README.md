@@ -34,6 +34,19 @@ conda activate bactoscoop
    pip install -r requirements.txt
 ```
 
+
 # Tutorial
 
 An example notebook can be found here [Notebook](https://github.com/Bart-Steemans/bactoscoop/blob/main/bactoscoop_demo.ipynb)
+
+# Common issues
+If you encounter following error [ImportError: cannot import name 'ifft' from 'scipy'](https://github.com/kevinjohncutler/omnipose/issues/78) 
+Fix this by replacing 
+```
+from scipy import fft, ifft
+```
+with
+```
+from scipy.fft import fft, ifft
+```
+
