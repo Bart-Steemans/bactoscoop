@@ -1,0 +1,3 @@
+omnipose==1.0.6
+shapely==2.0.1
+pandas==2.1.3
