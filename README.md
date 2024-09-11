@@ -1,8 +1,10 @@
-# BactoScoop: from multichannel micrographs of bacteria to quantifiable features
+# BactoScoop: from multichannel micrographs of bacteria to quantifiable single-cell features
 
 <p align="center">
   <img src="https://github.com/Bart-Steemans/bactoscoop/blob/main/logo.jpg?raw=true" alt="BactoScoop" width="300"/>
 </p>
+
+
 
 # How to install BactoScoop
 
@@ -18,11 +20,18 @@ conda create -n bactoscoop 'python==3.10.12' pytorch
 ```
 torchvision pytorch-cuda=11.8 -c pytorch -c nvidia
 ```
-See [GPU support](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file#gpu-support) for more details.See [Python compatibility](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file#python-compatibility) for more about choosing your python version.
+See [GPU support](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file#gpu-support) for more details. See [Python compatibility](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file#python-compatibility) for more about choosing your python version.
 
 5. To activate this new environment, run
 ```
 conda activate bactoscoop
+```
+6. Set bactoscoop as your current directory and install the remaining requirements
+```
+   cd /path/to/bactoscoop/
+```
+```
+   pip install -r requirements.txt
 ```
 
 # Tutorial
