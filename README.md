@@ -4,7 +4,9 @@
   <img src="https://github.com/Bart-Steemans/bactoscoop/blob/main/logo.jpg?raw=true" alt="BactoScoop" width="300"/>
 </p>
 
+This application is built to extract as many single cell features as possible from multichannel microscopy images of bacteria. It uses Omnipose (https://doi.org/10.1038/s41592-022-01639-4) to segment phase contrast images, creates an internal coordinate system (or cell mesh) for each cell where numerous features are extracted from (related to shapes, sizes, objects, intensity, texture, etc.). If you train a support vector machine model, there is also the possibility of omitting poor segmentation masks (https://doi.org/10.1016/j.xpro.2024.102868). 
 
+Disclaimer: the program is still under development, as such, any issues, comments, or ideas are more than welcome!
 
 # How to install BactoScoop
 
@@ -26,7 +28,11 @@ See [GPU support](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file
 ```
 conda activate bactoscoop
 ```
-6. Set bactoscoop as your current directory and install the remaining requirements
+6. Clone this github repository
+```
+git clone https://github.com/Bart-Steemans/bactoscoop.git
+```
+7. Set bactoscoop as your current directory and install the remaining requirements
 ```
    cd /path/to/bactoscoop/
 ```
