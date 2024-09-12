@@ -28,7 +28,11 @@ See [GPU support](https://github.com/kevinjohncutler/omnipose?tab=readme-ov-file
 ```
 conda activate bactoscoop
 ```
-6. Set bactoscoop as your current directory and install the remaining requirements
+6. Clone this github repository
+```
+git clone https://github.com/Bart-Steemans/bactoscoop.git
+```
+7. Set bactoscoop as your current directory and install the remaining requirements
 ```
    cd /path/to/bactoscoop/
 ```
