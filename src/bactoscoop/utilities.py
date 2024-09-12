@@ -1073,11 +1073,11 @@ def read_channels(folder_path, images_dict, channel_list=None):
         channel_list = []
 
     for channel in channel_list:
-        matching_files = [
+        matching_files = sorted([
             f
             for f in os.listdir(folder_path)
             if f.endswith(f"{channel}.tif") or f.endswith(f"{channel}.tiff")
-        ]
+        ])
 
         if matching_files:
             images_dict[channel] = [
@@ -1098,11 +1098,11 @@ def read_channels(folder_path, images_dict, channel_list=None):
 
 def read_tiff_folder(folder_path, suffix="", include_paths=False):
     # Get a list of all TIFF files in the folder
-    tiff_files = [
+    tiff_files = sorted([
         f
         for f in os.listdir(folder_path)
         if f.endswith(f"{suffix}.tif") or f.endswith(f"{suffix}.tiff")
-    ]
+    ])
 
     if not tiff_files:
         # Raise an exception if no TIFF files are found in the folder
