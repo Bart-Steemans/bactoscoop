@@ -129,54 +129,54 @@ class Image:
         result_df = self.features_to_dataframe(method)
         return result_df
 
-    def calculate_signal_correlation_features(
-        self,
-        method,
-        signal1,
-        signal2,
-        shift_signal1,
-        shift_signal2,
-        all_data,
-        use_shifted_contours,
-        max_mesh_size,
-    ):
+    # def calculate_signal_correlation_features(
+    #     self,
+    #     method,
+    #     signal1,
+    #     signal2,
+    #     shift_signal1,
+    #     shift_signal2,
+    #     all_data,
+    #     use_shifted_contours,
+    #     max_mesh_size,
+    # ):
 
-        features = Features(self)
-        result_df = None
-        bad_celllist = []
-        for cell in self.cells:
-            cell.discard = False
-            features.discard_large_meshes(cell, max_mesh_size)
+    #     features = Features(self)
+    #     result_df = None
+    #     bad_celllist = []
+    #     for cell in self.cells:
+    #         cell.discard = False
+    #         features.discard_large_meshes(cell, max_mesh_size)
 
-            if not cell.discard:
-                feature_calculation_method = f"{method}"
-                if hasattr(features, feature_calculation_method):
-                    try:
-                        calculation_method = getattr(
-                            features, feature_calculation_method
-                        )
+    #         if not cell.discard:
+    #             feature_calculation_method = f"{method}"
+    #             if hasattr(features, feature_calculation_method):
+    #                 try:
+    #                     calculation_method = getattr(
+    #                         features, feature_calculation_method
+    #                     )
 
-                        calculation_method(
-                            cell,
-                            signal1,
-                            signal2,
-                            shift_signal1,
-                            shift_signal2,
-                            all_data,
-                            use_shifted_contours,
-                        )
+    #                     calculation_method(
+    #                         cell,
+    #                         signal1,
+    #                         signal2,
+    #                         shift_signal1,
+    #                         shift_signal2,
+    #                         all_data,
+    #                         use_shifted_contours,
+    #                     )
 
-                    except Exception as e:
-                        # print(f"Encountered a ValueError: {e}")
-                        bad_celllist.append(cell.cell_id)
-                        cell.discard = True
+    #                 except Exception as e:
+    #                     # print(f"Encountered a ValueError: {e}")
+    #                     bad_celllist.append(cell.cell_id)
+    #                     cell.discard = True
 
-        if bad_celllist:
-            bactoscoop_logger.debug(
-                f"Unable to calculate {method} features from cells: {bad_celllist} in frame {self.frame}"
-            )
-        result_df = self.features_to_dataframe(method)
-        return result_df
+    #     if bad_celllist:
+    #         bactoscoop_logger.debug(
+    #             f"Unable to calculate {method} features from cells: {bad_celllist} in frame {self.frame}"
+    #         )
+    #     result_df = self.features_to_dataframe(method)
+    #     return result_df
 
     def features_to_dataframe(self, method):
         """

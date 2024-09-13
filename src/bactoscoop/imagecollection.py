@@ -114,9 +114,11 @@ class ImageCollection:
         if self.masks is None:
             self.load_masks()
             self.load_phase_images(phase_channel)
+            
+        assert len(self.masks) == len(self.images), "Lengths of masks and images should be the same."
 
         self.image_objects = []
-
+        
         for i, image_name in enumerate(self.image_filenames):
 
             image = self.images[i]

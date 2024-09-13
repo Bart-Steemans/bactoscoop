@@ -1067,13 +1067,14 @@ def get_object_mesh(
 
 
 # %% File readers/handlers
+from natsort import natsorted
 def read_channels(folder_path, images_dict, channel_list=None):
     if channel_list is None:
         # If no suffixes are provided, assume an empty list
         channel_list = []
 
     for channel in channel_list:
-        matching_files = sorted([
+        matching_files = natsorted([
             f
             for f in os.listdir(folder_path)
             if f.endswith(f"{channel}.tif") or f.endswith(f"{channel}.tiff")
@@ -1098,12 +1099,11 @@ def read_channels(folder_path, images_dict, channel_list=None):
 
 def read_tiff_folder(folder_path, suffix="", include_paths=False):
     # Get a list of all TIFF files in the folder
-    tiff_files = sorted([
+    tiff_files = natsorted([
         f
         for f in os.listdir(folder_path)
         if f.endswith(f"{suffix}.tif") or f.endswith(f"{suffix}.tiff")
     ])
-
     if not tiff_files:
         # Raise an exception if no TIFF files are found in the folder
         raise ValueError("\nNo TIFF files found in folder: " + folder_path)
