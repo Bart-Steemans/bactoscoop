@@ -117,8 +117,8 @@ class Image:
                             cell, channel, all_data, use_shifted_contours, shift_signal
                         )
 
-                    except ValueError as e:
-                        bactoscoop_logger.debug(f"Encountered a ValueError: {e}")
+                    except Exception as e:
+                        bactoscoop_logger.debug(f"Encountered a Exception: {e}")
                         bad_celllist.append(cell.cell_id)
                         cell.discard = True
 
