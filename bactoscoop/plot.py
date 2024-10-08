@@ -16,7 +16,7 @@ from . import utilities as u
 dpi = 300
 
 
-def plot_contour(cell_id, image, verbose=False):
+def plot_contour(cell_id, image, base_channel=None, verbose=False):
     """
     Plot the contour of a cell on an image.
 
@@ -25,33 +25,53 @@ def plot_contour(cell_id, image, verbose=False):
 
     Parameters
     ----------
-    cell : Cell
-        The cell object to be plotted.
+    cell_id : int
+        The ID of the cell to be plotted.
     image : Image
         The image object on which to plot the cell contour.
+    base_channel : any, optional
+        Used for conditional cropping. If None, cropping is applied.
+    verbose : bool, optional
+        If True, prints messages for missing cells or other info.
     """
+    # Find the cell with the specified cell_id
     cellobj = next((cell for cell in image.cells if cell.cell_id == cell_id), None)
+    
+    # If the cell is not found, optionally display a message
     if cellobj is None:
         if verbose:
             print(f"Cell with ID {cell_id} not found.")
         return
-    fig = plt.figure(figsize=(12, 12))
-
+    
+    # Extract the contour of the cell
     contour = cellobj.contour
-    midline = cellobj.midline
-    msh = cellobj.mesh
-    xmin = np.min(contour.T[1] - 10)
-    xmax = np.max(contour.T[1] + 10)
-    ymin = np.min(contour.T[0] - 10)
-    ymax = np.max(contour.T[0] + 10)
-    plt.xlim(xmin, xmax)
-    plt.ylim(ymin, ymax)
-    plt.imshow(image.image, cmap="gist_gray")
-    plt.plot(contour.T[1], contour.T[0], "-", c="w", lw=5)
+
+    # Crop the image around the contour using the provided cropping function
+    cropped_img, _, cropped_contour, x_offset, y_offset = u.crop_image(
+        image=image.image, contour=contour, mask_to_crop=None, phase_img=None
+    )
+
+    # Create a plot for the cropped image and the cell contour
+    fig = plt.figure(figsize=(12, 12))
+    
+    # Display the cropped image
+    plt.imshow(cropped_img, cmap="gist_gray")
+
+    # Adjust the contour coordinates to match the cropped image
+    adjusted_contour_x = contour.T[1] - y_offset
+    adjusted_contour_y = contour.T[0] - x_offset
+    
+    # Plot the contour on the cropped image
+    plt.plot(adjusted_contour_x, adjusted_contour_y, "-", c="w", lw=5)
+
+    # Set the title with the cell ID and frame number
+    plt.title(f"Cell {cellobj.cell_id} Frame {image.frame}")
+
+    # Display the plot
+    plt.show()
     # plt.plot(midline.T[1], midline.T[0], '-', c='blue', lw=5)
     # plt.plot([msh[:,1][::2], msh[:,3][::2]], [msh[:,0][::2], msh[:,2][::2]], '-', c='cyan', lw=2)
-    plt.title(f"Cell {cellobj.cell_id} Frame {image.frame}")
-    plt.show()
+
 
 
 def plot_aligned_contours(cell_id, image, channel, verbose=False):

@@ -701,7 +701,7 @@ class ImageCollection:
         # Create DataFrame from the collected data
         self.mesh_df_collection = pd.DataFrame(data)
 
-    def merge_dataframes(self):
+    def merge_dataframes(self, include_metadata_tag=False):
         """
         Merge feature dataframes into a single dataframe.
 
@@ -738,7 +738,15 @@ class ImageCollection:
         result = merged_data.pivot_table(
             index=["image_name", "cell_id", "frame"], aggfunc="first"
         ).reset_index()
-
+        if include_metadata_tag:
+            # Rename 'image_name', 'cell_id', and 'frame' to 'Metadata_*'
+            result = result.rename(
+                columns={
+                    "image_name": "Metadata_image_name",
+                    "cell_id": "Metadata_cell_id",
+                    "frame": "Metadata_frame"
+                }
+            )
         # Reset the index to make it look like the final result
         self.merged_features = result.reset_index(drop=True)
 
@@ -873,7 +881,7 @@ class Pipeline:
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
                 max_mesh_size=800,
             )
-            ic.merge_dataframes()
+            ic.merge_dataframes(include_metadata_tag=True)
             ic.dataframe_to_pkl(pkl_name=kwargs.get("pkl_ext", None))
             
         if "calculate_features_with_membrane" in kwargs and kwargs["calculate_features_with_membrane"] is not None:
@@ -895,7 +903,7 @@ class Pipeline:
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
                 max_mesh_size=800,
             )
-            ic.merge_dataframes()
+            ic.merge_dataframes(include_metadata_tag=True)
         if "calculate_correlation" in kwargs and kwargs["calculate_correlation"] is not None:
             feature_method_tuples = [
                 (['normalized_axial_intensity', 'normalized_average_mesh_intensity', 'radial_intensity_distribution'], ['manders', 'pearson', 'li_icq', 'spearman','kendall', 'distance_corr','covariance', 'n_cross_corr','entropy_diff', 'kurtosis_ratio', 'skewness_product', 'zero_crossings_diff', 'fft_peak_ratio', 'fft_energy_ratio', 'histogram_intersection', 'cosine_similarity']),
