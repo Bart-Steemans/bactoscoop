@@ -800,7 +800,7 @@ class Pipeline:
         if "load_mesh" in kwargs and kwargs["load_mesh"]:
             filename = ic.name + "_meshdata.pkl"
             ic.batch_load_mesh(filename, phase_channel=channel1)
-        if "load_curated_mesh" in kwargs and kwargs["load_curated_mesh"]:
+        elif "load_curated_mesh" in kwargs and kwargs["load_curated_mesh"]:
             filename = ic.name + "_curated_meshdata.pkl"
             ic.batch_load_mesh(filename, phase_channel=channel1)
         else:
