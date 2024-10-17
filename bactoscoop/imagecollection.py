@@ -701,23 +701,27 @@ class ImageCollection:
         # Create DataFrame from the collected data
         self.mesh_df_collection = pd.DataFrame(data)
 
-    def merge_dataframes(self, include_metadata_tag=False):
+    def merge_dataframes(self, include_metadata_tag=False, discard_morphological_nan=False):
         """
         Merge feature dataframes into a single dataframe.
-
+    
         Merges multiple feature dataframes into a single dataframe, ensuring that columns are properly renamed
         to identify the channel and removes duplicates based on specific columns.
-
+    
+        Args:
+            include_metadata_tag (bool): Whether to rename 'image_name', 'cell_id', and 'frame' to 'Metadata_*'.
+            discard_nan (bool): Whether to discard rows with NaN in 'cell_area' and 'cell_length'.
+    
         Returns:
             pd.DataFrame: The merged feature dataframe.
         """
         merged_dataframes = []
-
+    
         for key, df in self.feature_dataframes.items():
             # Split the key into its parts
             parts = key.split("_")
             channel = parts[1]  # Extract the channel
-
+    
             # Set a prefix to identify the channel in column names if the channel is not None
             if channel != "None":
                 df = df.rename(
@@ -727,17 +731,22 @@ class ImageCollection:
                         if col not in ["image_name", "cell_id", "frame"]
                     }
                 )
-
+    
             # Append the modified dataframe to the list
             merged_dataframes.append(df)
-
+    
         # Concatenate the dataframes vertically
         merged_data = pd.concat(merged_dataframes)
-
+    
         # Merge the dataframes based on 'image_name', 'cell_id', and 'frame'
         result = merged_data.pivot_table(
             index=["image_name", "cell_id", "frame"], aggfunc="first"
         ).reset_index()
+    
+        # Discard rows with NaN in 'cell_area' and 'cell_length' if discard_nan is True
+        if discard_morphological_nan:
+            result = result.dropna(subset=["cell_area", "cell_length"])
+    
         if include_metadata_tag:
             # Rename 'image_name', 'cell_id', and 'frame' to 'Metadata_*'
             result = result.rename(
@@ -747,6 +756,7 @@ class ImageCollection:
                     "frame": "Metadata_frame"
                 }
             )
+
         # Reset the index to make it look like the final result
         self.merged_features = result.reset_index(drop=True)
 
@@ -881,7 +891,7 @@ class Pipeline:
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
                 max_mesh_size=800,
             )
-            ic.merge_dataframes(include_metadata_tag=True)
+            ic.merge_dataframes(include_metadata_tag=True, discard_morphological_nan=True)
             ic.dataframe_to_pkl(pkl_name=kwargs.get("pkl_ext", None))
             
         if "calculate_features_with_membrane" in kwargs and kwargs["calculate_features_with_membrane"] is not None:
@@ -903,7 +913,7 @@ class Pipeline:
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
                 max_mesh_size=800,
             )
-            ic.merge_dataframes(include_metadata_tag=True)
+            ic.merge_dataframes(include_metadata_tag=True, discard_morphological_nan=True)
         if "calculate_correlation" in kwargs and kwargs["calculate_correlation"] is not None:
             feature_method_tuples = [
                 (['normalized_axial_intensity', 'normalized_average_mesh_intensity', 'radial_intensity_distribution'], ['manders', 'pearson', 'li_icq', 'spearman','kendall', 'distance_corr','covariance', 'n_cross_corr','entropy_diff', 'kurtosis_ratio', 'skewness_product', 'zero_crossings_diff', 'fft_peak_ratio', 'fft_energy_ratio', 'histogram_intersection', 'cosine_similarity']),

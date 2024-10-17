@@ -51,7 +51,7 @@ class Features:
         if 0.9 <= ratio <= 1.1:
             cell.discard = False
         else:
-            bactoscoop_logger.debug(f"Cell mesh with Cell id {cell.cell_id} is discarded")
+            bactoscoop_logger.debug(f"Cell mesh with cell id {cell.cell_id} is discarded due to bad mesh quality")
             cell.discard = True
 
     def discard_bad_object_meshes(self, cell, ratio_list):
