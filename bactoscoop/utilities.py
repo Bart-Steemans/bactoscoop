@@ -979,13 +979,16 @@ def get_subcellular_objects(
     cropped_img, _, cropped_contour, x_offset, y_offset = crop_image(
         image=signal, contour=contour, mask_to_crop=None, phase_img=image
     )
-
+    
+    
     cropped_mask = draw_mask(cropped_contour, cropped_img)
     bgr = median_background(cropped_img, cropped_mask)
     cropped_img_bgr = np.maximum(cropped_img - bgr, 0)
-
+    
+    expanded_contour = expand_contour(cropped_contour, 5)
+    cropped_img_bgr_zero = set_bg_zero(expanded_contour, cropped_img_bgr)
     # Apply Laplacian of Gaussian (LoG) filter to the cropped_img
-    log_filtered_img = gaussian_laplace(cropped_img_bgr, sigma=log_sigma)
+    log_filtered_img = gaussian_laplace(cropped_img_bgr_zero, sigma=log_sigma)
 
     threshold_value = threshold_otsu(log_filtered_img)
 

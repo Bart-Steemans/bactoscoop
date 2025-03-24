@@ -829,7 +829,7 @@ class Pipeline:
                 channel_method_pairs=[([None], "svm")],
                 all_data=False,
                 reset=True,
-                max_mesh_size=800,
+                max_mesh_size=1000,
             )
             ic.merge_dataframes()
             ic.dataframe_to_pkl("svm_features")
@@ -889,7 +889,7 @@ class Pipeline:
                 all_data=kwargs.get("all_data", False),
                 reset=True,
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
-                max_mesh_size=800,
+                max_mesh_size=1000,
             )
             ic.merge_dataframes(include_metadata_tag=True, discard_morphological_nan=True)
             ic.dataframe_to_pkl(pkl_name=kwargs.get("pkl_ext", None))
@@ -929,31 +929,36 @@ class Pipeline:
 
         ic.dataframe_to_pkl(pkl_name=kwargs.get("pkl_ext", None))
             
+
         del ic
         gc.collect()
 
     def general_pipeline_parallel(self, exp_folder_path, **kwargs):
         self.exp_folder_path = exp_folder_path
-
+    
         subfolder_paths = [
             os.path.join(exp_folder_path, directory)
             for directory in os.listdir(exp_folder_path)
             if os.path.isdir(os.path.join(exp_folder_path, directory))
         ]
         print(f"\nProcessed folders are: {subfolder_paths}")
-
-        # Create a multiprocessing pool with the specified number of cores (default: 2)
-        pool = multiprocessing.Pool(kwargs.get("n_cores", 2))
-
-        # Map the function to process each image folder in parallel
-        pool.starmap(
-            self.process_image_folder,
-            [(image_path, kwargs) for image_path in subfolder_paths],
-        )
-
-        # Close the pool and wait for all processes to complete
-        pool.close()
-        pool.join()
+    
+        num_cores = kwargs.get("n_cores", 2)
+        
+        # Use try-finally to ensure processes are cleaned up
+        pool = multiprocessing.Pool(num_cores)
+        
+        try:
+            pool.starmap(
+                self.process_image_folder,
+                [(image_path, kwargs) for image_path in subfolder_paths],
+            )
+        finally:
+            pool.close()  # Prevents new tasks from being submitted
+            pool.join()   # Waits for all worker processes to finish
+            pool.terminate()  # Kills any remaining processes
+            del pool  # Explicitly delete pool object
+            gc.collect()  # Force garbage collection
 
     def general_pipeline_sequential(self, exp_folder_path, svm=False, **kwargs):
         self.exp_folder_path = exp_folder_path
@@ -971,43 +976,3 @@ class Pipeline:
         else:
             for image_path in subfolder_paths:
                 self.process_image_folder(image_path, kwargs)
-
-    # deprecated
-    def process_image_folder_for_svm(self, image_path, kwargs):
-        channel1 = kwargs.get("channel1", "")
-        ic = ImageCollection(image_path)
-
-        if "segment" in kwargs and kwargs["segment"]:
-            ic.load_phase_images(phase_channel=channel1)
-            i = len(ic.images)
-            ic.segment_images(
-                kwargs.get("mask_thresh", 1), kwargs.get("minsize", 300), n=range(i)
-            )
-
-        if "load_mesh" in kwargs and kwargs["load_mesh"]:
-            filename = ic.name + "_meshdata.pkl"
-            ic.batch_load_mesh(filename, phase_channel=channel1)
-        else:
-            ic.batch_process_mesh(
-                object_list=None,
-                phase_channel=channel1,
-                join_thresh=kwargs.get("join_thresh", 4),
-                split_thresh=kwargs.get("split_thresh", 0.4),
-                CD_width=kwargs.get("CD_width", False),
-            )
-            del ic.images
-            del ic.masks
-        if "curation" in kwargs and kwargs["curation"] is not None:
-            ic.curate_dataset(kwargs["curation"])
-
-        feature_type = kwargs.get("chann_method_tuple", "")
-        ic.batch_calculate_features(
-            channel_method_pairs=feature_type,
-            all_data=False,
-            reset=True,
-            max_mesh_size=800,
-        )
-        ic.merge_dataframes()
-        ic.dataframe_to_pkl("{}_svm_features.pkl".format(ic.name))
-        del ic
-        gc.collect()

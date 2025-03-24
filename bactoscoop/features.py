@@ -371,7 +371,7 @@ class Features:
             width=avg_width,
             min_val=np.min(cropped_signal),
             max_val=np.max(cropped_signal),
-            num_erosions=30,
+            num_erosions=10,
             erosion_scale=None,
         )
 

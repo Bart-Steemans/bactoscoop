@@ -10,7 +10,9 @@ import numpy as np
 from scipy import stats
 from skimage import filters
 from scipy.spatial.distance import pdist, squareform
+import logging
 
+bactoscoop_logger = logging.getLogger("logger")
 class SignalCorrelation:
     def __init__(self, df, channel1, channel2, feature, method_name):
         self.df = df
@@ -66,14 +68,19 @@ class SignalCorrelation:
 
         results = []
         for signal1, signal2 in zip(signals1, signals2):
-            if SignalCorrelation.is_valid_signal(
-                signal1
-            ) and SignalCorrelation.is_valid_signal(signal2):
-                result = self.method(signal1, signal2)
-                results.append(result)
-            else:
-                results.append(np.nan)  # Append NaN for invalid rows
-
+            try:
+                if SignalCorrelation.is_valid_signal(
+                    signal1
+                ) and SignalCorrelation.is_valid_signal(signal2):
+                    result = self.method(signal1, signal2)
+                    results.append(result)
+                else:
+                    results.append(np.nan)  # Append NaN for invalid rows
+            except ValueError as e:
+                bactoscoop_logger.debug(f"Encountered a ValueError: {e}")
+                results.append(np.nan)
+                continue
+            
         method_name = self.method.__name__
         new_feature_name = (
             f"{self.channel1}_{self.channel2}_{self.feature}_{method_name}"
