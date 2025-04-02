@@ -985,10 +985,8 @@ def get_subcellular_objects(
     bgr = median_background(cropped_img, cropped_mask)
     cropped_img_bgr = np.maximum(cropped_img - bgr, 0)
     
-    expanded_contour = expand_contour(cropped_contour, 5)
-    cropped_img_bgr_zero = set_bg_zero(expanded_contour, cropped_img_bgr)
     # Apply Laplacian of Gaussian (LoG) filter to the cropped_img
-    log_filtered_img = gaussian_laplace(cropped_img_bgr_zero, sigma=log_sigma)
+    log_filtered_img = gaussian_laplace(cropped_img_bgr, sigma=log_sigma)
 
     threshold_value = threshold_otsu(log_filtered_img)
 
@@ -1693,7 +1691,7 @@ def get_object_avg_width(nucleoid_masks, px):
 def get_object_aspect_ratio(rect_length_lists, rect_width_lists):
 
     aspect_ratio_list = []
-
+    # wrong: has to be length_list/width_list
     for length_list, width_list in zip(rect_length_lists, rect_width_lists):
         aspect_ratio = width_list / length_list
         aspect_ratio_list.append(aspect_ratio)

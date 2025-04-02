@@ -914,6 +914,8 @@ class Pipeline:
                 max_mesh_size=800,
             )
             ic.merge_dataframes(include_metadata_tag=True, discard_morphological_nan=True)
+            del ic.channel_images
+            del ic.images
         if "calculate_correlation" in kwargs and kwargs["calculate_correlation"] is not None:
             feature_method_tuples = [
                 (['normalized_axial_intensity', 'normalized_average_mesh_intensity', 'radial_intensity_distribution'], ['manders', 'pearson', 'li_icq', 'spearman','kendall', 'distance_corr','covariance', 'n_cross_corr','entropy_diff', 'kurtosis_ratio', 'skewness_product', 'zero_crossings_diff', 'fft_peak_ratio', 'fft_energy_ratio', 'histogram_intersection', 'cosine_similarity']),
@@ -944,21 +946,16 @@ class Pipeline:
         print(f"\nProcessed folders are: {subfolder_paths}")
     
         num_cores = kwargs.get("n_cores", 2)
-        
-        # Use try-finally to ensure processes are cleaned up
-        pool = multiprocessing.Pool(num_cores)
-        
-        try:
+
+        # Using 'with' ensures processes are properly terminated
+        with multiprocessing.Pool(num_cores) as pool:
             pool.starmap(
                 self.process_image_folder,
                 [(image_path, kwargs) for image_path in subfolder_paths],
             )
-        finally:
-            pool.close()  # Prevents new tasks from being submitted
-            pool.join()   # Waits for all worker processes to finish
-            pool.terminate()  # Kills any remaining processes
-            del pool  # Explicitly delete pool object
-            gc.collect()  # Force garbage collection
+        
+        # Explicitly force garbage collection after processing
+        gc.collect()
 
     def general_pipeline_sequential(self, exp_folder_path, svm=False, **kwargs):
         self.exp_folder_path = exp_folder_path
