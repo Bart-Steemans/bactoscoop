@@ -623,7 +623,7 @@ class ImageCollection:
             None
         """
         self.batch_calculate_features(
-            channel_method_pairs=[([None], "svm")], all_data=True, reset=True
+            channel_method_pairs=[([None], "svm")], all_data=True, reset=True, max_mesh_size=800
         )
 
         cur = Curation(self.feature_dataframes["svm_None_features"])
@@ -669,7 +669,7 @@ class ImageCollection:
                 "{}_curated_meshdata.pkl".format(self.name), self.mesh_df_collection
             )
 
-        del cur
+        #del cur
 
     def add_meshdata_to_dataframe(self):
         data = []
@@ -829,7 +829,7 @@ class Pipeline:
                 channel_method_pairs=[([None], "svm")],
                 all_data=False,
                 reset=True,
-                max_mesh_size=1000,
+                max_mesh_size=800,
             )
             ic.merge_dataframes()
             ic.dataframe_to_pkl("svm_features")
@@ -902,7 +902,7 @@ class Pipeline:
                 shift_signal=True,
                 reset=True,
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
-                max_mesh_size=800,
+                max_mesh_size=1000,
             )
             feature_type = kwargs.get("chann_method_tuple", "")
             ic.batch_calculate_features(
@@ -911,7 +911,7 @@ class Pipeline:
                 shift_signal=False,
                 reset=False,
                 use_shifted_contours=kwargs.get("use_shifted_contours", False),
-                max_mesh_size=800,
+                max_mesh_size=1000,
             )
             ic.merge_dataframes(include_metadata_tag=True, discard_morphological_nan=True)
             del ic.channel_images

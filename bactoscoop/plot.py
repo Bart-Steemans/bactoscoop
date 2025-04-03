@@ -65,7 +65,7 @@ def plot_contour(cell_id, image, base_channel=None, verbose=False):
     plt.plot(adjusted_contour_x, adjusted_contour_y, "-", c="w", lw=5)
 
     # Set the title with the cell ID and frame number
-    plt.title(f"Cell {cellobj.cell_id} Frame {image.frame}")
+    plt.title(f"Cell {cellobj.cell_id} Frame {image.frame} Mesh length {len(cellobj.mesh)}")
 
     # Display the plot
     plt.show()

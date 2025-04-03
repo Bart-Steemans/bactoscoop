@@ -34,11 +34,12 @@ class Features:
         """
 
         if not 4 <= len(cell.mesh) <= max_mesh_size:
-            cell.discard = True
+            
+            print(f"{cell.cell_id} cell too large")
             bactoscoop_logger.debug(
                 f"The mesh of Cell number {cell.cell_id} is too small or large"
             )
-
+            cell.discard = True
     def discard_bad_meshes(self, cell):
 
         px = self.image_obj.px

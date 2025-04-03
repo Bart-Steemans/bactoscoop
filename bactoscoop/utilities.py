@@ -1046,23 +1046,23 @@ def get_object_mesh(
         for cn in object_contours:
             meshdata["object_contour"].append(cn + [x, y])
             meshdata["cropped_object_contour"].append(cn)
+            
             temp_mask = draw_mask(cn, object_mask)
             contour, result, midline = contour2mesh(cn, temp_mask)
             # Store the object_contours already
 
-            if np.any(result):
+            if np.any(result) and result.shape[0] < 800:
+
 
                 result += [x, y, x, y]
                 midline += [x, y]
-
-                # Store the rest of the data in case of succesful execution
+                
                 meshdata["object_mesh"].append(result)
                 meshdata["object_midline"].append(midline)
-
             else:
-
-                meshdata["object_mesh"].append(np.array(result))
-                meshdata["object_midline"].append(np.array(midline))
+                # Append empty arrays instead of invalid data
+                meshdata["object_mesh"].append(np.array([]))
+                meshdata["object_midline"].append(np.array([]))
 
     return meshdata
 

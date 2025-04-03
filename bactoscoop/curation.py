@@ -62,62 +62,49 @@ class Curation:
     def prepare_dataframe(self, cols):
         """
         Prepare the feature dataset for SVM curation.
-
+    
         This method prepares the feature dataset for cell curation using a Support Vector Machine (SVM) model.
-        It extracts the relevant feature columns while excluding the specified number of initial columns.
-
+        It extracts the relevant feature columns while ensuring that `cell_id` and `frame` are preserved.
+    
         Parameters
         ----------
         cols : int
-            The number of columns to exclude from the feature dataset. Typically, this includes non-feature columns.
-
+            The number of columns to exclude from the feature dataset.
         """
-        # Cols is generally 4 due to the non-feature columns: image_name, frame, cell_id and contour.
-        exclude_columns = ["image_name", "frame", "contour", "cell_id", "label"]
-
-        # Get the indices of the columns to include
-        cols_to_include = [
-            col for col in self.svm_df.columns if col not in exclude_columns
-        ]
+    
+        # Identify non-feature columns (but keep cell_id & frame for tracking)
+        exclude_columns = ["image_name", "contour", "label"]  # Keep cell_id & frame
+        cols_to_include = [col for col in self.svm_df.columns if col not in exclude_columns]
         cols_to_include.sort()
-        # Select the columns to include in self.features
-        self.features = self.svm_df[cols_to_include]
+    
+        # Preserve cell_id and frame separately for re-mapping
+        self.cell_id_frame = self.svm_df[["cell_id", "frame"]].copy()
+    
+        # Select only feature columns for training
+        self.features = self.svm_df[cols_to_include].drop(columns=["cell_id", "frame"])
+    
         # Convert numeric columns to float
         self.features[self.features.select_dtypes(include=[np.number]).columns] = (
             self.features.select_dtypes(include=[np.number]).astype(float)
         )
-
-        # Check for infinite values and NaNs
-        has_infinite = np.any(
-            np.isinf(self.features.select_dtypes(include=[np.number]))
+    
+        # Check for infinite and NaN values
+        mask = ~(
+            np.isinf(self.features).any(axis=1) | np.isnan(self.features).any(axis=1)
         )
-        has_nan = np.any(np.isnan(self.features.select_dtypes(include=[np.number])))
-
-        if has_infinite or has_nan:
-            # Create a boolean mask for rows without infinite or NaN values
-            mask = ~(
-                np.isinf(self.features.select_dtypes(include=[np.number])).any(axis=1)
-                | np.isnan(self.features.select_dtypes(include=[np.number])).any(axis=1)
-            )
-
-            svm_df_nan = self.svm_df[~mask]
-            self.svm_df_nan = svm_df_nan
-            self.svm_df_nan["label"] = 0
-
-            # Filter the DataFrame to keep only rows without infinite or NaN values
-            svm_training_filtered = self.features[mask]
-
-            # Print the number of removed rows
-            num_removed_rows = len(self.features) - len(svm_training_filtered)
-            print(f"\nNumber of removed rows: {num_removed_rows}")
-
-            # Update self.features with the filtered DataFrame
-            self.features = svm_training_filtered
-            self.svm_df = self.svm_df[mask]
-
-        else:
-            self.svm_df_nan = pd.DataFrame()
-            print("\nNo rows removed")
+    
+        # Store discarded rows separately
+        self.svm_df_nan = self.svm_df[~mask].copy()
+        self.svm_df_nan["label"] = 0  # Assign label 0 to discarded cells
+    
+        # Keep only valid rows for training
+        self.features = self.features[mask]
+        self.cell_id_frame = self.cell_id_frame[mask]  # Ensure cell_id & frame match
+        self.svm_df = self.svm_df[mask]
+    
+        # Print the number of removed rows
+        num_removed_rows = len(mask) - mask.sum()
+        print(f"\nNumber of removed rows: {num_removed_rows}")
 
     def get_label_proportions(self):
         """
@@ -144,26 +131,27 @@ class Curation:
 
     def make_predictions(self):
         """
-        Make predictions using the SVM model.
-
-        This method uses the trained Support Vector Machine (SVM) model to make predictions on the features in the curated dataset.
-        The predicted labels are added to a new 'label' column in the DataFrame.
-
+        Make predictions using the SVM model and reattach `cell_id` and `frame`.
+    
         Returns
         -------
         pd.DataFrame
-            A DataFrame containing the predicted labels in the 'label' column.
+            A DataFrame containing the predicted labels with corresponding `cell_id` and `frame`.
         """
-        # Make predictions using the SVM model
+    
+        # Predict labels
         predictions = self.svm_model.predict(self.features)
-
-        # Assuming 'label' column is missing in the DataFrame, add the predicted labels
+    
+        # Create curated DataFrame
         self.curated_df = self.svm_df.copy()
         self.curated_df["label"] = predictions
-        self.curated_df = pd.concat(
-            [self.curated_df, self.svm_df_nan], ignore_index=True
-        )
-
+    
+        # Reattach `cell_id` and `frame`
+        self.curated_df[["cell_id", "frame"]] = self.cell_id_frame.values
+    
+        # Add back NaN/Inf-removed rows
+        self.curated_df = pd.concat([self.curated_df, self.svm_df_nan], ignore_index=True)
+    
         return self.curated_df
 
     def get_control(self, num_pos=5, num_neg=5):

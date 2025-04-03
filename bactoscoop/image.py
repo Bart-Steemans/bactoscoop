@@ -101,27 +101,44 @@ class Image:
         features = Features(self)
         result_df = None
         bad_celllist = []
+        
+        # First, filter out cells that should be discarded by discard_large_meshes
+        filtered_cells = []
         for cell in self.cells:
             cell.discard = False
             features.discard_large_meshes(cell, max_mesh_size)
-
+            
             if not cell.discard:
-                feature_calculation_method = f"{method}"
-                if hasattr(features, feature_calculation_method):
-                    try:
-                        calculation_method = getattr(
-                            features, feature_calculation_method
-                        )
-
-                        calculation_method(
-                            cell, channel, all_data, use_shifted_contours, shift_signal
-                        )
-
-                    except Exception as e:
-                        bactoscoop_logger.debug(f"Encountered a Exception: {e}")
-                        bad_celllist.append(cell.cell_id)
-                        cell.discard = True
-
+                filtered_cells.append(cell)
+        
+        # Update self.cells to only contain non-discarded cells
+        self.cells = filtered_cells
+        
+        # Now, process the remaining cells
+        for cell in self.cells:
+            feature_calculation_method = f"{method}"
+                
+            if hasattr(features, feature_calculation_method):
+                try:
+                    calculation_method = getattr(features, feature_calculation_method)
+        
+                    calculation_method(
+                        cell, channel, all_data, use_shifted_contours, shift_signal
+                    )
+        
+                except Exception as e:
+                    bactoscoop_logger.debug(f"Encountered an Exception: {e}")
+                    bad_celllist.append(cell.cell_id)
+                    cell.discard = True
+            if feature_calculation_method == "svm":
+                
+                filtered_cells = []
+                for cell in self.cells:
+                    if not cell.discard:
+                        filtered_cells.append(cell)
+                
+                # Update self.cells to only contain non-discarded cells
+                self.cells = filtered_cells
         if bad_celllist:
             bactoscoop_logger.debug(
                 f"Unable to calculate {method} features from cells: {bad_celllist} in frame {self.frame}"
