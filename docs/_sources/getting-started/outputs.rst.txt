@@ -1,0 +1,47 @@
+Outputs
+=======
+
+Save geometry and measurements at different stages to inspect an analysis
+or resume it without repeating every step.
+
+.. list-table:: Common outputs
+   :header-rows: 1
+   :widths: 28 44 28
+
+   * - Output
+     - Contents
+     - How it is produced
+   * - ``masks/*_cp_masks.tif``
+     - Integer segmentation labels for each selected field.
+     - ``segment_images()`` via Omnipose.
+   * - ``<dataset>_meshdata.pkl``
+     - Cell IDs, field metadata, contours, midlines, and meshes.
+     - ``batch_process_mesh(save_data=True)``.
+   * - ``<dataset>_curated_meshdata.pkl``
+     - Geometry for cells retained by curation.
+     - ``curate_dataset(save_curated_data=True)``.
+   * - ``<dataset>_meshdata.parquet``
+     - Reloadable geometry stored as nested numeric lists.
+     - ``meshdata_to_parquet()``.
+   * - ``<dataset>_features.pkl`` / ``.parquet``
+     - Merged per-cell feature table.
+     - ``dataframe_to_pkl()`` / ``dataframe_to_parquet()``.
+   * - ``curated_masks/*.tif`` and ``curated_mask_provenance.csv``
+     - Rasterized retained contours and original-label overlap records.
+     - ``export_curated_masks()``.
+
+The default dataset name is the final component of ``image_folder_path``.
+Renaming a working-copy folder therefore changes default output names.
+Use explicit filenames when that matters.
+
+Identity columns
+----------------
+
+The ordinary table uses ``image_name``, ``cell_id``, and ``frame``. A cell ID is
+local to a field; use all identity columns when joining tables. ``frame`` is the
+image's collection index and is not evidence of temporal tracking.
+``include_metadata_tag=True`` renames these columns to ``Metadata_image_name``,
+``Metadata_cell_id``, and ``Metadata_frame``.
+
+See :doc:`../workflow/export` for naming, serialization, overwrite behavior,
+and how to preserve processing summaries alongside measurements.

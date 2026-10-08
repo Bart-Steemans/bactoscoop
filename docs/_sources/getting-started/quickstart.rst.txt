@@ -1,0 +1,36 @@
+Quick start
+===========
+
+This example reuses the supplied three-channel masks, builds meshes, curates
+the cells, detects GFP-DnaN objects, and saves morphology and signal measurements.
+The script first copies the dataset so that the original inputs and outputs
+remain available for comparison.
+
+Run this in the BactoScoop environment, or in its Jupyter kernel:
+
+.. literalinclude:: ../_downloads/quickstart.py
+   :language: python
+
+Download :download:`the complete script <../_downloads/quickstart.py>`.
+The default calibration matches the supplied walkthrough; replace it with your
+microscope's µm/pixel calibration for your own images.
+
+What to inspect
+---------------
+
+Inspect the mask outlines before trusting the reconstructed meshes. After
+curation, compare the kept and rejected contours. Then inspect individual
+object detections and check whether the merged table contains the expected
+channels. See :doc:`../examples/plotting` for the plotting functions.
+
+This quick start intentionally uses the supplied SVM with its matching dataset.
+The same model need not classify cells correctly in a different experiment.
+Review :doc:`../workflow/curation` before applying it to other images.
+
+Expected files
+--------------
+
+The working copy contains new ``_meshdata.pkl``, ``_curated_meshdata.pkl``,
+``_features.pkl``, and ``_features.parquet`` files. The script also saves
+``processing_summary.json`` so item-level and cell-level failures can be reviewed.
+Existing masks remain in the working copy's ``masks/`` folder.

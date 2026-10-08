@@ -1,0 +1,751 @@
+bactoscoop.image
+================
+
+.. py:module:: bactoscoop.image
+
+Classes and public operations
+-----------------------------
+
+Image
+~~~~~
+
+.. py:class:: Image(image, image_name, frame, mask=None, processed_mesh_dataframe=None, px=0.065)
+
+   Represent one microscopy field, its calibrated cell population, and channel caches.
+
+   Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image_name: Input ``image_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param frame: Input ``frame`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mask: Input ``mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param processed_mesh_dataframe: Input ``processed_mesh_dataframe`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mask``, ``self.cells``, ``self.px``, ``self.image_name``, ``self.frame``, ``self.image``, ``self.channels``, ``self.joined_mask``, ``self.processing_mask``, ``self.prefilter_summary``, ``self.mesh_dataframe``, ``self.processed_mesh_dataframe``, ``self.im_interp2d``, ``self.chann_interp2d``, ``self.bg_channels``, ``self.inverted_image``, ``self.feature_errors``, ``self.object_detection_errors``, ``self.shift_errors``.
+
+   `View current source, line 20 <../source-code/image.html#image-20>`_.
+
+Image.calculate_features
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.calculate_features(method, channel, all_data, use_shifted_contours, shift_signal, max_mesh_size, retain_contour_on_object_mesh_failure_channels=None)
+
+   Calculate features for cells based on the specified method and channel.
+
+   :param method: The method used to calculate features for cells. The methods are: 'morphological', 'profiling', 'svm', 'objects', 'phase'. (To be expanded)
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+   :param shift_signal: Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+   :param max_mesh_size: Maximum accepted mesh row count; cells above this limit are removed from the image cell population.
+   :param retain_contour_on_object_mesh_failure_channels: Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      result_df
+
+   **Assigned state:** ``self.feature_errors``, ``self.cells``, ``cell.discard``.
+
+   **Explicitly raised exceptions:** ``TypeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 76 <../source-code/image.html#image-76>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate features for cells based on the specified method and channel.
+
+      This method calculates features for individual cells in the image based on the provided method
+      and channel. It also allows for adding profiling data if required.
+
+      Parameters
+      ----------
+      method : str
+          The method used to calculate features for cells.
+          The methods are: 'morphological', 'profiling', 'svm', 'objects', 'phase'. (To be expanded)
+      channel : str
+          The channel for which features are calculated.
+      add_profiling_data : bool
+          Whether to include profiling data in the feature calculations.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing the calculated features for the cells.
+
+   .. raw:: html
+
+      </details>
+
+Image.features_to_dataframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.features_to_dataframe(method)
+
+   Convert cell features stored in a dictionary to a pandas DataFrame.
+
+   :param method: The name of the method used for feature calculation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      features_df
+
+   `View current source, line 182 <../source-code/image.html#image-182>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Convert cell features stored in a dictionary to a pandas DataFrame.
+
+      This method takes a dictionary of cell features, specified by the method name, and converts it into a pandas DataFrame.
+      Additionally, it adds information features to the DataFrame.
+
+      Parameters
+      ----------
+      method : str
+          The name of the method used for feature calculation.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing cell features.
+
+   .. raw:: html
+
+      </details>
+
+Image.dataframe_from_dict
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.dataframe_from_dict(feature_dictionary)
+
+   Convert a feature dictionary to a pandas DataFrame.
+
+   :param feature_dictionary: The name of the feature dictionary to convert.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      df
+
+   `View current source, line 205 <../source-code/image.html#image-205>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Convert a feature dictionary to a pandas DataFrame.
+
+      This method takes a feature dictionary, which maps cell IDs to feature values, and converts it into a pandas DataFrame.
+
+      Parameters
+      ----------
+      feature_dictionary : str
+          The name of the feature dictionary to convert.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing cell features.
+
+   .. raw:: html
+
+      </details>
+
+Image.add_info_feature_df
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.add_info_feature_df(dataframe)
+
+   Add information columns to a feature DataFrame.
+
+   :param dataframe: The DataFrame to which information columns will be added.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 231 <../source-code/image.html#image-231>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Add information columns to a feature DataFrame.
+
+      This method adds information columns, including 'image_name', 'cell_id', and 'frame',
+      to an existing DataFrame.
+
+      Parameters
+      ----------
+      dataframe : pd.DataFrame
+          The DataFrame to which information columns will be added.
+
+   .. raw:: html
+
+      </details>
+
+Image.apply_neighbor_prefilter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.apply_neighbor_prefilter(max_neighbors=None, connectivity=1)
+
+   Apply neighbor prefilter.
+
+   :param max_neighbors: Remove labels whose distinct touching-label count is greater than this limit.
+   :param connectivity: Touching-label neighborhood: 1/4 for edges, 2/8 including diagonals.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      stats
+      None
+
+   **Assigned state:** ``self.processing_mask``, ``self.prefilter_summary``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 253 <../source-code/image.html#image-253>`_.
+
+Image.join_split_pipeline
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.join_split_pipeline(join_thresh=4, split_thresh=0.3, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+
+   Perform a pipeline for joining and splitting cells.
+
+   :param join_thresh: Maximum pole-to-pole joining distance in pixels.
+   :param split_thresh: Relative constriction threshold used by the splitting pipeline.
+   :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
+   :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 283 <../source-code/image.html#image-283>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Perform a pipeline for joining and splitting cells.
+
+      This method is used within the batch_mesh_process() method of ImageCollection. It involves joining cells based on
+      a specified threshold, converting masks to mesh data, splitting cells based on a specified threshold,
+      and creating cell objects.
+
+      Parameters
+      ----------
+      join_thresh : int, optional
+          The threshold for joining cells in pixels. (default is 4)
+      split_thresh : float, optional
+          The threshold for splitting cells. (default is 0.3)
+
+      Returns
+      -------
+      None
+
+   .. raw:: html
+
+      </details>
+
+Image.create_cell_object
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.create_cell_object(verbose=True)
+
+   Create Cell objects from mesh data.
+
+   :param verbose: Whether to print a message indicating the source of the Cell objects (processed or unprocessed meshes). (default is True)
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   **Assigned state:** ``self.cells``.
+
+   `View current source, line 319 <../source-code/image.html#image-319>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Create Cell objects from mesh data.
+
+      This method creates Cell objects based on mesh data contained in a DataFrame. The Cell objects are
+      initialized with contour, mesh, and midline data, and they are added to the list of cells in the Image object.
+
+      Parameters
+      ----------
+      verbose : bool, optional
+          Whether to print a message indicating the source of the Cell objects (processed or unprocessed meshes). (default is True)
+
+      Returns
+      -------
+      None
+
+   .. raw:: html
+
+      </details>
+
+Image.add_cell
+~~~~~~~~~~~~~~
+
+.. py:method:: Image.add_cell(cell)
+
+   Add a Cell object to the list of cells in the Image object.
+
+   :param cell: Cell instance containing geometry and measurements.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 367 <../source-code/image.html#image-367>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Add a Cell object to the list of cells in the Image object.
+
+   .. raw:: html
+
+      </details>
+
+Image.get_inverted_image
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.get_inverted_image()
+
+   Calculate the inverted image for phase contrast.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.inverted_image``, ``self.im_interp2d``.
+
+   `View current source, line 373 <../source-code/image.html#image-373>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate the inverted image for phase contrast.
+
+      This method computes the inverted image for phase contrast imaging. It subtracts the maximum pixel value
+      from the original image and does a background subtraction (bgr = mean(background intensity)) to obtain the inverted image.
+
+   .. raw:: html
+
+      </details>
+
+Image.get_bg_channel
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.get_bg_channel(channel)
+
+   Get bg channel.
+
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.bg_channels``.
+
+   `View current source, line 386 <../source-code/image.html#image-386>`_.
+
+Image.get_inverted_interp2d
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.get_inverted_interp2d()
+
+   Get inverted interp2d.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.im_interp2d
+
+   **Assigned state:** ``self.im_interp2d``.
+
+   `View current source, line 393 <../source-code/image.html#image-393>`_.
+
+Image.get_channel_interp2d
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.get_channel_interp2d(channel)
+
+   Get channel interp2d.
+
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.chann_interp2d[channel]
+
+   **Assigned state:** ``self.chann_interp2d``.
+
+   `View current source, line 400 <../source-code/image.html#image-400>`_.
+
+Image.channel_interp2d
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.channel_interp2d()
+
+   Interpolate channel images using 2D spline interpolation.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 407 <../source-code/image.html#image-407>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Interpolate channel images using 2D spline interpolation.
+
+      This method interpolates the channel images using 2D spline interpolation and stores the interpolated images
+      in the 'chann_interp2d' dictionary.
+
+   .. raw:: html
+
+      </details>
+
+Image.join_cells
+~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.join_cells(thresh=None, smoothing=0.1)
+
+   Join cells based on pole-to-pole distance.
+
+   :param thresh: The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no threshold is applied, and all cells will be considered for joining. (default is None)
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.joined_mask``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 417 <../source-code/image.html#image-417>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Join cells based on pole-to-pole distance.
+
+      This method attempts to join adjacent cells within the image based on the distance between their poles. It identifies cell pairs
+      with pole-to-pole distances below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
+      'joined_mask' array.
+
+      Parameters
+      ----------
+      thresh : float, optional
+          The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no
+          threshold is applied, and all cells will be considered for joining. (default is None)
+
+   .. raw:: html
+
+      </details>
+
+Image.mask2mesh
+~~~~~~~~~~~~~~~
+
+.. py:method:: Image.mask2mesh(smoothing=0.1)
+
+   Create meshes from cell masks.
+
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mesh_dataframe``.
+
+   `View current source, line 510 <../source-code/image.html#image-510>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Create meshes from cell masks.
+
+      This method processes cell masks to create corresponding meshes. It generates contours and skeletons for each cell in the mask,
+      extends the skeleton, and calculates additional geometric properties, such as length and width. Based on these properties, it
+      straightens the cell contour and creates a mesh representation. The resulting mesh data, including contour, mesh, and midline,
+      is stored in a DataFrame and associated with the image frame.
+
+      This method is based on the cell profile creation of the MOMIA package (doi: 10.1016/j.celrep.2021.110154)
+
+   .. raw:: html
+
+      </details>
+
+Image.split_cells
+~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.split_cells(thresh=0.3, CD_width=False)
+
+   Split cells based on a constriction degree threshold.
+
+   :param thresh: The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split. The default is 0.3.
+   :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.processed_mesh_dataframe``.
+
+   `View current source, line 533 <../source-code/image.html#image-533>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Split cells based on a constriction degree threshold.
+
+      This method separates cells within the image based on a given constriction degree threshold. It calculates the constriction degree
+      for each cell and, if it exceeds the threshold, splits the cell into two separate cells. The new mesh data, including contour, mesh,
+      and midline, is stored in a DataFrame and associated with the image frame.
+
+      This method is based on the splitting algorithm in the Oufti software package (doi: 10.1111/mmi.13264).
+
+      Parameters
+      ----------
+      thresh : float, optional
+          The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split.
+          The default is 0.3.
+
+   .. raw:: html
+
+      </details>
+
+Image.object_detection
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.object_detection(channels=None, smoothing=0.1, align=False, log_sigma=3, kernel_width=4, min_overlap_ratio=0.01, max_external_ratio=0.1)
+
+   Detect subcellular objects within cell contours in specified channels.
+
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param align: Use the object-detection alignment path for the selected signal.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      detections_df
+
+   **Assigned state:** ``self.object_detection_errors``, ``cell.object_meshdata``.
+
+   `View current source, line 633 <../source-code/image.html#image-633>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Detect subcellular objects within cell contours in specified channels.
+
+      This method performs object detection within the contours of cells for the specified channels. It uses a Laplacian of Gaussian (LoG)
+      filter to detect subcellular objects and returns their contours. The detected objects are stored in a DataFrame, including the frame,
+      cell ID, channel name, and object contours.
+
+      Parameters
+      ----------
+      channels : List of str, optional
+          The list of channel names for which to perform object detection.
+
+      log_sigma : int, optional
+          The sigma parameter of the LoG filter used in object detection. Increasing this parameter may detect larger objects.
+          The default is 3.
+
+      kernel_width : int, optional
+          The kernel width used for dilating object masks. Increasing this value results in larger masks.
+          The default is 4.
+
+      min_overlap_ratio : float, optional
+          The minimum overlap ratio between detected objects and cell contours to keep the object. Objects with lower overlap are discarded.
+          The default is 0.01.
+
+      max_external_ratio : float, optional
+          The maximum ratio an object is allowed to lie outside the cell contour. Objects exceeding this ratio are discarded.
+          The default is 0.1.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing information about the detected objects, including frame, cell ID, channel name, and object contours.
+
+   .. raw:: html
+
+      </details>
+
+Image.shift_correction
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image.shift_correction(shifted_channel, log_sigma, kernel_width, min_overlap_ratio, max_external_ratio, phase_log_sigma, phase_closing_level, signal_closing_level, max_shift_correction)
+
+   Shift correction.
+
+   :param shifted_channel: Input ``shifted_channel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+   :param phase_log_sigma: Input ``phase_log_sigma`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_closing_level: Input ``phase_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal_closing_level: Input ``signal_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_shift_correction: Input ``max_shift_correction`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (len(self.cells) - failed_attempts) / len(self.cells)
+      0.0
+
+   **Assigned state:** ``self.shift_errors``, ``cell.shifted_contour``, ``cell.shifted_mesh``, ``cell.shifted_midline``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 754 <../source-code/image.html#image-754>`_.
+
+Cell
+~~~~
+
+.. py:class:: Cell(contour, mesh, midline, shape, cell_id)
+
+   Store one cell contour, paired mesh, midline, identity, and feature dictionaries.
+
+   The cell_id is local to a field; geometry arrays remain in pixel units.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param shape: Input ``shape`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.discard``, ``self.contour``, ``self.mesh``, ``self.midline``, ``self.cell_id``, ``self.shifted_contour``, ``self.shifted_mesh``, ``self.shifted_midline``, ``self.x1``, ``self.y1``, ``self.x2``, ``self.y2``, ``self.profile_mesh``, ``self.object_meshdata``, ``self.morphological_features``, ``self.phase_features``, ``self.objects_features``, ``self.svm_features``, ``self.profiling_features``, ``self.signal_correlation_features``, ``self.profiling_data``.
+
+   `View current source, line 815 <../source-code/image.html#image-815>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Class representing a single cell in an image.
+
+      This class represents a single cell within an image, characterized by its contour, mesh, and midline data. It is identified by a unique cell ID.
+
+      Attributes
+      ----------
+      discard : bool
+          A flag to indicate whether the cell should be discarded during analysis.
+
+      contour : ndarray
+          The contour data of the cell.
+
+      mesh : ndarray
+          The mesh data (4xN).
+
+      midline : ndarray
+          The midline data describing the cell's central axis (2xN).
+
+      cell_id : int
+          A unique identifier for the cell.
+
+      x1, y1, x2, y2 : ndarray
+          Arrays representing the coordinates of the cell's mesh.
+
+      profile_mesh : None
+          Placeholder for profile mesh data.
+
+      object_contours : dict
+          A dictionary to store detected subcellular object contours in different channels.
+
+      morphological_features : dict
+          Dictionary to store morphological features of the cell.
+
+      phase_features : dict
+          Dictionary to store phase contrast features of the cell.
+
+      objects_features : dict
+          Dictionary to store features related to subcellular objects within the cell.
+
+      svm_features : dict
+          Dictionary to store support vector machine (SVM) features.
+
+      profiling_features : dict
+          Dictionary to store profiling features.
+
+      profiling_data : dict
+          Dictionary to store data related to the profiling of the cell.
+
+   .. raw:: html
+
+      </details>
+
+Internal helpers
+----------------
+
+Image._active_mask
+~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Image._active_mask()
+
+    active mask.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.processing_mask if self.processing_mask is not None else self.mask
+
+   `View current source, line 250 <../source-code/image.html#image-250>`_.

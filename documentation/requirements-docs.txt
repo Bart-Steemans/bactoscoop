@@ -1,0 +1,9 @@
+sphinx==9.0.4
+furo==2025.12.19
+sphinx-copybutton==0.5.2
+myst-parser==5.1.0
+openpyxl>=3.1,<4
+pygments>=2.19
+beautifulsoup4>=4.12
+# Used only for browser validation, not for building or viewing the site.
+playwright==1.63.0

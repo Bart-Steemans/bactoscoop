@@ -1,0 +1,133 @@
+bactoscoop.omni
+===============
+
+.. py:module:: bactoscoop.omni
+
+Classes and public operations
+-----------------------------
+
+Omnipose
+~~~~~~~~
+
+.. py:class:: Omnipose(imgs, paths)
+
+   Omnipose.
+
+   :param imgs: Input ``imgs`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param paths: Input ``paths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.imgs``, ``self.files``, ``self.use_GPU``, ``self.masks``, ``self.flows``, ``self.selected_imgs``, ``self.selected_files``, ``self.model``.
+
+   `View current source, line 14 <../source-code/omni.html#omni-14>`_.
+
+Omnipose.load_models
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Omnipose.load_models(model_name)
+
+   Load the desired omnipose model.
+
+   :param model_name: Omnipose model identifier; default collection model is bact_phase_omni.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.model``.
+
+   `View current source, line 28 <../source-code/omni.html#omni-28>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Load the desired omnipose model.
+
+   .. raw:: html
+
+      </details>
+
+Omnipose.process
+~~~~~~~~~~~~~~~~
+
+.. py:method:: Omnipose.process(n=(0,), mask_thresh=1, minsize=300)
+
+   Segment the raw images and get their masks.
+
+   :param n: Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.
+   :param mask_thresh: Threshold passed as Omnipose mask_threshold.
+   :param minsize: Minimum accepted segmentation-mask size in pixels.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.masks``, ``self.flows``, ``self.selected_imgs``, ``self.selected_files``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 36 <../source-code/omni.html#omni-36>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Segment the raw images and get their masks.
+
+   .. raw:: html
+
+      </details>
+
+Omnipose.save_masks
+~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Omnipose.save_masks()
+
+   Save the segmentation masks.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``RuntimeError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 91 <../source-code/omni.html#omni-91>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Save the segmentation masks.
+
+   .. raw:: html
+
+      </details>
+
+Omnipose.compiled_process
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Omnipose.compiled_process(n, mask_thresh, minsize)
+
+   Sequentially process and save the masks in one method.
+
+   :param n: Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.
+   :param mask_thresh: Threshold passed as Omnipose mask_threshold.
+   :param minsize: Minimum accepted segmentation-mask size in pixels.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 116 <../source-code/omni.html#omni-116>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Sequentially process and save the masks in one method.
+
+   .. raw:: html
+
+      </details>

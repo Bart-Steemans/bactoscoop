@@ -1,0 +1,1081 @@
+Morphological features
+======================
+
+**Prerequisites:** Cell contour, mesh, midline, phase image, and physical calibration.
+
+A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.
+
+cell_length
+-----------
+
+**Exported column:** ``cell_length``
+
+**Meaning:** Cell length along the mesh midline.
+
+Calculation: Sum the step lengths between successive mesh midpoints along the cell axis.
+Explanation: This is the measured pole-to-pole length of the cell, following the fitted midline rather than a simple straight line.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_length(step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_length`.
+
+`Source assignment, line 85 <../source-code/features.html#features-85>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_width
+----------
+
+**Exported column:** ``cell_width``
+
+**Meaning:** Cell body width.
+
+Calculation: Compute the width of every mesh segment as the distance between (x1, y1) and (x2, y2), sort those widths, and take the mean of the widest one-third.
+Explanation: This gives a robust estimate of the cell body width while reducing the influence of the narrow poles.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_avg_width(cell.x1, cell.y1, cell.x2, cell.y2, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_avg_width`.
+
+`Source assignment, line 86 <../source-code/features.html#features-86>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_aspect_ratio
+-----------------
+
+**Exported column:** ``cell_aspect_ratio``
+
+**Meaning:** Cell length-to-width ratio.
+
+Calculation: cell\_length / cell\_width.
+Explanation: Higher values indicate a more elongated cell, whereas lower values indicate a shorter or rounder cell.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   cell.morphological_features['cell_length'] / cell.morphological_features['cell_width']
+
+`Source assignment, line 89 <../source-code/features.html#features-89>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_area
+---------
+
+**Exported column:** ``cell_area``
+
+**Meaning:** Cell projected area.
+
+Calculation: Compute the area of the polygon defined by the cell contour.
+Explanation: This is the 2D projected size of the segmented cell in the image.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   cell_area
+
+`Source assignment, line 96 <../source-code/features.html#features-96>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_volume
+-----------
+
+**Exported column:** ``cell_volume``
+
+**Meaning:** Cell estimated volume.
+
+Calculation: Treat each mesh segment as a cylinder with radius width/2, integrate pi\*(width/2)^2 along the cell length using the trapezoidal rule, and sum the segments.
+Explanation: This estimates the 3D volume of the bacterium from its 2D mesh.
+
+**Units:** µm³. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_volume(cell.x1, cell.y1, cell.x2, cell.y2, step_length, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_volume`.
+
+`Source assignment, line 97 <../source-code/features.html#features-97>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_surface_area
+-----------------
+
+**Exported column:** ``cell_surface_area``
+
+**Meaning:** Cell estimated surface area.
+
+Calculation: For each mesh segment compute 2\*pi\*(width/2)\*step\_length and sum the segment values.
+Explanation: This estimates the outer surface area of the cell envelope along the reconstructed cell shape.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_surface_area(width_not_ordered, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_surface_area`.
+
+`Source assignment, line 100 <../source-code/features.html#features-100>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_SOV
+--------
+
+**Exported column:** ``cell_SOV``
+
+**Meaning:** Cell surface-area-to-volume ratio.
+
+Calculation: cell\_surface\_area / cell\_volume.
+Explanation: This expresses how much surface area the cell has relative to its volume and is useful for comparing shape states.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_surface_area_over_volume(cell.morphological_features['cell_surface_area'], cell.morphological_features['cell_volume'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_surface_area_over_volume`.
+
+`Source assignment, line 103 <../source-code/features.html#features-103>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_perimeter
+--------------
+
+**Exported column:** ``cell_perimeter``
+
+**Meaning:** Cell contour perimeter.
+
+Calculation: Sum the distances between consecutive points of the subpixel contour.
+Explanation: This is the total contour length around the cell boundary in 2D.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   per
+
+`Source assignment, line 111 <../source-code/features.html#features-111>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_circularity
+----------------
+
+**Exported column:** ``cell_circularity``
+
+**Meaning:** Cell circularity.
+
+Calculation: (4\*pi\*cell\_area) / (cell\_perimeter^2).
+Explanation: Values closer to 1 indicate a more circle-like outline, while lower values indicate a more elongated or irregular shape.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   circ
+
+`Source assignment, line 112 <../source-code/features.html#features-112>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_compactness
+----------------
+
+**Exported column:** ``cell_compactness``
+
+**Meaning:** Cell compactness.
+
+Calculation: (cell\_perimeter^2) / cell\_area.
+Explanation: This describes how much boundary length is needed to enclose the area; larger values reflect less compact shapes.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   poa
+
+`Source assignment, line 113 <../source-code/features.html#features-113>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_sphericity
+---------------
+
+**Exported column:** ``cell_sphericity``
+
+**Meaning:** Cell sphericity descriptor.
+
+Calculation: (1.5\*pi\*(cell\_perimeter/(2\*pi))^1.5) / cell\_area.
+Explanation: This is a 2D shape descriptor intended to capture how close the outline is to a compact rounded object.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.
+
+**Units:** µm⁻¹ᐟ² under the implemented 2D formula. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sph
+
+`Source assignment, line 114 <../source-code/features.html#features-114>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_width_variability
+----------------------
+
+**Exported column:** ``cell_width_variability``
+
+**Meaning:** Cell width variability.
+
+Calculation: Take the widest 50% of mesh widths and compute std(widths) / mean(widths).
+Explanation: This measures how uneven the cell width is along its length; larger values mean the cell tapers or constricts more strongly.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_width_variability(width_not_ordered)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_width_variability`.
+
+`Source assignment, line 115 <../source-code/features.html#features-115>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_eccentricity
+-----------------
+
+**Exported column:** ``cell_eccentricity``
+
+**Meaning:** Cell eccentricity.
+
+Calculation: Export the corresponding measurement directly from skimage.regionprops on the binary cell mask.
+Explanation: This is a standard image-analysis descriptor of how elongated the fitted region is.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   ecc
+
+`Source assignment, line 120 <../source-code/features.html#features-120>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_solidity
+-------------
+
+**Exported column:** ``cell_solidity``
+
+**Meaning:** Cell solidity.
+
+Calculation: Export the corresponding measurement directly from skimage.regionprops on the binary cell mask.
+Explanation: This is a standard image-analysis descriptor of how fully the contour fills its convex hull.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sol
+
+`Source assignment, line 121 <../source-code/features.html#features-121>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_convexity
+--------------
+
+**Exported column:** ``cell_convexity``
+
+**Meaning:** Cell convexity.
+
+Calculation: convex-hull perimeter / measured mask perimeter.
+Explanation: This quantifies how close the outline is to a smooth convex shape; deviations reflect indentations or irregular borders.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   conv
+
+`Source assignment, line 122 <../source-code/features.html#features-122>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_max_contour_curvature
+--------------------------
+
+**Exported column:** ``cell_max_contour_curvature``
+
+**Meaning:** Maximum cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   con_max_c
+
+`Source assignment, line 127 <../source-code/features.html#features-127>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_min_contour_curvature
+--------------------------
+
+**Exported column:** ``cell_min_contour_curvature``
+
+**Meaning:** Minimum cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   con_min_c
+
+`Source assignment, line 128 <../source-code/features.html#features-128>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_mean_contour_curvature
+---------------------------
+
+**Exported column:** ``cell_mean_contour_curvature``
+
+**Meaning:** Mean cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   con_mean_c
+
+`Source assignment, line 129 <../source-code/features.html#features-129>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_std_contour_curvature
+--------------------------
+
+**Exported column:** ``cell_std_contour_curvature``
+
+**Meaning:** Standard deviation of cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   con_std_c
+
+`Source assignment, line 130 <../source-code/features.html#features-130>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_contour_bending_energy
+---------------------------
+
+**Exported column:** ``cell_contour_bending_energy``
+
+**Meaning:** Cell contour bending energy.
+
+Calculation: sum(curvature^2) / line\_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.bending_energy(cell.contour, con_curvature, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.bending_energy`.
+
+`Source assignment, line 131 <../source-code/features.html#features-131>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_max_midline_curvature
+--------------------------
+
+**Exported column:** ``cell_max_midline_curvature``
+
+**Meaning:** Maximum cell midline curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mid_max_c
+
+`Source assignment, line 138 <../source-code/features.html#features-138>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_min_midline_curvature
+--------------------------
+
+**Exported column:** ``cell_min_midline_curvature``
+
+**Meaning:** Minimum cell midline curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mid_min_c
+
+`Source assignment, line 139 <../source-code/features.html#features-139>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_mean_midline_curvature
+---------------------------
+
+**Exported column:** ``cell_mean_midline_curvature``
+
+**Meaning:** Mean cell midline curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mid_mean_c
+
+`Source assignment, line 140 <../source-code/features.html#features-140>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_std_midline_curvature
+--------------------------
+
+**Exported column:** ``cell_std_midline_curvature``
+
+**Meaning:** Standard deviation of cell midline curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mid_std_c
+
+`Source assignment, line 141 <../source-code/features.html#features-141>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_midline_bending_energy
+---------------------------
+
+**Exported column:** ``cell_midline_bending_energy``
+
+**Meaning:** Cell midline bending energy.
+
+Calculation: sum(curvature^2) / line\_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.bending_energy(cell.midline, mid_curvature, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.bending_energy`.
+
+`Source assignment, line 142 <../source-code/features.html#features-142>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_midline_sinuosity
+----------------------
+
+**Exported column:** ``cell_midline_sinuosity``
+
+**Meaning:** Cell midline sinuosity.
+
+Calculation: midline\_length / straight pole-to-pole distance.
+Explanation: A straight cell has a value near 1, while a bent or wavy cell has a larger value.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.sinuosity(cell.midline)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.sinuosity`.
+
+`Source assignment, line 145 <../source-code/features.html#features-145>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_area_asymmetry
+-------------------
+
+**Exported column:** ``cell_area_asymmetry``
+
+**Meaning:** Cell longitudinal area asymmetry.
+
+Calculation: Split the cell into two longitudinal halves using step\_length \* width per segment, then compute smaller\_half\_area / larger\_half\_area.
+Explanation: Values near 1 mean both halves are similar in size; lower values indicate asymmetry between the two sides of the cell.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_area_asymmetry(step_length, width_not_ordered)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_area_asymmetry`.
+
+`Source assignment, line 149 <../source-code/features.html#features-149>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+max_feret_diameter
+------------------
+
+**Exported column:** ``max_feret_diameter``
+
+**Meaning:** Maximum Feret diameter of the cell.
+
+Calculation: Export the corresponding size descriptor from the binary cell mask and its centroid geometry.
+Explanation: These features summarize cell size from different geometric viewpoints, such as span, equivalent circle size, or centroid-to-edge distance.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_MAX_FERET_DIAMETER']
+
+`Source assignment, line 156 <../source-code/features.html#features-156>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+equivalent_diameter
+-------------------
+
+**Exported column:** ``equivalent_diameter``
+
+**Meaning:** Equivalent cell diameter.
+
+Calculation: Export the corresponding size descriptor from the binary cell mask and its centroid geometry.
+Explanation: These features summarize cell size from different geometric viewpoints, such as span, equivalent circle size, or centroid-to-edge distance.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_EQUIVALENT_DIAMETER']
+
+`Source assignment, line 159 <../source-code/features.html#features-159>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+max_radius
+----------
+
+**Exported column:** ``max_radius``
+
+**Meaning:** Maximum cell radius.
+
+Distance from the binary-mask centroid to foreground pixels, summarized as the named statistic. Interior foreground pixels are included; this is not exclusively centroid-to-edge distance.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_MAXIMUM_RADIUS']
+
+`Source assignment, line 162 <../source-code/features.html#features-162>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+mean_radius
+-----------
+
+**Exported column:** ``mean_radius``
+
+**Meaning:** Mean cell radius.
+
+Distance from the binary-mask centroid to foreground pixels, summarized as the named statistic. Interior foreground pixels are included; this is not exclusively centroid-to-edge distance.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_MEAN_RADIUS']
+
+`Source assignment, line 165 <../source-code/features.html#features-165>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+median_radius
+-------------
+
+**Exported column:** ``median_radius``
+
+**Meaning:** Median cell radius.
+
+Distance from the binary-mask centroid to foreground pixels, summarized as the named statistic. Interior foreground pixels are included; this is not exclusively centroid-to-edge distance.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_MEDIAN_RADIUS']
+
+`Source assignment, line 168 <../source-code/features.html#features-168>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+extent
+------
+
+**Exported column:** ``extent``
+
+**Meaning:** Cell extent within the bounding box.
+
+Calculation: Export the corresponding measurement directly from skimage.regionprops on the binary cell mask.
+Explanation: This is a standard image-analysis descriptor of how fully the contour fills its bounding box.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   regionprops_features['F_EXTENT']
+
+`Source assignment, line 171 <../source-code/features.html#features-171>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_constriction_degree_width
+------------------------------
+
+**Exported column:** ``cell_constriction_degree_width``
+
+**Meaning:** Cell constriction degree from the width profile.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(width_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 191 <../source-code/features.html#features-191>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_rel_constr_pos_width
+-------------------------
+
+**Exported column:** ``cell_rel_constr_pos_width``
+
+**Meaning:** Relative position of the width-profile constriction.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(width_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 191 <../source-code/features.html#features-191>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_constriction_degree_axial
+------------------------------
+
+**Exported column:** ``cell_constriction_degree_axial``
+
+**Meaning:** Cell constriction degree from the inverse phase midline profile.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(axial_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 202 <../source-code/features.html#features-202>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_rel_constr_pos_axial
+-------------------------
+
+**Exported column:** ``cell_rel_constr_pos_axial``
+
+**Meaning:** Relative position of the axial constriction.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(axial_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 202 <../source-code/features.html#features-202>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_constriction_degree_width_axial
+------------------------------------
+
+**Exported column:** ``cell_constriction_degree_width_axial``
+
+**Meaning:** Cell constriction degree from the width-weighted inverse phase profile.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(weighted_axial_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 211 <../source-code/features.html#features-211>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_rel_constr_pos_width_axial
+-------------------------------
+
+**Exported column:** ``cell_rel_constr_pos_width_axial``
+
+**Meaning:** Relative position of the width-weighted axial constriction.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(weighted_axial_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 211 <../source-code/features.html#features-211>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_constriction_degree_mesh
+-----------------------------
+
+**Exported column:** ``cell_constriction_degree_mesh``
+
+**Meaning:** Cell constriction degree from the mesh-intensity profile.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(mesh_intensity_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 230 <../source-code/features.html#features-230>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+cell_rel_constr_pos_mesh
+------------------------
+
+**Exported column:** ``cell_rel_constr_pos_mesh``
+
+**Meaning:** Relative position of the mesh-intensity constriction.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(mesh_intensity_profile, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 230 <../source-code/features.html#features-230>`_; :py:meth:`bactoscoop.features.Features.morphological`.
+
+Region-property component families
+----------------------------------
+
+These scalar components are also emitted and are not gated by ``all_data``.
+They come directly from scikit-image properties in pixel coordinates and do
+not receive physical calibration. The raw moments and inertia tensor carry
+pixel-order units; normalized and Hu moments are dimensionless.
+
+moments
+~~~~~~~
+
+Columns: ``moments_0_0``, ``moments_0_1``, ``moments_0_2``, ``moments_0_3``, ``moments_1_0``, ``moments_1_1``, ``moments_1_2``, ``moments_1_3``, ``moments_2_0``, ``moments_2_1``, ``moments_2_2``, ``moments_2_3``, ``moments_3_0``, ``moments_3_1``, ``moments_3_2``, ``moments_3_3``.
+
+Raw moments sum row^i × column^j over foreground pixels; units follow the coordinate powers.
+
+moments_central
+~~~~~~~~~~~~~~~
+
+Columns: ``moments_central_0_0``, ``moments_central_0_1``, ``moments_central_0_2``, ``moments_central_0_3``, ``moments_central_1_0``, ``moments_central_1_1``, ``moments_central_1_2``, ``moments_central_1_3``, ``moments_central_2_0``, ``moments_central_2_1``, ``moments_central_2_2``, ``moments_central_2_3``, ``moments_central_3_0``, ``moments_central_3_1``, ``moments_central_3_2``, ``moments_central_3_3``.
+
+Central moments use coordinates relative to the mask centroid.
+
+moments_normalized
+~~~~~~~~~~~~~~~~~~
+
+Columns: ``moments_normalized_0_2``, ``moments_normalized_0_3``, ``moments_normalized_1_1``, ``moments_normalized_1_2``, ``moments_normalized_1_3``, ``moments_normalized_2_0``, ``moments_normalized_2_1``, ``moments_normalized_2_2``, ``moments_normalized_2_3``, ``moments_normalized_3_0``, ``moments_normalized_3_1``, ``moments_normalized_3_2``, ``moments_normalized_3_3``.
+
+Normalized central moments from regionprops; three low-order components are skipped by the utility.
+
+moments_hu
+~~~~~~~~~~
+
+Columns: ``moments_hu_0``, ``moments_hu_1``, ``moments_hu_2``, ``moments_hu_3``, ``moments_hu_4``, ``moments_hu_5``, ``moments_hu_6``.
+
+Seven Hu moment invariants from the binary region.
+
+inertia_tensor
+~~~~~~~~~~~~~~
+
+Columns: ``inertia_tensor_0_0``, ``inertia_tensor_0_1``, ``inertia_tensor_1_0``, ``inertia_tensor_1_1``.
+
+Four 2D inertia tensor components in pixel².
+
+inertia_tensor_eigvals
+~~~~~~~~~~~~~~~~~~~~~~
+
+Columns: ``inertia_tensor_eigvals_0``, ``inertia_tensor_eigvals_1``.
+
+Two inertia tensor eigenvalues in pixel².
+
+Each component is scalar. Degenerate masks or undefined normalized components can produce nonfinite values. See :py:func:`bactoscoop.utilities.get_additional_regionprops_features` for generation and :doc:`../workflow/features` for row-level failure handling.

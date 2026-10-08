@@ -1,0 +1,47 @@
+Channel alignment and shift correction
+======================================
+
+Check fluorescence registration before interpreting profiles or object
+positions. BactoScoop exposes several related operations with different effects.
+
+Object alignment
+----------------
+
+``batch_detect_objects(..., align=True)`` uses the object detection alignment
+path for the requested channel. The five-channel notebook enables this for
+the outer-membrane channel C2 and leaves it disabled for C3–C5. This is an
+example-specific choice.
+
+Shifted geometry
+----------------
+
+``batch_shift_correction`` constructs shifted contours, midlines, and meshes.
+``use_shifted_contours=True`` selects stored shifted geometry in feature
+calculation. It requires the relevant shifted data to exist; enabling the flag
+does not itself perform shift correction.
+
+Signal cropping
+---------------
+
+``shift_signal=True`` activates signal handling during supported measurements.
+The profiling and membrane implementations use their respective cropping and
+optional-shift utilities. The ``objects`` method receives extra positional
+arguments through ``*args`` and does not use ``shift_signal`` as a general
+object-coordinate transformation.
+
+Inspect these operations separately because a successful field match does
+not prove subpixel registration, and changing one flag does not automatically
+change every measurement. See the C2 alignment figure in
+:doc:`../examples/five-channel` and the exact API signatures in
+:doc:`../reference/parameters`.
+
+.. code-block:: python
+
+   import bactoscoop.plot as bplt
+   fig = bplt.plot_C2_alignment(
+       ic.image_objects[0], cell_id=43, channel="C2",
+       channel_label="Outer membrane", show_objects=True,
+   )
+
+Choose a cell ID present in your own retained image before calling a cell-level
+plot. The number above comes from the supplied five-channel walkthrough.

@@ -1,0 +1,827 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Parameter reference" href="parameters.html"><link rel="prev" title="Membrane features" href="features-membrane.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Svm features - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-objects.html">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/features.html">bactoscoop.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/image.html">bactoscoop.image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/imagecollection.html">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plot.html">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/reference/features-svm.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="svm-features">
+<h1>Svm features<a class="headerlink" href="#svm-features" title="Link to this heading">¶</a></h1>
+<p><strong>Prerequisites:</strong> Valid cell geometry and inverse-phase signal; these quantities are used by the curation classifier.</p>
+<p>A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.</p>
+<section id="contour">
+<h2>contour<a class="headerlink" href="#contour" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_contour</span></code></p>
+<p><strong>Meaning:</strong> Stored cell contour coordinates.</p>
+<p>Calculation: Store the cell contour coordinates directly in the table.
+Explanation: This is mainly kept for tracking, visualization, and linking feature rows back to the original segmented cell.</p>
+<p><strong>Units:</strong> pixels. <strong>Value shape:</strong> N × 2 geometry array in pixel coordinates.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-394">Source assignment, line 394</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-length">
+<h2>cell_length<a class="headerlink" href="#cell-length" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_length</span></code></p>
+<p><strong>Meaning:</strong> Cell length along the mesh midline.</p>
+<p>Calculation: Sum the step lengths between successive mesh midpoints along the cell axis.
+Explanation: This is the measured pole-to-pole length of the cell, following the fitted midline rather than a simple straight line.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_length</span><span class="p">(</span><span class="n">step_length</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_length" title="bactoscoop.utilities.get_length"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_length()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-397">Source assignment, line 397</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-width">
+<h2>cell_width<a class="headerlink" href="#cell-width" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_width</span></code></p>
+<p><strong>Meaning:</strong> Cell body width.</p>
+<p>Calculation: Compute the width of every mesh segment as the distance between (x1, y1) and (x2, y2), sort those widths, and take the mean of the widest one-third.
+Explanation: This gives a robust estimate of the cell body width while reducing the influence of the narrow poles.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_avg_width</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">x1</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">y1</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">x2</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_avg_width" title="bactoscoop.utilities.get_avg_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_avg_width()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-398">Source assignment, line 398</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-area">
+<h2>cell_area<a class="headerlink" href="#cell-area" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_area</span></code></p>
+<p><strong>Meaning:</strong> Cell projected area.</p>
+<p>Calculation: Compute the area of the polygon defined by the cell contour.
+Explanation: This is the 2D projected size of the segmented cell in the image.</p>
+<p><strong>Units:</strong> µm². <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_area</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_area" title="bactoscoop.utilities.get_area"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_area()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-401">Source assignment, line 401</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-volume">
+<h2>cell_volume<a class="headerlink" href="#cell-volume" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_volume</span></code></p>
+<p><strong>Meaning:</strong> Cell estimated volume.</p>
+<p>Calculation: Treat each mesh segment as a cylinder with radius width/2, integrate pi*(width/2)^2 along the cell length using the trapezoidal rule, and sum the segments.
+Explanation: This estimates the 3D volume of the bacterium from its 2D mesh.</p>
+<p><strong>Units:</strong> µm³. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_volume</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">x1</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">y1</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">x2</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">y2</span><span class="p">,</span> <span class="n">step_length</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_volume" title="bactoscoop.utilities.get_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_volume()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-402">Source assignment, line 402</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-surface-area">
+<h2>cell_surface_area<a class="headerlink" href="#cell-surface-area" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_surface_area</span></code></p>
+<p><strong>Meaning:</strong> Cell estimated surface area.</p>
+<p>Calculation: For each mesh segment compute 2*pi*(width/2)*step_length and sum the segment values.
+Explanation: This estimates the outer surface area of the cell envelope along the reconstructed cell shape.</p>
+<p><strong>Units:</strong> µm². <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_surface_area</span><span class="p">(</span><span class="n">width_not_ordered</span><span class="p">,</span> <span class="n">step_length</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_surface_area" title="bactoscoop.utilities.get_surface_area"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_surface_area()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-405">Source assignment, line 405</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="max-curvature">
+<h2>max_curvature<a class="headerlink" href="#max-curvature" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_max_curvature</span></code></p>
+<p><strong>Meaning:</strong> Maximum cell contour curvature.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_curvature_characteristics</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_curvature_characteristics" title="bactoscoop.utilities.get_curvature_characteristics"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_curvature_characteristics()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-408">Source assignment, line 408</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="min-curvature">
+<h2>min_curvature<a class="headerlink" href="#min-curvature" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_min_curvature</span></code></p>
+<p><strong>Meaning:</strong> Minimum cell contour curvature.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_curvature_characteristics</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_curvature_characteristics" title="bactoscoop.utilities.get_curvature_characteristics"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_curvature_characteristics()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-408">Source assignment, line 408</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="mean-curvature">
+<h2>mean_curvature<a class="headerlink" href="#mean-curvature" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_mean_curvature</span></code></p>
+<p><strong>Meaning:</strong> Mean cell contour curvature.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_curvature_characteristics</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_curvature_characteristics" title="bactoscoop.utilities.get_curvature_characteristics"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_curvature_characteristics()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-408">Source assignment, line 408</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-perimeter">
+<h2>cell_perimeter<a class="headerlink" href="#cell-perimeter" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_perimeter</span></code></p>
+<p><strong>Meaning:</strong> Cell contour perimeter.</p>
+<p>Calculation: Sum the distances between consecutive points of the subpixel contour.
+Explanation: This is the total contour length around the cell boundary in 2D.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_cell_perimeter_measurements</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">svm_features</span><span class="p">[</span><span class="s1">'cell_area'</span><span class="p">],</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_cell_perimeter_measurements" title="bactoscoop.utilities.get_cell_perimeter_measurements"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_cell_perimeter_measurements()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-415">Source assignment, line 415</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-circularity">
+<h2>cell_circularity<a class="headerlink" href="#cell-circularity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_circularity</span></code></p>
+<p><strong>Meaning:</strong> Cell circularity.</p>
+<p>Calculation: (4*pi*cell_area) / (cell_perimeter^2).
+Explanation: Values closer to 1 indicate a more circle-like outline, while lower values indicate a more elongated or irregular shape.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_cell_perimeter_measurements</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">svm_features</span><span class="p">[</span><span class="s1">'cell_area'</span><span class="p">],</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_cell_perimeter_measurements" title="bactoscoop.utilities.get_cell_perimeter_measurements"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_cell_perimeter_measurements()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-415">Source assignment, line 415</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-poa">
+<h2>cell_POA<a class="headerlink" href="#cell-poa" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_POA</span></code></p>
+<p><strong>Meaning:</strong> Cell compactness.</p>
+<p>Calculation: (cell_perimeter^2) / cell_area.
+Explanation: This describes how much boundary length is needed to enclose the area; larger values reflect less compact shapes.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_cell_perimeter_measurements</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">svm_features</span><span class="p">[</span><span class="s1">'cell_area'</span><span class="p">],</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_cell_perimeter_measurements" title="bactoscoop.utilities.get_cell_perimeter_measurements"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_cell_perimeter_measurements()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-415">Source assignment, line 415</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="cell-sphericity">
+<h2>cell_sphericity<a class="headerlink" href="#cell-sphericity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_sphericity</span></code></p>
+<p><strong>Meaning:</strong> Cell sphericity descriptor.</p>
+<p>Calculation: (1.5*pi*(cell_perimeter/(2*pi))^1.5) / cell_area.
+Explanation: This is a 2D shape descriptor intended to capture how close the outline is to a compact rounded object.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.</p>
+<p><strong>Units:</strong> µm⁻¹ᐟ² under the implemented 2D formula. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_cell_perimeter_measurements</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">svm_features</span><span class="p">[</span><span class="s1">'cell_area'</span><span class="p">],</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_cell_perimeter_measurements" title="bactoscoop.utilities.get_cell_perimeter_measurements"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_cell_perimeter_measurements()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-415">Source assignment, line 415</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-total-intensity">
+<h2>phaco_total_intensity<a class="headerlink" href="#phaco-total-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_total_intensity</span></code></p>
+<p><strong>Meaning:</strong> Total phase-contrast intensity inside the cell.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_int</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-428">Source assignment, line 428</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-max-intensity">
+<h2>phaco_max_intensity<a class="headerlink" href="#phaco-max-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_max_intensity</span></code></p>
+<p><strong>Meaning:</strong> Maximum phase-contrast intensity inside the cell.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">max_int</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-429">Source assignment, line 429</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-mean-intensity">
+<h2>phaco_mean_intensity<a class="headerlink" href="#phaco-mean-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_mean_intensity</span></code></p>
+<p><strong>Meaning:</strong> Mean phase-contrast intensity inside the cell.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean_int</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-430">Source assignment, line 430</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-contour-peaks">
+<h2>phaco_contour_peaks<a class="headerlink" href="#phaco-contour-peaks" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_contour_peaks</span></code></p>
+<p><strong>Meaning:</strong> Number of peaks in the phase-contrast contour profile.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> count. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">find_signal_peaks</span><span class="p">(</span><span class="n">phaco_contour_intensity</span><span class="p">,</span> <span class="n">max_int</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.find_signal_peaks" title="bactoscoop.utilities.find_signal_peaks"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.find_signal_peaks()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-441">Source assignment, line 441</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-max-contour-intensity">
+<h2>phaco_max_contour_intensity<a class="headerlink" href="#phaco-max-contour-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_max_contour_intensity</span></code></p>
+<p><strong>Meaning:</strong> Maximum phase-contrast intensity along the contour.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">phaco_contour_intensity</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-444">Source assignment, line 444</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-mean-contour-intensity">
+<h2>phaco_mean_contour_intensity<a class="headerlink" href="#phaco-mean-contour-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_mean_contour_intensity</span></code></p>
+<p><strong>Meaning:</strong> Mean phase-contrast intensity along the contour.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">phaco_contour_intensity</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-447">Source assignment, line 447</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-min-contour-intensity">
+<h2>phaco_min_contour_intensity<a class="headerlink" href="#phaco-min-contour-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_min_contour_intensity</span></code></p>
+<p><strong>Meaning:</strong> Mean of the 10 lowest phase-contrast contour intensities.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sorted_phaco_contour_intensity</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-450">Source assignment, line 450</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-max-contour-variability">
+<h2>phaco_max_contour_variability<a class="headerlink" href="#phaco-max-contour-variability" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_max_contour_variability</span></code></p>
+<p><strong>Meaning:</strong> Maximum local variability of phase-contrast contour intensity.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> A.U.. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">phaco_contour_intensity_variability</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-453">Source assignment, line 453</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-mean-contour-variability">
+<h2>phaco_mean_contour_variability<a class="headerlink" href="#phaco-mean-contour-variability" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_mean_contour_variability</span></code></p>
+<p><strong>Meaning:</strong> Mean local variability of phase-contrast contour intensity.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> A.U.. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">phaco_contour_intensity_variability</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-456">Source assignment, line 456</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="midline-kurtosis">
+<h2>midline_kurtosis<a class="headerlink" href="#midline-kurtosis" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_midline_kurtosis</span></code></p>
+<p><strong>Meaning:</strong> Kurtosis of the phase-contrast midline profile.</p>
+<p>Calculation: Compute the requested distribution statistic from the phase-contrast axial intensity profile along the midline.
+Explanation: These values describe whether the midline intensity profile is symmetric, heavy-tailed, or dominated by peaks.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_kurtosis</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_axial_intensity'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_kurtosis" title="bactoscoop.utilities.get_kurtosis"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_kurtosis()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-468">Source assignment, line 468</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="midline-skewness">
+<h2>midline_skewness<a class="headerlink" href="#midline-skewness" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_midline_skewness</span></code></p>
+<p><strong>Meaning:</strong> Skewness of the phase-contrast midline profile.</p>
+<p>Calculation: Compute the requested distribution statistic from the phase-contrast axial intensity profile along the midline.
+Explanation: These values describe whether the midline intensity profile is symmetric, heavy-tailed, or dominated by peaks.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_skew</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_axial_intensity'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_skew" title="bactoscoop.utilities.get_skew"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_skew()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-471">Source assignment, line 471</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-max-expanded-contour-intensity">
+<h2>phaco_max_expanded_contour_intensity<a class="headerlink" href="#phaco-max-expanded-contour-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_max_expanded_contour_intensity</span></code></p>
+<p><strong>Meaning:</strong> Maximum phase-contrast intensity along the expanded contour.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_expanded_contour_intensity'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-485">Source assignment, line 485</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-mean-expanded-contour-intensity">
+<h2>phaco_mean_expanded_contour_intensity<a class="headerlink" href="#phaco-mean-expanded-contour-intensity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_mean_expanded_contour_intensity</span></code></p>
+<p><strong>Meaning:</strong> Mean phase-contrast intensity along the expanded contour.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_expanded_contour_intensity'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-488">Source assignment, line 488</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+<section id="phaco-cell-edge-gradient">
+<h2>phaco_cell_edge_gradient<a class="headerlink" href="#phaco-cell-edge-gradient" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_phaco_cell_edge_gradient</span></code></p>
+<p><strong>Meaning:</strong> Mean phase-contrast edge gradient.</p>
+<p>Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.</p>
+<p><strong>Units:</strong> A.U.. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_eroded_contour_intensity'</span><span class="p">]</span> <span class="o">-</span> <span class="n">cell</span><span class="o">.</span><span class="n">profiling_data</span><span class="p">[</span><span class="s1">'phaco_expanded_contour_intensity'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-493">Source assignment, line 493</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.svm" title="bactoscoop.features.Features.svm"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.svm()</span></code></a>.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="parameters.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Parameter reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="features-membrane.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Membrane features</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Svm features</a><ul>
+<li><a class="reference internal" href="#contour">contour</a></li>
+<li><a class="reference internal" href="#cell-length">cell_length</a></li>
+<li><a class="reference internal" href="#cell-width">cell_width</a></li>
+<li><a class="reference internal" href="#cell-area">cell_area</a></li>
+<li><a class="reference internal" href="#cell-volume">cell_volume</a></li>
+<li><a class="reference internal" href="#cell-surface-area">cell_surface_area</a></li>
+<li><a class="reference internal" href="#max-curvature">max_curvature</a></li>
+<li><a class="reference internal" href="#min-curvature">min_curvature</a></li>
+<li><a class="reference internal" href="#mean-curvature">mean_curvature</a></li>
+<li><a class="reference internal" href="#cell-perimeter">cell_perimeter</a></li>
+<li><a class="reference internal" href="#cell-circularity">cell_circularity</a></li>
+<li><a class="reference internal" href="#cell-poa">cell_POA</a></li>
+<li><a class="reference internal" href="#cell-sphericity">cell_sphericity</a></li>
+<li><a class="reference internal" href="#phaco-total-intensity">phaco_total_intensity</a></li>
+<li><a class="reference internal" href="#phaco-max-intensity">phaco_max_intensity</a></li>
+<li><a class="reference internal" href="#phaco-mean-intensity">phaco_mean_intensity</a></li>
+<li><a class="reference internal" href="#phaco-contour-peaks">phaco_contour_peaks</a></li>
+<li><a class="reference internal" href="#phaco-max-contour-intensity">phaco_max_contour_intensity</a></li>
+<li><a class="reference internal" href="#phaco-mean-contour-intensity">phaco_mean_contour_intensity</a></li>
+<li><a class="reference internal" href="#phaco-min-contour-intensity">phaco_min_contour_intensity</a></li>
+<li><a class="reference internal" href="#phaco-max-contour-variability">phaco_max_contour_variability</a></li>
+<li><a class="reference internal" href="#phaco-mean-contour-variability">phaco_mean_contour_variability</a></li>
+<li><a class="reference internal" href="#midline-kurtosis">midline_kurtosis</a></li>
+<li><a class="reference internal" href="#midline-skewness">midline_skewness</a></li>
+<li><a class="reference internal" href="#phaco-max-expanded-contour-intensity">phaco_max_expanded_contour_intensity</a></li>
+<li><a class="reference internal" href="#phaco-mean-expanded-contour-intensity">phaco_mean_expanded_contour_intensity</a></li>
+<li><a class="reference internal" href="#phaco-cell-edge-gradient">phaco_cell_edge_gradient</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

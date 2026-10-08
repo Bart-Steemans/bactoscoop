@@ -1,0 +1,96 @@
+{
+  "version": "0.1.0",
+  "date": "2026-10-07",
+  "environments": {
+    "uv": {
+      "python": "3.10.20 (main, Mar 20 2026, 00:31:48) [MSC v.1944 64 bit (AMD64)]",
+      "version": "0.1.0",
+      "tests_run": 19,
+      "test_failures": 0,
+      "walkthroughs": {
+        "3_channel_example_walkthrough.ipynb": {
+          "rows": 130,
+          "columns": 188,
+          "errors": [],
+          "processing_summary": {
+            "status": "completed",
+            "error_count": 0,
+            "cell_error_count": 0
+          },
+          "source_sha256": "706e89df4aa785f734dae7d70184de1b277dac51e65314591951c868cc3d303c",
+          "source_unchanged": true
+        },
+        "5_channel_example_walkthrough.ipynb": {
+          "rows": 227,
+          "columns": 390,
+          "errors": [],
+          "processing_summary": {
+            "status": "completed",
+            "error_count": 0,
+            "cell_error_count": 35
+          },
+          "source_sha256": "0798111e0e4365eb937b1a7f2b4d6ac7fd2f77b006840e7073a0d03f461df4c6",
+          "source_unchanged": true
+        }
+      }
+    },
+    "conda": {
+      "python": "3.10.22 | packaged by Anaconda, Inc. | (main, Oct  1 2026, 20:15:38) [MSC v.1942 64 bit (AMD64)]",
+      "version": "0.1.0",
+      "tests_run": 19,
+      "test_failures": 0,
+      "walkthroughs": {
+        "3_channel_example_walkthrough.ipynb": {
+          "rows": 129,
+          "columns": 188,
+          "errors": [],
+          "processing_summary": {
+            "status": "completed",
+            "error_count": 0,
+            "cell_error_count": 0
+          },
+          "source_sha256": "706e89df4aa785f734dae7d70184de1b277dac51e65314591951c868cc3d303c",
+          "source_unchanged": true
+        },
+        "5_channel_example_walkthrough.ipynb": {
+          "rows": 228,
+          "columns": 390,
+          "errors": [],
+          "processing_summary": {
+            "status": "completed",
+            "error_count": 0,
+            "cell_error_count": 39
+          },
+          "source_sha256": "0798111e0e4365eb937b1a7f2b4d6ac7fd2f77b006840e7073a0d03f461df4c6",
+          "source_unchanged": true
+        }
+      }
+    }
+  },
+  "tutorials": {
+    "three-channel": {
+      "rows": 130,
+      "columns": 188,
+      "errors": [],
+      "processing_summary": {
+        "status": "completed",
+        "error_count": 0,
+        "cell_error_count": 0
+      },
+      "source_sha256": "706e89df4aa785f734dae7d70184de1b277dac51e65314591951c868cc3d303c",
+      "source_unchanged": true
+    },
+    "five-channel": {
+      "rows": 227,
+      "columns": 390,
+      "errors": [],
+      "processing_summary": {
+        "status": "completed",
+        "error_count": 0,
+        "cell_error_count": 35
+      },
+      "source_sha256": "0798111e0e4365eb937b1a7f2b4d6ac7fd2f77b006840e7073a0d03f461df4c6",
+      "source_unchanged": true
+    }
+  }
+}

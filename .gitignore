@@ -1,0 +1,47 @@
+# Disposable Python and packaging caches; scientific example assets are retained.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+.docs-venv/
+build/
+dist/
+.env
+.env.*
+.pypirc
+documentation/reports/
+documentation/validation/
+documentation/publishing/
+documentation/source/generated/
+documentation/source/api/
+documentation/source/source-code/
+documentation/source/examples/three-channel.md
+documentation/source/examples/five-channel.md
+documentation/source/_downloads/
+documentation/source/_static/figures/
+documentation/source/_static/logo.png
+# These reference pages are generated; author-maintained text lives in write_guides.py.
+documentation/source/reference/features-*.rst
+documentation/source/reference/parameters.rst
+# Keep portable documentation inputs; rendered HTML is exported once under docs/.
+documentation/*
+!documentation/*.py
+!documentation/*.md
+!documentation/requirements-docs.txt
+!documentation/launch.cmd
+!documentation/validation-summary.rst
+!documentation/release-validation.json
+!documentation/source/
+!documentation/templates/
+documentation/source/*
+!documentation/source/conf.py
+!documentation/source/_static/
+documentation/source/_static/*
+!documentation/source/_static/custom.css
+
+# Maintainer procedures and administrative progress belong in the local documentation workspace.
+documentation/README.md
+documentation/PUBLISHING.md
+documentation/PROGRESS.md

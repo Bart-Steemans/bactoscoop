@@ -1,0 +1,64 @@
+SVM curation
+============
+
+Use a trained support vector machine to remove cells whose geometry or phase
+measurements resemble the rejected class in the model's training data. Curation
+is a quality-control stage; the model's labels are not biological cell states.
+
+.. code-block:: python
+
+   import bactoscoop.plot as bplt
+   before = bplt.snapshot_cell_contours(ic.image_objects)
+   ic.curate_dataset(str(model_path), control=False, save_curated_data=True)
+   fig = bplt.plot_curation_review(before, ic.image_objects)
+
+The method calculates SVM features, predicts labels, retains label 1, updates
+the image cell lists and mesh dataframe, and optionally writes the curated mesh
+pickle. Label 0 is rejected. ``cols`` is a legacy argument and is currently unused.
+
+Model and dataset pairing
+-------------------------
+
+The three-channel example supplies ``DnaN_Timecourse.pkl``. The five-channel
+example supplies ``keio_collection_stationary.pkl``. Use each model with its
+matching walkthrough and inspect the outcome before applying it elsewhere.
+
+The model must expose ``feature_names_in_`` from training on a named pandas
+DataFrame. Curation requires the actual feature columns in exactly that order.
+The current dataframe preparation selects feature columns by name and sorts
+them alphabetically before checking the model schema.
+An unnamed model or a mismatched/reordered schema raises an error instead of
+silently interpreting columns in the wrong order. Rows with nonfinite feature
+values are excluded from prediction and returned as rejected rows.
+
+State and controls
+------------------
+
+``curate_dataset`` begins with a reset of the feature tables and a maximum mesh
+size of 800. Calculate your analysis features after curation. Setting
+``save_curated_data=False`` suppresses the file write, but still changes the
+in-memory retained cells and mesh dataframe.
+
+``control=True`` requests randomly selected positive and negative examples.
+``Curation.get_control`` actually returns ``(cell_id, frame)`` pairs and returns
+``(None, None)`` if either class has too few requested examples. Some older
+docstrings describe the order or empty result differently.
+
+Export curated masks
+--------------------
+
+.. code-block:: python
+
+   paths, provenance = ic.export_curated_masks(
+       output_subfolder="curated_masks", overwrite=False,
+   )
+
+The exporter rasterizes retained contours into a separate label mask per field
+and records overlaps with original labels in a CSV. It does not alter the
+original segmentation masks. Rounded contours can differ from original mask
+pixels; inspect the new masks. Invalid contours are skipped, and overlapping
+contours are assigned in cell iteration order. Use the provenance table rather
+than assuming a curated label equals the old cell ID.
+
+API: :py:meth:`bactoscoop.imagecollection.ImageCollection.curate_dataset`,
+:py:class:`bactoscoop.curation.Curation`.

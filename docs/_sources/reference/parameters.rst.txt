@@ -1,0 +1,324 @@
+Parameter reference
+===================
+
+Signature defaults are listed separately from settings chosen in the tutorials.
+The tables below are generated from the current source. Follow each method link
+for prerequisites, returned values, side effects, and source evidence.
+
+ImageCollection
+---------------
+
+:py:class:`bactoscoop.imagecollection.ImageCollection`
+
+.. code-block:: python
+
+   ImageCollection(image_folder_path=None, px=0.065, error_policy='continue', log_cell_errors=False)
+
+* ``image_folder_path`` — default ``None``. Dataset folder containing TIFFs and the masks subfolder; None delays path configuration.
+* ``px`` — default ``0.065``. Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+* ``error_policy`` — default ``'continue'``. "continue" records independent item/cell failures; "raise" raises the recorded error. Setup failures can still stop work.
+* ``log_cell_errors`` — default ``False``. Print each recorded cell error when true; recording is independent of this flag.
+
+processing_summary
+------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.processing_summary`
+
+.. code-block:: python
+
+   processing_summary()
+
+
+load_masks
+----------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.load_masks`
+
+.. code-block:: python
+
+   load_masks()
+
+
+load_phase_images
+-----------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.load_phase_images`
+
+.. code-block:: python
+
+   load_phase_images(phase_channel='')
+
+* ``phase_channel`` — default ``''``. TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+load_channel_images
+-------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.load_channel_images`
+
+.. code-block:: python
+
+   load_channel_images(channel_list)
+
+* ``channel_list`` — required. Sequence of channel suffixes to load or attach.
+
+create_image_objects
+--------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.create_image_objects`
+
+.. code-block:: python
+
+   create_image_objects(phase_channel='')
+
+* ``phase_channel`` — default ``''``. TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+add_channels
+------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.add_channels`
+
+.. code-block:: python
+
+   add_channels(img_objects, channel_list, load_data=True)
+
+* ``img_objects`` — required. Image objects to attach channel data to.
+* ``channel_list`` — required. Sequence of channel suffixes to load or attach.
+* ``load_data`` — default ``True``. Load channel TIFFs before attaching them when true; false uses already loaded field-keyed data.
+
+get_mesh_dataframe
+------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.get_mesh_dataframe`
+
+.. code-block:: python
+
+   get_mesh_dataframe(image_name)
+
+* ``image_name`` — required. See the linked implementation.
+
+create_image_object
+-------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.create_image_object`
+
+.. code-block:: python
+
+   create_image_object(image, image_name, index, mask, mesh_df, px)
+
+* ``image`` — required. See the linked implementation.
+* ``image_name`` — required. See the linked implementation.
+* ``index`` — required. See the linked implementation.
+* ``mask`` — required. See the linked implementation.
+* ``mesh_df`` — required. See the linked implementation.
+* ``px`` — required. Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+segment_images
+--------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.segment_images`
+
+.. code-block:: python
+
+   segment_images(mask_thresh, minsize, n, model_name='bact_phase_omni')
+
+* ``mask_thresh`` — required. Threshold passed as Omnipose mask_threshold.
+* ``minsize`` — required. Minimum accepted segmentation-mask size in pixels.
+* ``n`` — required. Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.
+* ``model_name`` — default ``'bact_phase_omni'``. Omnipose model identifier; default collection model is bact_phase_omni.
+
+batch_detect_objects
+--------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_detect_objects`
+
+.. code-block:: python
+
+   batch_detect_objects(channels=None, reset_channels=True, align=False, smoothing=0.1, log_sigma=3, kernel_width=4, min_overlap_ratio=0.01, max_external_ratio=0.1)
+
+* ``channels`` — default ``None``. Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+* ``reset_channels`` — default ``True``. Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.
+* ``align`` — default ``False``. Use the object-detection alignment path for the selected signal.
+* ``smoothing`` — default ``0.1``. Smoothing passed to the contour/mesh fitting path.
+* ``log_sigma`` — default ``3``. Laplacian-of-Gaussian sigma for signal-object detection.
+* ``kernel_width`` — default ``4``. Width of the square dilation kernel used for candidate object masks.
+* ``min_overlap_ratio`` — default ``0.01``. Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+* ``max_external_ratio`` — default ``0.1``. Maximum accepted outside-cell ratio under the utility implementation.
+
+batch_process_mesh
+------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_process_mesh`
+
+.. code-block:: python
+
+   batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+
+* ``pkl_name`` — default ``None``. Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+* ``object_list`` — default ``None``. Explicit image-object sequence to process; None selects collection targets.
+* ``save_data`` — default ``True``. Write the combined mesh table when true.
+* ``phase_channel`` — default ``''``. TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+* ``join_thresh`` — default ``4``. Maximum pole-to-pole joining distance in pixels.
+* ``split_thresh`` — default ``0.35``. Relative constriction threshold used by the splitting pipeline.
+* ``CD_width`` — default ``False``. Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
+* ``smoothing`` — default ``0.1``. Smoothing passed to the contour/mesh fitting path.
+* ``neighbor_filter_max_neighbors`` — default ``None``. Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
+* ``neighbor_filter_connectivity`` — default ``1``. 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+
+batch_load_mesh
+---------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_load_mesh`
+
+.. code-block:: python
+
+   batch_load_mesh(pkl_name, pkl_path=None, phase_channel='')
+
+* ``pkl_name`` — required. Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+* ``pkl_path`` — default ``None``. Directory containing an input mesh file; None selects the image folder.
+* ``phase_channel`` — default ``''``. TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+batch_mask2mesh
+---------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_mask2mesh`
+
+.. code-block:: python
+
+   batch_mask2mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', smoothing=0.1)
+
+* ``pkl_name`` — default ``None``. Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+* ``object_list`` — default ``None``. Explicit image-object sequence to process; None selects collection targets.
+* ``save_data`` — default ``True``. Write the combined mesh table when true.
+* ``phase_channel`` — default ``''``. TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+* ``smoothing`` — default ``0.1``. Smoothing passed to the contour/mesh fitting path.
+
+batch_shift_correction
+----------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_shift_correction`
+
+.. code-block:: python
+
+   batch_shift_correction(shifted_channel, reset_channels=False, log_sigma=1.5, kernel_width=3, min_overlap_ratio=0.1, max_external_ratio=1, phase_log_sigma=0.5, phase_closing_level=2, signal_closing_level=12, max_shift_correction=15)
+
+* ``shifted_channel`` — required. See the linked implementation.
+* ``reset_channels`` — default ``False``. Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.
+* ``log_sigma`` — default ``1.5``. Laplacian-of-Gaussian sigma for signal-object detection.
+* ``kernel_width`` — default ``3``. Width of the square dilation kernel used for candidate object masks.
+* ``min_overlap_ratio`` — default ``0.1``. Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+* ``max_external_ratio`` — default ``1``. Maximum accepted outside-cell ratio under the utility implementation.
+* ``phase_log_sigma`` — default ``0.5``. See the linked implementation.
+* ``phase_closing_level`` — default ``2``. See the linked implementation.
+* ``signal_closing_level`` — default ``12``. See the linked implementation.
+* ``max_shift_correction`` — default ``15``. See the linked implementation.
+
+batch_calculate_features
+------------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_calculate_features`
+
+.. code-block:: python
+
+   batch_calculate_features(channel_method_pairs, all_data=True, reset=True, use_shifted_contours=False, shift_signal=False, max_mesh_size=600, retain_contour_on_object_mesh_failure_channels=None)
+
+* ``channel_method_pairs`` — required. Pairs of (channel list, feature method), for example [([None], "morphological"), (["C2"], "profiling")].
+* ``all_data`` — default ``True``. Feature-method-specific option; objects includes detailed per-object arrays when true.
+* ``reset`` — default ``True``. Clear stored feature dataframes when true; false retains other pairs while replacing each recalculated pair.
+* ``use_shifted_contours`` — default ``False``. Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+* ``shift_signal`` — default ``False``. Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+* ``max_mesh_size`` — default ``600``. Maximum accepted mesh row count; cells above this limit are removed from the image cell population.
+* ``retain_contour_on_object_mesh_failure_channels`` — default ``None``. Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.
+
+batch_calculate_signal_correlation_features
+-------------------------------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features`
+
+.. code-block:: python
+
+   batch_calculate_signal_correlation_features(df, channels, feature_method_tuples)
+
+* ``df`` — required. DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+* ``channels`` — required. Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+* ``feature_method_tuples`` — required. Pairs of (feature-name list, correlation-selector list) applied to each channel pair.
+
+curate_dataset
+--------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.curate_dataset`
+
+.. code-block:: python
+
+   curate_dataset(path_to_model, cols=4, control=False, save_curated_data=True)
+
+* ``path_to_model`` — required. Path to a serialized SVM carrying the ``feature_names_in_`` training-column schema.
+* ``cols`` — default ``4``. Legacy curation argument retained for compatibility; unused by the current curation preparation.
+* ``control`` — default ``False``. Request visual examples of retained/rejected classes; random selection can be unavailable for small classes.
+* ``save_curated_data`` — default ``True``. Write curated mesh pickle when true; in-memory curation always occurs.
+
+add_meshdata_to_dataframe
+-------------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.add_meshdata_to_dataframe`
+
+.. code-block:: python
+
+   add_meshdata_to_dataframe()
+
+
+export_curated_masks
+--------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.export_curated_masks`
+
+.. code-block:: python
+
+   export_curated_masks(output_subfolder='curated_masks', overwrite=True)
+
+* ``output_subfolder`` — default ``'curated_masks'``. Destination for newly rasterized curated masks, relative to the dataset folder.
+* ``overwrite`` — default ``True``. Replace existing curated mask TIFFs when true; false raises for a file already present.
+
+merge_dataframes
+----------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.merge_dataframes`
+
+.. code-block:: python
+
+   merge_dataframes(include_metadata_tag=False, discard_morphological_nan=False)
+
+* ``include_metadata_tag`` — default ``False``. Rename identity columns with ``Metadata_`` prefixes.
+* ``discard_morphological_nan`` — default ``False``. Drop merged rows missing cell_area or cell_length; these columns must exist.
+
+dataframe_to_pkl
+----------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.dataframe_to_pkl`
+
+.. code-block:: python
+
+   dataframe_to_pkl(pkl_name=None)
+
+* ``pkl_name`` — default ``None``. Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+
+meshdata_to_parquet
+-------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.meshdata_to_parquet`
+
+.. code-block:: python
+
+   meshdata_to_parquet(parquet_name=None)
+
+* ``parquet_name`` — default ``None``. Output filename ending in .parquet within the image folder; None chooses the dataset-based default.
+
+dataframe_to_parquet
+--------------------
+
+:py:meth:`bactoscoop.imagecollection.ImageCollection.dataframe_to_parquet`
+
+.. code-block:: python
+
+   dataframe_to_parquet(parquet_name=None)
+
+* ``parquet_name`` — default ``None``. Output filename ending in .parquet within the image folder; None chooses the dataset-based default.

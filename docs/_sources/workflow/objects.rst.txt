@@ -1,0 +1,54 @@
+Intracellular object detection
+==============================
+
+Detect signal regions within each retained cell and channel before calculating
+object features. The same routine can be used for nucleoid-like regions or
+puncta, but parameter choices must suit the signal and imaging conditions.
+
+.. code-block:: python
+
+   detections = ic.batch_detect_objects(
+       channels=["C3"], reset_channels=True, align=False,
+       smoothing=0.1, log_sigma=3, kernel_width=3,
+       min_overlap_ratio=0.001, max_external_ratio=0.3,
+   )
+
+The operation loads and attaches channels by field identity, constructs
+background-subtracted signals, thresholds filtered signals into candidate
+regions, checks overlap with the cell, and attempts object geometry construction.
+The returned dataframe includes field/cell information and channel detections;
+full per-cell object geometry is also stored under ``cell.object_meshdata``.
+
+Parameter choices
+-----------------
+
+``log_sigma`` controls Laplacian-of-Gaussian filtering. ``kernel_width`` affects
+mask dilation; changing it changes object extent. ``min_overlap_ratio`` is the
+minimum accepted overlap criterion and ``max_external_ratio`` limits external
+signal. They are ratios, not distances. Refer to the linked utilities for their
+actual denominators. The notebook values above differ from the method defaults.
+
+Loading channels incrementally
+------------------------------
+
+``reset_channels=True`` clears loaded channel dictionaries and each image's
+background/interpolation caches. Use it for the first detection pass. A later
+pass with ``reset_channels=False`` preserves already loaded channels, as in
+the five-channel tutorial. Requested-channel detections are replaced; a failed
+redetection does not preserve stale detections for that channel.
+
+Object meshes can fail independently
+------------------------------------
+
+A detected contour can be retained even if its mesh cannot be constructed.
+The detector keeps matching empty geometry placeholders and error records.
+By default, the objects feature row is omitted when required object meshes fail.
+For selected channels, set
+``retain_contour_on_object_mesh_failure_channels=["C4", "C5"]`` during feature
+calculation to keep contour-based quantities and put NaN in mesh-dependent
+aggregates. The five-channel notebook uses this option for RNA and DAPI.
+
+No detected object and a missing feature row are not the same as an observed
+count of zero. Check detections and ``cell_errors`` before interpreting missing
+measurements. API:
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_detect_objects`.

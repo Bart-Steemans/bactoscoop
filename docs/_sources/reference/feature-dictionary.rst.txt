@@ -1,0 +1,24 @@
+Feature dictionary
+==================
+
+Use this dictionary to connect exported columns to their calculation.
+Names are extracted from current assignments, including tuple assignments;
+region-property component families are expanded below. Descriptions draw on
+``SingleCellFeatures.xlsx`` and are qualified where its wording differs from code.
+
+Morphology uses unprefixed names with channel ``None``. Other families export
+``<channel>_<key>``, such as ``C3_NC_ratio``. Identity columns are documented
+in :doc:`data-structures`; correlation columns are in :doc:`../workflow/correlation`.
+
+.. toctree::
+   :maxdepth: 1
+
+   features-morphological
+   features-profiling
+   features-objects
+   features-membrane
+   features-svm
+
+Array-valued columns remain arrays/lists within one cell row. They are not
+separate rows per object. For missing-value interpretation, see :doc:`../workflow/features`
+and :doc:`../workflow/objects`.

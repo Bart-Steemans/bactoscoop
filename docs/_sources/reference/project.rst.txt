@@ -1,0 +1,50 @@
+Project information
+===================
+
+Author and attribution
+----------------------
+
+I'm Bart Steemans from the `Govers Lab <https://www.goverslab.com/>`_ at KU Leuven.
+I developed BactoScoop for image-based profiling of individual bacterial cells.
+Segmentation uses Omnipose and its Cellpose fork; the source links to those
+dependencies and the current package metadata pins Omnipose 1.0.6.
+Please acknowledge the original tools appropriately in work based on their use.
+
+Version and changelog
+---------------------
+
+BactoScoop **0.1.1** supports **Python 3.10**. Install it from PyPI
+or download a tagged release from GitHub. See the changelog below for release notes.
+
+.. literalinclude:: ../_downloads/CHANGELOG.md
+   :language: text
+
+Project links
+-------------
+
+Find the documentation, public source, releases, and issue tracker here:
+
+* `Documentation <https://bart-steemans.github.io/bactoscoop/>`_
+* `Releases <https://github.com/Bart-Steemans/bactoscoop/releases>`_
+* `PyPI <https://pypi.org/project/bactoscoop/>`_
+* `Repository <https://github.com/Bart-Steemans/bactoscoop>`_
+* `Issue tracker <https://github.com/Bart-Steemans/bactoscoop/issues>`_
+* `Omnipose documentation <https://omnipose.readthedocs.io/>`_
+
+License
+-------
+
+BactoScoop is distributed under the MIT license. The source license identifies
+copyright © 2023 Bart Steemans.
+
+.. literalinclude:: ../_downloads/LICENSE
+   :language: text
+
+Documentation design
+--------------------
+
+The documentation follows the scientific layout used by the Omnipose site, with
+Sphinx and Furo for navigation, search, and light/dark appearance. The BactoScoop
+content is based on this repository. Required scripts, styles, fonts supplied
+by the theme, and figures are local assets; reading the built site does not
+require a network connection.

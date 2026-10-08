@@ -1,0 +1,52 @@
+Segmentation and mask review
+============================
+
+Use Omnipose to turn phase-contrast images into labeled cell masks. If masks
+already exist, skip this stage and load them through ``create_image_objects()``.
+
+.. code-block:: python
+
+   from bactoscoop import ImageCollection
+   ic = ImageCollection(r"C:\path\to\working_copy", px=0.065)
+   ic.load_phase_images(phase_channel="C1")
+   ok = ic.segment_images(
+       mask_thresh=1, minsize=100, n=range(len(ic.images)),
+       model_name="bact_phase_omni",
+   )
+   if not ok:
+       raise RuntimeError(ic.processing_summary())
+   ic.create_image_objects(phase_channel="C1")
+
+Selection and thresholds
+------------------------
+
+``n`` selects image positions; ``None`` selects all loaded images in the wrapper.
+Selected indices must be unique, valid integers. An empty selection is rejected.
+The wrapper saves masks only for the selected images, so an incomplete mask set
+cannot subsequently satisfy a whole-collection phase/mask match.
+
+``minsize`` is the minimum mask size in pixels. ``mask_thresh`` becomes Omnipose's
+``mask_threshold``; changing it changes how much of the predicted signal is
+included. The walkthrough uses 1, but it is not a universal threshold.
+
+The current wrapper fixes channels to ``[0, 0]``, rescale to ``None``, flow threshold
+to 0.0, ``omni=True``, ``cluster=True``, ``resample=True``, ``diameter=None``,
+and batch size to 1. These are wrapper implementation choices, not keyword
+arguments exposed by ``ImageCollection.segment_images``.
+
+Review the result
+-----------------
+
+.. code-block:: python
+
+   import bactoscoop.plot as bplt
+   fig = bplt.plot_segmentation_review(ic.image_objects, crop_size=500)
+
+Look for merged cells, split cells, missing poles, and labels crossing the
+image boundary before constructing meshes. A failed segmentation sets the
+collection's failure state; the same collection refuses to silently reload
+old masks from disk afterward. Start a fresh collection when deliberately
+resuming from a known mask set.
+
+API: :py:meth:`bactoscoop.imagecollection.ImageCollection.segment_images`,
+:py:class:`bactoscoop.omni.Omnipose`, and :doc:`../getting-started/inputs`.

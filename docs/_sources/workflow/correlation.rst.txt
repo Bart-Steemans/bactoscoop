@@ -1,0 +1,43 @@
+Signal correlation and similarity
+=================================
+
+Compare matching profiles or scalar features from different channels after
+merging the feature tables. The implementation compares the supplied numerical
+values; it does not establish molecular interaction or correct misregistration.
+
+.. code-block:: python
+
+   ic.batch_calculate_signal_correlation_features(
+       ic.merged_features, ["C2", "C3"],
+       [(["normalized_axial_intensity"],
+         ["pearson", "spearman", "manders"])],
+   )
+
+The dataframe must contain both ``C2_<feature>`` and ``C3_<feature>``.
+The helper considers channel combinations and writes columns using the
+underlying function name, for example
+``C2_C3_normalized_axial_intensity_pearson_correlation_coefficient``.
+
+.. include:: ../generated/correlation-methods.rst
+
+Interpretation and input checks
+-------------------------------
+
+Most methods require lists or arrays with more than one sample. ``ratio``
+expects finite scalars and returns NaN for a zero denominator. Invalid, empty,
+nonfinite, or unconvertible inputs are initially marked missing. Most paired
+profile metrics require aligned arrays of equal length; their checks are not
+uniform, so supply compatible one-dimensional profiles.
+
+Constant profiles can make correlation undefined. Pearson and rank methods
+may return NaN with a numerical-library warning; zero norms invalidate cosine
+or overlap denominators. Distance correlation explicitly returns NaN for
+constant profiles. Histogram intersection uses common bins and separately
+normalized sample counts, and can compare unequal-length profiles.
+
+The Li ICQ implementation multiplies the conventional centered fraction by 2,
+giving its own -1 to 1 scale. The ``manders`` selector calculates an uncentered
+overlap coefficient; it is not a pair of thresholded Manders M1/M2 fractions.
+Covariance retains units of the input product. Entropy requires meaningful
+nonnegative distributions; negative background-subtracted profiles need careful
+interpretation. See :py:class:`bactoscoop.signalcorrelation.SignalCorrelation`.

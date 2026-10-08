@@ -1,0 +1,76 @@
+bactoscoop.logging_utils
+========================
+
+.. py:module:: bactoscoop.logging_utils
+
+Classes and public operations
+-----------------------------
+
+get_bactoscoop_logger
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_bactoscoop_logger()
+
+   Get bactoscoop logger.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      logger
+
+   `View current source, line 16 <../source-code/logging_utils.html#logging_utils-16>`_.
+
+configure_bactoscoop_logging
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: configure_bactoscoop_logging(level='INFO')
+
+   Configure bactoscoop logging.
+
+   :param level: Logging level name, such as INFO or WARNING.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      logger
+
+   `View current source, line 29 <../source-code/logging_utils.html#logging_utils-29>`_.
+
+tqdm_if_verbose
+~~~~~~~~~~~~~~~
+
+.. py:function:: tqdm_if_verbose(iterable, **kwargs)
+
+   Tqdm if verbose.
+
+   :param iterable: Input ``iterable`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      tqdm(iterable, **kwargs)
+
+   `View current source, line 36 <../source-code/logging_utils.html#logging_utils-36>`_.
+
+Internal helpers
+----------------
+
+_resolve_log_level
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _resolve_log_level(level_name)
+
+    resolve log level.
+
+   :param level_name: Input ``level_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      getattr(logging, str(level_name).upper(), logging.INFO)
+
+   `View current source, line 12 <../source-code/logging_utils.html#logging_utils-12>`_.

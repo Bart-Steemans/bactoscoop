@@ -1,0 +1,20 @@
+API reference
+=============
+
+Use ``ImageCollection`` as the main workflow entry point. The pages below
+show current signatures extracted from source without importing the analysis
+dependencies. Each entry links to a local, line-numbered source snapshot.
+Public workflow operations and internal helpers are separated.
+
+.. toctree::
+   :maxdepth: 1
+
+   curation
+   features
+   image
+   imagecollection
+   logging_utils
+   omni
+   plot
+   signalcorrelation
+   utilities

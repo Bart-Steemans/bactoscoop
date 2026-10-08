@@ -1,0 +1,537 @@
+Profiling features
+==================
+
+**Prerequisites:** Loaded matching fluorescence channel and valid cell geometry; channel background subtraction is performed.
+
+A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.
+
+axial_intensity
+---------------
+
+**Exported column:** ``<channel>_axial_intensity``
+
+**Meaning:** Axial intensity profile along the cell.
+
+Calculation: Sample intensity along the cell midline with perpendicular averaging and apply Gaussian smoothing.
+Explanation: This is the 1D signal profile along the long axis of the cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.measure_smoothened_intensity(cropped_ml, cropped_signal_interp2d, width=10)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.measure_smoothened_intensity`.
+
+`Source assignment, line 288 <../source-code/features.html#features-288>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+step_length_demograph
+---------------------
+
+**Exported column:** ``<channel>_step_length_demograph``
+
+**Meaning:** Cumulative distance along the cell axis.
+
+Calculation: Compute the cumulative distance along the midline from one pole to the other.
+Explanation: This is the position axis used to place axial signal values in a demograph.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cumulative_step_length_midline(cropped_ml, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cumulative_step_length_midline`.
+
+`Source assignment, line 291 <../source-code/features.html#features-291>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+normalized_axial_intensity
+--------------------------
+
+**Exported column:** ``<channel>_normalized_axial_intensity``
+
+**Meaning:** Min-max normalized axial intensity profile.
+
+Calculation: Apply per-cell min-max normalization: (x - min) / (max - min).
+Explanation: This rescales the profile to the 0-1 range so cells can be compared independent of absolute intensity differences.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** Within-cell min–max scaling for normalized axial/mesh/contour profiles; complemented contour intensity is transformed separately in the helper.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.normalize_per_cell(cell.profiling_features['axial_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.normalize_per_cell`.
+
+`Source assignment, line 294 <../source-code/features.html#features-294>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_length
+-----------
+
+**Exported column:** ``<channel>_cell_length``
+
+**Meaning:** Cell length along the mesh midline.
+
+Calculation: Sum the step lengths between successive mesh midpoints along the cell axis.
+Explanation: This is the measured pole-to-pole length of the cell, following the fitted midline rather than a simple straight line.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.line_length(cropped_ml) * px
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.line_length`.
+
+`Source assignment, line 297 <../source-code/features.html#features-297>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+raw_average_mesh_intensity
+--------------------------
+
+**Exported column:** ``<channel>_raw_average_mesh_intensity``
+
+**Meaning:** Unsmoothened mean mesh intensity profile.
+
+Calculation: Average the sampled intensities across each profiling-mesh cross-section before smoothing.
+Explanation: This gives one mean intensity value per position along the cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.average(mesh_intensity, axis=0)
+
+`Source assignment, line 299 <../source-code/features.html#features-299>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+average_mesh_intensity
+----------------------
+
+**Exported column:** ``<channel>_average_mesh_intensity``
+
+**Meaning:** Smoothed mean mesh intensity profile.
+
+Calculation: Apply Gaussian smoothing to raw\_average\_mesh\_intensity.
+Explanation: This reduces local noise and makes broader intensity trends easier to interpret.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.gaussian_smoothing(mesh_intensity)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.gaussian_smoothing`.
+
+`Source assignment, line 302 <../source-code/features.html#features-302>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+raw_normalized_average_mesh_intensity
+-------------------------------------
+
+**Exported column:** ``<channel>_raw_normalized_average_mesh_intensity``
+
+**Meaning:** Min-max normalized unsmoothed mesh intensity profile.
+
+Calculation: Apply per-cell min-max normalization: (x - min) / (max - min).
+Explanation: This rescales the profile to the 0-1 range so cells can be compared independent of absolute intensity differences.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** Within-cell min–max scaling for normalized axial/mesh/contour profiles; complemented contour intensity is transformed separately in the helper.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.normalize_per_cell(cell.profiling_features['raw_average_mesh_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.normalize_per_cell`.
+
+`Source assignment, line 305 <../source-code/features.html#features-305>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+normalized_average_mesh_intensity
+---------------------------------
+
+**Exported column:** ``<channel>_normalized_average_mesh_intensity``
+
+**Meaning:** Min-max normalized mesh intensity profile.
+
+Calculation: Apply per-cell min-max normalization: (x - min) / (max - min).
+Explanation: This rescales the profile to the 0-1 range so cells can be compared independent of absolute intensity differences.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** Within-cell min–max scaling for normalized axial/mesh/contour profiles; complemented contour intensity is transformed separately in the helper.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.normalize_per_cell(cell.profiling_features['average_mesh_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.normalize_per_cell`.
+
+`Source assignment, line 312 <../source-code/features.html#features-312>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+signal_constriction_degree_mesh
+-------------------------------
+
+**Exported column:** ``<channel>_signal_constriction_degree_mesh``
+
+**Meaning:** Signal constriction degree from the mesh-intensity profile.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(cell.profiling_features['average_mesh_intensity'], step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 318 <../source-code/features.html#features-318>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+signal_rel_constr_pos_mesh
+--------------------------
+
+**Exported column:** ``<channel>_signal_rel_constr_pos_mesh``
+
+**Meaning:** Relative position of the mesh-signal constriction.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree_single_cell_min(cell.profiling_features['average_mesh_intensity'], step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree_single_cell_min`.
+
+`Source assignment, line 318 <../source-code/features.html#features-318>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_mesh_intensity_mean
+------------------------
+
+**Exported column:** ``<channel>_cell_mesh_intensity_mean``
+
+**Meaning:** Mean mesh intensity.
+
+Calculation: Compute the intensity mean of average\_mesh\_intensity.
+Explanation: This summarizes the overall intensity distribution along the cell mesh in a single value.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(cell.profiling_features['average_mesh_intensity'])
+
+`Source assignment, line 339 <../source-code/features.html#features-339>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_mesh_intensity_std
+-----------------------
+
+**Exported column:** ``<channel>_cell_mesh_intensity_std``
+
+**Meaning:** Standard deviation of mesh intensity.
+
+Calculation: Compute the intensity std of average\_mesh\_intensity.
+Explanation: This summarizes the overall intensity distribution along the cell mesh in a single value.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.std(cell.profiling_features['average_mesh_intensity'])
+
+`Source assignment, line 342 <../source-code/features.html#features-342>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_mesh_kurtosis
+------------------
+
+**Exported column:** ``<channel>_cell_mesh_kurtosis``
+
+**Meaning:** Kurtosis of mesh intensity.
+
+Calculation: Compute the kurtosis of average\_mesh\_intensity.
+Explanation: This summarizes the overall intensity distribution along the cell mesh in a single value.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_kurtosis(cell.profiling_features['average_mesh_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_kurtosis`.
+
+`Source assignment, line 345 <../source-code/features.html#features-345>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_mesh_skewness
+------------------
+
+**Exported column:** ``<channel>_cell_mesh_skewness``
+
+**Meaning:** Skewness of mesh intensity.
+
+Calculation: Compute the skewness of average\_mesh\_intensity.
+Explanation: This summarizes the overall intensity distribution along the cell mesh in a single value.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_skew(cell.profiling_features['average_mesh_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_skew`.
+
+`Source assignment, line 348 <../source-code/features.html#features-348>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_dissimilarity
+-----------------------
+
+**Exported column:** ``<channel>_cell_glcm_dissimilarity``
+
+**Meaning:** Cell texture dissimilarity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute sum(P(i,j) \* \|i-j\|) across gray-level pairs, averaged over the angles used by bactoscoop.
+Explanation: Dissimilarity increases when neighboring pixels tend to have different intensities and is lower when neighboring pixels are more alike.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_dissimilarity
+
+`Source assignment, line 354 <../source-code/features.html#features-354>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_correlation
+---------------------
+
+**Exported column:** ``<channel>_cell_glcm_correlation``
+
+**Meaning:** Cell texture correlation (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute the Haralick correlation term, which measures the covariance of paired gray levels after normalization by their standard deviations.
+Explanation: Correlation is high when neighboring pixel intensities vary together in a predictable linear way and lower when that relationship is weak.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_correlation
+
+`Source assignment, line 355 <../source-code/features.html#features-355>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_homogeneity
+---------------------
+
+**Exported column:** ``<channel>_cell_glcm_homogeneity``
+
+**Meaning:** Cell texture homogeneity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute sum(P(i,j) / (1 + (i-j)^2)) across gray-level pairs, averaged over angles.
+Explanation: Homogeneity is high when most co-occurrences lie near the diagonal of the GLCM, meaning neighboring pixels usually have similar intensities.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_homogeneity
+
+`Source assignment, line 356 <../source-code/features.html#features-356>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_energy
+----------------
+
+**Exported column:** ``<channel>_cell_glcm_energy``
+
+**Meaning:** Cell texture energy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute sqrt(sum(P(i,j)^2)), averaged over angles.
+Explanation: Energy is high when the texture is orderly and dominated by a limited number of recurring gray-level combinations, and lower when the texture is more diverse.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_energy
+
+`Source assignment, line 357 <../source-code/features.html#features-357>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_contrast
+------------------
+
+**Exported column:** ``<channel>_cell_glcm_contrast``
+
+**Meaning:** Cell texture contrast (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute sum(P(i,j) \* (i-j)^2) across gray-level pairs, averaged over angles.
+Explanation: Contrast emphasizes strong local intensity differences, so higher values indicate sharper intensity transitions or more pronounced texture variation.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contrast
+
+`Source assignment, line 358 <../source-code/features.html#features-358>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+cell_glcm_shannon_entropy
+-------------------------
+
+**Exported column:** ``<channel>_cell_glcm_shannon_entropy``
+
+**Meaning:** Cell texture Shannon entropy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the relevant image representation and compute its Shannon entropy in base 2.
+Explanation: Shannon entropy increases when the texture is more complex or unpredictable and decreases when the co-occurrence pattern is more ordered and repetitive.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_entropy
+
+`Source assignment, line 359 <../source-code/features.html#features-359>`_; :py:meth:`bactoscoop.features.Features.profiling`.
+
+radial_intensity_distribution
+-----------------------------
+
+**Exported column:** ``<channel>_radial_intensity_distribution``
+
+**Meaning:** Radial intensity distribution profile.
+
+Calculation: Iteratively erode the contour, measure the mean normalized intensity on each erosion level, and store the resulting radial profile.
+Explanation: This shows how signal is distributed from the cell center toward the cell edge.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.radial_intensities(cropped_signal_interp2d, cropped_contour, width=avg_width, min_val=np.min(cropped_signal), max_val=np.max(cropped_signal), num_erosions=10, erosion_scale=None)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.radial_intensities`.
+
+`Source assignment, line 362 <../source-code/features.html#features-362>`_; :py:meth:`bactoscoop.features.Features.profiling`.

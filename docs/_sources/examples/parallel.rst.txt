@@ -1,0 +1,53 @@
+Parallel processing of sample folders
+=====================================
+
+The repository includes a screening script in
+``examples/BactoScoop Parallel Processing.py`` and three drive-specific variants
+at the repository root. They show how to apply the single-folder workflow to
+many samples. Their acquisition drives, model paths, worker count, and channel
+choices describe a specific experiment.
+
+First validate one representative folder serially, then distribute
+independent folders among workers. Keep each worker's outputs within its own
+sample folder to avoid competing writes.
+
+.. code-block:: python
+
+   # Set these before importing NumPy or BactoScoop in worker processes.
+   import os
+   for variable in ("OMP_NUM_THREADS", "MKL_NUM_THREADS",
+                    "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+       os.environ.setdefault(variable, "1")
+   os.environ.setdefault("BACTOSCOOP_LOG_LEVEL", "WARNING")
+
+   from multiprocessing import get_context
+
+   def process_folder(folder):
+       from bactoscoop import ImageCollection
+       ic = ImageCollection(folder, px=0.065)
+       ic.create_image_objects(phase_channel="C1")
+       ic.batch_process_mesh(phase_channel="C1", save_data=True)
+       return folder, ic.processing_summary()
+
+   if __name__ == "__main__":
+       folders = [r"C:\data\sample_A", r"C:\data\sample_B"]
+       with get_context("spawn").Pool(processes=2, maxtasksperchild=4) as pool:
+           for folder, summary in pool.imap_unordered(process_folder, folders):
+               print(folder, summary["status"])
+
+This minimal example processes meshes from existing masks. Add curation,
+detection, measurement, and export only after confirming the intended settings.
+Use a script with a ``__main__`` guard on Windows, rather than pasting the worker
+example directly into a notebook.
+
+Memory and progress
+-------------------
+
+The screening scripts limit numerical-library threads, recycle workers with
+``MAX_TASKS_PER_CHILD``, and record stage/progress information. Choose the worker
+count for available memory and workload; the script's default 12 cores is not a
+recommendation for every machine. Multiple simultaneous GPU segmentation jobs
+can compete for GPU memory.
+
+The full screening scripts were inspected, not executed for this documentation.
+The documentation does not claim a newly measured throughput benchmark.

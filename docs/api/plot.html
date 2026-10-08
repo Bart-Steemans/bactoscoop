@@ -1,0 +1,1684 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="bactoscoop.signalcorrelation" href="signalcorrelation.html"><link rel="prev" title="bactoscoop.omni" href="omni.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>bactoscoop.plot - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-objects.html">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-svm.html">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features.html">bactoscoop.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image.html">bactoscoop.image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imagecollection.html">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/plot.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-bactoscoop.plot">
+<span id="bactoscoop-plot"></span><h1>bactoscoop.plot<a class="headerlink" href="#module-bactoscoop.plot" title="Link to this heading">¶</a></h1>
+<section id="classes-and-public-operations">
+<h2>Classes and public operations<a class="headerlink" href="#classes-and-public-operations" title="Link to this heading">¶</a></h2>
+<section id="pick-representative-cell">
+<h3>pick_representative_cell<a class="headerlink" href="#pick-representative-cell" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.pick_representative_cell">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">pick_representative_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.pick_representative_cell" title="Link to this definition">¶</a></dt>
+<dd><p>Pick an interior, isolated, median-sized cell with valid geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>margin_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">margin_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">winner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">winner</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-40">View current source, line 40</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Pick an interior, isolated, median-sized cell with valid geometry.
+
+The rule is deterministic and uses geometry only, never fluorescence intensity.
+Returns the image object and cell ID so the same cell can be revisited.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="select-example-cell">
+<h3>select_example_cell<a class="headerlink" href="#select-example-cell" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.select_example_cell">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">select_example_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.select_example_cell" title="Link to this definition">¶</a></dt>
+<dd><p>Choose an existing field/cell, or a representative cell in the chosen field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>field_id</strong> – Shared TIFF field stem before the channel suffix.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pick_representative_cell</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+<span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cell_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-98">View current source, line 98</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Choose an existing field/cell, or a representative cell in the chosen field.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-field-channels">
+<h3>plot_field_channels<a class="headerlink" href="#plot-field-channels" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_field_channels">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_field_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">650</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_field_channels" title="Link to this definition">¶</a></dt>
+<dd><p>Preview the same pixel window across the named TIFF channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_dir</strong> – Folder containing the channel TIFF files.</p></li>
+<li><p><strong>field_id</strong> – Shared TIFF field stem before the channel suffix.</p></li>
+<li><p><strong>channel_labels</strong> – Mapping from channel identifiers to human-readable signal labels.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-133">View current source, line 133</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Preview the same pixel window across the named TIFF channels.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-segmentation-review">
+<h3>plot_segmentation_review<a class="headerlink" href="#plot-segmentation-review" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_segmentation_review">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_segmentation_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_segmentation_review" title="Link to this definition">¶</a></dt>
+<dd><p>Compare phase and mask outlines in a selectable cell-centered crop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+<li><p><strong>mask_label</strong> – Input <code class="docutils literal notranslate"><span class="pre">mask_label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>center</strong> – Input <code class="docutils literal notranslate"><span class="pre">center</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-160">View current source, line 160</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compare phase and mask outlines in a selectable cell-centered crop.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-cell-gallery">
+<h3>plot_cell_gallery<a class="headerlink" href="#plot-cell-gallery" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_cell_gallery">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_cell_gallery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">110</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align_signal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_cell_gallery" title="Link to this definition">¶</a></dt>
+<dd><p>Show phase and mesh, optionally with a registered signal crop and objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>channel_label</strong> – Input <code class="docutils literal notranslate"><span class="pre">channel_label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>align_signal</strong> – Input <code class="docutils literal notranslate"><span class="pre">align_signal</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>show_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">show_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-207">View current source, line 207</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Show phase and mesh, optionally with a registered signal crop and objects.
+
+The registered crop uses the same local crop/phase registration called by
+``object_detection(align=True)``. Plot it after detection to compare its
+detected object contours with the phase-cell contour.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-c2-alignment">
+<h3>plot_C2_alignment<a class="headerlink" href="#plot-c2-alignment" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_C2_alignment">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_C2_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">110</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_C2_alignment" title="Link to this definition">¶</a></dt>
+<dd><p>Compare the raw C2 signal with the phase-aligned C2 signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>channel_label</strong> – Input <code class="docutils literal notranslate"><span class="pre">channel_label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>show_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">show_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-280">View current source, line 280</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compare the raw C2 signal with the phase-aligned C2 signal.
+
+BEFORE: original fluorescence image, cropped around the cell.
+AFTER:  fluorescence crop returned by u.crop_image(..., phase_img=...).
+
+Cell contours are overlaid using the correct origin for each crop.
+Detected object contours can optionally be shown on the aligned panel.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="snapshot-cell-contours">
+<h3>snapshot_cell_contours<a class="headerlink" href="#snapshot-cell-contours" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.snapshot_cell_contours">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">snapshot_cell_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.snapshot_cell_contours" title="Link to this definition">¶</a></dt>
+<dd><p>Copy cell IDs and contours before curation changes the collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">image</span><span class="o">.</span><span class="n">image_name</span><span class="p">:</span> <span class="p">{</span><span class="n">cell</span><span class="o">.</span><span class="n">cell_id</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">}</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">image_objects</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-430">View current source, line 430</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Copy cell IDs and contours before curation changes the collection.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-curation-review">
+<h3>plot_curation_review<a class="headerlink" href="#plot-curation-review" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_curation_review">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_curation_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">before_contours</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">700</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_curation_review" title="Link to this definition">¶</a></dt>
+<dd><p>Show retained cells in green and removed cells in red on phase images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>before_contours</strong> – Input <code class="docutils literal notranslate"><span class="pre">before_contours</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>image_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-440">View current source, line 440</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Show retained cells in green and removed cells in red on phase images.
+
+``before_contours`` is made by :func:`snapshot_cell_contours` before
+curation. Cells are matched by image name and cell ID.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-signal-gallery">
+<h3>plot_signal_gallery<a class="headerlink" href="#plot-signal-gallery" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_signal_gallery">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_signal_gallery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_signal_gallery" title="Link to this definition">¶</a></dt>
+<dd><p>Show the phase image beside raw channel crops, with optional detections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>channel_labels</strong> – Mapping from channel identifiers to human-readable signal labels.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>show_objects</strong> – Input <code class="docutils literal notranslate"><span class="pre">show_objects</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-510">View current source, line 510</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Show the phase image beside raw channel crops, with optional detections.
+
+Cell contours are displayed on all panels. Detected object contours
+are optionally overlaid on the corresponding fluorescence channels.
+
+Crops share pixel coordinates. This function does not register channels.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-object-area-vs-cell-area">
+<h3>plot_object_area_vs_cell_area<a class="headerlink" href="#plot-object-area-vs-cell-area" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_object_area_vs_cell_area">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_object_area_vs_cell_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_object_area_vs_cell_area" title="Link to this definition">¶</a></dt>
+<dd><p>Compare detected object area with cell area for each named channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> – Input <code class="docutils literal notranslate"><span class="pre">features</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channel_labels</strong> – Mapping from channel identifiers to human-readable signal labels.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-611">View current source, line 611</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compare detected object area with cell area for each named channel.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-feature-overview">
+<h3>plot_feature_overview<a class="headerlink" href="#plot-feature-overview" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_feature_overview">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_feature_overview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C4_NC_ratio'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_feature_overview" title="Link to this definition">¶</a></dt>
+<dd><p>Exploratory overview of cell morphology, constriction, detected objects, and relative signal localization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> – Input <code class="docutils literal notranslate"><span class="pre">features</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>signal_column</strong> – Input <code class="docutils literal notranslate"><span class="pre">signal_column</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'coerce'</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-640">View current source, line 640</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Exploratory overview of cell morphology, constriction,
+detected objects, and relative signal localization.
+
+C2 = outer membrane
+C3 = inner membrane
+C4 = RNA
+C5 = DAPI
+
+Missing features are indicated in their panels.
+Nothing is saved.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-feature-histogram">
+<h3>plot_feature_histogram<a class="headerlink" href="#plot-feature-histogram" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_feature_histogram">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_feature_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#197E89'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(7,</span> <span class="pre">4.5)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_feature_histogram" title="Link to this definition">¶</a></dt>
+<dd><p>Plot a feature distribution with mean, median and interquartile range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p></li>
+<li><p><strong>feature</strong> – Unprefixed shared feature name; corresponding channel-prefixed columns must exist.</p></li>
+<li><p><strong>bins</strong> – Input <code class="docutils literal notranslate"><span class="pre">bins</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>xlabel</strong> – Input <code class="docutils literal notranslate"><span class="pre">xlabel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>color</strong> – Input <code class="docutils literal notranslate"><span class="pre">color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>figsize</strong> – Input <code class="docutils literal notranslate"><span class="pre">figsize</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-866">View current source, line 866</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot a feature distribution with mean, median and interquartile range.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-feature-scatter">
+<h3>plot_feature_scatter<a class="headerlink" href="#plot-feature-scatter" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_feature_scatter">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_feature_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trendline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(7,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_feature_scatter" title="Link to this definition">¶</a></dt>
+<dd><p>Plot two features against each other.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p></li>
+<li><p><strong>x_feature</strong> – Input <code class="docutils literal notranslate"><span class="pre">x_feature</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>y_feature</strong> – Input <code class="docutils literal notranslate"><span class="pre">y_feature</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>color_by</strong> – Input <code class="docutils literal notranslate"><span class="pre">color_by</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>xlabel</strong> – Input <code class="docutils literal notranslate"><span class="pre">xlabel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>ylabel</strong> – Input <code class="docutils literal notranslate"><span class="pre">ylabel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>trendline</strong> – Input <code class="docutils literal notranslate"><span class="pre">trendline</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>figsize</strong> – Input <code class="docutils literal notranslate"><span class="pre">figsize</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-945">View current source, line 945</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot two features against each other.
+
+Optionally colour points by a third numeric feature.
+A linear regression line and Pearson correlation can be shown.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-contour">
+<h3>plot_contour<a class="headerlink" href="#plot-contour" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_contour">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_contour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_um</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">um_per_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.065</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_svg_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_contour" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the contour of a cell with optional scalebar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>base_channel</strong> – Input <code class="docutils literal notranslate"><span class="pre">base_channel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>add_scalebar</strong> – Input <code class="docutils literal notranslate"><span class="pre">add_scalebar</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>save_svg_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_svg_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1059">View current source, line 1059</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot the contour of a cell with optional scalebar.
+
+Parameters
+----------
+window_px : int or None
+    If provided, creates a fixed square window (in pixels) centered on the cell.
+    If None, tight crop is used (default behavior).
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-cell-contour-gallery">
+<h3>plot_cell_contour_gallery<a class="headerlink" href="#plot-cell-contour-gallery" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_cell_contour_gallery">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_cell_contour_gallery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gist_grey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gist_grey'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'yellow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_um</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">um_per_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.065</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize_per_panel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_individual_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_cell_contour_gallery" title="Link to this definition">¶</a></dt>
+<dd><p>Plot a cropped gallery for one cell using: - image.image for phase contrast - image.channels[ch] for channel images - only the cell contour overlay</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – Typically ic.image_objects[frame_id]</p></li>
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>phase_first</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_first</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>phase_cmap</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_cmap</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channel_cmap</strong> – Input <code class="docutils literal notranslate"><span class="pre">channel_cmap</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>contour_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">contour_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>contour_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">contour_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>add_scalebar</strong> – Input <code class="docutils literal notranslate"><span class="pre">add_scalebar</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>title</strong> – Input <code class="docutils literal notranslate"><span class="pre">title</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>figsize_per_panel</strong> – Input <code class="docutils literal notranslate"><span class="pre">figsize_per_panel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>save_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>save_individual_dir</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_individual_dir</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>dpi</strong> – Input <code class="docutils literal notranslate"><span class="pre">dpi</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'cell_id'</span><span class="p">:</span> <span class="n">cell_id</span><span class="p">,</span> <span class="s1">'crop_bounds'</span><span class="p">:</span> <span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">),</span> <span class="s1">'panel_names'</span><span class="p">:</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">panels</span><span class="p">],</span> <span class="s1">'figure'</span><span class="p">:</span> <span class="n">fig</span><span class="p">}</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1193">View current source, line 1193</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot a cropped gallery for one cell using:
+  - image.image for phase contrast
+  - image.channels[ch] for channel images
+  - only the cell contour overlay
+
+Parameters
+----------
+cell_id : int or str
+image : object
+    Typically ic.image_objects[frame_id]
+channels : list of str
+    Example: ["C1", "C2", "C3", "C4", "C5"]
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-aligned-contours">
+<h3>plot_aligned_contours<a class="headerlink" href="#plot-aligned-contours" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_aligned_contours">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_aligned_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_aligned_contours" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the contour of a cell on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – The image object on which to plot the cell contour.</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1360">View current source, line 1360</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot the contour of a cell on an image.
+
+This function takes a cell object and an image object and plots the contour of the specified cell on the image.
+It also displays the cell ID in the title of the plot.
+
+Parameters
+----------
+cell : Cell
+    The cell object to be plotted.
+image : Image
+    The image object on which to plot the cell contour.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-svm-controls">
+<h3>plot_svm_controls<a class="headerlink" href="#plot-svm-controls" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_svm_controls">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_svm_controls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_cell_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_svm_controls" title="Link to this definition">¶</a></dt>
+<dd><p>Plot cells based on frame and cell ID pairs from SVM control analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_cell_pairs</strong> – A list of (cell_id, frame) pairs for cells to be plotted.</p></li>
+<li><p><strong>image_objects</strong> – A list of image objects corresponding to the frames in frame_cell_pairs.</p></li>
+<li><p><strong>message</strong> – An optional message to be added to the title of the plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-1400">View current source, line 1400</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot cells based on frame and cell ID pairs from SVM control analysis.
+
+This function takes frame and cell ID pairs, along with a list of image objects, and plots the cells from SVM control analysis.
+It allows adding an optional message to the title of the plot.
+
+Parameters
+----------
+frame_cell_pairs : list of tuples
+    A list of (cell_id, frame) pairs for cells to be plotted.
+image_objects : list
+    A list of image objects corresponding to the frames in frame_cell_pairs.
+message : str, optional
+    An optional message to be added to the title of the plot.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-mask">
+<h3>plot_mask<a class="headerlink" href="#plot-mask" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_mask">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_mask" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the mask overlay on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>joined</strong> – Whether to use the joined mask for overlay (default is False).</p></li>
+<li><p><strong>dpi</strong> – Dots per inch for the plot (default is 400).</p></li>
+<li><p><strong>alpha</strong> – Alpha (transparency) value for the mask overlay (default is 0.4).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-1448">View current source, line 1448</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot the mask overlay on an image.
+
+This function takes an image object and optionally a joined mask, and plots the mask overlay on the image.
+The alpha parameter controls the transparency of the mask overlay.
+
+Parameters
+----------
+image_object : Image object
+    An image object containing the image and mask data.
+joined : bool, optional
+    Whether to use the joined mask for overlay (default is False).
+dpi : int, optional
+    Dots per inch for the plot (default is 400).
+alpha : float, optional
+    Alpha (transparency) value for the mask overlay (default is 0.4).
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-random-contours">
+<h3>plot_random_contours<a class="headerlink" href="#plot-random-contours" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_random_contours">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_random_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cells_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_random_contours" title="Link to this definition">¶</a></dt>
+<dd><p>Plot random cell contours within an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – An image object containing the image and cell contour data.</p></li>
+<li><p><strong>num_cells_to_plot</strong> – Number of random cell contours to plot (default is 4).</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+<li><p><strong>scalebar</strong> – Whether to add a scale bar to the plots (default is False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-1488">View current source, line 1488</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot random cell contours within an image.
+
+This function selects and plots random cell contours within an image, showing a specified number of cells.
+
+Parameters
+----------
+image : Image object
+    An image object containing the image and cell contour data.
+num_cells_to_plot : int, optional
+    Number of random cell contours to plot (default is 4).
+crop_size : int, optional
+    Size of the cropped area around each cell (default is 200).
+scalebar : bool, optional
+    Whether to add a scale bar to the plots (default is False).
+
+Returns
+-------
+None
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-random-objects">
+<h3>plot_random_objects<a class="headerlink" href="#plot-random-objects" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_random_objects">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_random_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chann</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objects_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_random_objects" title="Link to this definition">¶</a></dt>
+<dd><p>Plot random objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>chann</strong> – Input <code class="docutils literal notranslate"><span class="pre">chann</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>num_objects_to_plot</strong> – Input <code class="docutils literal notranslate"><span class="pre">num_objects_to_plot</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+<li><p><strong>scalebar</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-1565">View current source, line 1565</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-random-axial">
+<h3>plot_random_axial<a class="headerlink" href="#plot-random-axial" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_random_axial">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_random_axial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_objects_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_random_axial" title="Link to this definition">¶</a></dt>
+<dd><p>Plot random axial.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_dataframe</strong> – Input <code class="docutils literal notranslate"><span class="pre">feature_dataframe</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>method</strong> – Input <code class="docutils literal notranslate"><span class="pre">method</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>num_objects_to_plot</strong> – Input <code class="docutils literal notranslate"><span class="pre">num_objects_to_plot</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-1633">View current source, line 1633</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-normalized-axial-intensity">
+<h3>plot_normalized_axial_intensity<a class="headerlink" href="#plot-normalized-axial-intensity" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_normalized_axial_intensity">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_normalized_axial_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_dataframe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_cell_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_normalized_axial_intensity" title="Link to this definition">¶</a></dt>
+<dd><p>Plot normalized axial profiles for selected cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_dataframe</strong> – Input <code class="docutils literal notranslate"><span class="pre">feature_dataframe</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>selected_frame</strong> – Input <code class="docutils literal notranslate"><span class="pre">selected_frame</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>selected_cell_id</strong> – Input <code class="docutils literal notranslate"><span class="pre">selected_cell_id</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>show</strong> – Display generated plots when true; check the documented return expression for figures.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">figures</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-1688">View current source, line 1688</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot normalized axial profiles for selected cells.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-object-mesh">
+<h3>plot_object_mesh<a class="headerlink" href="#plot-object-mesh" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_object_mesh">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_object_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chann</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_object_mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Plot object mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>chann</strong> – Input <code class="docutils literal notranslate"><span class="pre">chann</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1728">View current source, line 1728</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-object-contours">
+<h3>plot_object_contours<a class="headerlink" href="#plot-object-contours" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_object_contours">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_object_contours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_scalebar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_um</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">um_per_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.065</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scalebar_lw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_svg_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_tiff_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_object_contours" title="Link to this definition">¶</a></dt>
+<dd><p>Plot the contours of a cell and its objects for multiple channels on a single base channel image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>contour_channels</strong> – Input <code class="docutils literal notranslate"><span class="pre">contour_channels</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>shift</strong> – Input <code class="docutils literal notranslate"><span class="pre">shift</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>base_channel</strong> – Input <code class="docutils literal notranslate"><span class="pre">base_channel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>add_scalebar</strong> – Input <code class="docutils literal notranslate"><span class="pre">add_scalebar</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+<li><p><strong>save_svg_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_svg_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>save_tiff_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_tiff_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1782">View current source, line 1782</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Plot the contours of a cell and its objects for multiple channels on a single base channel image.
+
+Behaves like your original version:
+  - base_channel None -&gt; uses image.image
+  - shift True -&gt; crop_image(... phase_img=image.image)
+  - else -&gt; crop_image(... phase_img=None)
+  - plots cell contour + object contours from cropped_object_contour
+  - adds scalebar the same way
+
+Added:
+  - window_px: optional fixed square window around cell center (bypasses crop_image).
+  - save_svg_path: save editable SVG (scalebar/text/contours editable in Illustrator).
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-mesh-scientific">
+<h3>plot_mesh_scientific<a class="headerlink" href="#plot-mesh-scientific" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_mesh_scientific">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_mesh_scientific</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_mesh_scientific" title="Link to this definition">¶</a></dt>
+<dd><p>Plot mesh scientific.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-1987">View current source, line 1987</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-width">
+<h3>plot_width<a class="headerlink" href="#plot-width" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_width">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">70</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_width" title="Link to this definition">¶</a></dt>
+<dd><p>Plot width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell</strong> – Cell instance containing geometry and measurements.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-2037">View current source, line 2037</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-signal-profile">
+<h3>plot_signal_profile<a class="headerlink" href="#plot-signal-profile" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_signal_profile">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_signal_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_signal_profile" title="Link to this definition">¶</a></dt>
+<dd><p>Plot signal profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell</strong> – Cell instance containing geometry and measurements.</p></li>
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-2138">View current source, line 2138</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-demograph-rotated">
+<h3>plot_demograph_rotated<a class="headerlink" href="#plot-demograph-rotated" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_demograph_rotated">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_demograph_rotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_lengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalized_average_mesh_intensity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Demograph</span> <span class="pre">Plot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Normalized</span> <span class="pre">Distance</span> <span class="pre">From</span> <span class="pre">Midcell</span> <span class="pre">(µm)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Cell</span> <span class="pre">Length</span> <span class="pre">Percentile'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rainbow'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DnaN-msfGFP</span> <span class="pre">Normalized</span> <span class="pre">Intensity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_demograph_rotated" title="Link to this definition">¶</a></dt>
+<dd><p>Plot demograph rotated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_lengths</strong> – Input <code class="docutils literal notranslate"><span class="pre">cell_lengths</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>normalized_average_mesh_intensity</strong> – Input <code class="docutils literal notranslate"><span class="pre">normalized_average_mesh_intensity</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>title</strong> – Input <code class="docutils literal notranslate"><span class="pre">title</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>y_label</strong> – Input <code class="docutils literal notranslate"><span class="pre">y_label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>x_label</strong> – Input <code class="docutils literal notranslate"><span class="pre">x_label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>cmap</strong> – Input <code class="docutils literal notranslate"><span class="pre">cmap</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>cbar_title</strong> – Input <code class="docutils literal notranslate"><span class="pre">cbar_title</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-2171">View current source, line 2171</a>.</p>
+</dd></dl>
+
+</section>
+<section id="list-field-ids">
+<h3>list_field_ids<a class="headerlink" href="#list-field-ids" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.list_field_ids">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">list_field_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C1'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.list_field_ids" title="Link to this definition">¶</a></dt>
+<dd><p>List field ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_dir</strong> – Folder containing the channel TIFF files.</p></li>
+<li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">({</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'_'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dataset_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">'*_</span><span class="si">{</span><span class="n">phase_channel</span><span class="si">}</span><span class="s1">.tiff'</span><span class="p">)})</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-2225">View current source, line 2225</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-multichannel-overview">
+<h3>plot_multichannel_overview<a class="headerlink" href="#plot-multichannel-overview" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_multichannel_overview">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_multichannel_overview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(14,</span> <span class="pre">3.8)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_multichannel_overview" title="Link to this definition">¶</a></dt>
+<dd><p>Return aligned display crops for each channel in a field of view.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_dir</strong> – Folder containing the channel TIFF files.</p></li>
+<li><p><strong>field_id</strong> – Shared TIFF field stem before the channel suffix.</p></li>
+<li><p><strong>channel_labels</strong> – Mapping from channel identifiers to human-readable signal labels.</p></li>
+<li><p><strong>figsize</strong> – Input <code class="docutils literal notranslate"><span class="pre">figsize</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-2235">View current source, line 2235</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return aligned display crops for each channel in a field of view.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-mesh-overlay">
+<h3>plot_mesh_overlay<a class="headerlink" href="#plot-mesh-overlay" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_mesh_overlay">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_mesh_overlay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_mesh_overlay" title="Link to this definition">¶</a></dt>
+<dd><p>Plot mesh overlay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>crop_size</strong> – Displayed crop extent in pixels.</p></li>
+<li><p><strong>verbose</strong> – Input <code class="docutils literal notranslate"><span class="pre">verbose</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-2244">View current source, line 2244</a>.</p>
+</dd></dl>
+
+</section>
+<section id="pick-detected-cell">
+<h3>pick_detected_cell<a class="headerlink" href="#pick-detected-cell" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.pick_detected_cell">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">pick_detected_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preferred_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('C4',</span> <span class="pre">'C5')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.pick_detected_cell" title="Link to this definition">¶</a></dt>
+<dd><p>Choose an interior, isolated cell with a detected object when possible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_object</strong> – Image instance containing the selected field and cells.</p></li>
+<li><p><strong>preferred_channels</strong> – Input <code class="docutils literal notranslate"><span class="pre">preferred_channels</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="n">candidates</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">score</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pick_representative_cell</span><span class="p">([</span><span class="n">image_object</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">distance</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">median_length</span><span class="p">),</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-2283">View current source, line 2283</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Choose an interior, isolated cell with a detected object when possible.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="plot-morphology-summary">
+<h3>plot_morphology_summary<a class="headerlink" href="#plot-morphology-summary" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_morphology_summary">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_morphology_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_morphology_summary" title="Link to this definition">¶</a></dt>
+<dd><p>Plot morphology summary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-2315">View current source, line 2315</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-signal-summary">
+<h3>plot_signal_summary<a class="headerlink" href="#plot-signal-summary" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_signal_summary">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_signal_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_signal_summary" title="Link to this definition">¶</a></dt>
+<dd><p>Plot signal summary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/plot.html#plot-2356">View current source, line 2356</a>.</p>
+</dd></dl>
+
+</section>
+<section id="plot-pairwise-metric-heatmap">
+<h3>plot_pairwise_metric_heatmap<a class="headerlink" href="#plot-pairwise-metric-heatmap" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot.plot_pairwise_metric_heatmap">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_pairwise_metric_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_suffix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('C2',</span> <span class="pre">'C3',</span> <span class="pre">'C4',</span> <span class="pre">'C5')</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_pairwise_metric_heatmap" title="Link to this definition">¶</a></dt>
+<dd><p>Plot pairwise metric heatmap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p></li>
+<li><p><strong>metric_suffix</strong> – Input <code class="docutils literal notranslate"><span class="pre">metric_suffix</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channel_order</strong> – Input <code class="docutils literal notranslate"><span class="pre">channel_order</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-2410">View current source, line 2410</a>.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="internal-helpers">
+<h2>Internal helpers<a class="headerlink" href="#internal-helpers" title="Link to this heading">¶</a></h2>
+<section id="tutorial-contrast">
+<h3>_tutorial_contrast<a class="headerlink" href="#tutorial-contrast" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot._tutorial_contrast">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">_tutorial_contrast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot._tutorial_contrast" title="Link to this definition">¶</a></dt>
+<dd><p>Return a display range without changing the measured image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="k">if</span> <span class="n">high</span> <span class="o">&gt;</span> <span class="n">low</span> <span class="k">else</span> <span class="n">low</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-27">View current source, line 27</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return a display range without changing the measured image.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="tutorial-crop">
+<h3>_tutorial_crop<a class="headerlink" href="#tutorial-crop" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot._tutorial_crop">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">_tutorial_crop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_px</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot._tutorial_crop" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>tutorial crop.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> – Input <code class="docutils literal notranslate"><span class="pre">shape</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>center</strong> – Input <code class="docutils literal notranslate"><span class="pre">center</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">window_px</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="nb">slice</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">window_px</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-33">View current source, line 33</a>.</p>
+</dd></dl>
+
+</section>
+<section id="tutorial-channel-color">
+<h3>_tutorial_channel_color<a class="headerlink" href="#tutorial-channel-color" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot._tutorial_channel_color">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">_tutorial_channel_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot._tutorial_channel_color" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>tutorial channel color.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>label</strong> – Input <code class="docutils literal notranslate"><span class="pre">label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">'#197E89'</span>
+<span class="s1">'#1DBCD3'</span>
+<span class="s1">'#2BAE66'</span>
+<span class="s1">'#D85755'</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-115">View current source, line 115</a>.</p>
+</dd></dl>
+
+</section>
+<section id="tutorial-channel-cmap">
+<h3>_tutorial_channel_cmap<a class="headerlink" href="#tutorial-channel-cmap" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.plot._tutorial_channel_cmap">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">_tutorial_channel_cmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot._tutorial_channel_cmap" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>tutorial channel cmap.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>label</strong> – Input <code class="docutils literal notranslate"><span class="pre">label</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="sa">f</span><span class="s2">"bactoscoop_</span><span class="si">{</span><span class="n">label</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="p">[</span><span class="s1">'#000000'</span><span class="p">,</span> <span class="n">color</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/plot.html#plot-126">View current source, line 126</a>.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="signalcorrelation.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bactoscoop.signalcorrelation</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="omni.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">bactoscoop.omni</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">bactoscoop.plot</a><ul>
+<li><a class="reference internal" href="#classes-and-public-operations">Classes and public operations</a><ul>
+<li><a class="reference internal" href="#pick-representative-cell">pick_representative_cell</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.pick_representative_cell"><code class="docutils literal notranslate"><span class="pre">pick_representative_cell()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#select-example-cell">select_example_cell</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.select_example_cell"><code class="docutils literal notranslate"><span class="pre">select_example_cell()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-field-channels">plot_field_channels</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_field_channels"><code class="docutils literal notranslate"><span class="pre">plot_field_channels()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-segmentation-review">plot_segmentation_review</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_segmentation_review"><code class="docutils literal notranslate"><span class="pre">plot_segmentation_review()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-cell-gallery">plot_cell_gallery</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_cell_gallery"><code class="docutils literal notranslate"><span class="pre">plot_cell_gallery()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-c2-alignment">plot_C2_alignment</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_C2_alignment"><code class="docutils literal notranslate"><span class="pre">plot_C2_alignment()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snapshot-cell-contours">snapshot_cell_contours</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.snapshot_cell_contours"><code class="docutils literal notranslate"><span class="pre">snapshot_cell_contours()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-curation-review">plot_curation_review</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_curation_review"><code class="docutils literal notranslate"><span class="pre">plot_curation_review()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-signal-gallery">plot_signal_gallery</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_signal_gallery"><code class="docutils literal notranslate"><span class="pre">plot_signal_gallery()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-object-area-vs-cell-area">plot_object_area_vs_cell_area</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_object_area_vs_cell_area"><code class="docutils literal notranslate"><span class="pre">plot_object_area_vs_cell_area()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-feature-overview">plot_feature_overview</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_feature_overview"><code class="docutils literal notranslate"><span class="pre">plot_feature_overview()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-feature-histogram">plot_feature_histogram</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_feature_histogram"><code class="docutils literal notranslate"><span class="pre">plot_feature_histogram()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-feature-scatter">plot_feature_scatter</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_feature_scatter"><code class="docutils literal notranslate"><span class="pre">plot_feature_scatter()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-contour">plot_contour</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_contour"><code class="docutils literal notranslate"><span class="pre">plot_contour()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-cell-contour-gallery">plot_cell_contour_gallery</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_cell_contour_gallery"><code class="docutils literal notranslate"><span class="pre">plot_cell_contour_gallery()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-aligned-contours">plot_aligned_contours</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_aligned_contours"><code class="docutils literal notranslate"><span class="pre">plot_aligned_contours()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-svm-controls">plot_svm_controls</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_svm_controls"><code class="docutils literal notranslate"><span class="pre">plot_svm_controls()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-mask">plot_mask</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_mask"><code class="docutils literal notranslate"><span class="pre">plot_mask()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-random-contours">plot_random_contours</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_random_contours"><code class="docutils literal notranslate"><span class="pre">plot_random_contours()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-random-objects">plot_random_objects</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_random_objects"><code class="docutils literal notranslate"><span class="pre">plot_random_objects()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-random-axial">plot_random_axial</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_random_axial"><code class="docutils literal notranslate"><span class="pre">plot_random_axial()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-normalized-axial-intensity">plot_normalized_axial_intensity</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_normalized_axial_intensity"><code class="docutils literal notranslate"><span class="pre">plot_normalized_axial_intensity()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-object-mesh">plot_object_mesh</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_object_mesh"><code class="docutils literal notranslate"><span class="pre">plot_object_mesh()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-object-contours">plot_object_contours</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_object_contours"><code class="docutils literal notranslate"><span class="pre">plot_object_contours()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-mesh-scientific">plot_mesh_scientific</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_mesh_scientific"><code class="docutils literal notranslate"><span class="pre">plot_mesh_scientific()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-width">plot_width</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_width"><code class="docutils literal notranslate"><span class="pre">plot_width()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-signal-profile">plot_signal_profile</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_signal_profile"><code class="docutils literal notranslate"><span class="pre">plot_signal_profile()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-demograph-rotated">plot_demograph_rotated</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_demograph_rotated"><code class="docutils literal notranslate"><span class="pre">plot_demograph_rotated()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#list-field-ids">list_field_ids</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.list_field_ids"><code class="docutils literal notranslate"><span class="pre">list_field_ids()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-multichannel-overview">plot_multichannel_overview</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_multichannel_overview"><code class="docutils literal notranslate"><span class="pre">plot_multichannel_overview()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-mesh-overlay">plot_mesh_overlay</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_mesh_overlay"><code class="docutils literal notranslate"><span class="pre">plot_mesh_overlay()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pick-detected-cell">pick_detected_cell</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.pick_detected_cell"><code class="docutils literal notranslate"><span class="pre">pick_detected_cell()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-morphology-summary">plot_morphology_summary</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_morphology_summary"><code class="docutils literal notranslate"><span class="pre">plot_morphology_summary()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-signal-summary">plot_signal_summary</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_signal_summary"><code class="docutils literal notranslate"><span class="pre">plot_signal_summary()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#plot-pairwise-metric-heatmap">plot_pairwise_metric_heatmap</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot.plot_pairwise_metric_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_pairwise_metric_heatmap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#internal-helpers">Internal helpers</a><ul>
+<li><a class="reference internal" href="#tutorial-contrast">_tutorial_contrast</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot._tutorial_contrast"><code class="docutils literal notranslate"><span class="pre">_tutorial_contrast()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-crop">_tutorial_crop</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot._tutorial_crop"><code class="docutils literal notranslate"><span class="pre">_tutorial_crop()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-channel-color">_tutorial_channel_color</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot._tutorial_channel_color"><code class="docutils literal notranslate"><span class="pre">_tutorial_channel_color()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-channel-cmap">_tutorial_channel_cmap</a><ul>
+<li><a class="reference internal" href="#bactoscoop.plot._tutorial_channel_cmap"><code class="docutils literal notranslate"><span class="pre">_tutorial_channel_cmap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

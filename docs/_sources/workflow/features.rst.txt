@@ -1,0 +1,67 @@
+Feature extraction
+==================
+
+Choose feature families per channel, then merge their results using the
+field/cell identity. Morphology uses ``[None]`` as its channel selection.
+
+.. code-block:: python
+
+   ic.batch_calculate_features(
+       [([None], "morphological"),
+        (["C2", "C3"], "profiling"),
+        (["C3"], "objects")],
+       all_data=False, reset=True, max_mesh_size=1000,
+   )
+   features = ic.merge_dataframes(discard_morphological_nan=True)
+
+Feature families
+----------------
+
+* ``morphological`` measures the cell geometry and inverse-phase profiles.
+* ``profiling`` measures background-subtracted channel signal along or across
+  the cell, plus texture.
+* ``objects`` requires detected object contours for that channel.
+* ``membrane`` uses detected-object/contour data to sample membrane-associated
+  signal around a selected contour.
+* ``svm`` supplies phase and geometry features for quality curation.
+
+``colocalization`` exists in the source but is incomplete. The generic dispatch
+can see other helper names too; only the implemented feature families above are
+documented as workflow choices. The older ``phase`` mention in a docstring does
+not correspond to an implemented feature method.
+
+Profiles and texture
+--------------------
+
+Axial profiles sample around the midline. Mesh profiles average intensity across
+the width at successive positions. ``normalize_per_cell`` performs min–max
+normalization within that profile; a constant profile becomes zeros. This
+normalization removes amplitude differences between cells and should not be
+interpreted as an absolute fluorescence measurement.
+
+Radial intensity distribution samples successive eroded contours and uses the
+cropped image intensity range for normalization. GLCM descriptors use quantized
+image intensities and the implementation's background masking and matrix settings.
+They depend on acquisition and preprocessing as well as signal structure.
+
+Optional data and failure behavior
+----------------------------------
+
+``all_data`` is method-specific. In the current source it gates detailed
+per-object arrays for ``objects``; it does not suppress the profiling or membrane
+arrays. The :doc:`../reference/feature-dictionary` identifies conditional outputs.
+
+Cells above ``max_mesh_size`` are removed from the image's cell list. A failure
+in an individual feature calculation sets its discard state for that pass and
+records a cell error; the corresponding feature row is omitted. Other feature
+families can still retain a row for that identity, so a merged table can contain
+missing channel quantities. See :doc:`errors`.
+
+Repeated calculations
+---------------------
+
+``reset=True`` clears all feature tables. ``reset=False`` retains other pairs,
+but recalculating an existing method/channel pair replaces that pair's table.
+Every feature calculation invalidates the previously merged table. Merge again
+before export or downstream correlation calculations. The five-channel example
+uses two passes to apply C2 signal shifting separately from C3–C5 measurements.

@@ -1,0 +1,15 @@
+.sidebar-brand-text { font-size: 1.3rem; }
+.sidebar-logo { max-height: 125px; width: auto; }
+.content { max-width: 58rem; }
+.workflow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .55rem; margin: 1.8rem 0 2rem; }
+.workflow span { border: 1px solid var(--color-background-border); background: var(--color-background-secondary); padding: .65rem .75rem; border-radius: 5px; font-size: .85rem; }
+.workflow b { color: var(--color-brand-primary); }
+table.docutils { width: 100%; }
+td, th { overflow-wrap: anywhere; }
+.api-fields { border-left: 3px solid var(--color-brand-primary); padding-left: 1rem; }
+.source-lines { overflow-x: auto; font-size: .8rem; }
+.source-lines .highlight { background: var(--color-background-secondary); padding: 1rem; }
+.source-lines a { color: inherit; }
+dl.py dt { overflow-wrap: anywhere; }
+figure figcaption, .figure .caption { font-size: .9rem; color: var(--color-foreground-secondary); }
+@media (max-width: 600px) { .workflow { justify-content: flex-start; } .workflow span { padding: .45rem .5rem; } .source-lines { font-size: .7rem; } }

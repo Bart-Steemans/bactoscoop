@@ -1,0 +1,1201 @@
+bactoscoop.imagecollection
+==========================
+
+.. py:module:: bactoscoop.imagecollection
+
+The public collection coordinates loading, geometry, curation, measurements, and export. See :doc:`../getting-started/quickstart`.
+
+Classes and public operations
+-----------------------------
+
+ImageCollection
+~~~~~~~~~~~~~~~
+
+.. py:class:: ImageCollection(image_folder_path=None, px=0.065, error_policy='continue', log_cell_errors=False)
+
+   Create a dataset collection with physical calibration and explicit error handling.
+
+   Use this as the public entry point; load fields/masks or reload geometry before dependent analysis.
+
+   :param image_folder_path: Dataset folder containing TIFFs and the masks subfolder; None delays path configuration.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+   :param error_policy: "continue" records independent item/cell failures; "raise" raises the recorded error. Setup failures can still stop work.
+   :param log_cell_errors: Print each recorded cell error when true; recording is independent of this flag.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.error_policy``, ``self.log_cell_errors``, ``self.processing_errors``, ``self.cell_errors``, ``self.completed_stages``, ``self.px``, ``self.images``, ``self.masks``, ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``, ``self.inverted_image``, ``self.channel_list``, ``self.image_filenames``, ``self.mask_filenames``, ``self.phase_channel``, ``self.segmentation_failed``, ``self.image_folder_path``, ``self.name``, ``self.image_objects``, ``self.mesh_df_collection``, ``self.feature_dataframes``, ``self.merged_features``, ``self.mesh_prefilter_stats``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 29 <../source-code/imagecollection.html#imagecollection-29>`_.
+
+ImageCollection.processing_summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.processing_summary()
+
+   Report retained stage and cell error history.
+
+   Returns a new summary dictionary. completed does not imply every stage ran, and cell errors alone do not change that status.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {'status': status, 'completed_stages': sorted(self.completed_stages), 'error_count': len(self.processing_errors), 'errors': list(self.processing_errors), 'cell_error_count': len(self.cell_errors), 'cell_errors': list(self.cell_errors)}
+
+   `View current source, line 135 <../source-code/imagecollection.html#imagecollection-135>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Return attempted-stage status and retained image/cell error records.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.load_masks
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.load_masks()
+
+   Read label TIFFs from the dataset masks subfolder.
+
+   Requires a dataset path; modifies masks and mask filenames; returns None.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.masks``, ``self.mask_filenames``.
+
+   `View current source, line 283 <../source-code/imagecollection.html#imagecollection-283>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Read masks from the ``/masks`` subfolder.
+
+      Mutates ``self.masks`` and ``self.mask_filenames``.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.load_phase_images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.load_phase_images(phase_channel='')
+
+   Load phase TIFFs using the selected channel suffix.
+
+   Requires a dataset path; sets images, filenames, paths, phase suffix, and stage state; returns None.
+
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.phase_channel``, ``self.images``, ``self.image_filenames``, ``self.paths``.
+
+   **Explicitly raised exceptions:** ``type(e)``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 296 <../source-code/imagecollection.html#imagecollection-296>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      This method loads phase contrast images from the specified image folder path, based on the characters before the file-extension,
+      and stores them in the 'self.images' array.
+
+      Parameters
+      ----------
+      phase_channel : str, optional
+          Characters before the file-extension (e.g., "c1", "phase") to look for when using this function. (default is an empty string)
+
+      Mutates ``self.images``, ``self.image_filenames`` and ``self.paths``.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.load_channel_images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.load_channel_images(channel_list)
+
+   Load channels and index their arrays by field identity.
+
+   Requires a dataset path; clears stale data for requested channels and records load/duplicate-field failures; returns None.
+
+   :param channel_list: Sequence of channel suffixes to load or attach.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.channel_list``, ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
+
+   `View current source, line 322 <../source-code/imagecollection.html#imagecollection-322>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      This method loads channel images from the image folder path based on the specified characters before the file-extension and stores them in
+      the 'self.channel_images' dictionary, where the channel name is used as the key.
+
+      Parameters
+      ----------
+      channel_list : List of str
+          Characters before the extension (e.g., ["c2", "c3"]) to look for when using this function.
+
+      Mutates ``self.channel_images``.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.create_image_objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.create_image_objects(phase_channel='')
+
+   Validate field matching and build a fresh image/cell population.
+
+   Loads missing phase/mask data, rejects invalid setup or stale masks after segmentation failure, and clears feature tables; returns None.
+
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.feature_dataframes``, ``self.merged_features``, ``self.image_objects``.
+
+   **Explicitly raised exceptions:** ``RuntimeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 369 <../source-code/imagecollection.html#imagecollection-369>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Create ``Image`` objects from the loaded masks and phase images.
+
+      Invalid collection-level setup raises immediately. Failures while creating
+      a single image object are logged and skipped so the rest of the batch can continue.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.add_channels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.add_channels(img_objects, channel_list, load_data=True)
+
+   This method loads channel images based on the provided channel list and adds them to the individual image objects.
+
+   :param img_objects: Image objects to attach channel data to.
+   :param channel_list: Sequence of channel suffixes to load or attach.
+   :param load_data: Load channel TIFFs before attaching them when true; false uses already loaded field-keyed data.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 409 <../source-code/imagecollection.html#imagecollection-409>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      This method loads channel images based on the provided channel list and adds them to the individual image objects.
+
+      Parameters
+      ----------
+      img_objects : List
+          List of image objects.
+      channel_list : List
+          List of channel names.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.get_mesh_dataframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.get_mesh_dataframe(image_name)
+
+   This method returns the mesh dataframe associated with the specified image name.
+
+   :param image_name: The name or identifier of the image.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      mesh_lookup.get(image_name)
+      None
+
+   `View current source, line 496 <../source-code/imagecollection.html#imagecollection-496>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      This method returns the mesh dataframe associated with the specified image name.
+
+      Parameters
+      ----------
+      image_name : str
+          The name or identifier of the image.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.create_image_object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.create_image_object(image, image_name, index, mask, mesh_df, px)
+
+   This method creates a single Image object using the provided image, image name, index, mask, mesh dataframe, and pixel size (px). If mesh data is present, it also creates associated Cell objects.
+
+   :param image: The phase contrast image for the Image object.
+   :param image_name: The name or identifier of the image.
+   :param index: The index or position of the image.
+   :param mask: The mask or region of interest associated with the image.
+   :param mesh_df: The mesh dataframe associated with the image, if available, or None.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      img_obj
+
+   `View current source, line 512 <../source-code/imagecollection.html#imagecollection-512>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      This method creates a single Image object using the provided image, image name, index, mask, mesh dataframe, and pixel size (px).
+      If mesh data is present, it also creates associated Cell objects.
+
+      Parameters
+      ----------
+      image : phase contrast image
+          The phase contrast image for the Image object.
+      image_name : str
+          The name or identifier of the image.
+      index : int
+          The index or position of the image.
+      mask : mask or None
+          The mask or region of interest associated with the image.
+      mesh_df : pd.DataFrame or None
+          The mesh dataframe associated with the image, if available, or None.
+      px : float
+      The pixel size in micrometers.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.segment_images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.segment_images(mask_thresh, minsize, n, model_name='bact_phase_omni')
+
+   Run Omnipose for selected phase images and save their masks.
+
+   Requires loaded phase images. Returns True on success or False on a recorded failure in continue mode; raise policy propagates errors.
+
+   :param mask_thresh: Threshold passed as Omnipose mask_threshold.
+   :param minsize: Minimum accepted segmentation-mask size in pixels.
+   :param n: Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.
+   :param model_name: Omnipose model identifier; default collection model is bact_phase_omni.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      True
+      False
+
+   **Assigned state:** ``self.segmentation_failed``, ``self.masks``, ``self.mask_filenames``.
+
+   `View current source, line 540 <../source-code/imagecollection.html#imagecollection-540>`_.
+
+ImageCollection.batch_detect_objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_detect_objects(channels=None, reset_channels=True, align=False, smoothing=0.1, log_sigma=3, kernel_width=4, min_overlap_ratio=0.01, max_external_ratio=0.1)
+
+   Replace requested-channel detections and collect object contours/geometry.
+
+   Requires image objects with cells. Loads channels, changes cell.object_meshdata and object_detection_df; returns the combined detection DataFrame.
+
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param reset_channels: Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.
+   :param align: Use the object-detection alignment path for the selected signal.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.object_detection_df
+
+   **Assigned state:** ``self.object_detection_df``, ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
+
+   `View current source, line 564 <../source-code/imagecollection.html#imagecollection-564>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Detect objects within the contour of the cell.
+
+      Parameters
+      ----------
+      channels : List of strings, optional
+          The channel names of the channels to perform object detection on.
+
+      log_sigma : int, optional
+          The sigma parameter of the Laplacian of Gaussian filter used in object detection. (default is 3)
+
+      kernel_width : int, optional
+          The kernel width of the kernel used for dilating the object masks.
+          Decreasing results in smaller masks, while increasing results in larger masks. (default is 4)
+
+      min_overlap_ratio : float, optional
+          Minimum overlap between the object and cell required for the object to be kept. (default is 0.01)
+
+      max_external_ratio : float, optional
+          The maximum ratio an object is allowed to lie outside the cell contour. (default is 0.1)
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing cell_id, object_contours, and frame information.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.batch_process_mesh
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+
+   Join/split cells, construct geometry, collect mesh tables, and optionally save a pickle.
+
+   Requires compatible phase images and masks. Updates cells, mesh_df_collection and mesh_prefilter_stats. Returns None.
+
+   :param pkl_name: Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+   :param object_list: Explicit image-object sequence to process; None selects collection targets.
+   :param save_data: Write the combined mesh table when true.
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+   :param join_thresh: Maximum pole-to-pole joining distance in pixels.
+   :param split_thresh: Relative constriction threshold used by the splitting pipeline.
+   :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
+   :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mesh_df_collection``, ``self.mesh_prefilter_stats``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 688 <../source-code/imagecollection.html#imagecollection-688>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Process cellular meshes from segmented masks and store the data in Cell objects.
+
+      After segmentation, this method can process the resulting masks and create cellular meshes from them.
+      It first joins cells with a pole-pole distance (px) below the 'join_thresh'.
+      Subsequently, meshes of all cells are created and cells can be split again if the constriction degree exceeds the 'split_thresh'.
+      The data is then stored in Cell objects and can be exported in a pickle file.
+
+      Parameters
+      ----------
+      pkl_name : str, optional
+          Name of the pickle file to save the mesh data. If None, the file will be saved as 'folder_name_meshdata.pkl'.
+
+      object_list : List, optional
+          Specify a list of Image objects to be processed. If 'object_list' is None, all Image instances in 'image_objects' are processed.
+
+      phase_channel : str, optional
+          Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+
+      join_thresh : int, optional
+          The pole-pole distance threshold for joining cells. Cells with a distance below this threshold will have their masks joined. (default is 4)
+
+      split_thresh : float, optional
+          The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.batch_load_mesh
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_load_mesh(pkl_name, pkl_path=None, phase_channel='')
+
+   Load saved pickle or mesh Parquet and reconstruct image objects.
+
+   Requires the matching phase images/masks and compatible geometry columns. Recreates population and clears feature state; returns None.
+
+   :param pkl_name: Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+   :param pkl_path: Directory containing an input mesh file; None selects the image folder.
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mesh_df_collection``.
+
+   **Explicitly raised exceptions:** ``FileNotFoundError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 780 <../source-code/imagecollection.html#imagecollection-780>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Load mesh data from a pickle-file and create image objects from the data.
+
+      Parameters
+      ----------
+      pkl_name : str
+          Name of the pickle file where the mesh data is stored (e.g., 'Ecoli_meshdata.pkl').
+
+      pkl_path : str, optional
+          Path to the file where the mesh data is stored. If not provided, the method will look in the image folder path.
+
+      phase_channel : str, optional
+          Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.batch_mask2mesh
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_mask2mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', smoothing=0.1)
+
+   Create meshes from masks without the joining or splitting as in the batch_process_mesh method.
+
+   :param pkl_name: Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+   :param object_list: Explicit image-object sequence to process; None selects collection targets.
+   :param save_data: Write the combined mesh table when true.
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mesh_df_collection``.
+
+   `View current source, line 820 <../source-code/imagecollection.html#imagecollection-820>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Create meshes from masks without the joining or splitting as in the batch_process_mesh method.
+
+      Parameters
+      ----------
+      pkl_name : str, optional
+          Name of the pickle file to save the mesh data. If None, the file will be saved as 'folder_name_meshdata.pkl'.
+      object_list : List, optional
+          Specify a list of Image objects to be processed. If 'object_list' is None, all Image instances in 'image_objects' are processed.
+      phase_channel : str, optional
+          Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.batch_shift_correction
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_shift_correction(shifted_channel, reset_channels=False, log_sigma=1.5, kernel_width=3, min_overlap_ratio=0.1, max_external_ratio=1, phase_log_sigma=0.5, phase_closing_level=2, signal_closing_level=12, max_shift_correction=15)
+
+   Batch shift correction.
+
+   :param shifted_channel: Input ``shifted_channel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param reset_channels: Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+   :param phase_log_sigma: Input ``phase_log_sigma`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_closing_level: Input ``phase_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal_closing_level: Input ``signal_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_shift_correction: Input ``max_shift_correction`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      average_success_percentage
+      0.0
+
+   **Assigned state:** ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
+
+   `View current source, line 877 <../source-code/imagecollection.html#imagecollection-877>`_.
+
+ImageCollection.batch_calculate_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_calculate_features(channel_method_pairs, all_data=True, reset=True, use_shifted_contours=False, shift_signal=False, max_mesh_size=600, retain_contour_on_object_mesh_failure_channels=None)
+
+   Calculate selected feature families for the current cell population.
+
+   Requires image objects and loaded signals/detections as appropriate. Replaces selected tables, may remove large cells, clears merged_features; returns the feature_dataframes dictionary.
+
+   :param channel_method_pairs: Pairs of (channel list, feature method), for example [([None], "morphological"), (["C2"], "profiling")].
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param reset: Clear stored feature dataframes when true; false retains other pairs while replacing each recalculated pair.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+   :param shift_signal: Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+   :param max_mesh_size: Maximum accepted mesh row count; cells above this limit are removed from the image cell population.
+   :param retain_contour_on_object_mesh_failure_channels: Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.feature_dataframes
+
+   **Assigned state:** ``self.merged_features``, ``self.feature_dataframes``.
+
+   **Explicitly raised exceptions:** ``ValueError``, ``TypeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 971 <../source-code/imagecollection.html#imagecollection-971>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate features of all image objects for specified channels and methods.
+
+      This method calculates features for all image objects based on the specified channel-method pairs. It takes a list of tuples, where each tuple contains channel names and the feature calculation method. The resulting feature dataframes are stored in a dictionary.
+
+      Parameters
+      ----------
+      channel_method_pairs : List[Tuple[List[str], str]]
+          A list of tuples where each tuple contains the channel names and feature calculation method.
+          Example of channel_method_pairs: [(['c1'], 'profiling'), (['c2', 'c3'], 'objects'), ([None], 'svm')].
+          With the example pairs, this method will analyze c1 using the profiling method,
+          then c2 and c3 using the objects method, and finally the phase contrast channel using the svm method.
+
+      add_profiling_data : bool, optional
+          Whether to include profiling data in the feature calculation. (default is True)
+
+      reset : bool, optional
+          If True, the dictionary storing the dataframes will be reset. If False, dataframes are added to the existing dictionary. (default is True)
+      retain_contour_on_object_mesh_failure_channels : list[str] or None, optional
+          Channels whose objects features retain contour-based measurements
+          when any detected object mesh is invalid. Other channels omit that
+          cell's objects feature row. None is equivalent to an empty list.
+          This option does not affect other feature methods.
+
+      Returns
+      -------
+      Dict
+          A dictionary containing dataframes with calculated features.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.batch_calculate_signal_correlation_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.batch_calculate_signal_correlation_features(df, channels, feature_method_tuples)
+
+   Add selected between-channel measurements to the supplied dataframe.
+
+   Requires both prefixed feature columns. Mutates and returns df; does not independently merge or validate an entire workflow.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param feature_method_tuples: Pairs of (feature-name list, correlation-selector list) applied to each channel pair.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      df
+
+   `View current source, line 1112 <../source-code/imagecollection.html#imagecollection-1112>`_.
+
+ImageCollection.curate_dataset
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.curate_dataset(path_to_model, cols=4, control=False, save_curated_data=True)
+
+   Predict SVM quality labels and retain the accepted cell population.
+
+   Requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.
+
+   :param path_to_model: Path to a serialized SVM carrying the ``feature_names_in_`` training-column schema.
+   :param cols: Legacy curation argument retained for compatibility; unused by the current curation preparation.
+   :param control: Request visual examples of retained/rejected classes; random selection can be unavailable for small classes.
+   :param save_curated_data: Write curated mesh pickle when true; in-memory curation always occurs.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.curated_df``, ``self.pos``, ``self.neg``.
+
+   `View current source, line 1224 <../source-code/imagecollection.html#imagecollection-1224>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Curate the dataset based on a trained support vector machine model.
+
+      This method calculates SVM features and uses a trained SVM model to classify cells based on these features.
+      It curates the dataset by discarding cells that are classified as label 0 (non-interesting).
+      Optionally, it can include positive and negative control cells.
+
+      Parameters:
+          path_to_model (str): Path to the trained SVM model.
+
+          cols (int): Retained for backward compatibility; currently unused.
+
+          control (bool): Whether to include positive and negative control cells.
+
+          save_curated_data (bool): Whether to write the curated mesh pickle.
+              The in-memory mesh dataframe is updated either way.
+
+      Returns:
+          None
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.add_meshdata_to_dataframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.add_meshdata_to_dataframe()
+
+   Add meshdata to dataframe.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.mesh_df_collection``.
+
+   `View current source, line 1290 <../source-code/imagecollection.html#imagecollection-1290>`_.
+
+ImageCollection.export_curated_masks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.export_curated_masks(output_subfolder='curated_masks', overwrite=True)
+
+   Rasterize retained contours and record overlap with original segmentation labels.
+
+   Requires image objects with original masks. Writes TIFFs and a provenance CSV; returns (list of mask paths, provenance DataFrame).
+
+   :param output_subfolder: Destination for newly rasterized curated masks, relative to the dataset folder.
+   :param overwrite: Replace existing curated mask TIFFs when true; false raises for a file already present.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (mask_paths, provenance)
+
+   **Explicitly raised exceptions:** ``ValueError``, ``FileExistsError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1320 <../source-code/imagecollection.html#imagecollection-1320>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Write one label mask per image from the SVM-curated cell contours.
+
+      This method is intended to be run after :meth:`curate_dataset`. It never
+      changes the original Omnipose masks in ``masks``. Instead, it writes new
+      masks to ``output_subfolder`` and records how every curated label overlaps
+      the original labels, so the output can be used directly by BactoFeatures.
+
+      Parameters
+      ----------
+      output_subfolder : str, optional
+          Folder below ``image_folder_path`` for the exported label TIFFs.
+      overwrite : bool, optional
+          If ``False``, fail before replacing an existing curated-mask TIFF.
+
+      Returns
+      -------
+      tuple[list[str], pandas.DataFrame]
+          Paths to the exported masks and a provenance table with one row per
+          curated cell.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.merge_dataframes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.merge_dataframes(include_metadata_tag=False, discard_morphological_nan=False)
+
+   Merge family/channel tables by image_name, cell_id, and frame.
+
+   Requires feature tables; channel prefixes are added and a first-value pivot is used. Modifies and returns merged_features.
+
+   :param include_metadata_tag: Rename identity columns with ``Metadata_`` prefixes.
+   :param discard_morphological_nan: Drop merged rows missing cell_area or cell_length; these columns must exist.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.merged_features
+
+   **Assigned state:** ``self.merged_features``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1425 <../source-code/imagecollection.html#imagecollection-1425>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Merge feature dataframes into a single dataframe.
+
+      Merges multiple feature dataframes into a single dataframe, ensuring that columns are properly renamed
+      to identify the channel and removes duplicates based on specific columns.
+
+      Args:
+          include_metadata_tag (bool): Whether to rename 'image_name', 'cell_id', and 'frame' to 'Metadata_*'.
+          discard_nan (bool): Whether to discard rows with NaN in 'cell_area' and 'cell_length'.
+
+      Returns:
+          pd.DataFrame: The merged feature dataframe.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.dataframe_to_pkl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.dataframe_to_pkl(pkl_name=None)
+
+   Save merged features as a pickle in the image folder.
+
+   Requires merged_features; uses atomic replacement and returns the saved path.
+
+   :param pkl_name: Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      os.path.join(self.image_folder_path, filename)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1493 <../source-code/imagecollection.html#imagecollection-1493>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Save merged features in the image folder and return the pickle path.
+
+      A suffixless ``pkl_name`` is a legacy tag appended to the dataset name;
+      a name ending in ``.pkl`` is used as the exact filename.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.meshdata_to_parquet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.meshdata_to_parquet(parquet_name=None)
+
+   Save reloadable nested geometry to compressed Parquet.
+
+   Requires nonempty mesh_df_collection; writes within the image folder and returns None.
+
+   :param parquet_name: Output filename ending in .parquet within the image folder; None chooses the dataset-based default.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1510 <../source-code/imagecollection.html#imagecollection-1510>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Save the current mesh dataframe as reloadable Parquet in the image folder.
+
+      Geometry arrays become nested numeric lists in Parquet. Reload with
+      ``batch_load_mesh("name.parquet", phase_channel=...)``.
+      Requires the optional ``pyarrow`` package.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection.dataframe_to_parquet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection.dataframe_to_parquet(parquet_name=None)
+
+   Save merged features as compressed Parquet in the image folder.
+
+   Requires merged_features and PyArrow; replaces the target atomically and returns None.
+
+   :param parquet_name: Output filename ending in .parquet within the image folder; None chooses the dataset-based default.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1522 <../source-code/imagecollection.html#imagecollection-1522>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Save merged features as Parquet in the image folder (requires pyarrow).
+
+   .. raw:: html
+
+      </details>
+
+Internal helpers
+----------------
+
+ImageCollection._require_image_folder_path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._require_image_folder_path()
+
+    require image folder path.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 80 <../source-code/imagecollection.html#imagecollection-80>`_.
+
+ImageCollection._require_loaded_images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._require_loaded_images()
+
+    require loaded images.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 84 <../source-code/imagecollection.html#imagecollection-84>`_.
+
+ImageCollection._record_processing_error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._record_processing_error(stage, error, image_name=None, channel=None, cell_id=None)
+
+    record processing error.
+
+   :param stage: Input ``stage`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param error: Input ``error`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image_name: Input ``image_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      record
+
+   `View current source, line 90 <../source-code/imagecollection.html#imagecollection-90>`_.
+
+ImageCollection._record_cell_error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._record_cell_error(stage, error, image_name, channel, cell_id, error_type=None)
+
+    record cell error.
+
+   :param stage: Input ``stage`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param error: Input ``error`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image_name: Input ``image_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param error_type: Input ``error_type`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      record
+
+   `View current source, line 114 <../source-code/imagecollection.html#imagecollection-114>`_.
+
+ImageCollection._record_stage_success
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._record_stage_success(stage)
+
+    record stage success.
+
+   :param stage: Input ``stage`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 152 <../source-code/imagecollection.html#imagecollection-152>`_.
+
+ImageCollection._validate_phase_image_state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._validate_phase_image_state()
+
+    validate phase image state.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      matched
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 155 <../source-code/imagecollection.html#imagecollection-155>`_.
+
+ImageCollection._normalize_channel_list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._normalize_channel_list(channel_list, argument_name='channel_list')
+
+    normalize channel list.
+
+   :param channel_list: Sequence of channel suffixes to load or attach.
+   :param argument_name: Input ``argument_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      normalized_channels
+
+   **Explicitly raised exceptions:** ``ValueError``, ``TypeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 240 <../source-code/imagecollection.html#imagecollection-240>`_.
+
+ImageCollection._iter_processing_targets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._iter_processing_targets(object_list, phase_channel)
+
+    iter processing targets.
+
+   :param object_list: Explicit image-object sequence to process; None selects collection targets.
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      [object_list]
+      self.image_objects
+      list(object_list)
+
+   **Explicitly raised exceptions:** ``TypeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 254 <../source-code/imagecollection.html#imagecollection-254>`_.
+
+ImageCollection._get_mesh_dataframe_lookup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._get_mesh_dataframe_lookup()
+
+   Build an image-name lookup from the current mesh dataframe.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {image_name: group.reset_index(drop=True) for image_name, group in self.mesh_df_collection.groupby('image_name', sort=False)}
+      None
+
+   `View current source, line 266 <../source-code/imagecollection.html#imagecollection-266>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Build an image-name lookup from the current mesh dataframe.
+
+      Do not retain this lookup across calls: callers can replace or mutate
+      ``mesh_df_collection``, and a cached lookup could then return stale
+      meshes for newly loaded data.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection._apply_curation_labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._apply_curation_labels()
+
+   Apply curation labels by stable image identity, with frame fallback.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1143 <../source-code/imagecollection.html#imagecollection-1143>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Apply curation labels by stable image identity, with frame fallback.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection._atomic_write
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._atomic_write(filename, writer)
+
+    atomic write.
+
+   :param filename: Input ``filename`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param writer: Input ``writer`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1529 <../source-code/imagecollection.html#imagecollection-1529>`_.
+
+ImageCollection._to_parquet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._to_parquet(filename, data, mesh_data=False)
+
+    to parquet.
+
+   :param filename: Input ``filename`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mesh_data: Input ``mesh_data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1547 <../source-code/imagecollection.html#imagecollection-1547>`_.
+
+ImageCollection._to_pickle
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._to_pickle(pkl_name, data)
+
+   Save data to a pkl file.
+
+   :param pkl_name: Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1565 <../source-code/imagecollection.html#imagecollection-1565>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Save data to a pkl file.
+
+   .. raw:: html
+
+      </details>
+
+ImageCollection._write_pickle_file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: ImageCollection._write_pickle_file(path, data)
+
+    write pickle file.
+
+   :param path: Input ``path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1576 <../source-code/imagecollection.html#imagecollection-1576>`_.

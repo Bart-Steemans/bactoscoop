@@ -1,0 +1,562 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Source: bactoscoop/curation.py - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-objects.html">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-svm.html">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/features.html">bactoscoop.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/image.html">bactoscoop.image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/imagecollection.html">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plot.html">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/source-code/curation.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="source-bactoscoop-curation-py">
+<h1>Source: bactoscoop/curation.py<a class="headerlink" href="#source-bactoscoop-curation-py" title="Link to this heading">¶</a></h1>
+<div class="source-lines"><div class="highlight"><pre><span></span><a id="curation-1" name="curation-1"></a><a href="#curation-1"><span class="linenos">  1</span></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a id="curation-2" name="curation-2"></a><a href="#curation-2"><span class="linenos">  2</span></a><span class="sd">"""</span>
+<a id="curation-3" name="curation-3"></a><a href="#curation-3"><span class="linenos">  3</span></a><span class="sd">Created on Mon Jul 31 16:46:21 2023</span>
+<a id="curation-4" name="curation-4"></a><a href="#curation-4"><span class="linenos">  4</span></a>
+<a id="curation-5" name="curation-5"></a><a href="#curation-5"><span class="linenos">  5</span></a><span class="sd">@author: Bart Steemans. Govers Lab.</span>
+<a id="curation-6" name="curation-6"></a><a href="#curation-6"><span class="linenos">  6</span></a><span class="sd">"""</span>
+<a id="curation-7" name="curation-7"></a><a href="#curation-7"><span class="linenos">  7</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<a id="curation-8" name="curation-8"></a><a href="#curation-8"><span class="linenos">  8</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<a id="curation-9" name="curation-9"></a><a href="#curation-9"><span class="linenos">  9</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="curation-10" name="curation-10"></a><a href="#curation-10"><span class="linenos"> 10</span></a>
+<a id="curation-11" name="curation-11"></a><a href="#curation-11"><span class="linenos"> 11</span></a>
+<a id="curation-12" name="curation-12"></a><a href="#curation-12"><span class="linenos"> 12</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Curation</span><span class="p">:</span>
+<a id="curation-13" name="curation-13"></a><a href="#curation-13"><span class="linenos"> 13</span></a>
+<a id="curation-14" name="curation-14"></a><a href="#curation-14"><span class="linenos"> 14</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">svm_df</span><span class="p">):</span>
+<a id="curation-15" name="curation-15"></a><a href="#curation-15"><span class="linenos"> 15</span></a>
+<a id="curation-16" name="curation-16"></a><a href="#curation-16"><span class="linenos"> 16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span> <span class="o">=</span> <span class="n">svm_df</span>
+<a id="curation-17" name="curation-17"></a><a href="#curation-17"><span class="linenos"> 17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="curation-18" name="curation-18"></a><a href="#curation-18"><span class="linenos"> 18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="curation-19" name="curation-19"></a><a href="#curation-19"><span class="linenos"> 19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">svm_model</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="curation-20" name="curation-20"></a><a href="#curation-20"><span class="linenos"> 20</span></a>
+<a id="curation-21" name="curation-21"></a><a href="#curation-21"><span class="linenos"> 21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">compiled_curation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_to_model</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+<a id="curation-22" name="curation-22"></a><a href="#curation-22"><span class="linenos"> 22</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-23" name="curation-23"></a><a href="#curation-23"><span class="linenos"> 23</span></a><span class="sd">        Perform compiled cell curation using a trained SVM model.</span>
+<a id="curation-24" name="curation-24"></a><a href="#curation-24"><span class="linenos"> 24</span></a>
+<a id="curation-25" name="curation-25"></a><a href="#curation-25"><span class="linenos"> 25</span></a><span class="sd">        This method curates the dataset by making predictions using a trained Support Vector Machine (SVM) model.</span>
+<a id="curation-26" name="curation-26"></a><a href="#curation-26"><span class="linenos"> 26</span></a><span class="sd">        Cells that do not meet the criteria specified by the model are flagged for potential removal.</span>
+<a id="curation-27" name="curation-27"></a><a href="#curation-27"><span class="linenos"> 27</span></a>
+<a id="curation-28" name="curation-28"></a><a href="#curation-28"><span class="linenos"> 28</span></a><span class="sd">        Parameters</span>
+<a id="curation-29" name="curation-29"></a><a href="#curation-29"><span class="linenos"> 29</span></a><span class="sd">        ----------</span>
+<a id="curation-30" name="curation-30"></a><a href="#curation-30"><span class="linenos"> 30</span></a><span class="sd">        path_to_model : str</span>
+<a id="curation-31" name="curation-31"></a><a href="#curation-31"><span class="linenos"> 31</span></a><span class="sd">            The path to the trained SVM model file.</span>
+<a id="curation-32" name="curation-32"></a><a href="#curation-32"><span class="linenos"> 32</span></a>
+<a id="curation-33" name="curation-33"></a><a href="#curation-33"><span class="linenos"> 33</span></a><span class="sd">        cols : int</span>
+<a id="curation-34" name="curation-34"></a><a href="#curation-34"><span class="linenos"> 34</span></a><span class="sd">            The number of columns to exclude in the dataset during curation.</span>
+<a id="curation-35" name="curation-35"></a><a href="#curation-35"><span class="linenos"> 35</span></a>
+<a id="curation-36" name="curation-36"></a><a href="#curation-36"><span class="linenos"> 36</span></a><span class="sd">        Returns</span>
+<a id="curation-37" name="curation-37"></a><a href="#curation-37"><span class="linenos"> 37</span></a><span class="sd">        -------</span>
+<a id="curation-38" name="curation-38"></a><a href="#curation-38"><span class="linenos"> 38</span></a><span class="sd">        pd.DataFrame</span>
+<a id="curation-39" name="curation-39"></a><a href="#curation-39"><span class="linenos"> 39</span></a><span class="sd">            A DataFrame containing the curated dataset.</span>
+<a id="curation-40" name="curation-40"></a><a href="#curation-40"><span class="linenos"> 40</span></a>
+<a id="curation-41" name="curation-41"></a><a href="#curation-41"><span class="linenos"> 41</span></a><span class="sd">        """</span>
+<a id="curation-42" name="curation-42"></a><a href="#curation-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">path_to_model</span><span class="p">)</span>
+<a id="curation-43" name="curation-43"></a><a href="#curation-43"><span class="linenos"> 43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">prepare_dataframe</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+<a id="curation-44" name="curation-44"></a><a href="#curation-44"><span class="linenos"> 44</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_predictions</span><span class="p">()</span>
+<a id="curation-45" name="curation-45"></a><a href="#curation-45"><span class="linenos"> 45</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span>
+<a id="curation-46" name="curation-46"></a><a href="#curation-46"><span class="linenos"> 46</span></a>
+<a id="curation-47" name="curation-47"></a><a href="#curation-47"><span class="linenos"> 47</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_to_model</span><span class="p">):</span>
+<a id="curation-48" name="curation-48"></a><a href="#curation-48"><span class="linenos"> 48</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-49" name="curation-49"></a><a href="#curation-49"><span class="linenos"> 49</span></a><span class="sd">        Load a trained SVM model from a file.</span>
+<a id="curation-50" name="curation-50"></a><a href="#curation-50"><span class="linenos"> 50</span></a>
+<a id="curation-51" name="curation-51"></a><a href="#curation-51"><span class="linenos"> 51</span></a><span class="sd">        This method loads a trained Support Vector Machine (SVM) model from a file located at the given path.</span>
+<a id="curation-52" name="curation-52"></a><a href="#curation-52"><span class="linenos"> 52</span></a>
+<a id="curation-53" name="curation-53"></a><a href="#curation-53"><span class="linenos"> 53</span></a><span class="sd">        Parameters</span>
+<a id="curation-54" name="curation-54"></a><a href="#curation-54"><span class="linenos"> 54</span></a><span class="sd">        ----------</span>
+<a id="curation-55" name="curation-55"></a><a href="#curation-55"><span class="linenos"> 55</span></a><span class="sd">        path_to_model : str</span>
+<a id="curation-56" name="curation-56"></a><a href="#curation-56"><span class="linenos"> 56</span></a><span class="sd">            The path to the trained SVM model file.</span>
+<a id="curation-57" name="curation-57"></a><a href="#curation-57"><span class="linenos"> 57</span></a>
+<a id="curation-58" name="curation-58"></a><a href="#curation-58"><span class="linenos"> 58</span></a><span class="sd">        """</span>
+<a id="curation-59" name="curation-59"></a><a href="#curation-59"><span class="linenos"> 59</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_to_model</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="curation-60" name="curation-60"></a><a href="#curation-60"><span class="linenos"> 60</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">svm_model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<a id="curation-61" name="curation-61"></a><a href="#curation-61"><span class="linenos"> 61</span></a>
+<a id="curation-62" name="curation-62"></a><a href="#curation-62"><span class="linenos"> 62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+<a id="curation-63" name="curation-63"></a><a href="#curation-63"><span class="linenos"> 63</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-64" name="curation-64"></a><a href="#curation-64"><span class="linenos"> 64</span></a><span class="sd">        Prepare the feature dataset for SVM curation.</span>
+<a id="curation-65" name="curation-65"></a><a href="#curation-65"><span class="linenos"> 65</span></a><span class="sd">    </span>
+<a id="curation-66" name="curation-66"></a><a href="#curation-66"><span class="linenos"> 66</span></a><span class="sd">        This method prepares the feature dataset for cell curation using a Support Vector Machine (SVM) model.</span>
+<a id="curation-67" name="curation-67"></a><a href="#curation-67"><span class="linenos"> 67</span></a><span class="sd">        It extracts the relevant feature columns while ensuring that `cell_id` and `frame` are preserved.</span>
+<a id="curation-68" name="curation-68"></a><a href="#curation-68"><span class="linenos"> 68</span></a><span class="sd">    </span>
+<a id="curation-69" name="curation-69"></a><a href="#curation-69"><span class="linenos"> 69</span></a><span class="sd">        Parameters</span>
+<a id="curation-70" name="curation-70"></a><a href="#curation-70"><span class="linenos"> 70</span></a><span class="sd">        ----------</span>
+<a id="curation-71" name="curation-71"></a><a href="#curation-71"><span class="linenos"> 71</span></a><span class="sd">        cols : int</span>
+<a id="curation-72" name="curation-72"></a><a href="#curation-72"><span class="linenos"> 72</span></a><span class="sd">            Retained for backward compatibility; feature columns are selected</span>
+<a id="curation-73" name="curation-73"></a><a href="#curation-73"><span class="linenos"> 73</span></a><span class="sd">            by name and this argument is currently unused.</span>
+<a id="curation-74" name="curation-74"></a><a href="#curation-74"><span class="linenos"> 74</span></a><span class="sd">        """</span>
+<a id="curation-75" name="curation-75"></a><a href="#curation-75"><span class="linenos"> 75</span></a>
+<a id="curation-76" name="curation-76"></a><a href="#curation-76"><span class="linenos"> 76</span></a>        <span class="c1"># Identify non-feature columns (but keep cell_id &amp; frame for tracking)</span>
+<a id="curation-77" name="curation-77"></a><a href="#curation-77"><span class="linenos"> 77</span></a>        <span class="n">exclude_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"image_name"</span><span class="p">,</span> <span class="s2">"contour"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">]</span>  <span class="c1"># Keep cell_id &amp; frame</span>
+<a id="curation-78" name="curation-78"></a><a href="#curation-78"><span class="linenos"> 78</span></a>        <span class="n">cols_to_include</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_columns</span><span class="p">]</span>
+<a id="curation-79" name="curation-79"></a><a href="#curation-79"><span class="linenos"> 79</span></a>        <span class="n">cols_to_include</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<a id="curation-80" name="curation-80"></a><a href="#curation-80"><span class="linenos"> 80</span></a>
+<a id="curation-81" name="curation-81"></a><a href="#curation-81"><span class="linenos"> 81</span></a>        <span class="c1"># Preserve cell_id and frame separately for re-mapping</span>
+<a id="curation-82" name="curation-82"></a><a href="#curation-82"><span class="linenos"> 82</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cell_id_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="p">[[</span><span class="s2">"cell_id"</span><span class="p">,</span> <span class="s2">"frame"</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="curation-83" name="curation-83"></a><a href="#curation-83"><span class="linenos"> 83</span></a>
+<a id="curation-84" name="curation-84"></a><a href="#curation-84"><span class="linenos"> 84</span></a>        <span class="c1"># Select only feature columns for training</span>
+<a id="curation-85" name="curation-85"></a><a href="#curation-85"><span class="linenos"> 85</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="p">[</span><span class="n">cols_to_include</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"cell_id"</span><span class="p">,</span> <span class="s2">"frame"</span><span class="p">])</span>
+<a id="curation-86" name="curation-86"></a><a href="#curation-86"><span class="linenos"> 86</span></a>
+<a id="curation-87" name="curation-87"></a><a href="#curation-87"><span class="linenos"> 87</span></a>        <span class="c1"># Convert numeric columns to float</span>
+<a id="curation-88" name="curation-88"></a><a href="#curation-88"><span class="linenos"> 88</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+<a id="curation-89" name="curation-89"></a><a href="#curation-89"><span class="linenos"> 89</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<a id="curation-90" name="curation-90"></a><a href="#curation-90"><span class="linenos"> 90</span></a>        <span class="p">)</span>
+<a id="curation-91" name="curation-91"></a><a href="#curation-91"><span class="linenos"> 91</span></a>
+<a id="curation-92" name="curation-92"></a><a href="#curation-92"><span class="linenos"> 92</span></a>        <span class="c1"># Check for infinite and NaN values</span>
+<a id="curation-93" name="curation-93"></a><a href="#curation-93"><span class="linenos"> 93</span></a>        <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span>
+<a id="curation-94" name="curation-94"></a><a href="#curation-94"><span class="linenos"> 94</span></a>            <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="curation-95" name="curation-95"></a><a href="#curation-95"><span class="linenos"> 95</span></a>        <span class="p">)</span>
+<a id="curation-96" name="curation-96"></a><a href="#curation-96"><span class="linenos"> 96</span></a>
+<a id="curation-97" name="curation-97"></a><a href="#curation-97"><span class="linenos"> 97</span></a>        <span class="c1"># Store discarded rows separately</span>
+<a id="curation-98" name="curation-98"></a><a href="#curation-98"><span class="linenos"> 98</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">svm_df_nan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="curation-99" name="curation-99"></a><a href="#curation-99"><span class="linenos"> 99</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">svm_df_nan</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Assign label 0 to discarded cells</span>
+<a id="curation-100" name="curation-100"></a><a href="#curation-100"><span class="linenos">100</span></a>
+<a id="curation-101" name="curation-101"></a><a href="#curation-101"><span class="linenos">101</span></a>        <span class="c1"># Keep only valid rows for training</span>
+<a id="curation-102" name="curation-102"></a><a href="#curation-102"><span class="linenos">102</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<a id="curation-103" name="curation-103"></a><a href="#curation-103"><span class="linenos">103</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cell_id_frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_id_frame</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>  <span class="c1"># Ensure cell_id &amp; frame match</span>
+<a id="curation-104" name="curation-104"></a><a href="#curation-104"><span class="linenos">104</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<a id="curation-105" name="curation-105"></a><a href="#curation-105"><span class="linenos">105</span></a>
+<a id="curation-106" name="curation-106"></a><a href="#curation-106"><span class="linenos">106</span></a>        <span class="c1"># Print the number of removed rows</span>
+<a id="curation-107" name="curation-107"></a><a href="#curation-107"><span class="linenos">107</span></a>        <span class="n">num_removed_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">-</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a id="curation-108" name="curation-108"></a><a href="#curation-108"><span class="linenos">108</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Number of removed rows: </span><span class="si">{</span><span class="n">num_removed_rows</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="curation-109" name="curation-109"></a><a href="#curation-109"><span class="linenos">109</span></a>
+<a id="curation-110" name="curation-110"></a><a href="#curation-110"><span class="linenos">110</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_label_proportions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="curation-111" name="curation-111"></a><a href="#curation-111"><span class="linenos">111</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-112" name="curation-112"></a><a href="#curation-112"><span class="linenos">112</span></a><span class="sd">        Calculate the proportions of labels in the curated dataset.</span>
+<a id="curation-113" name="curation-113"></a><a href="#curation-113"><span class="linenos">113</span></a>
+<a id="curation-114" name="curation-114"></a><a href="#curation-114"><span class="linenos">114</span></a><span class="sd">        This method calculates and returns the proportions of label 1 and label 0 in the curated dataset.</span>
+<a id="curation-115" name="curation-115"></a><a href="#curation-115"><span class="linenos">115</span></a><span class="sd">        It counts the occurrences of each label and divides them by the total number of samples in the dataset to compute the proportions.</span>
+<a id="curation-116" name="curation-116"></a><a href="#curation-116"><span class="linenos">116</span></a>
+<a id="curation-117" name="curation-117"></a><a href="#curation-117"><span class="linenos">117</span></a><span class="sd">        Returns</span>
+<a id="curation-118" name="curation-118"></a><a href="#curation-118"><span class="linenos">118</span></a><span class="sd">        -------</span>
+<a id="curation-119" name="curation-119"></a><a href="#curation-119"><span class="linenos">119</span></a><span class="sd">        float</span>
+<a id="curation-120" name="curation-120"></a><a href="#curation-120"><span class="linenos">120</span></a><span class="sd">            The proportion of label 1 in the curated dataset.</span>
+<a id="curation-121" name="curation-121"></a><a href="#curation-121"><span class="linenos">121</span></a><span class="sd">        float</span>
+<a id="curation-122" name="curation-122"></a><a href="#curation-122"><span class="linenos">122</span></a><span class="sd">            The proportion of label 0 in the curated dataset.</span>
+<a id="curation-123" name="curation-123"></a><a href="#curation-123"><span class="linenos">123</span></a>
+<a id="curation-124" name="curation-124"></a><a href="#curation-124"><span class="linenos">124</span></a><span class="sd">        """</span>
+<a id="curation-125" name="curation-125"></a><a href="#curation-125"><span class="linenos">125</span></a>        <span class="n">label_counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<a id="curation-126" name="curation-126"></a><a href="#curation-126"><span class="linenos">126</span></a>        <span class="n">total_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">)</span>
+<a id="curation-127" name="curation-127"></a><a href="#curation-127"><span class="linenos">127</span></a>
+<a id="curation-128" name="curation-128"></a><a href="#curation-128"><span class="linenos">128</span></a>        <span class="n">proportion_label_1</span> <span class="o">=</span> <span class="n">label_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_samples</span>
+<a id="curation-129" name="curation-129"></a><a href="#curation-129"><span class="linenos">129</span></a>        <span class="n">proportion_label_0</span> <span class="o">=</span> <span class="n">label_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_samples</span>
+<a id="curation-130" name="curation-130"></a><a href="#curation-130"><span class="linenos">130</span></a>
+<a id="curation-131" name="curation-131"></a><a href="#curation-131"><span class="linenos">131</span></a>        <span class="k">return</span> <span class="n">proportion_label_1</span><span class="p">,</span> <span class="n">proportion_label_0</span>
+<a id="curation-132" name="curation-132"></a><a href="#curation-132"><span class="linenos">132</span></a>
+<a id="curation-133" name="curation-133"></a><a href="#curation-133"><span class="linenos">133</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">make_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="curation-134" name="curation-134"></a><a href="#curation-134"><span class="linenos">134</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-135" name="curation-135"></a><a href="#curation-135"><span class="linenos">135</span></a><span class="sd">        Make predictions using the SVM model and reattach `cell_id` and `frame`.</span>
+<a id="curation-136" name="curation-136"></a><a href="#curation-136"><span class="linenos">136</span></a><span class="sd">    </span>
+<a id="curation-137" name="curation-137"></a><a href="#curation-137"><span class="linenos">137</span></a><span class="sd">        Returns</span>
+<a id="curation-138" name="curation-138"></a><a href="#curation-138"><span class="linenos">138</span></a><span class="sd">        -------</span>
+<a id="curation-139" name="curation-139"></a><a href="#curation-139"><span class="linenos">139</span></a><span class="sd">        pd.DataFrame</span>
+<a id="curation-140" name="curation-140"></a><a href="#curation-140"><span class="linenos">140</span></a><span class="sd">            A DataFrame containing the predicted labels with corresponding `cell_id` and `frame`.</span>
+<a id="curation-141" name="curation-141"></a><a href="#curation-141"><span class="linenos">141</span></a><span class="sd">        """</span>
+<a id="curation-142" name="curation-142"></a><a href="#curation-142"><span class="linenos">142</span></a>
+<a id="curation-143" name="curation-143"></a><a href="#curation-143"><span class="linenos">143</span></a>        <span class="c1"># Use the schema stored with the trained model. An unnamed model can</span>
+<a id="curation-144" name="curation-144"></a><a href="#curation-144"><span class="linenos">144</span></a>        <span class="c1"># only check width and could silently interpret reordered columns.</span>
+<a id="curation-145" name="curation-145"></a><a href="#curation-145"><span class="linenos">145</span></a>        <span class="n">expected_columns</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svm_model</span><span class="p">,</span> <span class="s2">"feature_names_in_"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<a id="curation-146" name="curation-146"></a><a href="#curation-146"><span class="linenos">146</span></a>        <span class="k">if</span> <span class="n">expected_columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="curation-147" name="curation-147"></a><a href="#curation-147"><span class="linenos">147</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="curation-148" name="curation-148"></a><a href="#curation-148"><span class="linenos">148</span></a>                <span class="s2">"The SVM model has no feature_names_in_ schema. Train it on a "</span>
+<a id="curation-149" name="curation-149"></a><a href="#curation-149"><span class="linenos">149</span></a>                <span class="s2">"named pandas DataFrame before using it for curation."</span>
+<a id="curation-150" name="curation-150"></a><a href="#curation-150"><span class="linenos">150</span></a>            <span class="p">)</span>
+<a id="curation-151" name="curation-151"></a><a href="#curation-151"><span class="linenos">151</span></a>        <span class="n">expected_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expected_columns</span><span class="p">)</span>
+<a id="curation-152" name="curation-152"></a><a href="#curation-152"><span class="linenos">152</span></a>        <span class="n">actual_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<a id="curation-153" name="curation-153"></a><a href="#curation-153"><span class="linenos">153</span></a>        <span class="k">if</span> <span class="n">actual_columns</span> <span class="o">!=</span> <span class="n">expected_columns</span><span class="p">:</span>
+<a id="curation-154" name="curation-154"></a><a href="#curation-154"><span class="linenos">154</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="curation-155" name="curation-155"></a><a href="#curation-155"><span class="linenos">155</span></a>                <span class="s2">"SVM feature columns do not match the model's training schema. "</span>
+<a id="curation-156" name="curation-156"></a><a href="#curation-156"><span class="linenos">156</span></a>                <span class="sa">f</span><span class="s2">"Expected </span><span class="si">{</span><span class="n">expected_columns</span><span class="si">}</span><span class="s2">; got </span><span class="si">{</span><span class="n">actual_columns</span><span class="si">}</span><span class="s2">."</span>
+<a id="curation-157" name="curation-157"></a><a href="#curation-157"><span class="linenos">157</span></a>            <span class="p">)</span>
+<a id="curation-158" name="curation-158"></a><a href="#curation-158"><span class="linenos">158</span></a>
+<a id="curation-159" name="curation-159"></a><a href="#curation-159"><span class="linenos">159</span></a>        <span class="c1"># Predict labels</span>
+<a id="curation-160" name="curation-160"></a><a href="#curation-160"><span class="linenos">160</span></a>        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+<a id="curation-161" name="curation-161"></a><a href="#curation-161"><span class="linenos">161</span></a>
+<a id="curation-162" name="curation-162"></a><a href="#curation-162"><span class="linenos">162</span></a>        <span class="c1"># Create curated DataFrame</span>
+<a id="curation-163" name="curation-163"></a><a href="#curation-163"><span class="linenos">163</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="curation-164" name="curation-164"></a><a href="#curation-164"><span class="linenos">164</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span>
+<a id="curation-165" name="curation-165"></a><a href="#curation-165"><span class="linenos">165</span></a>
+<a id="curation-166" name="curation-166"></a><a href="#curation-166"><span class="linenos">166</span></a>        <span class="c1"># Reattach `cell_id` and `frame`</span>
+<a id="curation-167" name="curation-167"></a><a href="#curation-167"><span class="linenos">167</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[[</span><span class="s2">"cell_id"</span><span class="p">,</span> <span class="s2">"frame"</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_id_frame</span><span class="o">.</span><span class="n">values</span>
+<a id="curation-168" name="curation-168"></a><a href="#curation-168"><span class="linenos">168</span></a>
+<a id="curation-169" name="curation-169"></a><a href="#curation-169"><span class="linenos">169</span></a>        <span class="c1"># Add back NaN/Inf-removed rows</span>
+<a id="curation-170" name="curation-170"></a><a href="#curation-170"><span class="linenos">170</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">svm_df_nan</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="curation-171" name="curation-171"></a><a href="#curation-171"><span class="linenos">171</span></a>
+<a id="curation-172" name="curation-172"></a><a href="#curation-172"><span class="linenos">172</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span>
+<a id="curation-173" name="curation-173"></a><a href="#curation-173"><span class="linenos">173</span></a>
+<a id="curation-174" name="curation-174"></a><a href="#curation-174"><span class="linenos">174</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_pos</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">num_neg</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<a id="curation-175" name="curation-175"></a><a href="#curation-175"><span class="linenos">175</span></a><span class="w">        </span><span class="sd">"""</span>
+<a id="curation-176" name="curation-176"></a><a href="#curation-176"><span class="linenos">176</span></a><span class="sd">        Get control cell IDs for positive and negative classes.</span>
+<a id="curation-177" name="curation-177"></a><a href="#curation-177"><span class="linenos">177</span></a>
+<a id="curation-178" name="curation-178"></a><a href="#curation-178"><span class="linenos">178</span></a><span class="sd">        This method retrieves cell IDs for positive and negative classes based on the curated dataset.</span>
+<a id="curation-179" name="curation-179"></a><a href="#curation-179"><span class="linenos">179</span></a><span class="sd">        It randomly selects a specified number of positive and negative cell IDs and returns them as lists, along with the corresponding 'frame' values.</span>
+<a id="curation-180" name="curation-180"></a><a href="#curation-180"><span class="linenos">180</span></a>
+<a id="curation-181" name="curation-181"></a><a href="#curation-181"><span class="linenos">181</span></a><span class="sd">        Parameters</span>
+<a id="curation-182" name="curation-182"></a><a href="#curation-182"><span class="linenos">182</span></a><span class="sd">        ----------</span>
+<a id="curation-183" name="curation-183"></a><a href="#curation-183"><span class="linenos">183</span></a><span class="sd">        num_pos : int, optional</span>
+<a id="curation-184" name="curation-184"></a><a href="#curation-184"><span class="linenos">184</span></a><span class="sd">            The number of positive class cell IDs to retrieve. The default is 5.</span>
+<a id="curation-185" name="curation-185"></a><a href="#curation-185"><span class="linenos">185</span></a><span class="sd">        num_neg : int, optional</span>
+<a id="curation-186" name="curation-186"></a><a href="#curation-186"><span class="linenos">186</span></a><span class="sd">            The number of negative class cell IDs to retrieve. The default is 5.</span>
+<a id="curation-187" name="curation-187"></a><a href="#curation-187"><span class="linenos">187</span></a>
+<a id="curation-188" name="curation-188"></a><a href="#curation-188"><span class="linenos">188</span></a><span class="sd">        Returns</span>
+<a id="curation-189" name="curation-189"></a><a href="#curation-189"><span class="linenos">189</span></a><span class="sd">        -------</span>
+<a id="curation-190" name="curation-190"></a><a href="#curation-190"><span class="linenos">190</span></a><span class="sd">        Tuple</span>
+<a id="curation-191" name="curation-191"></a><a href="#curation-191"><span class="linenos">191</span></a><span class="sd">            Two lists containing tuples of ('frame', 'cell_id') for positive and negative class control cell IDs.</span>
+<a id="curation-192" name="curation-192"></a><a href="#curation-192"><span class="linenos">192</span></a><span class="sd">            If there are not enough samples for one class, the corresponding list will be empty.</span>
+<a id="curation-193" name="curation-193"></a><a href="#curation-193"><span class="linenos">193</span></a><span class="sd">        """</span>
+<a id="curation-194" name="curation-194"></a><a href="#curation-194"><span class="linenos">194</span></a>
+<a id="curation-195" name="curation-195"></a><a href="#curation-195"><span class="linenos">195</span></a>        <span class="n">positive_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<a id="curation-196" name="curation-196"></a><a href="#curation-196"><span class="linenos">196</span></a>        <span class="n">negative_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<a id="curation-197" name="curation-197"></a><a href="#curation-197"><span class="linenos">197</span></a>
+<a id="curation-198" name="curation-198"></a><a href="#curation-198"><span class="linenos">198</span></a>        <span class="c1"># Check if there are not enough positive or negative samples</span>
+<a id="curation-199" name="curation-199"></a><a href="#curation-199"><span class="linenos">199</span></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive_indices</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_pos</span><span class="p">:</span>
+<a id="curation-200" name="curation-200"></a><a href="#curation-200"><span class="linenos">200</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"No positive labels"</span><span class="p">)</span>
+<a id="curation-201" name="curation-201"></a><a href="#curation-201"><span class="linenos">201</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Return None for positive and available negative indices</span>
+<a id="curation-202" name="curation-202"></a><a href="#curation-202"><span class="linenos">202</span></a>        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">negative_indices</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">num_neg</span><span class="p">:</span>
+<a id="curation-203" name="curation-203"></a><a href="#curation-203"><span class="linenos">203</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"No negative labels"</span><span class="p">)</span>
+<a id="curation-204" name="curation-204"></a><a href="#curation-204"><span class="linenos">204</span></a>            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>  <span class="c1"># Return available positive indices and None for negative</span>
+<a id="curation-205" name="curation-205"></a><a href="#curation-205"><span class="linenos">205</span></a>
+<a id="curation-206" name="curation-206"></a><a href="#curation-206"><span class="linenos">206</span></a>        <span class="n">positive_indices_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+<a id="curation-207" name="curation-207"></a><a href="#curation-207"><span class="linenos">207</span></a>            <span class="n">positive_indices</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_pos</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+<a id="curation-208" name="curation-208"></a><a href="#curation-208"><span class="linenos">208</span></a>        <span class="p">)</span>
+<a id="curation-209" name="curation-209"></a><a href="#curation-209"><span class="linenos">209</span></a>        <span class="n">negative_indices_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+<a id="curation-210" name="curation-210"></a><a href="#curation-210"><span class="linenos">210</span></a>            <span class="n">negative_indices</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_neg</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+<a id="curation-211" name="curation-211"></a><a href="#curation-211"><span class="linenos">211</span></a>        <span class="p">)</span>
+<a id="curation-212" name="curation-212"></a><a href="#curation-212"><span class="linenos">212</span></a>
+<a id="curation-213" name="curation-213"></a><a href="#curation-213"><span class="linenos">213</span></a>        <span class="c1"># Retrieve cell_id and frame for selected indices</span>
+<a id="curation-214" name="curation-214"></a><a href="#curation-214"><span class="linenos">214</span></a>        <span class="n">positive_cell_frames</span> <span class="o">=</span> <span class="p">[</span>
+<a id="curation-215" name="curation-215"></a><a href="#curation-215"><span class="linenos">215</span></a>            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">"cell_id"</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">"frame"</span><span class="p">])</span>
+<a id="curation-216" name="curation-216"></a><a href="#curation-216"><span class="linenos">216</span></a>            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">positive_indices_random</span>
+<a id="curation-217" name="curation-217"></a><a href="#curation-217"><span class="linenos">217</span></a>        <span class="p">]</span>
+<a id="curation-218" name="curation-218"></a><a href="#curation-218"><span class="linenos">218</span></a>        <span class="n">negative_cell_frames</span> <span class="o">=</span> <span class="p">[</span>
+<a id="curation-219" name="curation-219"></a><a href="#curation-219"><span class="linenos">219</span></a>            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">"cell_id"</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">curated_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">"frame"</span><span class="p">])</span>
+<a id="curation-220" name="curation-220"></a><a href="#curation-220"><span class="linenos">220</span></a>            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">negative_indices_random</span>
+<a id="curation-221" name="curation-221"></a><a href="#curation-221"><span class="linenos">221</span></a>        <span class="p">]</span>
+<a id="curation-222" name="curation-222"></a><a href="#curation-222"><span class="linenos">222</span></a>
+<a id="curation-223" name="curation-223"></a><a href="#curation-223"><span class="linenos">223</span></a>        <span class="k">return</span> <span class="n">positive_cell_frames</span><span class="p">,</span> <span class="n">negative_cell_frames</span>
+</pre></div>
+</div></section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

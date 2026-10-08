@@ -1,0 +1,45 @@
+Reuse masks and saved meshes
+============================
+
+Resume at different points in the workflow, provided the inputs and saved
+geometry belong to the same fields and calibration.
+
+Reuse existing masks
+--------------------
+
+.. code-block:: python
+
+   from bactoscoop import ImageCollection
+   ic = ImageCollection(r"C:\path\to\data", px=0.065)
+   ic.create_image_objects(phase_channel="C1")
+   ic.batch_process_mesh(phase_channel="C1", save_data=True)
+
+``create_image_objects`` loads missing phase images and masks, validates their
+field identities, and creates new image objects. In the tutorials, set
+``RUN_SEGMENTATION=False`` to take this route.
+
+Reuse geometry
+--------------
+
+.. code-block:: python
+
+   ic = ImageCollection(r"C:\path\to\data", px=0.065)
+   ic.batch_load_mesh("data_curated_meshdata.pkl", phase_channel="C1")
+   # Continue with channel detection and feature extraction.
+
+``batch_load_mesh`` accepts pickle and reloadable mesh Parquet. ``pkl_path`` can
+specify the directory containing the mesh file; its default is the image folder.
+The image/mask files are still needed to reconstruct image objects and measure
+signals. The file needs compatible geometry columns and field identities.
+
+State after loading
+-------------------
+
+Reloading creates a new image/cell population and clears previous feature and
+merged tables. Saved mesh tables preserve geometry, not all channel caches,
+detected objects, or feature dictionaries. Redetect objects and calculate the
+requested features after reloading.
+
+Verify ``px`` against the original experiment rather than assuming the saved
+geometry file carries all acquisition settings. See
+:py:meth:`bactoscoop.imagecollection.ImageCollection.batch_load_mesh`.

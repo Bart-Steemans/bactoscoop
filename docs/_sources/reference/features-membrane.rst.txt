@@ -1,0 +1,381 @@
+Membrane features
+=================
+
+**Prerequisites:** Loaded channel, valid cell geometry, and detected object contours for that channel; measurements sample the reconstructed cell contour.
+
+A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.
+
+cell_perimeter
+--------------
+
+**Exported column:** ``<channel>_cell_perimeter``
+
+**Meaning:** Cell contour perimeter.
+
+Calculation: Sum the distances between consecutive points of the subpixel contour.
+Explanation: This is the total contour length around the cell boundary in 2D.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_perimeter_measurements(cropped_contour, area, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_perimeter_measurements`.
+
+`Source assignment, line 878 <../source-code/features.html#features-878>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_intensity
+-----------------
+
+**Exported column:** ``<channel>_contour_intensity``
+
+**Meaning:** Membrane contour intensity profile.
+
+Calculation: Sample intensity along the eroded and resampled contour and smooth the resulting profile.
+Explanation: This is the 1D membrane-associated signal profile that runs around the cell perimeter.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   contour_intensity_profile
+
+`Source assignment, line 889 <../source-code/features.html#features-889>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+normalized_contour_intensity
+----------------------------
+
+**Exported column:** ``<channel>_normalized_contour_intensity``
+
+**Meaning:** Normalized membrane contour intensity profile.
+
+Calculation: Apply per-cell min-max normalization: (x - min) / (max - min).
+Explanation: This rescales the profile to the 0-1 range so cells can be compared independent of absolute intensity differences.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** Within-cell min–max scaling for normalized axial/mesh/contour profiles; complemented contour intensity is transformed separately in the helper.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.normalize_per_cell(cell.membrane_features['contour_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.normalize_per_cell`.
+
+`Source assignment, line 890 <../source-code/features.html#features-890>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+complemented_contour_intensity
+------------------------------
+
+**Exported column:** ``<channel>_complemented_contour_intensity``
+
+**Meaning:** Complemented membrane contour intensity profile.
+
+Calculation: Split the normalized contour profile into two halves, reverse one half, and average opposite positions together.
+Explanation: This folds the two sides of the membrane onto one common coordinate system for easier comparison.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** Within-cell min–max scaling for normalized axial/mesh/contour profiles; complemented contour intensity is transformed separately in the helper.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_complemented_contour_intensity(cell.membrane_features['normalized_contour_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_complemented_contour_intensity`.
+
+`Source assignment, line 893 <../source-code/features.html#features-893>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_intensity_mean
+----------------------
+
+**Exported column:** ``<channel>_contour_intensity_mean``
+
+**Meaning:** Mean membrane contour intensity.
+
+Calculation: Compute the requested summary statistic from contour\_intensity.
+Explanation: This condenses the membrane-intensity profile into one interpretable number.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(contour_intensity_profile)
+
+`Source assignment, line 899 <../source-code/features.html#features-899>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_intensity_std
+---------------------
+
+**Exported column:** ``<channel>_contour_intensity_std``
+
+**Meaning:** Standard deviation of membrane contour intensity.
+
+Calculation: Compute the requested summary statistic from contour\_intensity.
+Explanation: This condenses the membrane-intensity profile into one interpretable number.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.std(contour_intensity_profile)
+
+`Source assignment, line 902 <../source-code/features.html#features-902>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_intensity_kurtosis
+--------------------------
+
+**Exported column:** ``<channel>_contour_intensity_kurtosis``
+
+**Meaning:** Kurtosis of membrane contour intensity.
+
+Calculation: Compute the requested summary statistic from contour\_intensity.
+Explanation: This condenses the membrane-intensity profile into one interpretable number.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_kurtosis(contour_intensity_profile)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_kurtosis`.
+
+`Source assignment, line 905 <../source-code/features.html#features-905>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_intensity_skewness
+--------------------------
+
+**Exported column:** ``<channel>_contour_intensity_skewness``
+
+**Meaning:** Skewness of membrane contour intensity.
+
+Calculation: Compute the requested summary statistic from contour\_intensity.
+Explanation: This condenses the membrane-intensity profile into one interpretable number.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_skew(contour_intensity_profile)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_skew`.
+
+`Source assignment, line 908 <../source-code/features.html#features-908>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+contour_gradient_homogeneity
+----------------------------
+
+**Exported column:** ``<channel>_contour_gradient_homogeneity``
+
+**Meaning:** Homogeneity of contour-intensity gradients.
+
+Calculation: Compute abs(median(abs(gradient)) - mean(abs(gradient))) on normalized\_contour\_intensity.
+Explanation: This measures how uniformly the contour signal changes around the cell perimeter.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_homogeneity(cell.membrane_features['normalized_contour_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_homogeneity`.
+
+`Source assignment, line 911 <../source-code/features.html#features-911>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_dissimilarity
+--------------------------
+
+**Exported column:** ``<channel>_glcm_contour_dissimilarity``
+
+**Meaning:** Membrane texture dissimilarity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute sum(P(i,j) \* \|i-j\|) across gray-level pairs, averaged over the angles used by bactoscoop.
+Explanation: Dissimilarity increases when neighboring pixels tend to have different intensities and is lower when neighboring pixels are more alike.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_dissimilarity
+
+`Source assignment, line 923 <../source-code/features.html#features-923>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_correlation
+------------------------
+
+**Exported column:** ``<channel>_glcm_contour_correlation``
+
+**Meaning:** Membrane texture correlation (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute the Haralick correlation term, which measures the covariance of paired gray levels after normalization by their standard deviations.
+Explanation: Correlation is high when neighboring pixel intensities vary together in a predictable linear way and lower when that relationship is weak.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_correlation
+
+`Source assignment, line 926 <../source-code/features.html#features-926>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_homogeneity
+------------------------
+
+**Exported column:** ``<channel>_glcm_contour_homogeneity``
+
+**Meaning:** Membrane texture homogeneity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute sum(P(i,j) / (1 + (i-j)^2)) across gray-level pairs, averaged over angles.
+Explanation: Homogeneity is high when most co-occurrences lie near the diagonal of the GLCM, meaning neighboring pixels usually have similar intensities.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_homogeneity
+
+`Source assignment, line 927 <../source-code/features.html#features-927>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_energy
+-------------------
+
+**Exported column:** ``<channel>_glcm_contour_energy``
+
+**Meaning:** Membrane texture energy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute sqrt(sum(P(i,j)^2)), averaged over angles.
+Explanation: Energy is high when the texture is orderly and dominated by a limited number of recurring gray-level combinations, and lower when the texture is more diverse.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_energy
+
+`Source assignment, line 928 <../source-code/features.html#features-928>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_contrast
+---------------------
+
+**Exported column:** ``<channel>_glcm_contour_contrast``
+
+**Meaning:** Membrane texture contrast (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute sum(P(i,j) \* (i-j)^2) across gray-level pairs, averaged over angles.
+Explanation: Contrast emphasizes strong local intensity differences, so higher values indicate sharper intensity transitions or more pronounced texture variation.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_contrast
+
+`Source assignment, line 929 <../source-code/features.html#features-929>`_; :py:meth:`bactoscoop.features.Features.membrane`.
+
+glcm_contour_shannon_entropy
+----------------------------
+
+**Exported column:** ``<channel>_glcm_contour_shannon_entropy``
+
+**Meaning:** Membrane texture Shannon entropy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the contour-intensity profile and compute its Shannon entropy in base 2.
+Explanation: Shannon entropy increases when the texture is more complex or unpredictable and decreases when the co-occurrence pattern is more ordered and repetitive.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_contour_entropy
+
+`Source assignment, line 930 <../source-code/features.html#features-930>`_; :py:meth:`bactoscoop.features.Features.membrane`.

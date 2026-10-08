@@ -1,0 +1,281 @@
+bactoscoop.features
+===================
+
+.. py:module:: bactoscoop.features
+
+Per-cell feature implementations called by Image and ImageCollection. See :doc:`../reference/feature-dictionary`.
+
+Classes and public operations
+-----------------------------
+
+Features
+~~~~~~~~
+
+.. py:class:: Features(image_obj)
+
+   Calculate per-cell geometry and signal feature families for an image.
+
+   Collection and Image methods coordinate the required loading, filtering, feature error recording, and table construction.
+
+   :param image_obj: Image instance supplying calibration, geometry, and channel data.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.image_obj``.
+
+   `View current source, line 14 <../source-code/features.html#features-14>`_.
+
+Features.discard_large_meshes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.discard_large_meshes(cell, max_mesh_size=600)
+
+   Discard cells with meshes that are too small or large.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param max_mesh_size: Maximum accepted mesh row count; cells above this limit are removed from the image cell population.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``cell.discard``.
+
+   `View current source, line 20 <../source-code/features.html#features-20>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Discard cells with meshes that are too small or large.
+
+      This method checks the size of a cell's mesh and flags it for discard if the mesh size does not fall within the acceptable range.
+
+      Parameters
+      ----------
+      cell : Cell
+          The Cell object representing the cell to be checked.
+
+      Returns
+      -------
+      None
+
+   .. raw:: html
+
+      </details>
+
+Features.discard_bad_meshes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.discard_bad_meshes(cell)
+
+   Discard bad meshes.
+
+   :param cell: Cell instance containing geometry and measurements.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``cell.discard``.
+
+   `View current source, line 42 <../source-code/features.html#features-42>`_.
+
+Features.contour_selection
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.contour_selection(cell, use_shifted_contours)
+
+   Contour selection.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (cell.shifted_contour, cell.shifted_midline, cell.shifted_mesh)
+      (cell.contour, cell.midline, cell.mesh)
+
+   `View current source, line 57 <../source-code/features.html#features-57>`_.
+
+Features.morphological
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.morphological(cell, channel, all_data, *args)
+
+   Calculate morphological features for a cell.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``cell.morphological_features``, ``cell.profiling_data``, ``cell.profile_mesh``, ``cell.discard``.
+
+   `View current source, line 63 <../source-code/features.html#features-63>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate morphological features for a cell.
+
+   .. raw:: html
+
+      </details>
+
+Features.profiling
+~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.profiling(cell, channel, all_data, use_shifted_contours, shift_signal, *args)
+
+   Calculate profiling features for a cell.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+   :param shift_signal: Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   **Assigned state:** ``cell.profiling_features``, ``cell.discard``.
+
+   **Explicitly raised exceptions:** ``AttributeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 241 <../source-code/features.html#features-241>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate profiling features for a cell.
+
+   .. raw:: html
+
+      </details>
+
+Features.svm
+~~~~~~~~~~~~
+
+.. py:method:: Features.svm(cell, channel, all_data, *args)
+
+   Calculate features of a cell to be used in training the Support Vector Machine (SVM) or curate a dataset using a trained SVM model.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``cell.svm_features``, ``cell.profiling_data``.
+
+   `View current source, line 375 <../source-code/features.html#features-375>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate features of a cell to be used in training the Support Vector Machine (SVM) or curate a dataset using a trained SVM model.
+
+   .. raw:: html
+
+      </details>
+
+Features.objects
+~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.objects(cell, channel, all_data, use_shifted_contours, *args, retain_contour_on_object_mesh_failure=False)
+
+   Calculates features related to the identified objects within a cell.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+   :param retain_contour_on_object_mesh_failure: Per-cell objects option used by the collection retention-channel setting.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   **Assigned state:** ``cell.objects_features``, ``cell.discard``.
+
+   **Explicitly raised exceptions:** ``AttributeError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 501 <../source-code/features.html#features-501>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculates features related to the identified objects within a cell.
+
+   .. raw:: html
+
+      </details>
+
+Features.membrane
+~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.membrane(cell, channel, all_data, use_shifted_contours, shift_signal)
+
+   Membrane.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+   :param shift_signal: Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   **Assigned state:** ``cell.membrane_features``, ``cell.discard``.
+
+   **Explicitly raised exceptions:** ``AttributeError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 836 <../source-code/features.html#features-836>`_.
+
+Features.colocalization
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Features.colocalization(cell, signal1, signal2, shift_signal1, shift_signal2, all_data, use_shifted_contours)
+
+   Incomplete preliminary colocalization implementation.
+
+   Prepares channel crops but does not complete a measurement; do not use as an analysis feature family.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param shift_signal1: Input ``shift_signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param shift_signal2: Input ``shift_signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param all_data: Feature-method-specific option; objects includes detailed per-object arrays when true.
+   :param use_shifted_contours: Select stored shifted contour, midline, and mesh geometry; the correction must already exist.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``cell.signal_correlation_features``.
+
+   **Explicitly raised exceptions:** ``AttributeError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 937 <../source-code/features.html#features-937>`_.

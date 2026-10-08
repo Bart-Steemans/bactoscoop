@@ -1,0 +1,1201 @@
+bactoscoop.plot
+===============
+
+.. py:module:: bactoscoop.plot
+
+Classes and public operations
+-----------------------------
+
+pick_representative_cell
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: pick_representative_cell(image_objects, margin_px=20)
+
+   Pick an interior, isolated, median-sized cell with valid geometry.
+
+   :param image_objects: Input ``image_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param margin_px: Input ``margin_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (winner[0], winner[1])
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 40 <../source-code/plot.html#plot-40>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Pick an interior, isolated, median-sized cell with valid geometry.
+
+      The rule is deterministic and uses geometry only, never fluorescence intensity.
+      Returns the image object and cell ID so the same cell can be revisited.
+
+   .. raw:: html
+
+      </details>
+
+select_example_cell
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: select_example_cell(image_objects, field_id=None, cell_id=None)
+
+   Choose an existing field/cell, or a representative cell in the chosen field.
+
+   :param image_objects: Input ``image_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param field_id: Shared TIFF field stem before the channel suffix.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      pick_representative_cell(objects)
+      (image, cell_id)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 98 <../source-code/plot.html#plot-98>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Choose an existing field/cell, or a representative cell in the chosen field.
+
+   .. raw:: html
+
+      </details>
+
+plot_field_channels
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_field_channels(dataset_dir, field_id, channel_labels, crop_size=650)
+
+   Preview the same pixel window across the named TIFF channels.
+
+   :param dataset_dir: Folder containing the channel TIFF files.
+   :param field_id: Shared TIFF field stem before the channel suffix.
+   :param channel_labels: Mapping from channel identifiers to human-readable signal labels.
+   :param crop_size: Displayed crop extent in pixels.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 133 <../source-code/plot.html#plot-133>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Preview the same pixel window across the named TIFF channels.
+
+   .. raw:: html
+
+      </details>
+
+plot_segmentation_review
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_segmentation_review(image_objects, crop_size=500, mask_label=None, center=None)
+
+   Compare phase and mask outlines in a selectable cell-centered crop.
+
+   :param image_objects: Input ``image_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param crop_size: Displayed crop extent in pixels.
+   :param mask_label: Input ``mask_label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param center: Input ``center`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 160 <../source-code/plot.html#plot-160>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compare phase and mask outlines in a selectable cell-centered crop.
+
+   .. raw:: html
+
+      </details>
+
+plot_cell_gallery
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_cell_gallery(image_object, cell_id, channel='C2', window_px=110, channel_label=None, align_signal=False, show_objects=False)
+
+   Show phase and mesh, optionally with a registered signal crop and objects.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param window_px: Cell plot window extent in pixels.
+   :param channel_label: Input ``channel_label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param align_signal: Input ``align_signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param show_objects: Input ``show_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 207 <../source-code/plot.html#plot-207>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Show phase and mesh, optionally with a registered signal crop and objects.
+
+      The registered crop uses the same local crop/phase registration called by
+      ``object_detection(align=True)``. Plot it after detection to compare its
+      detected object contours with the phase-cell contour.
+
+   .. raw:: html
+
+      </details>
+
+plot_C2_alignment
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_C2_alignment(image_object, cell_id, window_px=110, channel='C2', channel_label=None, show_objects=False)
+
+   Compare the raw C2 signal with the phase-aligned C2 signal.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param window_px: Cell plot window extent in pixels.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param channel_label: Input ``channel_label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param show_objects: Input ``show_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 280 <../source-code/plot.html#plot-280>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compare the raw C2 signal with the phase-aligned C2 signal.
+
+      BEFORE: original fluorescence image, cropped around the cell.
+      AFTER:  fluorescence crop returned by u.crop_image(..., phase_img=...).
+
+      Cell contours are overlaid using the correct origin for each crop.
+      Detected object contours can optionally be shown on the aligned panel.
+
+   .. raw:: html
+
+      </details>
+
+snapshot_cell_contours
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: snapshot_cell_contours(image_objects)
+
+   Copy cell IDs and contours before curation changes the collection.
+
+   :param image_objects: Input ``image_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {image.image_name: {cell.cell_id: np.asarray(cell.contour).copy() for cell in image.cells} for image in image_objects}
+
+   `View current source, line 430 <../source-code/plot.html#plot-430>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Copy cell IDs and contours before curation changes the collection.
+
+   .. raw:: html
+
+      </details>
+
+plot_curation_review
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_curation_review(before_contours, image_objects, crop_size=700)
+
+   Show retained cells in green and removed cells in red on phase images.
+
+   :param before_contours: Input ``before_contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image_objects: Input ``image_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param crop_size: Displayed crop extent in pixels.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 440 <../source-code/plot.html#plot-440>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Show retained cells in green and removed cells in red on phase images.
+
+      ``before_contours`` is made by :func:`snapshot_cell_contours` before
+      curation. Cells are matched by image name and cell ID.
+
+   .. raw:: html
+
+      </details>
+
+plot_signal_gallery
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_signal_gallery(image_object, cell_id, channel_labels=None, window_px=120, show_objects=False)
+
+   Show the phase image beside raw channel crops, with optional detections.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param channel_labels: Mapping from channel identifiers to human-readable signal labels.
+   :param window_px: Cell plot window extent in pixels.
+   :param show_objects: Input ``show_objects`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 510 <../source-code/plot.html#plot-510>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Show the phase image beside raw channel crops, with optional detections.
+
+      Cell contours are displayed on all panels. Detected object contours
+      are optionally overlaid on the corresponding fluorescence channels.
+
+      Crops share pixel coordinates. This function does not register channels.
+
+   .. raw:: html
+
+      </details>
+
+plot_object_area_vs_cell_area
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_object_area_vs_cell_area(features, channel_labels)
+
+   Compare detected object area with cell area for each named channel.
+
+   :param features: Input ``features`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel_labels: Mapping from channel identifiers to human-readable signal labels.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 611 <../source-code/plot.html#plot-611>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compare detected object area with cell area for each named channel.
+
+   .. raw:: html
+
+      </details>
+
+plot_feature_overview
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_feature_overview(features, signal_column='C4_NC_ratio')
+
+   Exploratory overview of cell morphology, constriction, detected objects, and relative signal localization.
+
+   :param features: Input ``features`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal_column: Input ``signal_column`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+      pd.to_numeric(features[column], errors='coerce').to_numpy()
+      None
+
+   `View current source, line 640 <../source-code/plot.html#plot-640>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Exploratory overview of cell morphology, constriction,
+      detected objects, and relative signal localization.
+
+      C2 = outer membrane
+      C3 = inner membrane
+      C4 = RNA
+      C5 = DAPI
+
+      Missing features are indicated in their panels.
+      Nothing is saved.
+
+   .. raw:: html
+
+      </details>
+
+plot_feature_histogram
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_feature_histogram(df, feature, bins=40, xlabel=None, color='#197E89', figsize=(7, 4.5))
+
+   Plot a feature distribution with mean, median and interquartile range.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param feature: Unprefixed shared feature name; corresponding channel-prefixed columns must exist.
+   :param bins: Input ``bins`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param xlabel: Input ``xlabel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param color: Input ``color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param figsize: Input ``figsize`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 866 <../source-code/plot.html#plot-866>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot a feature distribution with mean, median and interquartile range.
+
+   .. raw:: html
+
+      </details>
+
+plot_feature_scatter
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_feature_scatter(df, x_feature, y_feature, color_by=None, xlabel=None, ylabel=None, trendline=True, figsize=(7, 5))
+
+   Plot two features against each other.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param x_feature: Input ``x_feature`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y_feature: Input ``y_feature`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param color_by: Input ``color_by`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param xlabel: Input ``xlabel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ylabel: Input ``ylabel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param trendline: Input ``trendline`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param figsize: Input ``figsize`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 945 <../source-code/plot.html#plot-945>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot two features against each other.
+
+      Optionally colour points by a third numeric feature.
+      A linear regression line and Pearson correlation can be shown.
+
+   .. raw:: html
+
+      </details>
+
+plot_contour
+~~~~~~~~~~~~
+
+.. py:function:: plot_contour(cell_id, image, base_channel=None, verbose=False, add_scalebar=True, scalebar_um=1, um_per_px=0.065, scalebar_color='white', scalebar_lw=6, window_px=None, save_svg_path=None)
+
+   Plot the contour of a cell with optional scalebar.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param base_channel: Input ``base_channel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param add_scalebar: Input ``add_scalebar`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param window_px: Cell plot window extent in pixels.
+   :param save_svg_path: Input ``save_svg_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 1059 <../source-code/plot.html#plot-1059>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot the contour of a cell with optional scalebar.
+
+      Parameters
+      ----------
+      window_px : int or None
+          If provided, creates a fixed square window (in pixels) centered on the cell.
+          If None, tight crop is used (default behavior).
+
+   .. raw:: html
+
+      </details>
+
+plot_cell_contour_gallery
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_cell_contour_gallery(cell_id, image, channels, window_px=100, phase_first=True, phase_cmap='gist_grey', channel_cmap='gist_grey', contour_color='yellow', contour_lw=1.5, add_scalebar=True, scalebar_um=1, um_per_px=0.065, scalebar_color='white', scalebar_lw=4, title=True, figsize_per_panel=3.0, save_path=None, save_individual_dir=None, dpi=500, verbose=False)
+
+   Plot a cropped gallery for one cell using: - image.image for phase contrast - image.channels[ch] for channel images - only the cell contour overlay
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: Typically ic.image\_objects[frame\_id]
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param window_px: Cell plot window extent in pixels.
+   :param phase_first: Input ``phase_first`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_cmap: Input ``phase_cmap`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel_cmap: Input ``channel_cmap`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour_color: Input ``contour_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour_lw: Input ``contour_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param add_scalebar: Input ``add_scalebar`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param title: Input ``title`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param figsize_per_panel: Input ``figsize_per_panel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param save_path: Input ``save_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param save_individual_dir: Input ``save_individual_dir`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param dpi: Input ``dpi`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {'cell_id': cell_id, 'crop_bounds': (y_min, y_max, x_min, x_max), 'panel_names': [p[0] for p in panels], 'figure': fig}
+      None
+
+   `View current source, line 1193 <../source-code/plot.html#plot-1193>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot a cropped gallery for one cell using:
+        - image.image for phase contrast
+        - image.channels[ch] for channel images
+        - only the cell contour overlay
+
+      Parameters
+      ----------
+      cell_id : int or str
+      image : object
+          Typically ic.image_objects[frame_id]
+      channels : list of str
+          Example: ["C1", "C2", "C3", "C4", "C5"]
+
+   .. raw:: html
+
+      </details>
+
+plot_aligned_contours
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_aligned_contours(cell_id, image, channel, verbose=False)
+
+   Plot the contour of a cell on an image.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: The image object on which to plot the cell contour.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 1360 <../source-code/plot.html#plot-1360>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot the contour of a cell on an image.
+
+      This function takes a cell object and an image object and plots the contour of the specified cell on the image.
+      It also displays the cell ID in the title of the plot.
+
+      Parameters
+      ----------
+      cell : Cell
+          The cell object to be plotted.
+      image : Image
+          The image object on which to plot the cell contour.
+
+   .. raw:: html
+
+      </details>
+
+plot_svm_controls
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_svm_controls(frame_cell_pairs, image_objects, message=None)
+
+   Plot cells based on frame and cell ID pairs from SVM control analysis.
+
+   :param frame_cell_pairs: A list of (cell\_id, frame) pairs for cells to be plotted.
+   :param image_objects: A list of image objects corresponding to the frames in frame\_cell\_pairs.
+   :param message: An optional message to be added to the title of the plot.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1400 <../source-code/plot.html#plot-1400>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot cells based on frame and cell ID pairs from SVM control analysis.
+
+      This function takes frame and cell ID pairs, along with a list of image objects, and plots the cells from SVM control analysis.
+      It allows adding an optional message to the title of the plot.
+
+      Parameters
+      ----------
+      frame_cell_pairs : list of tuples
+          A list of (cell_id, frame) pairs for cells to be plotted.
+      image_objects : list
+          A list of image objects corresponding to the frames in frame_cell_pairs.
+      message : str, optional
+          An optional message to be added to the title of the plot.
+
+   .. raw:: html
+
+      </details>
+
+plot_mask
+~~~~~~~~~
+
+.. py:function:: plot_mask(image_object, joined=False, dpi=400, alpha=0.4)
+
+   Plot the mask overlay on an image.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param joined: Whether to use the joined mask for overlay (default is False).
+   :param dpi: Dots per inch for the plot (default is 400).
+   :param alpha: Alpha (transparency) value for the mask overlay (default is 0.4).
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1448 <../source-code/plot.html#plot-1448>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot the mask overlay on an image.
+
+      This function takes an image object and optionally a joined mask, and plots the mask overlay on the image.
+      The alpha parameter controls the transparency of the mask overlay.
+
+      Parameters
+      ----------
+      image_object : Image object
+          An image object containing the image and mask data.
+      joined : bool, optional
+          Whether to use the joined mask for overlay (default is False).
+      dpi : int, optional
+          Dots per inch for the plot (default is 400).
+      alpha : float, optional
+          Alpha (transparency) value for the mask overlay (default is 0.4).
+
+   .. raw:: html
+
+      </details>
+
+plot_random_contours
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_random_contours(image, num_cells_to_plot=4, crop_size=200, scalebar=False)
+
+   Plot random cell contours within an image.
+
+   :param image: An image object containing the image and cell contour data.
+   :param num_cells_to_plot: Number of random cell contours to plot (default is 4).
+   :param crop_size: Displayed crop extent in pixels.
+   :param scalebar: Whether to add a scale bar to the plots (default is False).
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1488 <../source-code/plot.html#plot-1488>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot random cell contours within an image.
+
+      This function selects and plots random cell contours within an image, showing a specified number of cells.
+
+      Parameters
+      ----------
+      image : Image object
+          An image object containing the image and cell contour data.
+      num_cells_to_plot : int, optional
+          Number of random cell contours to plot (default is 4).
+      crop_size : int, optional
+          Size of the cropped area around each cell (default is 200).
+      scalebar : bool, optional
+          Whether to add a scale bar to the plots (default is False).
+
+      Returns
+      -------
+      None
+
+   .. raw:: html
+
+      </details>
+
+plot_random_objects
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_random_objects(image, chann, num_objects_to_plot=4, crop_size=300, scalebar=True)
+
+   Plot random objects.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param chann: Input ``chann`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param num_objects_to_plot: Input ``num_objects_to_plot`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param crop_size: Displayed crop extent in pixels.
+   :param scalebar: Input ``scalebar`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1565 <../source-code/plot.html#plot-1565>`_.
+
+plot_random_axial
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_random_axial(feature_dataframe, channels, method, num_objects_to_plot=2)
+
+   Plot random axial.
+
+   :param feature_dataframe: Input ``feature_dataframe`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param method: Input ``method`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param num_objects_to_plot: Input ``num_objects_to_plot`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 1633 <../source-code/plot.html#plot-1633>`_.
+
+plot_normalized_axial_intensity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_normalized_axial_intensity(feature_dataframe, channels, selected_frame=None, selected_cell_id=None, show=True)
+
+   Plot normalized axial profiles for selected cells.
+
+   :param feature_dataframe: Input ``feature_dataframe`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
+   :param selected_frame: Input ``selected_frame`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param selected_cell_id: Input ``selected_cell_id`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param show: Display generated plots when true; check the documented return expression for figures.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      figures
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1688 <../source-code/plot.html#plot-1688>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot normalized axial profiles for selected cells.
+
+   .. raw:: html
+
+      </details>
+
+plot_object_mesh
+~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_object_mesh(cell_id, image, chann, verbose=False)
+
+   Plot object mesh.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param chann: Input ``chann`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 1728 <../source-code/plot.html#plot-1728>`_.
+
+plot_object_contours
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_object_contours(cell_id, image, contour_channels, shift=False, base_channel=None, verbose=False, add_scalebar=True, scalebar_um=1, um_per_px=0.065, scalebar_color='white', scalebar_lw=8, window_px=None, save_svg_path=None, save_tiff_path=None)
+
+   Plot the contours of a cell and its objects for multiple channels on a single base channel image.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour_channels: Input ``contour_channels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param shift: Input ``shift`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param base_channel: Input ``base_channel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param add_scalebar: Input ``add_scalebar`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param window_px: Cell plot window extent in pixels.
+   :param save_svg_path: Input ``save_svg_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param save_tiff_path: Input ``save_tiff_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 1782 <../source-code/plot.html#plot-1782>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Plot the contours of a cell and its objects for multiple channels on a single base channel image.
+
+      Behaves like your original version:
+        - base_channel None -> uses image.image
+        - shift True -> crop_image(... phase_img=image.image)
+        - else -> crop_image(... phase_img=None)
+        - plots cell contour + object contours from cropped_object_contour
+        - adds scalebar the same way
+
+      Added:
+        - window_px: optional fixed square window around cell center (bypasses crop_image).
+        - save_svg_path: save editable SVG (scalebar/text/contours editable in Illustrator).
+
+   .. raw:: html
+
+      </details>
+
+plot_mesh_scientific
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_mesh_scientific(cell_id, image, crop_size=300, verbose=False)
+
+   Plot mesh scientific.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param crop_size: Displayed crop extent in pixels.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 1987 <../source-code/plot.html#plot-1987>`_.
+
+plot_width
+~~~~~~~~~~
+
+.. py:function:: plot_width(cell, image, crop_size=70)
+
+   Plot width.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param crop_size: Displayed crop extent in pixels.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2037 <../source-code/plot.html#plot-2037>`_.
+
+plot_signal_profile
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_signal_profile(cell, image)
+
+   Plot signal profile.
+
+   :param cell: Cell instance containing geometry and measurements.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2138 <../source-code/plot.html#plot-2138>`_.
+
+plot_demograph_rotated
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_demograph_rotated(cell_lengths, normalized_average_mesh_intensity, title='Demograph Plot', y_label='Normalized Distance From Midcell (µm)', x_label='Cell Length Percentile', cmap='rainbow', cbar_title='DnaN-msfGFP Normalized Intensity')
+
+   Plot demograph rotated.
+
+   :param cell_lengths: Input ``cell_lengths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param normalized_average_mesh_intensity: Input ``normalized_average_mesh_intensity`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param title: Input ``title`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y_label: Input ``y_label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x_label: Input ``x_label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cmap: Input ``cmap`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cbar_title: Input ``cbar_title`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2171 <../source-code/plot.html#plot-2171>`_.
+
+list_field_ids
+~~~~~~~~~~~~~~
+
+.. py:function:: list_field_ids(dataset_dir, phase_channel='C1')
+
+   List field ids.
+
+   :param dataset_dir: Folder containing the channel TIFF files.
+   :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      sorted({path.stem.rsplit('_', 1)[0] for path in dataset_dir.glob(f'*_{phase_channel}.tiff')})
+
+   `View current source, line 2225 <../source-code/plot.html#plot-2225>`_.
+
+plot_multichannel_overview
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_multichannel_overview(dataset_dir, field_id, channel_labels, figsize=(14, 3.8))
+
+   Return aligned display crops for each channel in a field of view.
+
+   :param dataset_dir: Folder containing the channel TIFF files.
+   :param field_id: Shared TIFF field stem before the channel suffix.
+   :param channel_labels: Mapping from channel identifiers to human-readable signal labels.
+   :param figsize: Input ``figsize`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      fig
+
+   `View current source, line 2235 <../source-code/plot.html#plot-2235>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Return aligned display crops for each channel in a field of view.
+
+   .. raw:: html
+
+      </details>
+
+plot_mesh_overlay
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_mesh_overlay(image_object, cell_id, crop_size=150, verbose=False)
+
+   Plot mesh overlay.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param crop_size: Displayed crop extent in pixels.
+   :param verbose: Input ``verbose`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 2244 <../source-code/plot.html#plot-2244>`_.
+
+pick_detected_cell
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: pick_detected_cell(image_object, preferred_channels=('C4', 'C5'))
+
+   Choose an interior, isolated cell with a detected object when possible.
+
+   :param image_object: Image instance containing the selected field and cells.
+   :param preferred_channels: Input ``preferred_channels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      max(candidates, key=score)[0]
+      pick_representative_cell([image_object])[1]
+      (item[2] >= 60, distance / max(item[3], 1), -abs(item[3] - median_length), item[2])
+
+   `View current source, line 2283 <../source-code/plot.html#plot-2283>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Choose an interior, isolated cell with a detected object when possible.
+
+   .. raw:: html
+
+      </details>
+
+plot_morphology_summary
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_morphology_summary(df)
+
+   Plot morphology summary.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2315 <../source-code/plot.html#plot-2315>`_.
+
+plot_signal_summary
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_signal_summary(df)
+
+   Plot signal summary.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2356 <../source-code/plot.html#plot-2356>`_.
+
+plot_pairwise_metric_heatmap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: plot_pairwise_metric_heatmap(df, metric_suffix, channel_order=('C2', 'C3', 'C4', 'C5'))
+
+   Plot pairwise metric heatmap.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param metric_suffix: Input ``metric_suffix`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel_order: Input ``channel_order`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      None
+
+   `View current source, line 2410 <../source-code/plot.html#plot-2410>`_.
+
+Internal helpers
+----------------
+
+_tutorial_contrast
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _tutorial_contrast(image)
+
+   Return a display range without changing the measured image.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (low, high if high > low else low + 1)
+
+   `View current source, line 27 <../source-code/plot.html#plot-27>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Return a display range without changing the measured image.
+
+   .. raw:: html
+
+      </details>
+
+_tutorial_crop
+~~~~~~~~~~~~~~
+
+.. py:function:: _tutorial_crop(shape, center, window_px)
+
+    tutorial crop.
+
+   :param shape: Input ``shape`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param center: Input ``center`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param window_px: Cell plot window extent in pixels.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (slice(y, min(y + window_px, shape[0])), slice(x, min(x + window_px, shape[1])))
+
+   `View current source, line 33 <../source-code/plot.html#plot-33>`_.
+
+_tutorial_channel_color
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _tutorial_channel_color(label)
+
+    tutorial channel color.
+
+   :param label: Input ``label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      '#197E89'
+      '#1DBCD3'
+      '#2BAE66'
+      '#D85755'
+
+   `View current source, line 115 <../source-code/plot.html#plot-115>`_.
+
+_tutorial_channel_cmap
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _tutorial_channel_cmap(label)
+
+    tutorial channel cmap.
+
+   :param label: Input ``label`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      LinearSegmentedColormap.from_list(f"bactoscoop_{label.replace(' ', '_')}", ['#000000', color])
+
+   `View current source, line 126 <../source-code/plot.html#plot-126>`_.

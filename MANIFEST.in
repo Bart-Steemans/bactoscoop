@@ -1,0 +1,9 @@
+include LICENSE README.md pyproject.toml
+recursive-include bactoscoop *.py
+prune tests
+prune examples
+prune documentation
+prune docs
+prune tools
+prune .github
+global-exclude *.py[cod] .env .env.* .pypirc *.pem *.key

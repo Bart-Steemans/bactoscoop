@@ -1,0 +1,1562 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Membrane features" href="features-membrane.html"><link rel="prev" title="Profiling features" href="features-profiling.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Objects features - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features-svm.html">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/features.html">bactoscoop.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/image.html">bactoscoop.image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/imagecollection.html">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/plot.html">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/reference/features-objects.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="objects-features">
+<h1>Objects features<a class="headerlink" href="#objects-features" title="Link to this heading">¶</a></h1>
+<p><strong>Prerequisites:</strong> Detected contours for the channel; valid object meshes for mesh-dependent quantities.</p>
+<p>A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.</p>
+<section id="cell-total-obj-rect-length">
+<h2>cell_total_obj_rect_length<a class="headerlink" href="#cell-total-obj-rect-length" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_rect_length</span></code></p>
+<p><strong>Meaning:</strong> Total object rectangle length per cell.</p>
+<p>Calculation: Fit a minimum-area rectangle to each object contour with cv2.minAreaRect, then report either the summed major-axis lengths or the mean minor-axis widths.
+Explanation: These features describe object size in a simple rectangle-based way.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_rect_length</span><span class="p">(</span><span class="n">object_contours</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_rect_length" title="bactoscoop.utilities.get_object_rect_length"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_rect_length()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-556">Source assignment, line 556</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-rect-width">
+<h2>cell_avg_obj_rect_width<a class="headerlink" href="#cell-avg-obj-rect-width" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_rect_width</span></code></p>
+<p><strong>Meaning:</strong> Mean object rectangle width per cell.</p>
+<p>Calculation: Fit a minimum-area rectangle to each object contour with cv2.minAreaRect, then report either the summed major-axis lengths or the mean minor-axis widths.
+Explanation: These features describe object size in a simple rectangle-based way.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_rect_length</span><span class="p">(</span><span class="n">object_contours</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_rect_length" title="bactoscoop.utilities.get_object_rect_length"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_rect_length()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-556">Source assignment, line 556</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-aspectratio">
+<h2>cell_avg_obj_aspectratio<a class="headerlink" href="#cell-avg-obj-aspectratio" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_aspectratio</span></code></p>
+<p><strong>Meaning:</strong> Mean object aspect ratio per cell.</p>
+<p>Calculation: For each object, compute rectangle length / rectangle width and then average across objects.
+Explanation: This tells you whether the detected objects are on average roundish or elongated.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_aspect_ratio</span><span class="p">(</span><span class="n">rectl</span><span class="p">,</span> <span class="n">rectw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_aspect_ratio" title="bactoscoop.utilities.get_object_aspect_ratio"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_aspect_ratio()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-562">Source assignment, line 562</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-width-dt">
+<h2>cell_avg_obj_width_dt<a class="headerlink" href="#cell-avg-obj-width-dt" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_width_dt</span></code></p>
+<p><strong>Meaning:</strong> Mean object width from the distance transform.</p>
+<p>Calculation: Use a distance transform and object skeleton to estimate local object widths, then average across objects.
+Explanation: This is a width estimate derived from the object masks themselves rather than from fitted rectangles.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_avg_width</span><span class="p">(</span><span class="n">object_masks</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_avg_width" title="bactoscoop.utilities.get_object_avg_width"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_avg_width()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-565">Source assignment, line 565</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="object-number">
+<h2>object_number<a class="headerlink" href="#object-number" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_object_number</span></code></p>
+<p><strong>Meaning:</strong> Number of objects per cell.</p>
+<p>Calculation: Count the number of detected object contours in the cell.
+Explanation: This simply tells you how many separate objects were found inside that cell.</p>
+<p><strong>Units:</strong> count. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">object_contours</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-568">Source assignment, line 568</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-total-obj-area">
+<h2>cell_total_obj_area<a class="headerlink" href="#cell-total-obj-area" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_area</span></code></p>
+<p><strong>Meaning:</strong> Total object area per cell.</p>
+<p>Calculation: Sum the areas of all object contours.
+Explanation: This is the total projected 2D area occupied by objects inside the cell.</p>
+<p><strong>Units:</strong> µm². <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_obj_area</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-572">Source assignment, line 572</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="nc-ratio">
+<h2>NC_ratio<a class="headerlink" href="#nc-ratio" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_NC_ratio</span></code></p>
+<p><strong>Meaning:</strong> Nucleoid-to-cell area ratio.</p>
+<p>Calculation: cell_total_obj_area / cell_area.
+Explanation: This compares the total object area to the host cell area and is often used as a nucleoid-to-cell occupancy measure.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_obj_area</span> <span class="o">/</span> <span class="n">cell_area</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-573">Source assignment, line 573</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-mean-c">
+<h2>cell_avg_obj_mean_c<a class="headerlink" href="#cell-avg-obj-mean-c" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_mean_c</span></code></p>
+<p><strong>Meaning:</strong> Mean object curvature averaged per cell.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_curvature_characteristics</span><span class="p">(</span><span class="n">object_contours</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_curvature_characteristics" title="bactoscoop.utilities.get_object_curvature_characteristics"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_curvature_characteristics()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-576">Source assignment, line 576</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-std-c">
+<h2>cell_avg_obj_std_c<a class="headerlink" href="#cell-avg-obj-std-c" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_std_c</span></code></p>
+<p><strong>Meaning:</strong> Mean object curvature variability per cell.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_curvature_characteristics</span><span class="p">(</span><span class="n">object_contours</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_curvature_characteristics" title="bactoscoop.utilities.get_object_curvature_characteristics"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_curvature_characteristics()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-576">Source assignment, line 576</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-perimeter">
+<h2>cell_avg_obj_perimeter<a class="headerlink" href="#cell-avg-obj-perimeter" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_perimeter</span></code></p>
+<p><strong>Meaning:</strong> Mean object perimeter per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_peri</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-597">Source assignment, line 597</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-circularity">
+<h2>cell_avg_obj_circularity<a class="headerlink" href="#cell-avg-obj-circularity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_circularity</span></code></p>
+<p><strong>Meaning:</strong> Mean object circularity per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_cir</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-598">Source assignment, line 598</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-compactness">
+<h2>cell_avg_obj_compactness<a class="headerlink" href="#cell-avg-obj-compactness" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_compactness</span></code></p>
+<p><strong>Meaning:</strong> Mean object compactness per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_comp</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-599">Source assignment, line 599</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-sphericity">
+<h2>cell_avg_obj_sphericity<a class="headerlink" href="#cell-avg-obj-sphericity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_sphericity</span></code></p>
+<p><strong>Meaning:</strong> Mean object sphericity per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.</p>
+<p><strong>Units:</strong> µm⁻¹ᐟ² under the implemented 2D formula. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_sph</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-600">Source assignment, line 600</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-convexity">
+<h2>cell_avg_obj_convexity<a class="headerlink" href="#cell-avg-obj-convexity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_convexity</span></code></p>
+<p><strong>Meaning:</strong> Mean object convexity per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_convexity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-610">Source assignment, line 610</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-eccentricity">
+<h2>cell_avg_obj_eccentricity<a class="headerlink" href="#cell-avg-obj-eccentricity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_eccentricity</span></code></p>
+<p><strong>Meaning:</strong> Mean object eccentricity per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_eccentricity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-611">Source assignment, line 611</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-solidity">
+<h2>cell_avg_obj_solidity<a class="headerlink" href="#cell-avg-obj-solidity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_solidity</span></code></p>
+<p><strong>Meaning:</strong> Mean object solidity per cell.</p>
+<p>Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_solidity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-612">Source assignment, line 612</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-total-obj-volume-approx">
+<h2>cell_total_obj_volume_approx<a class="headerlink" href="#cell-total-obj-volume-approx" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_volume_approx</span></code></p>
+<p><strong>Meaning:</strong> Approximate total object volume per cell.</p>
+<p>Calculation: For each object compute cell_volume * (object_area / cell_area)^(3/2), then sum the object volumes.
+Explanation: This is an approximate 3D object-volume estimate derived from 2D area occupancy.</p>
+<p><strong>Units:</strong> µm³. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_volume</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-618">Source assignment, line 618</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-obj-contour-avg-bending-energy">
+<h2>cell_obj_contour_avg_bending_energy<a class="headerlink" href="#cell-obj-contour-avg-bending-energy" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_obj_contour_avg_bending_energy</span></code></p>
+<p><strong>Meaning:</strong> Mean object contour bending energy per cell.</p>
+<p>Calculation: sum(curvature^2) / line_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.</p>
+<p><strong>Units:</strong> µm⁻³ under the implemented sum(curvature²)/length. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">object_bending_energy</span><span class="p">(</span><span class="n">object_contours</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.object_bending_energy" title="bactoscoop.utilities.object_bending_energy"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.object_bending_energy()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-620">Source assignment, line 620</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-interobject-distance">
+<h2>cell_avg_interobject_distance<a class="headerlink" href="#cell-avg-interobject-distance" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_interobject_distance</span></code></p>
+<p><strong>Meaning:</strong> Mean distance between objects within one cell.</p>
+<p>Calculation: Compute all pairwise centroid-to-centroid distances between objects and average them.
+Explanation: This measures how far apart the objects tend to be within one cell.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_interobject_distance</span><span class="p">(</span><span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_interobject_distance" title="bactoscoop.utilities.get_interobject_distance"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_interobject_distance()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-732">Source assignment, line 732</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="avg-pole-obj-distance">
+<h2>avg_pole_obj_distance<a class="headerlink" href="#avg-pole-obj-distance" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_avg_pole_obj_distance</span></code></p>
+<p><strong>Meaning:</strong> Mean distance from poles to objects.</p>
+<p>Calculation: mean of the two smallest object-to-pole distances returned by get_pole_object_distances. Inspect obj_pole_distances for all distances.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_pole_object_distances</span><span class="p">(</span><span class="n">cropped_msh</span><span class="p">,</span> <span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_pole_object_distances" title="bactoscoop.utilities.get_pole_object_distances"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_pole_object_distances()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-739">Source assignment, line 739</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="l">
+<h2>l<a class="headerlink" href="#l" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_l</span></code></p>
+<p><strong>Meaning:</strong> Object position along the cell axis.</p>
+<p>Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">projection_on_midline</span><span class="p">(</span><span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">cropped_ml</span><span class="p">,</span> <span class="n">cell_widthno</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.projection_on_midline" title="bactoscoop.utilities.projection_on_midline"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.projection_on_midline()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-744">Source assignment, line 744</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="d">
+<h2>d<a class="headerlink" href="#d" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_d</span></code></p>
+<p><strong>Meaning:</strong> Object lateral position relative to the midline.</p>
+<p>Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">projection_on_midline</span><span class="p">(</span><span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">cropped_ml</span><span class="p">,</span> <span class="n">cell_widthno</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.projection_on_midline" title="bactoscoop.utilities.projection_on_midline"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.projection_on_midline()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-744">Source assignment, line 744</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="l-norm">
+<h2>l_norm<a class="headerlink" href="#l-norm" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_l_norm</span></code></p>
+<p><strong>Meaning:</strong> Normalized object position along the cell axis.</p>
+<p>Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">projection_on_midline</span><span class="p">(</span><span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">cropped_ml</span><span class="p">,</span> <span class="n">cell_widthno</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.projection_on_midline" title="bactoscoop.utilities.projection_on_midline"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.projection_on_midline()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-744">Source assignment, line 744</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="d-norm">
+<h2>d_norm<a class="headerlink" href="#d-norm" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_d_norm</span></code></p>
+<p><strong>Meaning:</strong> Normalized object lateral position.</p>
+<p>Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">projection_on_midline</span><span class="p">(</span><span class="n">object_centroid_list</span><span class="p">,</span> <span class="n">cropped_ml</span><span class="p">,</span> <span class="n">cell_widthno</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.projection_on_midline" title="bactoscoop.utilities.projection_on_midline"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.projection_on_midline()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-744">Source assignment, line 744</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="object-avg-center-distance">
+<h2>object_avg_center_distance<a class="headerlink" href="#object-avg-center-distance" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_object_avg_center_distance</span></code></p>
+<p><strong>Meaning:</strong> Mean object offset from cell center.</p>
+<p>Calculation: mean(l_norm) - 0.5. This is a signed offset of the mean longitudinal object position, not an average absolute distance.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_avg_distance_from_center</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">objects_features</span><span class="p">[</span><span class="s1">'l_norm'</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_avg_distance_from_center" title="bactoscoop.utilities.get_avg_distance_from_center"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_avg_distance_from_center()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-752">Source assignment, line 752</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-dissimilarity">
+<h2>glcm_obj_dissimilarity<a class="headerlink" href="#glcm-obj-dissimilarity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_dissimilarity</span></code></p>
+<p><strong>Meaning:</strong> Object texture dissimilarity (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) * |i-j|) across gray-level pairs, averaged over the angles used by bactoscoop.
+Explanation: Dissimilarity increases when neighboring pixels tend to have different intensities and is lower when neighboring pixels are more alike.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_dissimilarity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-765">Source assignment, line 765</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-correlation">
+<h2>glcm_obj_correlation<a class="headerlink" href="#glcm-obj-correlation" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_correlation</span></code></p>
+<p><strong>Meaning:</strong> Object texture correlation (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute the Haralick correlation term, which measures the covariance of paired gray levels after normalization by their standard deviations.
+Explanation: Correlation is high when neighboring pixel intensities vary together in a predictable linear way and lower when that relationship is weak.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_correlation</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-766">Source assignment, line 766</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-homogeneity">
+<h2>glcm_obj_homogeneity<a class="headerlink" href="#glcm-obj-homogeneity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_homogeneity</span></code></p>
+<p><strong>Meaning:</strong> Object texture homogeneity (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) / (1 + (i-j)^2)) across gray-level pairs, averaged over angles.
+Explanation: Homogeneity is high when most co-occurrences lie near the diagonal of the GLCM, meaning neighboring pixels usually have similar intensities.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_homogeneity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-767">Source assignment, line 767</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-energy">
+<h2>glcm_obj_energy<a class="headerlink" href="#glcm-obj-energy" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_energy</span></code></p>
+<p><strong>Meaning:</strong> Object texture energy (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sqrt(sum(P(i,j)^2)), averaged over angles.
+Explanation: Energy is high when the texture is orderly and dominated by a limited number of recurring gray-level combinations, and lower when the texture is more diverse.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_energy</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-768">Source assignment, line 768</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-contrast">
+<h2>glcm_obj_contrast<a class="headerlink" href="#glcm-obj-contrast" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_contrast</span></code></p>
+<p><strong>Meaning:</strong> Object texture contrast (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) * (i-j)^2) across gray-level pairs, averaged over angles.
+Explanation: Contrast emphasizes strong local intensity differences, so higher values indicate sharper intensity transitions or more pronounced texture variation.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_contrast</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-769">Source assignment, line 769</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="glcm-obj-shannon-entropy">
+<h2>glcm_obj_shannon_entropy<a class="headerlink" href="#glcm-obj-shannon-entropy" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_glcm_obj_shannon_entropy</span></code></p>
+<p><strong>Meaning:</strong> Object texture Shannon entropy (GLCM).</p>
+<p>Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute its Shannon entropy in base 2.
+Explanation: Shannon entropy increases when the texture is more complex or unpredictable and decreases when the co-occurrence pattern is more ordered and repetitive.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glcm_object_entropy</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-770">Source assignment, line 770</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="objects-intensity-mean">
+<h2>objects_intensity_mean<a class="headerlink" href="#objects-intensity-mean" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_objects_intensity_mean</span></code></p>
+<p><strong>Meaning:</strong> Mean intensity of object pixels.</p>
+<p>Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">object_intensity_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-775">Source assignment, line 775</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="objects-intensity-std">
+<h2>objects_intensity_std<a class="headerlink" href="#objects-intensity-std" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_objects_intensity_std</span></code></p>
+<p><strong>Meaning:</strong> Standard deviation of object-pixel intensity.</p>
+<p>Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">object_intensity_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-778">Source assignment, line 778</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="objects-kurtosis">
+<h2>objects_kurtosis<a class="headerlink" href="#objects-kurtosis" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_objects_kurtosis</span></code></p>
+<p><strong>Meaning:</strong> Kurtosis of object-pixel intensity.</p>
+<p>Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_kurtosis</span><span class="p">(</span><span class="n">object_intensity_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_kurtosis" title="bactoscoop.utilities.get_kurtosis"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_kurtosis()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-781">Source assignment, line 781</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="objects-skewness">
+<h2>objects_skewness<a class="headerlink" href="#objects-skewness" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_objects_skewness</span></code></p>
+<p><strong>Meaning:</strong> Skewness of object-pixel intensity.</p>
+<p>Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_skew</span><span class="p">(</span><span class="n">object_intensity_values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_skew" title="bactoscoop.utilities.get_skew"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_skew()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-784">Source assignment, line 784</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-total-obj-mesh-length">
+<h2>cell_total_obj_mesh_length<a class="headerlink" href="#cell-total-obj-mesh-length" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_mesh_length</span></code></p>
+<p><strong>Meaning:</strong> Total object mesh length per cell.</p>
+<p>Calculation: Measure the length of each object mesh / midline and sum those lengths.
+Explanation: This gives the total longitudinal extent of all detected objects in the cell.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">obj_lengths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-679">Source assignment, line 679</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-width">
+<h2>cell_avg_obj_width<a class="headerlink" href="#cell-avg-obj-width" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_width</span></code></p>
+<p><strong>Meaning:</strong> Mean object width from object meshes.</p>
+<p>Calculation: For each object mesh, compute the mean of the widest one-third of widths and then average across objects.
+Explanation: This gives a robust typical object width using the object meshes.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_obj_width</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-680">Source assignment, line 680</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-width-variability">
+<h2>cell_avg_obj_width_variability<a class="headerlink" href="#cell-avg-obj-width-variability" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_width_variability</span></code></p>
+<p><strong>Meaning:</strong> Mean object width variability per cell.</p>
+<p>Calculation: For each object mesh, compute std(widths) / mean(widths) on the broadest half of widths, then average across objects.
+Explanation: This measures how uniformly wide the objects are along their length.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_width_variability</span><span class="p">(</span><span class="n">width_no</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_width_variability" title="bactoscoop.utilities.get_object_width_variability"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_width_variability()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-681">Source assignment, line 681</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="object-avg-consdegree">
+<h2>object_avg_consDegree<a class="headerlink" href="#object-avg-consdegree" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_object_avg_consDegree</span></code></p>
+<p><strong>Meaning:</strong> Mean object constriction degree per cell.</p>
+<p>Calculation: For each object, apply the constriction routine to the width-weighted axial intensity profile and then average the constriction degree across objects.
+Explanation: This indicates whether objects tend to have an internal neck or narrowing.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">constr_degree</span><span class="p">(</span><span class="n">axial_intensity</span><span class="p">,</span> <span class="n">obj_step_lengths</span><span class="p">,</span> <span class="n">width_no</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.constr_degree" title="bactoscoop.utilities.constr_degree"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.constr_degree()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-684">Source assignment, line 684</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-total-obj-volume">
+<h2>cell_total_obj_volume<a class="headerlink" href="#cell-total-obj-volume" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_volume</span></code></p>
+<p><strong>Meaning:</strong> Mesh-based total object volume per cell.</p>
+<p>Calculation: Estimate each object volume from its mesh by integrating pi*(width/2)^2 along the object length, then sum the objects.
+Explanation: This is the mesh-based 3D volume estimate of all objects together.</p>
+<p><strong>Units:</strong> µm³. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_nucleoid_volume</span><span class="p">(</span><span class="n">obj_x1</span><span class="p">,</span> <span class="n">obj_y1</span><span class="p">,</span> <span class="n">obj_x2</span><span class="p">,</span> <span class="n">obj_y2</span><span class="p">,</span> <span class="n">obj_step_lengths</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_nucleoid_volume" title="bactoscoop.utilities.get_nucleoid_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_nucleoid_volume()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-692">Source assignment, line 692</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-total-obj-surface-area">
+<h2>cell_total_obj_surface_area<a class="headerlink" href="#cell-total-obj-surface-area" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_total_obj_surface_area</span></code></p>
+<p><strong>Meaning:</strong> Aggregate object surface area per cell.</p>
+<p>Calculation: Compute 2*pi*(width/2)*step_length along each object mesh and aggregate the returned values.
+Explanation: This describes the object surface size, although the current utility returns the mean per-object surface area despite the feature name saying total.</p>
+<p><strong>Units:</strong> µm². <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_surface_area</span><span class="p">(</span><span class="n">width_no</span><span class="p">,</span> <span class="n">obj_step_lengths</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_surface_area" title="bactoscoop.utilities.get_object_surface_area"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_surface_area()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-697">Source assignment, line 697</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-obj-sov">
+<h2>cell_avg_obj_SOV<a class="headerlink" href="#cell-avg-obj-sov" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_obj_SOV</span></code></p>
+<p><strong>Meaning:</strong> Mean object surface-area-to-volume ratio per cell.</p>
+<p>Calculation: For each object compute surface_area / volume and then average across objects.
+Explanation: This tells you how much surface each object has relative to its volume.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_surface_area_over_volume</span><span class="p">(</span><span class="n">surface_area_list</span><span class="p">,</span> <span class="n">object_volumes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_surface_area_over_volume" title="bactoscoop.utilities.get_object_surface_area_over_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_surface_area_over_volume()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-700">Source assignment, line 700</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-obj-midline-avg-bending-energy">
+<h2>cell_obj_midline_avg_bending_energy<a class="headerlink" href="#cell-obj-midline-avg-bending-energy" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_obj_midline_avg_bending_energy</span></code></p>
+<p><strong>Meaning:</strong> Mean object midline bending energy per cell.</p>
+<p>Calculation: sum(curvature^2) / line_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.</p>
+<p><strong>Units:</strong> µm⁻³ under the implemented sum(curvature²)/length. <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">object_bending_energy</span><span class="p">(</span><span class="n">object_midlines</span><span class="p">,</span> <span class="n">px</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.object_bending_energy" title="bactoscoop.utilities.object_bending_energy"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.object_bending_energy()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-705">Source assignment, line 705</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="cell-avg-midline-sinuosity">
+<h2>cell_avg_midline_sinuosity<a class="headerlink" href="#cell-avg-midline-sinuosity" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_cell_avg_midline_sinuosity</span></code></p>
+<p><strong>Meaning:</strong> Mean object midline sinuosity per cell.</p>
+<p>Calculation: Compute midline_length / pole-to-pole distance for each object and average across objects.
+Explanation: This indicates whether objects are usually straight or curved.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Scalar.</p>
+<p><strong>Availability:</strong> emitted whenever this family calculation succeeds; <code class="docutils literal notranslate"><span class="pre">all_data</span></code> does not gate this key.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_object_sinuosity</span><span class="p">(</span><span class="n">object_midlines</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_object_sinuosity" title="bactoscoop.utilities.get_object_sinuosity"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_object_sinuosity()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-709">Source assignment, line 709</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-areas">
+<h2>obj_areas<a class="headerlink" href="#obj-areas" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_areas</span></code></p>
+<p><strong>Meaning:</strong> Individual object areas.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm². <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">area_list</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-789">Source assignment, line 789</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-aspect-ratios">
+<h2>obj_aspect_ratios<a class="headerlink" href="#obj-aspect-ratios" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_aspect_ratios</span></code></p>
+<p><strong>Meaning:</strong> Individual object aspect ratios.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aspect_r</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-790">Source assignment, line 790</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="max-obj-curvatures">
+<h2>max_obj_curvatures<a class="headerlink" href="#max-obj-curvatures" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_max_obj_curvatures</span></code></p>
+<p><strong>Meaning:</strong> Maximum curvature of each object.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">max_c</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-791">Source assignment, line 791</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="min-obj-curvatures">
+<h2>min_obj_curvatures<a class="headerlink" href="#min-obj-curvatures" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_min_obj_curvatures</span></code></p>
+<p><strong>Meaning:</strong> Minimum curvature of each object.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min_c</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-792">Source assignment, line 792</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="mean-obj-curvatures">
+<h2>mean_obj_curvatures<a class="headerlink" href="#mean-obj-curvatures" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_mean_obj_curvatures</span></code></p>
+<p><strong>Meaning:</strong> Mean curvature of each object.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean_c</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-793">Source assignment, line 793</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="std-obj-curvatures">
+<h2>std_obj_curvatures<a class="headerlink" href="#std-obj-curvatures" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_std_obj_curvatures</span></code></p>
+<p><strong>Meaning:</strong> Curvature standard deviation of each object.</p>
+<p>Calculation: Compute curvature as |x’y’’ - y’x’’| / (x’^2 + y’^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">std_c</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-794">Source assignment, line 794</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-perimeters">
+<h2>obj_perimeters<a class="headerlink" href="#obj-perimeters" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_perimeters</span></code></p>
+<p><strong>Meaning:</strong> Individual object perimeters.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">perimeters</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-795">Source assignment, line 795</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-circularities">
+<h2>obj_circularities<a class="headerlink" href="#obj-circularities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_circularities</span></code></p>
+<p><strong>Meaning:</strong> Individual object circularities.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">circularities</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-796">Source assignment, line 796</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-compactnesses">
+<h2>obj_compactnesses<a class="headerlink" href="#obj-compactnesses" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_compactnesses</span></code></p>
+<p><strong>Meaning:</strong> Individual object compactness values.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">compactnesses</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-797">Source assignment, line 797</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-sphericities">
+<h2>obj_sphericities<a class="headerlink" href="#obj-sphericities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_sphericities</span></code></p>
+<p><strong>Meaning:</strong> Individual object sphericity values.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.</p>
+<p><strong>Units:</strong> µm⁻¹ᐟ² under the implemented 2D formula. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sphericities</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-798">Source assignment, line 798</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-convexities">
+<h2>obj_convexities<a class="headerlink" href="#obj-convexities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_convexities</span></code></p>
+<p><strong>Meaning:</strong> Individual object convexities.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">convexity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-799">Source assignment, line 799</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-eccentricities">
+<h2>obj_eccentricities<a class="headerlink" href="#obj-eccentricities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_eccentricities</span></code></p>
+<p><strong>Meaning:</strong> Individual object eccentricities.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eccentricity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-800">Source assignment, line 800</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-solidities">
+<h2>obj_solidities<a class="headerlink" href="#obj-solidities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_solidities</span></code></p>
+<p><strong>Meaning:</strong> Individual object solidities.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">solidity</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-801">Source assignment, line 801</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-volumes-approx">
+<h2>obj_volumes_approx<a class="headerlink" href="#obj-volumes-approx" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_volumes_approx</span></code></p>
+<p><strong>Meaning:</strong> Individual object volumes.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm³. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">approx_object_volumes</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-802">Source assignment, line 802</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-sov">
+<h2>obj_SOV<a class="headerlink" href="#obj-sov" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_SOV</span></code></p>
+<p><strong>Meaning:</strong> Individual object surface-area-to-volume ratios.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm⁻¹. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sov_list</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-803">Source assignment, line 803</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-constriction-degrees">
+<h2>obj_constriction_degrees<a class="headerlink" href="#obj-constriction-degrees" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_constriction_degrees</span></code></p>
+<p><strong>Meaning:</strong> Individual object constriction degrees.</p>
+<p>Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">constrDegree</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-804">Source assignment, line 804</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-relative-positions">
+<h2>obj_relative_positions<a class="headerlink" href="#obj-relative-positions" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_relative_positions</span></code></p>
+<p><strong>Meaning:</strong> Relative constriction positions of individual objects.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">relPos</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-805">Source assignment, line 805</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-contour-bending-energies">
+<h2>obj_contour_bending_energies<a class="headerlink" href="#obj-contour-bending-energies" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_contour_bending_energies</span></code></p>
+<p><strong>Meaning:</strong> Individual object contour bending energies.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.</p>
+<p><strong>Units:</strong> µm⁻³ under the implemented sum(curvature²)/length. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contour_bending_energies</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-806">Source assignment, line 806</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-midline-bending-energies">
+<h2>obj_midline_bending_energies<a class="headerlink" href="#obj-midline-bending-energies" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_midline_bending_energies</span></code></p>
+<p><strong>Meaning:</strong> Individual object midline bending energies.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.</p>
+<p><strong>Units:</strong> µm⁻³ under the implemented sum(curvature²)/length. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">midline_bending_energies</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-809">Source assignment, line 809</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-interobject-distances">
+<h2>obj_interobject_distances<a class="headerlink" href="#obj-interobject-distances" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_interobject_distances</span></code></p>
+<p><strong>Meaning:</strong> Pairwise distances between objects.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interobject_distances</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-812">Source assignment, line 812</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-midline-sinuosities">
+<h2>obj_midline_sinuosities<a class="headerlink" href="#obj-midline-sinuosities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_midline_sinuosities</span></code></p>
+<p><strong>Meaning:</strong> Individual object midline sinuosities.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sinuosity_list</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-815">Source assignment, line 815</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="min-2-distances-from-pole">
+<h2>min_2_distances_from_pole<a class="headerlink" href="#min-2-distances-from-pole" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_min_2_distances_from_pole</span></code></p>
+<p><strong>Meaning:</strong> Two shortest pole-to-object distances.</p>
+<p>Calculation: Export the feature exactly as computed by bactoscoop for this feature family.
+Explanation: This row records that exported measurement in a form that can be interpreted alongside the other single-cell features.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">min2distances</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-816">Source assignment, line 816</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-pole-distances">
+<h2>obj_pole_distances<a class="headerlink" href="#obj-pole-distances" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_pole_distances</span></code></p>
+<p><strong>Meaning:</strong> Pole-to-object distances.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> µm. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pole_distances</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-817">Source assignment, line 817</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-intensity-values">
+<h2>obj_intensity_values<a class="headerlink" href="#obj-intensity-values" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_intensity_values</span></code></p>
+<p><strong>Meaning:</strong> All object-pixel intensity values.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">object_intensity_values</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/features.html#features-818">Source assignment, line 818</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-mean-intensities">
+<h2>obj_mean_intensities<a class="headerlink" href="#obj-mean-intensities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_mean_intensities</span></code></p>
+<p><strong>Meaning:</strong> Mean intensity of each object.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_objects_mean</span><span class="p">(</span><span class="n">object_intensities_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_objects_mean" title="bactoscoop.utilities.get_objects_mean"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_objects_mean()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-819">Source assignment, line 819</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-std-intensities">
+<h2>obj_std_intensities<a class="headerlink" href="#obj-std-intensities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_std_intensities</span></code></p>
+<p><strong>Meaning:</strong> Intensity standard deviation of each object.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Image intensity units after the family-specific preprocessing. <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_objects_std</span><span class="p">(</span><span class="n">object_intensities_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_objects_std" title="bactoscoop.utilities.get_objects_std"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_objects_std()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-822">Source assignment, line 822</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-kurtosis-intensities">
+<h2>obj_kurtosis_intensities<a class="headerlink" href="#obj-kurtosis-intensities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_kurtosis_intensities</span></code></p>
+<p><strong>Meaning:</strong> Intensity kurtosis of each object.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_objects_kurtosis</span><span class="p">(</span><span class="n">object_intensities_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_objects_kurtosis" title="bactoscoop.utilities.get_objects_kurtosis"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_objects_kurtosis()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-825">Source assignment, line 825</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+<section id="obj-skewness-intensities">
+<h2>obj_skewness_intensities<a class="headerlink" href="#obj-skewness-intensities" title="Link to this heading">¶</a></h2>
+<p><strong>Exported column:</strong> <code class="docutils literal notranslate"><span class="pre">&lt;channel&gt;_obj_skewness_intensities</span></code></p>
+<p><strong>Meaning:</strong> Intensity skewness of each object.</p>
+<p>Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.</p>
+<p><strong>Units:</strong> Dimensionless (GLCM descriptors use quantized intensity bins). <strong>Value shape:</strong> Array/list per cell (per object for detailed object outputs).</p>
+<p><strong>Availability:</strong> only when <code class="docutils literal notranslate"><span class="pre">all_data=True</span></code>.</p>
+<p><strong>Normalization:</strong> No additional export-level normalization; the calculation below determines family-specific preprocessing.</p>
+<p><strong>Current assignment expression</strong> (a tuple expression can produce several named outputs):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="o">.</span><span class="n">get_objects_skewness</span><span class="p">(</span><span class="n">object_intensities_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation helpers:</strong> <a class="reference internal" href="../api/utilities.html#bactoscoop.utilities.get_objects_skewness" title="bactoscoop.utilities.get_objects_skewness"><code class="xref py py-func docutils literal notranslate"><span class="pre">bactoscoop.utilities.get_objects_skewness()</span></code></a>.</p>
+<p><a class="reference external" href="../source-code/features.html#features-828">Source assignment, line 828</a>; <a class="reference internal" href="../api/features.html#bactoscoop.features.Features.objects" title="bactoscoop.features.Features.objects"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.features.Features.objects()</span></code></a>.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="features-membrane.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Membrane features</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="features-profiling.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Profiling features</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Objects features</a><ul>
+<li><a class="reference internal" href="#cell-total-obj-rect-length">cell_total_obj_rect_length</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-rect-width">cell_avg_obj_rect_width</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-aspectratio">cell_avg_obj_aspectratio</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-width-dt">cell_avg_obj_width_dt</a></li>
+<li><a class="reference internal" href="#object-number">object_number</a></li>
+<li><a class="reference internal" href="#cell-total-obj-area">cell_total_obj_area</a></li>
+<li><a class="reference internal" href="#nc-ratio">NC_ratio</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-mean-c">cell_avg_obj_mean_c</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-std-c">cell_avg_obj_std_c</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-perimeter">cell_avg_obj_perimeter</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-circularity">cell_avg_obj_circularity</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-compactness">cell_avg_obj_compactness</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-sphericity">cell_avg_obj_sphericity</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-convexity">cell_avg_obj_convexity</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-eccentricity">cell_avg_obj_eccentricity</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-solidity">cell_avg_obj_solidity</a></li>
+<li><a class="reference internal" href="#cell-total-obj-volume-approx">cell_total_obj_volume_approx</a></li>
+<li><a class="reference internal" href="#cell-obj-contour-avg-bending-energy">cell_obj_contour_avg_bending_energy</a></li>
+<li><a class="reference internal" href="#cell-avg-interobject-distance">cell_avg_interobject_distance</a></li>
+<li><a class="reference internal" href="#avg-pole-obj-distance">avg_pole_obj_distance</a></li>
+<li><a class="reference internal" href="#l">l</a></li>
+<li><a class="reference internal" href="#d">d</a></li>
+<li><a class="reference internal" href="#l-norm">l_norm</a></li>
+<li><a class="reference internal" href="#d-norm">d_norm</a></li>
+<li><a class="reference internal" href="#object-avg-center-distance">object_avg_center_distance</a></li>
+<li><a class="reference internal" href="#glcm-obj-dissimilarity">glcm_obj_dissimilarity</a></li>
+<li><a class="reference internal" href="#glcm-obj-correlation">glcm_obj_correlation</a></li>
+<li><a class="reference internal" href="#glcm-obj-homogeneity">glcm_obj_homogeneity</a></li>
+<li><a class="reference internal" href="#glcm-obj-energy">glcm_obj_energy</a></li>
+<li><a class="reference internal" href="#glcm-obj-contrast">glcm_obj_contrast</a></li>
+<li><a class="reference internal" href="#glcm-obj-shannon-entropy">glcm_obj_shannon_entropy</a></li>
+<li><a class="reference internal" href="#objects-intensity-mean">objects_intensity_mean</a></li>
+<li><a class="reference internal" href="#objects-intensity-std">objects_intensity_std</a></li>
+<li><a class="reference internal" href="#objects-kurtosis">objects_kurtosis</a></li>
+<li><a class="reference internal" href="#objects-skewness">objects_skewness</a></li>
+<li><a class="reference internal" href="#cell-total-obj-mesh-length">cell_total_obj_mesh_length</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-width">cell_avg_obj_width</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-width-variability">cell_avg_obj_width_variability</a></li>
+<li><a class="reference internal" href="#object-avg-consdegree">object_avg_consDegree</a></li>
+<li><a class="reference internal" href="#cell-total-obj-volume">cell_total_obj_volume</a></li>
+<li><a class="reference internal" href="#cell-total-obj-surface-area">cell_total_obj_surface_area</a></li>
+<li><a class="reference internal" href="#cell-avg-obj-sov">cell_avg_obj_SOV</a></li>
+<li><a class="reference internal" href="#cell-obj-midline-avg-bending-energy">cell_obj_midline_avg_bending_energy</a></li>
+<li><a class="reference internal" href="#cell-avg-midline-sinuosity">cell_avg_midline_sinuosity</a></li>
+<li><a class="reference internal" href="#obj-areas">obj_areas</a></li>
+<li><a class="reference internal" href="#obj-aspect-ratios">obj_aspect_ratios</a></li>
+<li><a class="reference internal" href="#max-obj-curvatures">max_obj_curvatures</a></li>
+<li><a class="reference internal" href="#min-obj-curvatures">min_obj_curvatures</a></li>
+<li><a class="reference internal" href="#mean-obj-curvatures">mean_obj_curvatures</a></li>
+<li><a class="reference internal" href="#std-obj-curvatures">std_obj_curvatures</a></li>
+<li><a class="reference internal" href="#obj-perimeters">obj_perimeters</a></li>
+<li><a class="reference internal" href="#obj-circularities">obj_circularities</a></li>
+<li><a class="reference internal" href="#obj-compactnesses">obj_compactnesses</a></li>
+<li><a class="reference internal" href="#obj-sphericities">obj_sphericities</a></li>
+<li><a class="reference internal" href="#obj-convexities">obj_convexities</a></li>
+<li><a class="reference internal" href="#obj-eccentricities">obj_eccentricities</a></li>
+<li><a class="reference internal" href="#obj-solidities">obj_solidities</a></li>
+<li><a class="reference internal" href="#obj-volumes-approx">obj_volumes_approx</a></li>
+<li><a class="reference internal" href="#obj-sov">obj_SOV</a></li>
+<li><a class="reference internal" href="#obj-constriction-degrees">obj_constriction_degrees</a></li>
+<li><a class="reference internal" href="#obj-relative-positions">obj_relative_positions</a></li>
+<li><a class="reference internal" href="#obj-contour-bending-energies">obj_contour_bending_energies</a></li>
+<li><a class="reference internal" href="#obj-midline-bending-energies">obj_midline_bending_energies</a></li>
+<li><a class="reference internal" href="#obj-interobject-distances">obj_interobject_distances</a></li>
+<li><a class="reference internal" href="#obj-midline-sinuosities">obj_midline_sinuosities</a></li>
+<li><a class="reference internal" href="#min-2-distances-from-pole">min_2_distances_from_pole</a></li>
+<li><a class="reference internal" href="#obj-pole-distances">obj_pole_distances</a></li>
+<li><a class="reference internal" href="#obj-intensity-values">obj_intensity_values</a></li>
+<li><a class="reference internal" href="#obj-mean-intensities">obj_mean_intensities</a></li>
+<li><a class="reference internal" href="#obj-std-intensities">obj_std_intensities</a></li>
+<li><a class="reference internal" href="#obj-kurtosis-intensities">obj_kurtosis_intensities</a></li>
+<li><a class="reference internal" href="#obj-skewness-intensities">obj_skewness_intensities</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

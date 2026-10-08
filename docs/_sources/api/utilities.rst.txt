@@ -1,0 +1,3316 @@
+bactoscoop.utilities
+====================
+
+.. py:module:: bactoscoop.utilities
+
+Low-level numerical and image helpers. Prefer the collection workflow for routine analysis; inspect geometry conventions before calling these directly.
+
+Classes and public operations
+-----------------------------
+
+smallest_path
+~~~~~~~~~~~~~
+
+.. py:function:: smallest_path(x_coords, y_coords, start_x, start_y)
+
+   Smallest path.
+
+   :param x_coords: Input ``x_coords`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y_coords: Input ``y_coords`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param start_x: Input ``start_x`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param start_y: Input ``start_y`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      ([x_coords[i] for i in sorted_points], [y_coords[i] for i in sorted_points])
+
+   `View current source, line 41 <../source-code/utilities.html#utilities-41>`_.
+
+skeleton_endpoints
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: skeleton_endpoints(skel)
+
+   Skeleton endpoints.
+
+   :param skel: Input ``skel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      out
+
+   `View current source, line 65 <../source-code/utilities.html#utilities-65>`_.
+
+get_ordered_list
+~~~~~~~~~~~~~~~~
+
+.. py:function:: get_ordered_list(points, x, y)
+
+   Get ordered list.
+
+   :param points: Input ``points`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x: Input ``x`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y: Input ``y`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      args
+
+   `View current source, line 81 <../source-code/utilities.html#utilities-81>`_.
+
+line_intersect
+~~~~~~~~~~~~~~
+
+.. py:function:: line_intersect(x1, y1, x2, y2, x3, y3, x4, y4)
+
+   Line intersect.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x3: Input ``x3`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y3: Input ``y3`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x4: Input ``x4`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y4: Input ``y4`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (intersect_x, intersect_y)
+
+   `View current source, line 89 <../source-code/utilities.html#utilities-89>`_.
+
+line_contour_intersection
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: line_contour_intersection(p1, p2, contour)
+
+   Line contour intersection.
+
+   :param p1: Input ``p1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param p2: Input ``p2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      intersection_points
+
+   `View current source, line 102 <../source-code/utilities.html#utilities-102>`_.
+
+unit_perpendicular_vector
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: unit_perpendicular_vector(data, closed=True)
+
+   Unit perpendicular vector.
+
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param closed: Input ``closed`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      unit_dxy
+
+   `View current source, line 123 <../source-code/utilities.html#utilities-123>`_.
+
+get_major_axis_line_coordinates
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_major_axis_line_coordinates(masks)
+
+   Get major axis line coordinates.
+
+   :param masks: Input ``masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      line_coordinates
+
+   `View current source, line 138 <../source-code/utilities.html#utilities-138>`_.
+
+extract_skeleton
+~~~~~~~~~~~~~~~~
+
+.. py:function:: extract_skeleton(masks)
+
+   Extract skeleton.
+
+   :param masks: Input ``masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      smoothed_skel
+      get_major_axis_line_coordinates(masks)
+
+   `View current source, line 174 <../source-code/utilities.html#utilities-174>`_.
+
+find_poles
+~~~~~~~~~~
+
+.. py:function:: find_poles(smoothed_skeleton, smoothed_contour, find_pole1=True, find_pole2=True)
+
+   Find poles.
+
+   :param smoothed_skeleton: Input ``smoothed_skeleton`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smoothed_contour: Input ``smoothed_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param find_pole1: Input ``find_pole1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param find_pole2: Input ``find_pole2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (extended_pole1, extended_pole2, trimmed_midline)
+
+   `View current source, line 215 <../source-code/utilities.html#utilities-215>`_.
+
+extend_skeleton
+~~~~~~~~~~~~~~~
+
+.. py:function:: extend_skeleton(smoothed_skeleton, smoothed_contour, find_pole1=True, find_pole2=True)
+
+   Extend skeleton.
+
+   :param smoothed_skeleton: Input ``smoothed_skeleton`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smoothed_contour: Input ``smoothed_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param find_pole1: Input ``find_pole1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param find_pole2: Input ``find_pole2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (extended_skeleton, new_pole1, new_pole2)
+
+   `View current source, line 266 <../source-code/utilities.html#utilities-266>`_.
+
+straighten_by_orthogonal_lines
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: straighten_by_orthogonal_lines(contour, midline, length, width, unit_micron=0.5)
+
+   Straighten by orthogonal lines.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param length: Input ``length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param unit_micron: Input ``unit_micron`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (l1, l2, profile_mesh, midline)
+
+   `View current source, line 285 <../source-code/utilities.html#utilities-285>`_.
+
+radial_intensities
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: radial_intensities(cropped_signal_interp2d, contour, width, min_val, max_val, num_erosions, erosion_scale=None)
+
+   Radial intensities.
+
+   :param cropped_signal_interp2d: Input ``cropped_signal_interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param min_val: Input ``min_val`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_val: Input ``max_val`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param num_erosions: Input ``num_erosions`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param erosion_scale: Input ``erosion_scale`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      intensities_per_mesh
+
+   `View current source, line 314 <../source-code/utilities.html#utilities-314>`_.
+
+spline_approximation
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: spline_approximation(init_contour, n=200, smooth_factor=1, closed=True)
+
+   Spline approximation.
+
+   :param init_contour: Input ``init_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param n: Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.
+   :param smooth_factor: Input ``smooth_factor`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param closed: Input ``closed`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.array([x_new, y_new]).T
+
+   `View current source, line 348 <../source-code/utilities.html#utilities-348>`_.
+
+divide_contour_by_midline
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: divide_contour_by_midline(midline, contour)
+
+   Divide contour by midline.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (half_contour_1, half_contour_2)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 359 <../source-code/utilities.html#utilities-359>`_.
+
+distance_matrix
+~~~~~~~~~~~~~~~
+
+.. py:function:: distance_matrix(data1, data2)
+
+   Distance matrix.
+
+   :param data1: Input ``data1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param data2: Input ``data2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      dxy
+
+   `View current source, line 396 <../source-code/utilities.html#utilities-396>`_.
+
+orthogonal_intersection_point
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: orthogonal_intersection_point(midline, outerline, precomputed_orthogonal_vector=None, min_dist=1e-100)
+
+   Orthogonal intersection point.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param outerline: Input ``outerline`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param precomputed_orthogonal_vector: Input ``precomputed_orthogonal_vector`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param min_dist: Input ``min_dist`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      pos_list
+
+   `View current source, line 406 <../source-code/utilities.html#utilities-406>`_.
+
+intersect_matrix
+~~~~~~~~~~~~~~~~
+
+.. py:function:: intersect_matrix(line, contour, orthogonal_vectors=None)
+
+   Intersect matrix.
+
+   :param line: Input ``line`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param orthogonal_vectors: Input ``orthogonal_vectors`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (intersect_x, intersect_y)
+
+   `View current source, line 446 <../source-code/utilities.html#utilities-446>`_.
+
+add_poles
+~~~~~~~~~
+
+.. py:function:: add_poles(coords1, coords2, pole1, pole2)
+
+   Add poles.
+
+   :param coords1: Input ``coords1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param coords2: Input ``coords2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param pole1: Input ``pole1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param pole2: Input ``pole2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (result, coords1, coords2)
+
+   `View current source, line 476 <../source-code/utilities.html#utilities-476>`_.
+
+line_length
+~~~~~~~~~~~
+
+.. py:function:: line_length(line)
+
+   Line length.
+
+   :param line: Input ``line`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.sum(np.sqrt(np.sum(d ** 2, axis=1)))
+
+   `View current source, line 486 <../source-code/utilities.html#utilities-486>`_.
+
+direct_intersect_distance
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: direct_intersect_distance(skeleton, contour)
+
+   Direct intersect distance.
+
+   :param skeleton: Input ``skeleton`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.concatenate([[0], dists, [0]])
+
+   `View current source, line 494 <../source-code/utilities.html#utilities-494>`_.
+
+contour2mesh
+~~~~~~~~~~~~
+
+.. py:function:: contour2mesh(contour, cropped_mask)
+
+   Contour2mesh.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param cropped_mask: Input ``cropped_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      ([], [], [])
+      (contour, result, midline)
+
+   `View current source, line 522 <../source-code/utilities.html#utilities-522>`_.
+
+draw_mask
+~~~~~~~~~
+
+.. py:function:: draw_mask(contour, image)
+
+   Draw mask.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      mask_dilated
+
+   `View current source, line 548 <../source-code/utilities.html#utilities-548>`_.
+
+crop_image
+~~~~~~~~~~
+
+.. py:function:: crop_image(image=None, contour=None, mask_to_crop=None, phase_img=None, pad=10)
+
+   Crop image.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param mask_to_crop: Input ``mask_to_crop`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_img: Input ``phase_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param pad: Input ``pad`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (cropped_img, cropped_mask, cropped_contour, x, y)
+
+   `View current source, line 554 <../source-code/utilities.html#utilities-554>`_.
+
+crop
+~~~~
+
+.. py:function:: crop(to_be_cropped, pad, image, xy_coordinates=False)
+
+   Crop.
+
+   :param to_be_cropped: Input ``to_be_cropped`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param pad: Input ``pad`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param xy_coordinates: Input ``xy_coordinates`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (x, y, w, h)
+
+   `View current source, line 585 <../source-code/utilities.html#utilities-585>`_.
+
+get_object_contours
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_contours(mask, smoothing=0.1)
+
+   Get object contours.
+
+   :param mask: Input ``mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      interpolated_contours
+
+   `View current source, line 606 <../source-code/utilities.html#utilities-606>`_.
+
+maybe_reverse_orientation
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: maybe_reverse_orientation(contour, result, midline)
+
+   Maybe reverse orientation.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param result: Input ``result`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (contour, result, midline)
+
+   `View current source, line 627 <../source-code/utilities.html#utilities-627>`_.
+
+get_label_neighbor_counts
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_label_neighbor_counts(labels, connectivity=1)
+
+   Get label neighbor counts.
+
+   :param labels: 2D integer label mask with zero background.
+   :param connectivity: Touching-label neighborhood: 1/4 for edges, 2/8 including diagonals.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {label: len(neighbors) for label, neighbors in neighbor_map.items()}
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 650 <../source-code/utilities.html#utilities-650>`_.
+
+filter_labels_by_neighbor_count
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: filter_labels_by_neighbor_count(labels, max_neighbors, connectivity=1)
+
+   Filter labels by neighbor count.
+
+   :param labels: 2D integer label mask with zero background.
+   :param max_neighbors: Remove labels whose distinct touching-label count is greater than this limit.
+   :param connectivity: Touching-label neighborhood: 1/4 for edges, 2/8 including diagonals.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (relabeled, stats)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 687 <../source-code/utilities.html#utilities-687>`_.
+
+get_cellular_mesh
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cellular_mesh(masks, smoothing)
+
+   Get cellular mesh.
+
+   :param masks: Input ``masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      meshdataframe
+
+   `View current source, line 730 <../source-code/utilities.html#utilities-730>`_.
+
+distance
+~~~~~~~~
+
+.. py:function:: distance(v1, v2)
+
+   Distance.
+
+   :param v1: Input ``v1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param v2: Input ``v2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.sqrt(np.sum((np.array(v1) - np.array(v2)) ** 2))
+
+   `View current source, line 764 <../source-code/utilities.html#utilities-764>`_.
+
+measure_width
+~~~~~~~~~~~~~
+
+.. py:function:: measure_width(extended_skeleton, smoothed_contour)
+
+   Measure width.
+
+   :param extended_skeleton: Input ``extended_skeleton`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smoothed_contour: Input ``smoothed_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (np.array([0] + width_list + [0]), length)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 770 <../source-code/utilities.html#utilities-770>`_.
+
+get_cell_pairs
+~~~~~~~~~~~~~~
+
+.. py:function:: get_cell_pairs(pole_1, pole_2, cell_ID, maxdist=None)
+
+   Get cell pairs.
+
+   :param pole_1: Input ``pole_1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param pole_2: Input ``pole_2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_ID: Input ``cell_ID`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param maxdist: Input ``maxdist`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      unique_nc2
+
+   `View current source, line 788 <../source-code/utilities.html#utilities-788>`_.
+
+mesh2contour
+~~~~~~~~~~~~
+
+.. py:function:: mesh2contour(x1, y1, x2, y2)
+
+   Mesh2contour.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.array([outx, outy]).T
+
+   `View current source, line 891 <../source-code/utilities.html#utilities-891>`_.
+
+split_point
+~~~~~~~~~~~
+
+.. py:function:: split_point(x1, y1, x2, y2, ctpos)
+
+   Split point.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ctpos: Input ``ctpos`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (newpole_x, newpole_y, np.array([[xt13, yt13, xt23, yt23]]), np.array([[xs13, ys13, xs23, ys23]]))
+
+   `View current source, line 905 <../source-code/utilities.html#utilities-905>`_.
+
+constr_degree_single_cell_min
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: constr_degree_single_cell_min(intensity, new_step_length, upper_limit=0.75, lower_limit=0.25, interp_factor=10)
+
+   Compute constriction degree and return both coarse and fine minima positions.
+
+   :param intensity: 1D intensity profile.
+   :param new_step_length: Currently unused here, kept for API compatibility.
+   :param upper_limit: Upper bound of region to search, as fraction of profile length.
+   :param lower_limit: Lower bound of region to search, as fraction of profile length.
+   :param interp_factor: Upsampling factor for fine-scale interpolation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (minsize, ctposr, minsizeabs, ctpos_coarse, ctpos_fine)
+
+   `View current source, line 953 <../source-code/utilities.html#utilities-953>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compute constriction degree and return both coarse and fine minima positions.
+
+      Parameters
+      ----------
+      intensity : array-like
+          1D intensity profile.
+      new_step_length : array-like
+          Currently unused here, kept for API compatibility.
+      upper_limit : float, optional
+          Upper bound of region to search, as fraction of profile length.
+      lower_limit : float, optional
+          Lower bound of region to search, as fraction of profile length.
+      interp_factor : int, optional
+          Upsampling factor for fine-scale interpolation.
+
+      Returns
+      -------
+      minsize : float
+          Relative constriction degree.
+      ctposr : float
+          Relative position of the constriction in [0, 1].
+      minsizeabs : float
+          Absolute constriction depth.
+      ctpos_coarse : int or list
+          Constriction position in original intensity index space.
+      ctpos_fine : int or list
+          Constriction position in interpolated fine index space.
+
+   .. raw:: html
+
+      </details>
+
+interp2d
+~~~~~~~~
+
+.. py:function:: interp2d(image)
+
+   Interp2d.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      ff
+
+   `View current source, line 1059 <../source-code/utilities.html#utilities-1059>`_.
+
+get_image_for_frame
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_image_for_frame(df_nr, images)
+
+   Get image for frame.
+
+   :param df_nr: Input ``df_nr`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param images: Input ``images`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      images[df_nr]
+
+   `View current source, line 1066 <../source-code/utilities.html#utilities-1066>`_.
+
+get_cell_mask
+~~~~~~~~~~~~~
+
+.. py:function:: get_cell_mask(contour, midline, image)
+
+   Get cell mask.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (mask, cropped_img, cropped_contour, cropped_midline, x, y)
+
+   `View current source, line 1070 <../source-code/utilities.html#utilities-1070>`_.
+
+keep_significant_masks
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: keep_significant_masks(nucleoid_mask, cropped_mask, min_overlap_ratio=0.01, max_external_ratio=0.1)
+
+   Keep significant masks.
+
+   :param nucleoid_mask: Input ``nucleoid_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_mask: Input ``cropped_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      significant_mask
+
+   `View current source, line 1081 <../source-code/utilities.html#utilities-1081>`_.
+
+get_object_masks
+~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_masks(contour, object_contours, object_midlines, object_meshes, signal)
+
+   Get object masks.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param object_contours: Input ``object_contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param object_midlines: Input ``object_midlines`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param object_meshes: Input ``object_meshes`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (masks, cropped_img, cropped_object_contours, cropped_object_midlines, cropped_object_meshes, x, y)
+
+   `View current source, line 1116 <../source-code/utilities.html#utilities-1116>`_.
+
+get_subcellular_objects
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_subcellular_objects(contour, signal, image, cell_id, smoothing, log_sigma, kernel_width, min_overlap_ratio=0.01, max_external_ratio=0.1)
+
+   Get subcellular objects.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (object_contours, cropped_img, object_mask, x_offset, y_offset)
+
+   `View current source, line 1141 <../source-code/utilities.html#utilities-1141>`_.
+
+get_object_mesh
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_mesh(contour, signal, image, cell_id, smoothing, log_sigma, kernel_width, min_overlap_ratio, max_external_ratio)
+
+   Get object mesh.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param smoothing: Smoothing passed to the contour/mesh fitting path.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      meshdata
+
+   `View current source, line 1188 <../source-code/utilities.html#utilities-1188>`_.
+
+image_field_key
+~~~~~~~~~~~~~~~
+
+.. py:function:: image_field_key(filename, suffix='', is_mask=False)
+
+   Return a normalized acquisition/field key from a TIFF filename.
+
+   :param filename: Input ``filename`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param suffix: Input ``suffix`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param is_mask: Input ``is_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      stem.strip().casefold()
+
+   `View current source, line 1255 <../source-code/utilities.html#utilities-1255>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Return a normalized acquisition/field key from a TIFF filename.
+
+      Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
+      ``cp_masks`` are removed so corresponding files can be matched by field.
+
+   .. raw:: html
+
+      </details>
+
+read_channels
+~~~~~~~~~~~~~
+
+.. py:function:: read_channels(folder_path, images_dict, channel_list=None)
+
+   Read channels.
+
+   :param folder_path: Input ``folder_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param images_dict: Input ``images_dict`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param channel_list: Sequence of channel suffixes to load or attach.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      images_dict
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1280 <../source-code/utilities.html#utilities-1280>`_.
+
+read_tiff_folder
+~~~~~~~~~~~~~~~~
+
+.. py:function:: read_tiff_folder(folder_path, suffix='', include_paths=False)
+
+   Read tiff folder.
+
+   :param folder_path: Input ``folder_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param suffix: Input ``suffix`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param include_paths: Input ``include_paths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (images, file_names, paths)
+      (images, file_names)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1312 <../source-code/utilities.html#utilities-1312>`_.
+
+separate_meshdata
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: separate_meshdata(df_nr, cell_nr, data)
+
+   Separate meshdata.
+
+   :param df_nr: Input ``df_nr`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_nr: Input ``cell_nr`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (x1, y1, x2, y2, contour)
+
+   `View current source, line 1353 <../source-code/utilities.html#utilities-1353>`_.
+
+separate_singleframe_meshdata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: separate_singleframe_meshdata(cell_id, data)
+
+   Separate singleframe meshdata.
+
+   :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (x1, y1, x2, y2, contour, midline)
+
+   `View current source, line 1362 <../source-code/utilities.html#utilities-1362>`_.
+
+get_cropped_object_data
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cropped_object_data(cnts, mdls, mshs, x, y)
+
+   Get cropped object data.
+
+   :param cnts: Input ``cnts`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mdls: Input ``mdls`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mshs: Input ``mshs`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x: Input ``x`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y: Input ``y`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (cropped_cnts, cropped_mdls, cropped_mshs)
+
+   `View current source, line 1373 <../source-code/utilities.html#utilities-1373>`_.
+
+get_cropped_cell_data
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cropped_cell_data(cnt, mdl, msh, x, y)
+
+   Get cropped cell data.
+
+   :param cnt: Input ``cnt`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mdl: Input ``mdl`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param msh: Input ``msh`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x: Input ``x`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y: Input ``y`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (cropped_cn, cropped_ml, cropped_msh)
+
+   `View current source, line 1396 <../source-code/utilities.html#utilities-1396>`_.
+
+get_uncropped_cell_data
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_uncropped_cell_data(cnt, mdl, msh, x, y)
+
+   Get uncropped cell data.
+
+   :param cnt: Input ``cnt`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param mdl: Input ``mdl`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param msh: Input ``msh`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x: Input ``x`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y: Input ``y`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (uncropped_cn, uncropped_ml, uncropped_msh)
+
+   `View current source, line 1408 <../source-code/utilities.html#utilities-1408>`_.
+
+mesh2midline
+~~~~~~~~~~~~
+
+.. py:function:: mesh2midline(x1, y1, x2, y2)
+
+   Mesh2midline.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      line
+
+   `View current source, line 1420 <../source-code/utilities.html#utilities-1420>`_.
+
+get_weighted_intprofile
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_weighted_intprofile(intensity, width)
+
+   Get weighted intprofile.
+
+   :param intensity: Input ``intensity`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      intensity * width
+      []
+
+   `View current source, line 1428 <../source-code/utilities.html#utilities-1428>`_.
+
+get_width
+~~~~~~~~~
+
+.. py:function:: get_width(x1, y1, x2, y2)
+
+   Get width.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      width_not_ordered
+
+   `View current source, line 1437 <../source-code/utilities.html#utilities-1437>`_.
+
+split_mesh2mesh
+~~~~~~~~~~~~~~~
+
+.. py:function:: split_mesh2mesh(x1, y1, x2, y2)
+
+   Split mesh2mesh.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (result, contour, midline)
+
+   `View current source, line 1442 <../source-code/utilities.html#utilities-1442>`_.
+
+get_profile_mesh
+~~~~~~~~~~~~~~~~
+
+.. py:function:: get_profile_mesh(mesh, width, micron_unit=1)
+
+   Get profile mesh.
+
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param micron_unit: Input ``micron_unit`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      profile_mesh
+
+   `View current source, line 1466 <../source-code/utilities.html#utilities-1466>`_.
+
+expand_contour
+~~~~~~~~~~~~~~
+
+.. py:function:: expand_contour(contour, scale=1)
+
+   enlarges contour :param contour: :param scale: :return:
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param scale: Input ``scale`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      contour - scale * dxy
+
+   `View current source, line 1483 <../source-code/utilities.html#utilities-1483>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      enlarges contour
+      :param contour:
+      :param scale:
+      :return:
+
+   .. raw:: html
+
+      </details>
+
+erode_contour
+~~~~~~~~~~~~~
+
+.. py:function:: erode_contour(contour, scale=1)
+
+   shrinks contour :param contour: :param scale: :return:
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param scale: Input ``scale`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      contour + scale * dxy
+
+   `View current source, line 1502 <../source-code/utilities.html#utilities-1502>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      shrinks contour
+      :param contour:
+      :param scale:
+      :return:
+
+   .. raw:: html
+
+      </details>
+
+mean_background
+~~~~~~~~~~~~~~~
+
+.. py:function:: mean_background(image, cell_mask)
+
+   Mean background.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_mask: Input ``cell_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      bgr
+
+   `View current source, line 1525 <../source-code/utilities.html#utilities-1525>`_.
+
+median_background
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: median_background(image, cell_mask)
+
+   Median background.
+
+   :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_mask: Input ``cell_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      bgr
+
+   `View current source, line 1536 <../source-code/utilities.html#utilities-1536>`_.
+
+poly_func
+~~~~~~~~~
+
+.. py:function:: poly_func(coords, a, b, c, d, e, f)
+
+   Poly func.
+
+   :param coords: Input ``coords`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param a: Input ``a`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param b: Input ``b`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param c: Input ``c`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param d: Input ``d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param e: Input ``e`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param f: Input ``f`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      a + b * x + c * y + d * x ** 2 + e * x * y + f * y ** 2
+
+   `View current source, line 1547 <../source-code/utilities.html#utilities-1547>`_.
+
+construct_bg_function
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: construct_bg_function(image, seg_mat, sampling_interval=None, plotF=False)
+
+   Reconstructs the background of an image using 2D polynomial fitting.
+
+   :param image: seg\_mat (ndarray): Binary segmentation mask (non-zero = foreground). sampling\_interval (int): Interval between samples. Default: height // 64. plotF (bool): Whether to plot the background fit.
+   :param seg_mat: sampling\_interval (int): Interval between samples. Default: height // 64. plotF (bool): Whether to plot the background fit.
+   :param sampling_interval: plotF (bool): Whether to plot the background fit.
+   :param plotF: Whether to plot the background fit.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (bg_function, bg_matrix)
+
+   `View current source, line 1552 <../source-code/utilities.html#utilities-1552>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Reconstructs the background of an image using 2D polynomial fitting.
+
+      Parameters:
+          image (ndarray): Input grayscale image.
+          seg_mat (ndarray): Binary segmentation mask (non-zero = foreground).
+          sampling_interval (int): Interval between samples. Default: height // 64.
+          plotF (bool): Whether to plot the background fit.
+
+      Returns:
+          bg_function (function): Background function F(x, y).
+          bg_matrix (ndarray): Estimated background image.
+
+   .. raw:: html
+
+      </details>
+
+get_step_length
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_step_length(x1, y1, x2, y2, px)
+
+   Get step length.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.sqrt(dx ** 2 + dy ** 2) / 2 * px
+
+   `View current source, line 1611 <../source-code/utilities.html#utilities-1611>`_.
+
+get_step_length_no_px
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_step_length_no_px(x1, y1, x2, y2)
+
+   Get step length no px.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.sqrt(dx ** 2 + dy ** 2) / 2
+
+   `View current source, line 1617 <../source-code/utilities.html#utilities-1617>`_.
+
+get_length
+~~~~~~~~~~
+
+.. py:function:: get_length(step_length)
+
+   Get length.
+
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.sum(step_length)
+
+   `View current source, line 1623 <../source-code/utilities.html#utilities-1623>`_.
+
+get_avg_width
+~~~~~~~~~~~~~
+
+.. py:function:: get_avg_width(x1, y1, x2, y2, px)
+
+   Get avg width.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (width * px, width_not_ordered * px)
+
+   `View current source, line 1627 <../source-code/utilities.html#utilities-1627>`_.
+
+get_avg_width_no_px
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_avg_width_no_px(x1, y1, x2, y2)
+
+   Get avg width no px.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (width, width_not_ordered)
+
+   `View current source, line 1636 <../source-code/utilities.html#utilities-1636>`_.
+
+get_area
+~~~~~~~~
+
+.. py:function:: get_area(contour, px)
+
+   Get area.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      area * px * px
+
+   `View current source, line 1645 <../source-code/utilities.html#utilities-1645>`_.
+
+get_volume
+~~~~~~~~~~
+
+.. py:function:: get_volume(x1, y1, x2, y2, step_length, px)
+
+   Get volume.
+
+   :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      volume * px * px
+
+   `View current source, line 1651 <../source-code/utilities.html#utilities-1651>`_.
+
+get_surface_area
+~~~~~~~~~~~~~~~~
+
+.. py:function:: get_surface_area(width_no, step_length)
+
+   Get surface area.
+
+   :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      total_surface_area
+
+   `View current source, line 1657 <../source-code/utilities.html#utilities-1657>`_.
+
+get_surface_area_over_volume
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_surface_area_over_volume(sa, vol)
+
+   Get surface area over volume.
+
+   :param sa: Input ``sa`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param vol: Input ``vol`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      sa / vol
+
+   `View current source, line 1664 <../source-code/utilities.html#utilities-1664>`_.
+
+get_cell_perimeter_measurements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cell_perimeter_measurements(contour, area, px)
+
+   Get cell perimeter measurements.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param area: Input ``area`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (perimeter, circularity, compactness, sphericity)
+
+   `View current source, line 1668 <../source-code/utilities.html#utilities-1668>`_.
+
+get_cell_width_variability
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cell_width_variability(width_no)
+
+   Get cell width variability.
+
+   :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      width_var
+
+   `View current source, line 1680 <../source-code/utilities.html#utilities-1680>`_.
+
+get_curvature_characteristics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_curvature_characteristics(contour, px)
+
+   Get curvature characteristics.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (curvature, max_c, min_c, mean_c, std_c)
+
+   `View current source, line 1688 <../source-code/utilities.html#utilities-1688>`_.
+
+get_total_phaco_intensity
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_total_phaco_intensity(contour, shape, interp2d)
+
+   Get total phaco intensity.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param shape: Input ``shape`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param interp2d: Input ``interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (np.sum(values), np.max(values), np.mean(values))
+
+   `View current source, line 1701 <../source-code/utilities.html#utilities-1701>`_.
+
+get_contour_intensity
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_contour_intensity(contour, interp2d)
+
+   Get contour intensity.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param interp2d: Input ``interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      data
+
+   `View current source, line 1710 <../source-code/utilities.html#utilities-1710>`_.
+
+find_signal_peaks
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: find_signal_peaks(signal, maximum)
+
+   Find signal peaks.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param maximum: Input ``maximum`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      len(peaks)
+
+   `View current source, line 1715 <../source-code/utilities.html#utilities-1715>`_.
+
+measure_contour_variability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: measure_contour_variability(signal)
+
+   Measure contour variability.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      contour_intensities_variability
+
+   `View current source, line 1720 <../source-code/utilities.html#utilities-1720>`_.
+
+get_kurtosis
+~~~~~~~~~~~~
+
+.. py:function:: get_kurtosis(signal)
+
+   Get kurtosis.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      kurtosis(signal)
+
+   `View current source, line 1731 <../source-code/utilities.html#utilities-1731>`_.
+
+get_skew
+~~~~~~~~
+
+.. py:function:: get_skew(signal)
+
+   Get skew.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      skew(signal)
+
+   `View current source, line 1735 <../source-code/utilities.html#utilities-1735>`_.
+
+sinuosity
+~~~~~~~~~
+
+.. py:function:: sinuosity(midline)
+
+   Sinuosity.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      sinuosity
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1739 <../source-code/utilities.html#utilities-1739>`_.
+
+get_area_asymmetry
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_area_asymmetry(step_length, width_no)
+
+   Get area asymmetry.
+
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      asymmetry_ratio
+      1.0
+
+   `View current source, line 1753 <../source-code/utilities.html#utilities-1753>`_.
+
+get_object_params
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_params(object_contours, px)
+
+   Get object params.
+
+   :param object_contours: Input ``object_contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (total_length, average_width)
+
+   `View current source, line 1774 <../source-code/utilities.html#utilities-1774>`_.
+
+get_object_width_variability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_width_variability(widths_no)
+
+   Get object width variability.
+
+   :param widths_no: Input ``widths_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (width_var_list, avg_width_var)
+
+   `View current source, line 1793 <../source-code/utilities.html#utilities-1793>`_.
+
+get_mesh_coordinates
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_mesh_coordinates(mesh)
+
+   Get mesh coordinates.
+
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (x1, y1, x2, y2)
+
+   `View current source, line 1806 <../source-code/utilities.html#utilities-1806>`_.
+
+get_object_rect_length
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_rect_length(nucleoid_contours, px)
+
+   Get object rect length.
+
+   :param nucleoid_contours: Input ``nucleoid_contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (rect_length_list, rect_width_list, total_rect_length, average_rect_width)
+
+   `View current source, line 1814 <../source-code/utilities.html#utilities-1814>`_.
+
+get_additional_regionprops_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_additional_regionprops_features(mask, px)
+
+   Get additional regionprops features.
+
+   :param mask: Input ``mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      features
+
+   `View current source, line 1864 <../source-code/utilities.html#utilities-1864>`_.
+
+get_object_avg_width
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_avg_width(nucleoid_masks, px)
+
+   Get object avg width.
+
+   :param nucleoid_masks: Input ``nucleoid_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (np.mean(nucleoid_avg_width_list), width_not_ordered_list)
+
+   `View current source, line 1917 <../source-code/utilities.html#utilities-1917>`_.
+
+get_object_aspect_ratio
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_aspect_ratio(rect_length_lists, rect_width_lists)
+
+   Get object aspect ratio.
+
+   :param rect_length_lists: Input ``rect_length_lists`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param rect_width_lists: Input ``rect_width_lists`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (aspect_ratio_list, avg_aspect_ratio)
+
+   `View current source, line 1940 <../source-code/utilities.html#utilities-1940>`_.
+
+get_object_area
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_area(contours, px)
+
+   Get object area.
+
+   :param contours: Input ``contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (area_list, total_area)
+
+   `View current source, line 1952 <../source-code/utilities.html#utilities-1952>`_.
+
+get_object_curvature_characteristics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_curvature_characteristics(contours, px)
+
+   Get object curvature characteristics.
+
+   :param contours: Input ``contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (curvatures, max_c_list, min_c_list, mean_c_list, std_c_list, avg_mean_c, avg_std_c)
+
+   `View current source, line 1965 <../source-code/utilities.html#utilities-1965>`_.
+
+get_object_perimeter_measurements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_perimeter_measurements(contours, areas, px)
+
+   Get object perimeter measurements.
+
+   :param contours: Input ``contours`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param areas: Input ``areas`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (perimeter_list, circularity_list, compactness_list, sphericity_list, avg_perimeter, avg_circularity, avg_compactness, avg_sphericity)
+
+   `View current source, line 1997 <../source-code/utilities.html#utilities-1997>`_.
+
+get_cell_convexity
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cell_convexity(mask)
+
+   Get cell convexity.
+
+   :param mask: Input ``mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (image_eccentricity, image_solidity, convexity)
+
+   `View current source, line 2030 <../source-code/utilities.html#utilities-2030>`_.
+
+get_object_convexity
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_convexity(cropped_masks)
+
+   Get object convexity.
+
+   :param cropped_masks: Input ``cropped_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (convexity_list, eccentricity_list, solidity_list, avg_convexity, avg_eccentricity, avg_solidity)
+
+   `View current source, line 2045 <../source-code/utilities.html#utilities-2045>`_.
+
+get_approx_nucleoid_volume
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_approx_nucleoid_volume(cell_volume, nucleoid_areas, cell_area)
+
+   Get approx nucleoid volume.
+
+   :param cell_volume: Input ``cell_volume`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param nucleoid_areas: Input ``nucleoid_areas`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cell_area: Input ``cell_area`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (nucleoid_volume_list, total_volume)
+
+   `View current source, line 2075 <../source-code/utilities.html#utilities-2075>`_.
+
+get_nucleoid_width_variability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_nucleoid_width_variability(widths)
+
+   Get nucleoid width variability.
+
+   :param widths: Input ``widths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (width_var_list, avg_width_var)
+
+   `View current source, line 2089 <../source-code/utilities.html#utilities-2089>`_.
+
+get_obj_mesh_coords
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_obj_mesh_coords(nucleoid_meshes)
+
+   Get obj mesh coords.
+
+   :param nucleoid_meshes: Input ``nucleoid_meshes`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (x1_list, y1_list, x2_list, y2_list)
+
+   `View current source, line 2106 <../source-code/utilities.html#utilities-2106>`_.
+
+measure_along_objects_midline_interp2d
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: measure_along_objects_midline_interp2d(midlines, im_interp2d, width=7, subpixel=0.5)
+
+   Measure along objects midline interp2d.
+
+   :param midlines: Input ``midlines`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param im_interp2d: Input ``im_interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param subpixel: Input ``subpixel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      prf_list
+
+   `View current source, line 2129 <../source-code/utilities.html#utilities-2129>`_.
+
+constr_degree
+~~~~~~~~~~~~~
+
+.. py:function:: constr_degree(intensities, new_step_lengths, width_not_ordered)
+
+   Constr degree.
+
+   :param intensities: Input ``intensities`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param new_step_lengths: Input ``new_step_lengths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width_not_ordered: Input ``width_not_ordered`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (constrDegree_list, relPos_list, constrDegree_abs_list, ctpos_list, avg_consDegree, avg_abs_consDegree)
+
+   `View current source, line 2181 <../source-code/utilities.html#utilities-2181>`_.
+
+fill_nan_values
+~~~~~~~~~~~~~~~
+
+.. py:function:: fill_nan_values(constrDegree_list, constrDegree_abs_list, ctpos_list, relPos_list)
+
+   Fill nan values.
+
+   :param constrDegree_list: Input ``constrDegree_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param constrDegree_abs_list: Input ``constrDegree_abs_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ctpos_list: Input ``ctpos_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param relPos_list: Input ``relPos_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2232 <../source-code/utilities.html#utilities-2232>`_.
+
+get_minima
+~~~~~~~~~~
+
+.. py:function:: get_minima(weighted_intensity)
+
+   Get minima.
+
+   :param weighted_intensity: Input ``weighted_intensity`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.concatenate(([False], (weighted_intensity.T[1:-1] < weighted_intensity.T[:-2]) & (weighted_intensity.T[1:-1] < weighted_intensity.T[2:]), [False]))
+
+   `View current source, line 2239 <../source-code/utilities.html#utilities-2239>`_.
+
+identify_minima
+~~~~~~~~~~~~~~~
+
+.. py:function:: identify_minima(intensity, minima)
+
+   Identify minima.
+
+   :param intensity: Input ``intensity`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param minima: Input ``minima`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (index, dh, dhi, hgt)
+
+   `View current source, line 2250 <../source-code/utilities.html#utilities-2250>`_.
+
+assign_values
+~~~~~~~~~~~~~
+
+.. py:function:: assign_values(constrDegree_list, constrDegree_abs_list, ctpos_list, relPos_list, minsize, minsizeabs, ctpos, ctposr)
+
+   Assign values.
+
+   :param constrDegree_list: Input ``constrDegree_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param constrDegree_abs_list: Input ``constrDegree_abs_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ctpos_list: Input ``ctpos_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param relPos_list: Input ``relPos_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param minsize: Minimum accepted segmentation-mask size in pixels.
+   :param minsizeabs: Input ``minsizeabs`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ctpos: Input ``ctpos`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param ctposr: Input ``ctposr`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   `View current source, line 2267 <../source-code/utilities.html#utilities-2267>`_.
+
+get_obj_avg_width
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_obj_avg_width(x1s, y1s, x2s, y2s, px)
+
+   Get obj avg width.
+
+   :param x1s: Input ``x1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1s: Input ``y1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2s: Input ``x2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2s: Input ``y2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (width_list, width_not_ordered_list, average_width)
+
+   `View current source, line 2284 <../source-code/utilities.html#utilities-2284>`_.
+
+get_nucleoid_volume
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_nucleoid_volume(x1s, y1s, x2s, y2s, step_lengths, px)
+
+   Get nucleoid volume.
+
+   :param x1s: Input ``x1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1s: Input ``y1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2s: Input ``x2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2s: Input ``y2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param step_lengths: Input ``step_lengths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (nucleoid_volume_list, total_volume)
+
+   `View current source, line 2308 <../source-code/utilities.html#utilities-2308>`_.
+
+get_object_step_length
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_step_length(x1s, y1s, x2s, y2s, px)
+
+   Get object step length.
+
+   :param x1s: Input ``x1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y1s: Input ``y1s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param x2s: Input ``x2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param y2s: Input ``y2s`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (nuc_step_length_list, nuc_length_list)
+
+   `View current source, line 2322 <../source-code/utilities.html#utilities-2322>`_.
+
+get_object_surface_area
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_surface_area(width_nos, step_lengths)
+
+   Get object surface area.
+
+   :param width_nos: Input ``width_nos`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param step_lengths: Input ``step_lengths`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (sum_surface_area_list, total_surface_area)
+
+   `View current source, line 2345 <../source-code/utilities.html#utilities-2345>`_.
+
+get_object_surface_area_over_volume
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_surface_area_over_volume(surface_areas, volumes)
+
+   Get object surface area over volume.
+
+   :param surface_areas: Input ``surface_areas`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param volumes: Input ``volumes`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (ratio_list, avg_ratio)
+
+   `View current source, line 2369 <../source-code/utilities.html#utilities-2369>`_.
+
+object_bending_energy
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: object_bending_energy(data, px)
+
+   Simplification of the formula from https://doi.org/10.1016/j.comgeo.2013.09.001
+
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (bending_energy_list, avg_bending_energy)
+
+   `View current source, line 2383 <../source-code/utilities.html#utilities-2383>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Simplification of the formula from https://doi.org/10.1016/j.comgeo.2013.09.001
+
+   .. raw:: html
+
+      </details>
+
+bending_energy
+~~~~~~~~~~~~~~
+
+.. py:function:: bending_energy(line, curvature, px)
+
+   Bending energy.
+
+   :param line: Input ``line`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param curvature: Input ``curvature`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.round(bending_energy, 5)
+
+   `View current source, line 2399 <../source-code/utilities.html#utilities-2399>`_.
+
+midline_midpoint
+~~~~~~~~~~~~~~~~
+
+.. py:function:: midline_midpoint(midline)
+
+   Midline midpoint.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      middle_point
+
+   `View current source, line 2406 <../source-code/utilities.html#utilities-2406>`_.
+
+get_object_midpoint
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_midpoint(midlines)
+
+   Get object midpoint.
+
+   :param midlines: Input ``midlines`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      centroid_coordinates
+
+   `View current source, line 2412 <../source-code/utilities.html#utilities-2412>`_.
+
+get_centroid
+~~~~~~~~~~~~
+
+.. py:function:: get_centroid(cropped_masks)
+
+   Get centroid.
+
+   :param cropped_masks: Input ``cropped_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      [centroids[0][0], centroids[1][0]]
+
+   `View current source, line 2420 <../source-code/utilities.html#utilities-2420>`_.
+
+get_object_centroid
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_centroid(cropped_masks)
+
+   Get object centroid.
+
+   :param cropped_masks: Input ``cropped_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      centroid_list
+
+   `View current source, line 2429 <../source-code/utilities.html#utilities-2429>`_.
+
+get_interobject_distance
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_interobject_distance(centroid_coordinates, px)
+
+   Get interobject distance.
+
+   :param centroid_coordinates: Input ``centroid_coordinates`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (average_distance, distances)
+      (np.nan, np.nan)
+
+   `View current source, line 2440 <../source-code/utilities.html#utilities-2440>`_.
+
+get_object_sinuosity
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_sinuosity(midlines)
+
+   Get object sinuosity.
+
+   :param midlines: Input ``midlines`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (sinuosity_list, avg_sinuosity)
+
+   `View current source, line 2453 <../source-code/utilities.html#utilities-2453>`_.
+
+get_mesh_area
+~~~~~~~~~~~~~
+
+.. py:function:: get_mesh_area(width_no, step_length)
+
+   Get mesh area.
+
+   :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      mesh_area
+
+   `View current source, line 2465 <../source-code/utilities.html#utilities-2465>`_.
+
+ratio_mesh_over_total_area
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: ratio_mesh_over_total_area(step_length, width_no, areas)
+
+   Ratio mesh over total area.
+
+   :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param areas: Input ``areas`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      ratio_list
+
+   `View current source, line 2471 <../source-code/utilities.html#utilities-2471>`_.
+
+get_shortest_pole_object_distances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_shortest_pole_object_distances(pole_coordinates, centroid_coordinates, px)
+
+   Get shortest pole object distances.
+
+   :param pole_coordinates: Input ``pole_coordinates`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param centroid_coordinates: Input ``centroid_coordinates`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (average_distance, distances)
+      (np.nan, np.nan)
+
+   `View current source, line 2480 <../source-code/utilities.html#utilities-2480>`_.
+
+get_pole_coordinates
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_pole_coordinates(mesh)
+
+   Get pole coordinates.
+
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (pole1, pole2)
+
+   `View current source, line 2492 <../source-code/utilities.html#utilities-2492>`_.
+
+get_pole_object_distances
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_pole_object_distances(mesh, centroid_coordinates, px)
+
+   Get pole object distances.
+
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+   :param centroid_coordinates: Input ``centroid_coordinates`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (avg_distance, min_2_distances, distances)
+      (np.nan, np.nan)
+
+   `View current source, line 2498 <../source-code/utilities.html#utilities-2498>`_.
+
+angle_between_vector
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: angle_between_vector(v1, v2)
+
+   Angle between vector.
+
+   :param v1: Input ``v1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param v2: Input ``v2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.arccos(np.dot(v1, v2) / (d1 * d2))
+
+   `View current source, line 2513 <../source-code/utilities.html#utilities-2513>`_.
+
+projection_on_midline
+~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: projection_on_midline(centroids, midline, width, px)
+
+   Projection on midline.
+
+   :param centroids: Input ``centroids`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (l_list, dl_list, norm_l_list, norm_dl_list)
+
+   `View current source, line 2519 <../source-code/utilities.html#utilities-2519>`_.
+
+get_avg_distance_from_center
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_avg_distance_from_center(l_norm_list)
+
+   Subtract 0.5 from the mean normalized longitudinal object position.
+
+   Returns a signed mean position offset, not the mean absolute distance from the center.
+
+   :param l_norm_list: Input ``l_norm_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      avg_dist
+
+   `View current source, line 2578 <../source-code/utilities.html#utilities-2578>`_.
+
+get_object_intensities
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_object_intensities(object_masks, cropped_signal)
+
+   Get object intensities.
+
+   :param object_masks: Input ``object_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_signal: Input ``cropped_signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (combined_intensity_values, individual_intensity_values)
+
+   `View current source, line 2584 <../source-code/utilities.html#utilities-2584>`_.
+
+get_objects_mean
+~~~~~~~~~~~~~~~~
+
+.. py:function:: get_objects_mean(intensity_values_list)
+
+   Get objects mean.
+
+   :param intensity_values_list: Input ``intensity_values_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      means
+
+   `View current source, line 2598 <../source-code/utilities.html#utilities-2598>`_.
+
+get_objects_std
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_objects_std(intensity_values_list)
+
+   Get objects std.
+
+   :param intensity_values_list: Input ``intensity_values_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      stds
+
+   `View current source, line 2603 <../source-code/utilities.html#utilities-2603>`_.
+
+get_objects_kurtosis
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_objects_kurtosis(intensity_values_list)
+
+   Get objects kurtosis.
+
+   :param intensity_values_list: Input ``intensity_values_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      kurtoses
+
+   `View current source, line 2608 <../source-code/utilities.html#utilities-2608>`_.
+
+get_objects_skewness
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_objects_skewness(intensity_values_list)
+
+   Get objects skewness.
+
+   :param intensity_values_list: Input ``intensity_values_list`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      skewnesses
+
+   `View current source, line 2615 <../source-code/utilities.html#utilities-2615>`_.
+
+get_variance
+~~~~~~~~~~~~
+
+.. py:function:: get_variance(data)
+
+   Get variance.
+
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.var(data)
+
+   `View current source, line 2620 <../source-code/utilities.html#utilities-2620>`_.
+
+measure_smoothened_intensity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: measure_smoothened_intensity(midline, im_interp2d, width=7, subpixel=0.5)
+
+   Measure smoothened intensity.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param im_interp2d: Input ``im_interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param subpixel: Input ``subpixel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      prf
+
+   `View current source, line 2625 <../source-code/utilities.html#utilities-2625>`_.
+
+gaussian_smoothing
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: gaussian_smoothing(data)
+
+   Gaussian smoothing.
+
+   :param data: Input ``data`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      prf.flatten()
+
+   `View current source, line 2634 <../source-code/utilities.html#utilities-2634>`_.
+
+measure_intensity_interp2d
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: measure_intensity_interp2d(midline, im_interp2d, width=7, subpixel=0.5)
+
+   Measure intensity interp2d.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param im_interp2d: Input ``im_interp2d`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param width: Input ``width`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param subpixel: Input ``subpixel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      data
+
+   `View current source, line 2641 <../source-code/utilities.html#utilities-2641>`_.
+
+normalize_per_cell
+~~~~~~~~~~~~~~~~~~
+
+.. py:function:: normalize_per_cell(profile)
+
+   Min–max normalize a profile within one cell.
+
+   Returns an array scaled to [0, 1]; a constant profile returns zeros.
+
+   :param profile: A 1D array-like object representing the profile.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      normalized_profile
+      np.zeros_like(profile)
+
+   `View current source, line 2657 <../source-code/utilities.html#utilities-2657>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Normalize the values in a 1D profile using Min-Max scaling.
+
+      Parameters:
+          profile (array-like): A 1D array-like object representing the profile.
+
+      Returns:
+          normalized_profile (ndarray): Normalized profile.
+
+   .. raw:: html
+
+      </details>
+
+get_cumulative_step_length_midline
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_cumulative_step_length_midline(midline, px)
+
+   Calculate cumulative step lengths for each segment in the midline.
+
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param px: Micrometres per pixel. Geometry arrays remain in pixel coordinates.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      cumulative_step_lengths
+
+   `View current source, line 2686 <../source-code/utilities.html#utilities-2686>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate cumulative step lengths for each segment in the midline.
+
+      Parameters:
+          midline (ndarray): An array containing X and Y coordinates of the midline.
+          px (float): The pixel size.
+
+      Returns:
+          cumulative_step_lengths (ndarray): Array containing cumulative step lengths for each segment in the midline.
+
+   .. raw:: html
+
+      </details>
+
+linear_interpolation
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: linear_interpolation(array, num_values)
+
+   Linear interpolation.
+
+   :param array: Input ``array`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param num_values: Input ``num_values`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      interpolated_values
+
+   `View current source, line 2713 <../source-code/utilities.html#utilities-2713>`_.
+
+get_phase_mask
+~~~~~~~~~~~~~~
+
+.. py:function:: get_phase_mask(phase_cropped_img, phase_log_sigma=0.5)
+
+   Get phase mask.
+
+   :param phase_cropped_img: Input ``phase_cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_log_sigma: Input ``phase_log_sigma`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      cropped_phase_mask
+
+   `View current source, line 2724 <../source-code/utilities.html#utilities-2724>`_.
+
+closing_mask
+~~~~~~~~~~~~
+
+.. py:function:: closing_mask(cropped_phase_mask, closing_level=2)
+
+   Closing mask.
+
+   :param cropped_phase_mask: Input ``cropped_phase_mask`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param closing_level: Input ``closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      mask_closed
+
+   `View current source, line 2738 <../source-code/utilities.html#utilities-2738>`_.
+
+find_centroid_in_largest_mask
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: find_centroid_in_largest_mask(phase_mask_closed, phase_cropped_contour)
+
+   Find centroid in largest mask.
+
+   :param phase_mask_closed: Input ``phase_mask_closed`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_cropped_contour: Input ``phase_cropped_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      []
+      [phase_centroid]
+
+   `View current source, line 2747 <../source-code/utilities.html#utilities-2747>`_.
+
+align
+~~~~~
+
+.. py:function:: align(signal_centroid, phase_centroid, cropped_contour)
+
+   Align.
+
+   :param signal_centroid: Input ``signal_centroid`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_centroid: Input ``phase_centroid`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_contour: Input ``cropped_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      aligned_contour
+
+   `View current source, line 2769 <../source-code/utilities.html#utilities-2769>`_.
+
+align_objects
+~~~~~~~~~~~~~
+
+.. py:function:: align_objects(signal_centroid, phase_centroid, cropped_mesh, cropped_contour, cropped_midline)
+
+   Align objects.
+
+   :param signal_centroid: Input ``signal_centroid`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_centroid: Input ``phase_centroid`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_mesh: Input ``cropped_mesh`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_contour: Input ``cropped_contour`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_midline: Input ``cropped_midline`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (aligned_contour, aligned_midline, aligned_mesh)
+
+   `View current source, line 2793 <../source-code/utilities.html#utilities-2793>`_.
+
+get_signal_mask
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_signal_mask(signal, contour, log_sigma, min_overlap_ratio, max_external_ratio)
+
+   Get signal mask.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (object_mask, cropped_img, x_offset, y_offset)
+
+   `View current source, line 2806 <../source-code/utilities.html#utilities-2806>`_.
+
+shift_contour
+~~~~~~~~~~~~~
+
+.. py:function:: shift_contour(phase_image, signal_image, contour, mesh, midline, log_sigma=1.5, kernel_width=3, min_overlap_ratio=0.3, max_external_ratio=0.8, phase_log_sigma=0.5, phase_closing_level=2, signal_closing_level=12, max_shift_correction=10)
+
+   Aligns the contour, mesh, and midline based on the centroids of the phase and signal masks.
+
+   :param phase_image: Input ``phase_image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal_image: Input ``signal_image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param mesh: Paired-boundary geometry with four columns in pixel coordinates.
+   :param midline: Central-axis points in (row, column) pixel coordinates.
+   :param log_sigma: Laplacian-of-Gaussian sigma for signal-object detection.
+   :param kernel_width: Width of the square dilation kernel used for candidate object masks.
+   :param min_overlap_ratio: Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.
+   :param max_external_ratio: Maximum accepted outside-cell ratio under the utility implementation.
+   :param phase_log_sigma: Input ``phase_log_sigma`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param phase_closing_level: Input ``phase_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal_closing_level: Input ``signal_closing_level`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_shift_correction: Input ``max_shift_correction`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (aligned_contour, aligned_mesh, aligned_midline)
+      (None, None, None)
+
+   `View current source, line 2828 <../source-code/utilities.html#utilities-2828>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Aligns the contour, mesh, and midline based on the centroids of the phase and signal masks.
+
+      Parameters:
+      - phase_image (array): The phase image.
+      - signal_image (array): The signal image.
+      - contour (array): The contour data.
+      - mesh (array): The mesh data.
+      - midline (array): The midline data.
+      - log_sigma (float): Sigma for the log filter for the signal mask.
+      - kernel_width (int): Width of the dilation kernel.
+      - min_overlap_ratio (float): Minimum overlap ratio for the signal mask.
+      - max_external_ratio (float): Maximum external ratio for the signal mask.
+      - phase_log_sigma (float): Sigma for the log filter for the phase mask.
+      - phase_closing_level (int): Closing level for the phase mask.
+      - signal_closing_level (int): Closing level for the signal mask.
+      - max_shift_correction (float): Maximum allowable distance between centroids for correction.
+
+      Returns:
+      - aligned_contour (array): The aligned contour data.
+      - aligned_mesh (array): The aligned mesh data.
+      - aligned_midline (array): The aligned midline data.
+
+   .. raw:: html
+
+      </details>
+
+crop_signal_with_optional_shift
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: crop_signal_with_optional_shift(image_obj, channel, contour, shift_signal)
+
+   Crop signal with optional shift.
+
+   :param image_obj: Image instance supplying calibration, geometry, and channel data.
+   :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param shift_signal: Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (cropped_signal, cropped_mask, cropped_contour, x_offset, y_offset)
+
+   `View current source, line 2929 <../source-code/utilities.html#utilities-2929>`_.
+
+change_contour_array_length
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: change_contour_array_length(cell_perimeter, contour, scale=0.02, smooth=1)
+
+   Change contour array length.
+
+   :param cell_perimeter: Input ``cell_perimeter`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param scale: Input ``scale`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param smooth: Input ``smooth`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      adjust_eroded_contour
+
+   `View current source, line 2940 <../source-code/utilities.html#utilities-2940>`_.
+
+normalized_intensity_by_image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: normalized_intensity_by_image(profile, cropped_image)
+
+   Normalized intensity by image.
+
+   :param profile: Input ``profile`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_image: Input ``cropped_image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      normalized_profile
+      np.zeros_like(prof)
+
+   `View current source, line 2947 <../source-code/utilities.html#utilities-2947>`_.
+
+get_homogeneity
+~~~~~~~~~~~~~~~
+
+.. py:function:: get_homogeneity(normalized_intensity)
+
+   Get homogeneity.
+
+   :param normalized_intensity: Input ``normalized_intensity`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      homogeneity
+
+   `View current source, line 2973 <../source-code/utilities.html#utilities-2973>`_.
+
+set_bg_zero
+~~~~~~~~~~~
+
+.. py:function:: set_bg_zero(contour, cropped_img)
+
+   Set bg zero.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      bg_zero_img
+
+   `View current source, line 2980 <../source-code/utilities.html#utilities-2980>`_.
+
+rescale_image_255
+~~~~~~~~~~~~~~~~~
+
+.. py:function:: rescale_image_255(cropped_image, max_value=255)
+
+   Rescale image 255.
+
+   :param cropped_image: Input ``cropped_image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_value: Input ``max_value`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      scaled_image
+
+   `View current source, line 2986 <../source-code/utilities.html#utilities-2986>`_.
+
+create_co_occurrence_matrix
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: create_co_occurrence_matrix(cropped_img, distances=[1], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256, symmetric=True, normed=True)
+
+   Create a co-occurrence matrix from a cropped image.
+
+   :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param distances: Input ``distances`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param angles: Input ``angles`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param levels: Input ``levels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param symmetric: Input ``symmetric`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param normed: Input ``normed`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      co_occurrence_matrix
+
+   `View current source, line 3003 <../source-code/utilities.html#utilities-3003>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Create a co-occurrence matrix from a cropped image.
+
+      Parameters:
+      - cropped_image: The cropped grayscale image.
+      - distances: List of pixel pair distances.
+      - angles: List of angles in radians for pixel pairs.
+      - levels: Number of gray levels (typically 256 for 8-bit images).
+      - symmetric: If True, the output matrix P[:, :, d, theta] is symmetric.
+                   This is accomplished by ignoring the order of value pairs, so both (i, j) and (j, i) are accumulated when (i, j) is encountered for a given offset.
+      - normed: If True, normalize each matrix P[:, :, d, theta] by dividing by the total number of accumulated co-occurrences for the given offset.
+
+      Returns:
+      - co_occurrence_matrix: The co-occurrence matrix.
+
+   .. raw:: html
+
+      </details>
+
+get_glcm_feature_means
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_glcm_feature_means(glcm)
+
+   Compute the mean Haralick properties for a GLCM in one pass.
+
+   :param glcm: Input ``glcm`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (dissimilarity, correlation.mean(), homogeneity, energy, contrast, entropy)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 3045 <../source-code/utilities.html#utilities-3045>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compute the mean Haralick properties for a GLCM in one pass.
+
+      The formulas mirror skimage.feature.graycoprops so callers keep the same
+      numerical behavior while avoiding repeated scans of the same matrix.
+
+   .. raw:: html
+
+      </details>
+
+calculate_haralick_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: calculate_haralick_features(contour, cropped_img, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
+
+   Calculate haralick features.
+
+   :param contour: Boundary points in (row, column) pixel coordinates.
+   :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param distances: Input ``distances`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param angles: Input ``angles`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param levels: Input ``levels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      get_glcm_feature_means(glcm)
+
+   `View current source, line 3101 <../source-code/utilities.html#utilities-3101>`_.
+
+align_contour_start
+~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: align_contour_start(eroded_contour, first_point)
+
+   Rotates the eroded_contour so that its point closest to the first point of p2p_contour comes first.
+
+   :param eroded_contour: Array of shape (N, 2), representing the contour after erosion.
+   :param first_point: Input ``first_point`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      aligned_contour
+
+   `View current source, line 3120 <../source-code/utilities.html#utilities-3120>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Rotates the eroded_contour so that its point closest to the first point
+      of p2p_contour comes first.
+
+      Parameters
+      ----------
+      eroded_contour : np.ndarray
+          Array of shape (N, 2), representing the contour after erosion.
+      p2p_contour : np.ndarray
+          Original contour array of shape (N, 2) before erosion.
+
+      Returns
+      -------
+      np.ndarray
+          Rotated eroded_contour starting from the closest point to the original start.
+
+   .. raw:: html
+
+      </details>
+
+calculate_object_haralick_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: calculate_object_haralick_features(object_masks, cropped_img, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
+
+   Calculate object haralick features.
+
+   :param object_masks: Input ``object_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param distances: Input ``distances`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param angles: Input ``angles`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param levels: Input ``levels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      get_glcm_feature_means(glcm)
+
+   `View current source, line 3145 <../source-code/utilities.html#utilities-3145>`_.
+
+calculate_contour_haralick_features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: calculate_contour_haralick_features(contour_intensities, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
+
+   Calculate contour haralick features.
+
+   :param contour_intensities: Input ``contour_intensities`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param distances: Input ``distances`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param angles: Input ``angles`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param levels: Input ``levels`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      get_glcm_feature_means(glcm)
+
+   `View current source, line 3166 <../source-code/utilities.html#utilities-3166>`_.
+
+split_array
+~~~~~~~~~~~
+
+.. py:function:: split_array(row)
+
+   Split array.
+
+   :param row: Input ``row`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (first_half, second_half)
+
+   `View current source, line 3185 <../source-code/utilities.html#utilities-3185>`_.
+
+get_complemented_contour_intensity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: get_complemented_contour_intensity(row)
+
+   Get complemented contour intensity.
+
+   :param row: Input ``row`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      complemented_contour_intensity_profile
+
+   `View current source, line 3192 <../source-code/utilities.html#utilities-3192>`_.
+
+shift_image
+~~~~~~~~~~~
+
+.. py:function:: shift_image(img, shift)
+
+   Correct XY drift between phase contrast image and fluorescent image(s). :param img: Input image :param shift: Subpixel XY drift :return: Drift corrected image
+
+   :param img: Input ``img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param shift: Input ``shift`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      offset_image.astype(np.uint16)
+
+   `View current source, line 3208 <../source-code/utilities.html#utilities-3208>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Correct XY drift between phase contrast image and fluorescent image(s).
+      :param img: Input image
+      :param shift: Subpixel XY drift
+      :return: Drift corrected image
+
+   .. raw:: html
+
+      </details>
+
+Internal helpers
+----------------
+
+_collect_touching_label_pairs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _collect_touching_label_pairs(label_slice_a, label_slice_b)
+
+    collect touching label pairs.
+
+   :param label_slice_a: Input ``label_slice_a`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param label_slice_b: Input ``label_slice_b`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.unique(pairs, axis=0)
+      np.empty((0, 2), dtype=np.int64)
+
+   `View current source, line 636 <../source-code/utilities.html#utilities-636>`_.
+
+_max_feret_diameter_px
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _max_feret_diameter_px(coords)
+
+   Exact point-set diameter with bounded pairwise-distance memory.
+
+   :param coords: Input ``coords`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      maximum
+      0.0
+
+   `View current source, line 1835 <../source-code/utilities.html#utilities-1835>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Exact point-set diameter with bounded pairwise-distance memory.
+
+   .. raw:: html
+
+      </details>

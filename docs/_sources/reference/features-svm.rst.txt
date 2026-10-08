@@ -1,0 +1,688 @@
+Svm features
+============
+
+**Prerequisites:** Valid cell geometry and inverse-phase signal; these quantities are used by the curation classifier.
+
+A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.
+
+contour
+-------
+
+**Exported column:** ``<channel>_contour``
+
+**Meaning:** Stored cell contour coordinates.
+
+Calculation: Store the cell contour coordinates directly in the table.
+Explanation: This is mainly kept for tracking, visualization, and linking feature rows back to the original segmented cell.
+
+**Units:** pixels. **Value shape:** N × 2 geometry array in pixel coordinates.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   cell.contour
+
+`Source assignment, line 394 <../source-code/features.html#features-394>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_length
+-----------
+
+**Exported column:** ``<channel>_cell_length``
+
+**Meaning:** Cell length along the mesh midline.
+
+Calculation: Sum the step lengths between successive mesh midpoints along the cell axis.
+Explanation: This is the measured pole-to-pole length of the cell, following the fitted midline rather than a simple straight line.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_length(step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_length`.
+
+`Source assignment, line 397 <../source-code/features.html#features-397>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_width
+----------
+
+**Exported column:** ``<channel>_cell_width``
+
+**Meaning:** Cell body width.
+
+Calculation: Compute the width of every mesh segment as the distance between (x1, y1) and (x2, y2), sort those widths, and take the mean of the widest one-third.
+Explanation: This gives a robust estimate of the cell body width while reducing the influence of the narrow poles.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_avg_width(cell.x1, cell.y1, cell.x2, cell.y2, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_avg_width`.
+
+`Source assignment, line 398 <../source-code/features.html#features-398>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_area
+---------
+
+**Exported column:** ``<channel>_cell_area``
+
+**Meaning:** Cell projected area.
+
+Calculation: Compute the area of the polygon defined by the cell contour.
+Explanation: This is the 2D projected size of the segmented cell in the image.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_area(cell.contour, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_area`.
+
+`Source assignment, line 401 <../source-code/features.html#features-401>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_volume
+-----------
+
+**Exported column:** ``<channel>_cell_volume``
+
+**Meaning:** Cell estimated volume.
+
+Calculation: Treat each mesh segment as a cylinder with radius width/2, integrate pi\*(width/2)^2 along the cell length using the trapezoidal rule, and sum the segments.
+Explanation: This estimates the 3D volume of the bacterium from its 2D mesh.
+
+**Units:** µm³. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_volume(cell.x1, cell.y1, cell.x2, cell.y2, step_length, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_volume`.
+
+`Source assignment, line 402 <../source-code/features.html#features-402>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_surface_area
+-----------------
+
+**Exported column:** ``<channel>_cell_surface_area``
+
+**Meaning:** Cell estimated surface area.
+
+Calculation: For each mesh segment compute 2\*pi\*(width/2)\*step\_length and sum the segment values.
+Explanation: This estimates the outer surface area of the cell envelope along the reconstructed cell shape.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_surface_area(width_not_ordered, step_length)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_surface_area`.
+
+`Source assignment, line 405 <../source-code/features.html#features-405>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+max_curvature
+-------------
+
+**Exported column:** ``<channel>_max_curvature``
+
+**Meaning:** Maximum cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_curvature_characteristics(cell.contour, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_curvature_characteristics`.
+
+`Source assignment, line 408 <../source-code/features.html#features-408>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+min_curvature
+-------------
+
+**Exported column:** ``<channel>_min_curvature``
+
+**Meaning:** Minimum cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_curvature_characteristics(cell.contour, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_curvature_characteristics`.
+
+`Source assignment, line 408 <../source-code/features.html#features-408>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+mean_curvature
+--------------
+
+**Exported column:** ``<channel>_mean_curvature``
+
+**Meaning:** Mean cell contour curvature.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_curvature_characteristics(cell.contour, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_curvature_characteristics`.
+
+`Source assignment, line 408 <../source-code/features.html#features-408>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_perimeter
+--------------
+
+**Exported column:** ``<channel>_cell_perimeter``
+
+**Meaning:** Cell contour perimeter.
+
+Calculation: Sum the distances between consecutive points of the subpixel contour.
+Explanation: This is the total contour length around the cell boundary in 2D.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_perimeter_measurements(cell.contour, cell.svm_features['cell_area'], px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_perimeter_measurements`.
+
+`Source assignment, line 415 <../source-code/features.html#features-415>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_circularity
+----------------
+
+**Exported column:** ``<channel>_cell_circularity``
+
+**Meaning:** Cell circularity.
+
+Calculation: (4\*pi\*cell\_area) / (cell\_perimeter^2).
+Explanation: Values closer to 1 indicate a more circle-like outline, while lower values indicate a more elongated or irregular shape.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_perimeter_measurements(cell.contour, cell.svm_features['cell_area'], px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_perimeter_measurements`.
+
+`Source assignment, line 415 <../source-code/features.html#features-415>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_POA
+--------
+
+**Exported column:** ``<channel>_cell_POA``
+
+**Meaning:** Cell compactness.
+
+Calculation: (cell\_perimeter^2) / cell\_area.
+Explanation: This describes how much boundary length is needed to enclose the area; larger values reflect less compact shapes.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_perimeter_measurements(cell.contour, cell.svm_features['cell_area'], px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_perimeter_measurements`.
+
+`Source assignment, line 415 <../source-code/features.html#features-415>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+cell_sphericity
+---------------
+
+**Exported column:** ``<channel>_cell_sphericity``
+
+**Meaning:** Cell sphericity descriptor.
+
+Calculation: (1.5\*pi\*(cell\_perimeter/(2\*pi))^1.5) / cell\_area.
+Explanation: This is a 2D shape descriptor intended to capture how close the outline is to a compact rounded object.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.
+
+**Units:** µm⁻¹ᐟ² under the implemented 2D formula. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_cell_perimeter_measurements(cell.contour, cell.svm_features['cell_area'], px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_cell_perimeter_measurements`.
+
+`Source assignment, line 415 <../source-code/features.html#features-415>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_total_intensity
+---------------------
+
+**Exported column:** ``<channel>_phaco_total_intensity``
+
+**Meaning:** Total phase-contrast intensity inside the cell.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   total_int
+
+`Source assignment, line 428 <../source-code/features.html#features-428>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_max_intensity
+-------------------
+
+**Exported column:** ``<channel>_phaco_max_intensity``
+
+**Meaning:** Maximum phase-contrast intensity inside the cell.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   max_int
+
+`Source assignment, line 429 <../source-code/features.html#features-429>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_mean_intensity
+--------------------
+
+**Exported column:** ``<channel>_phaco_mean_intensity``
+
+**Meaning:** Mean phase-contrast intensity inside the cell.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mean_int
+
+`Source assignment, line 430 <../source-code/features.html#features-430>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_contour_peaks
+-------------------
+
+**Exported column:** ``<channel>_phaco_contour_peaks``
+
+**Meaning:** Number of peaks in the phase-contrast contour profile.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** count. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.find_signal_peaks(phaco_contour_intensity, max_int)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.find_signal_peaks`.
+
+`Source assignment, line 441 <../source-code/features.html#features-441>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_max_contour_intensity
+---------------------------
+
+**Exported column:** ``<channel>_phaco_max_contour_intensity``
+
+**Meaning:** Maximum phase-contrast intensity along the contour.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.max(phaco_contour_intensity)
+
+`Source assignment, line 444 <../source-code/features.html#features-444>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_mean_contour_intensity
+----------------------------
+
+**Exported column:** ``<channel>_phaco_mean_contour_intensity``
+
+**Meaning:** Mean phase-contrast intensity along the contour.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(phaco_contour_intensity)
+
+`Source assignment, line 447 <../source-code/features.html#features-447>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_min_contour_intensity
+---------------------------
+
+**Exported column:** ``<channel>_phaco_min_contour_intensity``
+
+**Meaning:** Mean of the 10 lowest phase-contrast contour intensities.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(sorted_phaco_contour_intensity[:10])
+
+`Source assignment, line 450 <../source-code/features.html#features-450>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_max_contour_variability
+-----------------------------
+
+**Exported column:** ``<channel>_phaco_max_contour_variability``
+
+**Meaning:** Maximum local variability of phase-contrast contour intensity.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** A.U.. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.max(phaco_contour_intensity_variability)
+
+`Source assignment, line 453 <../source-code/features.html#features-453>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_mean_contour_variability
+------------------------------
+
+**Exported column:** ``<channel>_phaco_mean_contour_variability``
+
+**Meaning:** Mean local variability of phase-contrast contour intensity.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** A.U.. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(phaco_contour_intensity_variability)
+
+`Source assignment, line 456 <../source-code/features.html#features-456>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+midline_kurtosis
+----------------
+
+**Exported column:** ``<channel>_midline_kurtosis``
+
+**Meaning:** Kurtosis of the phase-contrast midline profile.
+
+Calculation: Compute the requested distribution statistic from the phase-contrast axial intensity profile along the midline.
+Explanation: These values describe whether the midline intensity profile is symmetric, heavy-tailed, or dominated by peaks.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_kurtosis(cell.profiling_data['phaco_axial_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_kurtosis`.
+
+`Source assignment, line 468 <../source-code/features.html#features-468>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+midline_skewness
+----------------
+
+**Exported column:** ``<channel>_midline_skewness``
+
+**Meaning:** Skewness of the phase-contrast midline profile.
+
+Calculation: Compute the requested distribution statistic from the phase-contrast axial intensity profile along the midline.
+Explanation: These values describe whether the midline intensity profile is symmetric, heavy-tailed, or dominated by peaks.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_skew(cell.profiling_data['phaco_axial_intensity'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_skew`.
+
+`Source assignment, line 471 <../source-code/features.html#features-471>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_max_expanded_contour_intensity
+------------------------------------
+
+**Exported column:** ``<channel>_phaco_max_expanded_contour_intensity``
+
+**Meaning:** Maximum phase-contrast intensity along the expanded contour.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.max(cell.profiling_data['phaco_expanded_contour_intensity'])
+
+`Source assignment, line 485 <../source-code/features.html#features-485>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_mean_expanded_contour_intensity
+-------------------------------------
+
+**Exported column:** ``<channel>_phaco_mean_expanded_contour_intensity``
+
+**Meaning:** Mean phase-contrast intensity along the expanded contour.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(cell.profiling_data['phaco_expanded_contour_intensity'])
+
+`Source assignment, line 488 <../source-code/features.html#features-488>`_; :py:meth:`bactoscoop.features.Features.svm`.
+
+phaco_cell_edge_gradient
+------------------------
+
+**Exported column:** ``<channel>_phaco_cell_edge_gradient``
+
+**Meaning:** Mean phase-contrast edge gradient.
+
+Calculation: Measure the requested statistic from the inverted, background-subtracted phase-contrast signal inside the cell, along the contour, or along expanded/eroded contour versions depending on the feature.
+Explanation: These features describe how the phase-contrast signal is distributed around and within the segmented cell.
+
+**Units:** A.U.. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.average(cell.profiling_data['phaco_eroded_contour_intensity'] - cell.profiling_data['phaco_expanded_contour_intensity'])
+
+`Source assignment, line 493 <../source-code/features.html#features-493>`_; :py:meth:`bactoscoop.features.Features.svm`.

@@ -1,0 +1,1669 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="bactoscoop.logging_utils" href="logging_utils.html"><link rel="prev" title="bactoscoop.image" href="image.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>bactoscoop.imagecollection - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-objects.html">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-svm.html">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features.html">bactoscoop.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image.html">bactoscoop.image</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/imagecollection.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-bactoscoop.imagecollection">
+<span id="bactoscoop-imagecollection"></span><h1>bactoscoop.imagecollection<a class="headerlink" href="#module-bactoscoop.imagecollection" title="Link to this heading">¶</a></h1>
+<p>The public collection coordinates loading, geometry, curation, measurements, and export. See <a class="reference internal" href="../getting-started/quickstart.html"><span class="doc">Quick start</span></a>.</p>
+<section id="classes-and-public-operations">
+<h2>Classes and public operations<a class="headerlink" href="#classes-and-public-operations" title="Link to this heading">¶</a></h2>
+<section id="imagecollection">
+<h3>ImageCollection<a class="headerlink" href="#imagecollection" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bactoscoop.imagecollection.</span></span><span class="sig-name descname"><span class="pre">ImageCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_folder_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.065</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'continue'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_cell_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection" title="Link to this definition">¶</a></dt>
+<dd><p>Create a dataset collection with physical calibration and explicit error handling.</p>
+<p>Use this as the public entry point; load fields/masks or reload geometry before dependent analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_folder_path</strong> – Dataset folder containing TIFFs and the masks subfolder; None delays path configuration.</p></li>
+<li><p><strong>px</strong> – Micrometres per pixel. Geometry arrays remain in pixel coordinates.</p></li>
+<li><p><strong>error_policy</strong> – “continue” records independent item/cell failures; “raise” raises the recorded error. Setup failures can still stop work.</p></li>
+<li><p><strong>log_cell_errors</strong> – Print each recorded cell error when true; recording is independent of this flag.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.error_policy</span></code>, <code class="docutils literal notranslate"><span class="pre">self.log_cell_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.processing_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.cell_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.completed_stages</span></code>, <code class="docutils literal notranslate"><span class="pre">self.px</span></code>, <code class="docutils literal notranslate"><span class="pre">self.images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.masks</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>, <code class="docutils literal notranslate"><span class="pre">self.inverted_image</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_list</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mask_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.phase_channel</span></code>, <code class="docutils literal notranslate"><span class="pre">self.segmentation_failed</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_folder_path</span></code>, <code class="docutils literal notranslate"><span class="pre">self.name</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_objects</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>, <code class="docutils literal notranslate"><span class="pre">self.feature_dataframes</span></code>, <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh_prefilter_stats</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-29">View current source, line 29</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-processing-summary">
+<h3>ImageCollection.processing_summary<a class="headerlink" href="#imagecollection-processing-summary" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.processing_summary">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">processing_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.processing_summary" title="Link to this definition">¶</a></dt>
+<dd><p>Report retained stage and cell error history.</p>
+<p>Returns a new summary dictionary. completed does not imply every stage ran, and cell errors alone do not change that status.</p>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'status'</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span> <span class="s1">'completed_stages'</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_stages</span><span class="p">),</span> <span class="s1">'error_count'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_errors</span><span class="p">),</span> <span class="s1">'errors'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_errors</span><span class="p">),</span> <span class="s1">'cell_error_count'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_errors</span><span class="p">),</span> <span class="s1">'cell_errors'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_errors</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-135">View current source, line 135</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return attempted-stage status and retained image/cell error records.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-load-masks">
+<h3>ImageCollection.load_masks<a class="headerlink" href="#imagecollection-load-masks" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.load_masks">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">load_masks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.load_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Read label TIFFs from the dataset masks subfolder.</p>
+<p>Requires a dataset path; modifies masks and mask filenames; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.masks</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mask_filenames</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-283">View current source, line 283</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Read masks from the ``/masks`` subfolder.
+
+Mutates ``self.masks`` and ``self.mask_filenames``.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-load-phase-images">
+<h3>ImageCollection.load_phase_images<a class="headerlink" href="#imagecollection-load-phase-images" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.load_phase_images">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">load_phase_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.load_phase_images" title="Link to this definition">¶</a></dt>
+<dd><p>Load phase TIFFs using the selected channel suffix.</p>
+<p>Requires a dataset path; sets images, filenames, paths, phase suffix, and stage state; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.phase_channel</span></code>, <code class="docutils literal notranslate"><span class="pre">self.images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.paths</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">type(e)</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-296">View current source, line 296</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads phase contrast images from the specified image folder path, based on the characters before the file-extension,
+and stores them in the 'self.images' array.
+
+Parameters
+----------
+phase_channel : str, optional
+    Characters before the file-extension (e.g., "c1", "phase") to look for when using this function. (default is an empty string)
+
+Mutates ``self.images``, ``self.image_filenames`` and ``self.paths``.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-load-channel-images">
+<h3>ImageCollection.load_channel_images<a class="headerlink" href="#imagecollection-load-channel-images" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.load_channel_images">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">load_channel_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.load_channel_images" title="Link to this definition">¶</a></dt>
+<dd><p>Load channels and index their arrays by field identity.</p>
+<p>Requires a dataset path; clears stale data for requested channels and records load/duplicate-field failures; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>channel_list</strong> – Sequence of channel suffixes to load or attach.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.channel_list</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-322">View current source, line 322</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads channel images from the image folder path based on the specified characters before the file-extension and stores them in
+the 'self.channel_images' dictionary, where the channel name is used as the key.
+
+Parameters
+----------
+channel_list : List of str
+    Characters before the extension (e.g., ["c2", "c3"]) to look for when using this function.
+
+Mutates ``self.channel_images``.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-create-image-objects">
+<h3>ImageCollection.create_image_objects<a class="headerlink" href="#imagecollection-create-image-objects" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.create_image_objects">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">create_image_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.create_image_objects" title="Link to this definition">¶</a></dt>
+<dd><p>Validate field matching and build a fresh image/cell population.</p>
+<p>Loads missing phase/mask data, rejects invalid setup or stale masks after segmentation failure, and clears feature tables; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.feature_dataframes</span></code>, <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_objects</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-369">View current source, line 369</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create ``Image`` objects from the loaded masks and phase images.
+
+Invalid collection-level setup raises immediately. Failures while creating
+a single image object are logged and skipped so the rest of the batch can continue.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-add-channels">
+<h3>ImageCollection.add_channels<a class="headerlink" href="#imagecollection-add-channels" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.add_channels">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">add_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_objects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.add_channels" title="Link to this definition">¶</a></dt>
+<dd><p>This method loads channel images based on the provided channel list and adds them to the individual image objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img_objects</strong> – Image objects to attach channel data to.</p></li>
+<li><p><strong>channel_list</strong> – Sequence of channel suffixes to load or attach.</p></li>
+<li><p><strong>load_data</strong> – Load channel TIFFs before attaching them when true; false uses already loaded field-keyed data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-409">View current source, line 409</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads channel images based on the provided channel list and adds them to the individual image objects.
+
+Parameters
+----------
+img_objects : List
+    List of image objects.
+channel_list : List
+    List of channel names.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-get-mesh-dataframe">
+<h3>ImageCollection.get_mesh_dataframe<a class="headerlink" href="#imagecollection-get-mesh-dataframe" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.get_mesh_dataframe">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">get_mesh_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.get_mesh_dataframe" title="Link to this definition">¶</a></dt>
+<dd><p>This method returns the mesh dataframe associated with the specified image name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_name</strong> – The name or identifier of the image.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_lookup</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_name</span><span class="p">)</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-496">View current source, line 496</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method returns the mesh dataframe associated with the specified image name.
+
+Parameters
+----------
+image_name : str
+    The name or identifier of the image.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-create-image-object">
+<h3>ImageCollection.create_image_object<a class="headerlink" href="#imagecollection-create-image-object" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.create_image_object">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">create_image_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.create_image_object" title="Link to this definition">¶</a></dt>
+<dd><p>This method creates a single Image object using the provided image, image name, index, mask, mesh dataframe, and pixel size (px). If mesh data is present, it also creates associated Cell objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – The phase contrast image for the Image object.</p></li>
+<li><p><strong>image_name</strong> – The name or identifier of the image.</p></li>
+<li><p><strong>index</strong> – The index or position of the image.</p></li>
+<li><p><strong>mask</strong> – The mask or region of interest associated with the image.</p></li>
+<li><p><strong>mesh_df</strong> – The mesh dataframe associated with the image, if available, or None.</p></li>
+<li><p><strong>px</strong> – Micrometres per pixel. Geometry arrays remain in pixel coordinates.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img_obj</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-512">View current source, line 512</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method creates a single Image object using the provided image, image name, index, mask, mesh dataframe, and pixel size (px).
+If mesh data is present, it also creates associated Cell objects.
+
+Parameters
+----------
+image : phase contrast image
+    The phase contrast image for the Image object.
+image_name : str
+    The name or identifier of the image.
+index : int
+    The index or position of the image.
+mask : mask or None
+    The mask or region of interest associated with the image.
+mesh_df : pd.DataFrame or None
+    The mesh dataframe associated with the image, if available, or None.
+px : float
+The pixel size in micrometers.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-segment-images">
+<h3>ImageCollection.segment_images<a class="headerlink" href="#imagecollection-segment-images" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.segment_images">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">segment_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask_thresh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bact_phase_omni'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.segment_images" title="Link to this definition">¶</a></dt>
+<dd><p>Run Omnipose for selected phase images and save their masks.</p>
+<p>Requires loaded phase images. Returns True on success or False on a recorded failure in continue mode; raise policy propagates errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_thresh</strong> – Threshold passed as Omnipose mask_threshold.</p></li>
+<li><p><strong>minsize</strong> – Minimum accepted segmentation-mask size in pixels.</p></li>
+<li><p><strong>n</strong> – Selected image positions; wrapper accepts None for all. Indices must be nonempty, unique valid integers.</p></li>
+<li><p><strong>model_name</strong> – Omnipose model identifier; default collection model is bact_phase_omni.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.segmentation_failed</span></code>, <code class="docutils literal notranslate"><span class="pre">self.masks</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mask_filenames</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-540">View current source, line 540</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-batch-detect-objects">
+<h3>ImageCollection.batch_detect_objects<a class="headerlink" href="#imagecollection-batch-detect-objects" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_detect_objects">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_detect_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_external_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_detect_objects" title="Link to this definition">¶</a></dt>
+<dd><p>Replace requested-channel detections and collect object contours/geometry.</p>
+<p>Requires image objects with cells. Loads channels, changes cell.object_meshdata and object_detection_df; returns the combined detection DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>reset_channels</strong> – Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.</p></li>
+<li><p><strong>align</strong> – Use the object-detection alignment path for the selected signal.</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+<li><p><strong>log_sigma</strong> – Laplacian-of-Gaussian sigma for signal-object detection.</p></li>
+<li><p><strong>kernel_width</strong> – Width of the square dilation kernel used for candidate object masks.</p></li>
+<li><p><strong>min_overlap_ratio</strong> – Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.</p></li>
+<li><p><strong>max_external_ratio</strong> – Maximum accepted outside-cell ratio under the utility implementation.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">object_detection_df</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.object_detection_df</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-564">View current source, line 564</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Detect objects within the contour of the cell.
+
+Parameters
+----------
+channels : List of strings, optional
+    The channel names of the channels to perform object detection on.
+
+log_sigma : int, optional
+    The sigma parameter of the Laplacian of Gaussian filter used in object detection. (default is 3)
+
+kernel_width : int, optional
+    The kernel width of the kernel used for dilating the object masks.
+    Decreasing results in smaller masks, while increasing results in larger masks. (default is 4)
+
+min_overlap_ratio : float, optional
+    Minimum overlap between the object and cell required for the object to be kept. (default is 0.01)
+
+max_external_ratio : float, optional
+    The maximum ratio an object is allowed to lie outside the cell contour. (default is 0.1)
+
+Returns
+-------
+pd.DataFrame
+    A DataFrame containing cell_id, object_contours, and frame information.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-batch-process-mesh">
+<h3>ImageCollection.batch_process_mesh<a class="headerlink" href="#imagecollection-batch-process-mesh" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_process_mesh">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_process_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkl_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_max_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_process_mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Join/split cells, construct geometry, collect mesh tables, and optionally save a pickle.</p>
+<p>Requires compatible phase images and masks. Updates cells, mesh_df_collection and mesh_prefilter_stats. Returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pkl_name</strong> – Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.</p></li>
+<li><p><strong>object_list</strong> – Explicit image-object sequence to process; None selects collection targets.</p></li>
+<li><p><strong>save_data</strong> – Write the combined mesh table when true.</p></li>
+<li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
+<li><p><strong>join_thresh</strong> – Maximum pole-to-pole joining distance in pixels.</p></li>
+<li><p><strong>split_thresh</strong> – Relative constriction threshold used by the splitting pipeline.</p></li>
+<li><p><strong>CD_width</strong> – Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+<li><p><strong>neighbor_filter_max_neighbors</strong> – Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
+<li><p><strong>neighbor_filter_connectivity</strong> – 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh_prefilter_stats</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-688">View current source, line 688</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Process cellular meshes from segmented masks and store the data in Cell objects.
+
+After segmentation, this method can process the resulting masks and create cellular meshes from them.
+It first joins cells with a pole-pole distance (px) below the 'join_thresh'.
+Subsequently, meshes of all cells are created and cells can be split again if the constriction degree exceeds the 'split_thresh'.
+The data is then stored in Cell objects and can be exported in a pickle file.
+
+Parameters
+----------
+pkl_name : str, optional
+    Name of the pickle file to save the mesh data. If None, the file will be saved as 'folder_name_meshdata.pkl'.
+
+object_list : List, optional
+    Specify a list of Image objects to be processed. If 'object_list' is None, all Image instances in 'image_objects' are processed.
+
+phase_channel : str, optional
+    Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+
+join_thresh : int, optional
+    The pole-pole distance threshold for joining cells. Cells with a distance below this threshold will have their masks joined. (default is 4)
+
+split_thresh : float, optional
+    The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-batch-load-mesh">
+<h3>ImageCollection.batch_load_mesh<a class="headerlink" href="#imagecollection-batch-load-mesh" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_load_mesh">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_load_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkl_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkl_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_load_mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Load saved pickle or mesh Parquet and reconstruct image objects.</p>
+<p>Requires the matching phase images/masks and compatible geometry columns. Recreates population and clears feature state; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pkl_name</strong> – Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.</p></li>
+<li><p><strong>pkl_path</strong> – Directory containing an input mesh file; None selects the image folder.</p></li>
+<li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>, <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-780">View current source, line 780</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Load mesh data from a pickle-file and create image objects from the data.
+
+Parameters
+----------
+pkl_name : str
+    Name of the pickle file where the mesh data is stored (e.g., 'Ecoli_meshdata.pkl').
+
+pkl_path : str, optional
+    Path to the file where the mesh data is stored. If not provided, the method will look in the image folder path.
+
+phase_channel : str, optional
+    Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-batch-mask2mesh">
+<h3>ImageCollection.batch_mask2mesh<a class="headerlink" href="#imagecollection-batch-mask2mesh" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_mask2mesh">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_mask2mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkl_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_mask2mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Create meshes from masks without the joining or splitting as in the batch_process_mesh method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pkl_name</strong> – Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.</p></li>
+<li><p><strong>object_list</strong> – Explicit image-object sequence to process; None selects collection targets.</p></li>
+<li><p><strong>save_data</strong> – Write the combined mesh table when true.</p></li>
+<li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-820">View current source, line 820</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create meshes from masks without the joining or splitting as in the batch_process_mesh method.
+
+Parameters
+----------
+pkl_name : str, optional
+    Name of the pickle file to save the mesh data. If None, the file will be saved as 'folder_name_meshdata.pkl'.
+object_list : List, optional
+    Specify a list of Image objects to be processed. If 'object_list' is None, all Image instances in 'image_objects' are processed.
+phase_channel : str, optional
+    Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-batch-shift-correction">
+<h3>ImageCollection.batch_shift_correction<a class="headerlink" href="#imagecollection-batch-shift-correction" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_shift_correction">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_shift_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shifted_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_external_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_log_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_closing_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_closing_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shift_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_shift_correction" title="Link to this definition">¶</a></dt>
+<dd><p>Batch shift correction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shifted_channel</strong> – Input <code class="docutils literal notranslate"><span class="pre">shifted_channel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>reset_channels</strong> – Clear loaded channel dictionaries and background/interpolation caches before loading requested channels.</p></li>
+<li><p><strong>log_sigma</strong> – Laplacian-of-Gaussian sigma for signal-object detection.</p></li>
+<li><p><strong>kernel_width</strong> – Width of the square dilation kernel used for candidate object masks.</p></li>
+<li><p><strong>min_overlap_ratio</strong> – Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.</p></li>
+<li><p><strong>max_external_ratio</strong> – Maximum accepted outside-cell ratio under the utility implementation.</p></li>
+<li><p><strong>phase_log_sigma</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_log_sigma</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>phase_closing_level</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_closing_level</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>signal_closing_level</strong> – Input <code class="docutils literal notranslate"><span class="pre">signal_closing_level</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>max_shift_correction</strong> – Input <code class="docutils literal notranslate"><span class="pre">max_shift_correction</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">average_success_percentage</span>
+<span class="mf">0.0</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-877">View current source, line 877</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-batch-calculate-features">
+<h3>ImageCollection.batch_calculate_features<a class="headerlink" href="#imagecollection-batch-calculate-features" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_calculate_features">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_calculate_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_method_pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_shifted_contours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_signal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_mesh_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_contour_on_object_mesh_failure_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_calculate_features" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate selected feature families for the current cell population.</p>
+<p>Requires image objects and loaded signals/detections as appropriate. Replaces selected tables, may remove large cells, clears merged_features; returns the feature_dataframes dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel_method_pairs</strong> – Pairs of (channel list, feature method), for example [([None], “morphological”), ([“C2”], “profiling”)].</p></li>
+<li><p><strong>all_data</strong> – Feature-method-specific option; objects includes detailed per-object arrays when true.</p></li>
+<li><p><strong>reset</strong> – Clear stored feature dataframes when true; false retains other pairs while replacing each recalculated pair.</p></li>
+<li><p><strong>use_shifted_contours</strong> – Select stored shifted contour, midline, and mesh geometry; the correction must already exist.</p></li>
+<li><p><strong>shift_signal</strong> – Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.</p></li>
+<li><p><strong>max_mesh_size</strong> – Maximum accepted mesh row count; cells above this limit are removed from the image cell population.</p></li>
+<li><p><strong>retain_contour_on_object_mesh_failure_channels</strong> – Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">feature_dataframes</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.feature_dataframes</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-971">View current source, line 971</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate features of all image objects for specified channels and methods.
+
+This method calculates features for all image objects based on the specified channel-method pairs. It takes a list of tuples, where each tuple contains channel names and the feature calculation method. The resulting feature dataframes are stored in a dictionary.
+
+Parameters
+----------
+channel_method_pairs : List[Tuple[List[str], str]]
+    A list of tuples where each tuple contains the channel names and feature calculation method.
+    Example of channel_method_pairs: [(['c1'], 'profiling'), (['c2', 'c3'], 'objects'), ([None], 'svm')].
+    With the example pairs, this method will analyze c1 using the profiling method,
+    then c2 and c3 using the objects method, and finally the phase contrast channel using the svm method.
+
+add_profiling_data : bool, optional
+    Whether to include profiling data in the feature calculation. (default is True)
+
+reset : bool, optional
+    If True, the dictionary storing the dataframes will be reset. If False, dataframes are added to the existing dictionary. (default is True)
+retain_contour_on_object_mesh_failure_channels : list[str] or None, optional
+    Channels whose objects features retain contour-based measurements
+    when any detected object mesh is invalid. Other channels omit that
+    cell's objects feature row. None is equivalent to an empty list.
+    This option does not affect other feature methods.
+
+Returns
+-------
+Dict
+    A dictionary containing dataframes with calculated features.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-batch-calculate-signal-correlation-features">
+<h3>ImageCollection.batch_calculate_signal_correlation_features<a class="headerlink" href="#imagecollection-batch-calculate-signal-correlation-features" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_calculate_signal_correlation_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_method_tuples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features" title="Link to this definition">¶</a></dt>
+<dd><p>Add selected between-channel measurements to the supplied dataframe.</p>
+<p>Requires both prefixed feature columns. Mutates and returns df; does not independently merge or validate an entire workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.</p></li>
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>feature_method_tuples</strong> – Pairs of (feature-name list, correlation-selector list) applied to each channel pair.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1112">View current source, line 1112</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-curate-dataset">
+<h3>ImageCollection.curate_dataset<a class="headerlink" href="#imagecollection-curate-dataset" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.curate_dataset">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">curate_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_curated_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.curate_dataset" title="Link to this definition">¶</a></dt>
+<dd><p>Predict SVM quality labels and retain the accepted cell population.</p>
+<p>Requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_to_model</strong> – Path to a serialized SVM carrying the <code class="docutils literal notranslate"><span class="pre">feature_names_in_</span></code> training-column schema.</p></li>
+<li><p><strong>cols</strong> – Legacy curation argument retained for compatibility; unused by the current curation preparation.</p></li>
+<li><p><strong>control</strong> – Request visual examples of retained/rejected classes; random selection can be unavailable for small classes.</p></li>
+<li><p><strong>save_curated_data</strong> – Write curated mesh pickle when true; in-memory curation always occurs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.curated_df</span></code>, <code class="docutils literal notranslate"><span class="pre">self.pos</span></code>, <code class="docutils literal notranslate"><span class="pre">self.neg</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1224">View current source, line 1224</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Curate the dataset based on a trained support vector machine model.
+
+This method calculates SVM features and uses a trained SVM model to classify cells based on these features.
+It curates the dataset by discarding cells that are classified as label 0 (non-interesting).
+Optionally, it can include positive and negative control cells.
+
+Parameters:
+    path_to_model (str): Path to the trained SVM model.
+
+    cols (int): Retained for backward compatibility; currently unused.
+
+    control (bool): Whether to include positive and negative control cells.
+
+    save_curated_data (bool): Whether to write the curated mesh pickle.
+        The in-memory mesh dataframe is updated either way.
+
+Returns:
+    None
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-add-meshdata-to-dataframe">
+<h3>ImageCollection.add_meshdata_to_dataframe<a class="headerlink" href="#imagecollection-add-meshdata-to-dataframe" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.add_meshdata_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">add_meshdata_to_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.add_meshdata_to_dataframe" title="Link to this definition">¶</a></dt>
+<dd><p>Add meshdata to dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1290">View current source, line 1290</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-export-curated-masks">
+<h3>ImageCollection.export_curated_masks<a class="headerlink" href="#imagecollection-export-curated-masks" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.export_curated_masks">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">export_curated_masks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_subfolder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'curated_masks'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.export_curated_masks" title="Link to this definition">¶</a></dt>
+<dd><p>Rasterize retained contours and record overlap with original segmentation labels.</p>
+<p>Requires image objects with original masks. Writes TIFFs and a provenance CSV; returns (list of mask paths, provenance DataFrame).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_subfolder</strong> – Destination for newly rasterized curated masks, relative to the dataset folder.</p></li>
+<li><p><strong>overwrite</strong> – Replace existing curated mask TIFFs when true; false raises for a file already present.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">mask_paths</span><span class="p">,</span> <span class="n">provenance</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">FileExistsError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1320">View current source, line 1320</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Write one label mask per image from the SVM-curated cell contours.
+
+This method is intended to be run after :meth:`curate_dataset`. It never
+changes the original Omnipose masks in ``masks``. Instead, it writes new
+masks to ``output_subfolder`` and records how every curated label overlaps
+the original labels, so the output can be used directly by BactoFeatures.
+
+Parameters
+----------
+output_subfolder : str, optional
+    Folder below ``image_folder_path`` for the exported label TIFFs.
+overwrite : bool, optional
+    If ``False``, fail before replacing an existing curated-mask TIFF.
+
+Returns
+-------
+tuple[list[str], pandas.DataFrame]
+    Paths to the exported masks and a provenance table with one row per
+    curated cell.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-merge-dataframes">
+<h3>ImageCollection.merge_dataframes<a class="headerlink" href="#imagecollection-merge-dataframes" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.merge_dataframes">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">merge_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_metadata_tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_morphological_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.merge_dataframes" title="Link to this definition">¶</a></dt>
+<dd><p>Merge family/channel tables by image_name, cell_id, and frame.</p>
+<p>Requires feature tables; channel prefixes are added and a first-value pivot is used. Modifies and returns merged_features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>include_metadata_tag</strong> – Rename identity columns with <code class="docutils literal notranslate"><span class="pre">Metadata_</span></code> prefixes.</p></li>
+<li><p><strong>discard_morphological_nan</strong> – Drop merged rows missing cell_area or cell_length; these columns must exist.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">merged_features</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1425">View current source, line 1425</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Merge feature dataframes into a single dataframe.
+
+Merges multiple feature dataframes into a single dataframe, ensuring that columns are properly renamed
+to identify the channel and removes duplicates based on specific columns.
+
+Args:
+    include_metadata_tag (bool): Whether to rename 'image_name', 'cell_id', and 'frame' to 'Metadata_*'.
+    discard_nan (bool): Whether to discard rows with NaN in 'cell_area' and 'cell_length'.
+
+Returns:
+    pd.DataFrame: The merged feature dataframe.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-dataframe-to-pkl">
+<h3>ImageCollection.dataframe_to_pkl<a class="headerlink" href="#imagecollection-dataframe-to-pkl" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.dataframe_to_pkl">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">dataframe_to_pkl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkl_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.dataframe_to_pkl" title="Link to this definition">¶</a></dt>
+<dd><p>Save merged features as a pickle in the image folder.</p>
+<p>Requires merged_features; uses atomic replacement and returns the saved path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pkl_name</strong> – Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_folder_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1493">View current source, line 1493</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save merged features in the image folder and return the pickle path.
+
+A suffixless ``pkl_name`` is a legacy tag appended to the dataset name;
+a name ending in ``.pkl`` is used as the exact filename.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-meshdata-to-parquet">
+<h3>ImageCollection.meshdata_to_parquet<a class="headerlink" href="#imagecollection-meshdata-to-parquet" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.meshdata_to_parquet">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">meshdata_to_parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parquet_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.meshdata_to_parquet" title="Link to this definition">¶</a></dt>
+<dd><p>Save reloadable nested geometry to compressed Parquet.</p>
+<p>Requires nonempty mesh_df_collection; writes within the image folder and returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parquet_name</strong> – Output filename ending in .parquet within the image folder; None chooses the dataset-based default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1510">View current source, line 1510</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save the current mesh dataframe as reloadable Parquet in the image folder.
+
+Geometry arrays become nested numeric lists in Parquet. Reload with
+``batch_load_mesh("name.parquet", phase_channel=...)``.
+Requires the optional ``pyarrow`` package.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-dataframe-to-parquet">
+<h3>ImageCollection.dataframe_to_parquet<a class="headerlink" href="#imagecollection-dataframe-to-parquet" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.dataframe_to_parquet">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">dataframe_to_parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parquet_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.dataframe_to_parquet" title="Link to this definition">¶</a></dt>
+<dd><p>Save merged features as compressed Parquet in the image folder.</p>
+<p>Requires merged_features and PyArrow; replaces the target atomically and returns None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parquet_name</strong> – Output filename ending in .parquet within the image folder; None chooses the dataset-based default.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1522">View current source, line 1522</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save merged features as Parquet in the image folder (requires pyarrow).
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+</section>
+<section id="internal-helpers">
+<h2>Internal helpers<a class="headerlink" href="#internal-helpers" title="Link to this heading">¶</a></h2>
+<section id="imagecollection-require-image-folder-path">
+<h3>ImageCollection._require_image_folder_path<a class="headerlink" href="#imagecollection-require-image-folder-path" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._require_image_folder_path">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_require_image_folder_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._require_image_folder_path" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>require image folder path.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-80">View current source, line 80</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-require-loaded-images">
+<h3>ImageCollection._require_loaded_images<a class="headerlink" href="#imagecollection-require-loaded-images" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._require_loaded_images">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_require_loaded_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._require_loaded_images" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>require loaded images.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-84">View current source, line 84</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-record-processing-error">
+<h3>ImageCollection._record_processing_error<a class="headerlink" href="#imagecollection-record-processing-error" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._record_processing_error">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_record_processing_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._record_processing_error" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>record processing error.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stage</strong> – Input <code class="docutils literal notranslate"><span class="pre">stage</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>error</strong> – Input <code class="docutils literal notranslate"><span class="pre">error</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>image_name</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_name</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">record</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-90">View current source, line 90</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-record-cell-error">
+<h3>ImageCollection._record_cell_error<a class="headerlink" href="#imagecollection-record-cell-error" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._record_cell_error">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_record_cell_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._record_cell_error" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>record cell error.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stage</strong> – Input <code class="docutils literal notranslate"><span class="pre">stage</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>error</strong> – Input <code class="docutils literal notranslate"><span class="pre">error</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>image_name</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_name</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+<li><p><strong>error_type</strong> – Input <code class="docutils literal notranslate"><span class="pre">error_type</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">record</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-114">View current source, line 114</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-record-stage-success">
+<h3>ImageCollection._record_stage_success<a class="headerlink" href="#imagecollection-record-stage-success" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._record_stage_success">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_record_stage_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._record_stage_success" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>record stage success.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stage</strong> – Input <code class="docutils literal notranslate"><span class="pre">stage</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-152">View current source, line 152</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-validate-phase-image-state">
+<h3>ImageCollection._validate_phase_image_state<a class="headerlink" href="#imagecollection-validate-phase-image-state" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._validate_phase_image_state">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_validate_phase_image_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._validate_phase_image_state" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>validate phase image state.</p>
+</div></blockquote>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">matched</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-155">View current source, line 155</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-normalize-channel-list">
+<h3>ImageCollection._normalize_channel_list<a class="headerlink" href="#imagecollection-normalize-channel-list" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._normalize_channel_list">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_normalize_channel_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'channel_list'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._normalize_channel_list" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>normalize channel list.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel_list</strong> – Sequence of channel suffixes to load or attach.</p></li>
+<li><p><strong>argument_name</strong> – Input <code class="docutils literal notranslate"><span class="pre">argument_name</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_channels</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-240">View current source, line 240</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-iter-processing-targets">
+<h3>ImageCollection._iter_processing_targets<a class="headerlink" href="#imagecollection-iter-processing-targets" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._iter_processing_targets">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_iter_processing_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._iter_processing_targets" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>iter processing targets.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_list</strong> – Explicit image-object sequence to process; None selects collection targets.</p></li>
+<li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">object_list</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">image_objects</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">object_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-254">View current source, line 254</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-get-mesh-dataframe-lookup">
+<h3>ImageCollection._get_mesh_dataframe_lookup<a class="headerlink" href="#imagecollection-get-mesh-dataframe-lookup" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._get_mesh_dataframe_lookup">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_get_mesh_dataframe_lookup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._get_mesh_dataframe_lookup" title="Link to this definition">¶</a></dt>
+<dd><p>Build an image-name lookup from the current mesh dataframe.</p>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">image_name</span><span class="p">:</span> <span class="n">group</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">image_name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mesh_df_collection</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'image_name'</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)}</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-266">View current source, line 266</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Build an image-name lookup from the current mesh dataframe.
+
+Do not retain this lookup across calls: callers can replace or mutate
+``mesh_df_collection``, and a cached lookup could then return stale
+meshes for newly loaded data.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-apply-curation-labels">
+<h3>ImageCollection._apply_curation_labels<a class="headerlink" href="#imagecollection-apply-curation-labels" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._apply_curation_labels">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_apply_curation_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._apply_curation_labels" title="Link to this definition">¶</a></dt>
+<dd><p>Apply curation labels by stable image identity, with frame fallback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1143">View current source, line 1143</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Apply curation labels by stable image identity, with frame fallback.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-atomic-write">
+<h3>ImageCollection._atomic_write<a class="headerlink" href="#imagecollection-atomic-write" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._atomic_write">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_atomic_write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">writer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._atomic_write" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>atomic write.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Input <code class="docutils literal notranslate"><span class="pre">filename</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>writer</strong> – Input <code class="docutils literal notranslate"><span class="pre">writer</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1529">View current source, line 1529</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-to-parquet">
+<h3>ImageCollection._to_parquet<a class="headerlink" href="#imagecollection-to-parquet" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._to_parquet">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_to_parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._to_parquet" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>to parquet.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Input <code class="docutils literal notranslate"><span class="pre">filename</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>data</strong> – Input <code class="docutils literal notranslate"><span class="pre">data</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>mesh_data</strong> – Input <code class="docutils literal notranslate"><span class="pre">mesh_data</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1547">View current source, line 1547</a>.</p>
+</dd></dl>
+
+</section>
+<section id="imagecollection-to-pickle">
+<h3>ImageCollection._to_pickle<a class="headerlink" href="#imagecollection-to-pickle" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._to_pickle">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_to_pickle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkl_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._to_pickle" title="Link to this definition">¶</a></dt>
+<dd><p>Save data to a pkl file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pkl_name</strong> – Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.</p></li>
+<li><p><strong>data</strong> – Input <code class="docutils literal notranslate"><span class="pre">data</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1565">View current source, line 1565</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save data to a pkl file.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="imagecollection-write-pickle-file">
+<h3>ImageCollection._write_pickle_file<a class="headerlink" href="#imagecollection-write-pickle-file" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection._write_pickle_file">
+<span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">_write_pickle_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection._write_pickle_file" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>write pickle file.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Input <code class="docutils literal notranslate"><span class="pre">path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>data</strong> – Input <code class="docutils literal notranslate"><span class="pre">data</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1576">View current source, line 1576</a>.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="logging_utils.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bactoscoop.logging_utils</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="image.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">bactoscoop.image</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">bactoscoop.imagecollection</a><ul>
+<li><a class="reference internal" href="#classes-and-public-operations">Classes and public operations</a><ul>
+<li><a class="reference internal" href="#imagecollection">ImageCollection</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection"><code class="docutils literal notranslate"><span class="pre">ImageCollection</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-processing-summary">ImageCollection.processing_summary</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.processing_summary"><code class="docutils literal notranslate"><span class="pre">ImageCollection.processing_summary()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-load-masks">ImageCollection.load_masks</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.load_masks"><code class="docutils literal notranslate"><span class="pre">ImageCollection.load_masks()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-load-phase-images">ImageCollection.load_phase_images</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.load_phase_images"><code class="docutils literal notranslate"><span class="pre">ImageCollection.load_phase_images()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-load-channel-images">ImageCollection.load_channel_images</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.load_channel_images"><code class="docutils literal notranslate"><span class="pre">ImageCollection.load_channel_images()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-create-image-objects">ImageCollection.create_image_objects</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.create_image_objects"><code class="docutils literal notranslate"><span class="pre">ImageCollection.create_image_objects()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-add-channels">ImageCollection.add_channels</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.add_channels"><code class="docutils literal notranslate"><span class="pre">ImageCollection.add_channels()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-get-mesh-dataframe">ImageCollection.get_mesh_dataframe</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.get_mesh_dataframe"><code class="docutils literal notranslate"><span class="pre">ImageCollection.get_mesh_dataframe()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-create-image-object">ImageCollection.create_image_object</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.create_image_object"><code class="docutils literal notranslate"><span class="pre">ImageCollection.create_image_object()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-segment-images">ImageCollection.segment_images</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.segment_images"><code class="docutils literal notranslate"><span class="pre">ImageCollection.segment_images()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-detect-objects">ImageCollection.batch_detect_objects</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_detect_objects"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_detect_objects()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-process-mesh">ImageCollection.batch_process_mesh</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_process_mesh"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_process_mesh()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-load-mesh">ImageCollection.batch_load_mesh</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_load_mesh"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_load_mesh()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-mask2mesh">ImageCollection.batch_mask2mesh</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_mask2mesh"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_mask2mesh()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-shift-correction">ImageCollection.batch_shift_correction</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_shift_correction"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_shift_correction()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-calculate-features">ImageCollection.batch_calculate_features</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_calculate_features"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_calculate_features()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-batch-calculate-signal-correlation-features">ImageCollection.batch_calculate_signal_correlation_features</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features"><code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_calculate_signal_correlation_features()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-curate-dataset">ImageCollection.curate_dataset</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.curate_dataset"><code class="docutils literal notranslate"><span class="pre">ImageCollection.curate_dataset()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-add-meshdata-to-dataframe">ImageCollection.add_meshdata_to_dataframe</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.add_meshdata_to_dataframe"><code class="docutils literal notranslate"><span class="pre">ImageCollection.add_meshdata_to_dataframe()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-export-curated-masks">ImageCollection.export_curated_masks</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.export_curated_masks"><code class="docutils literal notranslate"><span class="pre">ImageCollection.export_curated_masks()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-merge-dataframes">ImageCollection.merge_dataframes</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.merge_dataframes"><code class="docutils literal notranslate"><span class="pre">ImageCollection.merge_dataframes()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-dataframe-to-pkl">ImageCollection.dataframe_to_pkl</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.dataframe_to_pkl"><code class="docutils literal notranslate"><span class="pre">ImageCollection.dataframe_to_pkl()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-meshdata-to-parquet">ImageCollection.meshdata_to_parquet</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.meshdata_to_parquet"><code class="docutils literal notranslate"><span class="pre">ImageCollection.meshdata_to_parquet()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-dataframe-to-parquet">ImageCollection.dataframe_to_parquet</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection.dataframe_to_parquet"><code class="docutils literal notranslate"><span class="pre">ImageCollection.dataframe_to_parquet()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#internal-helpers">Internal helpers</a><ul>
+<li><a class="reference internal" href="#imagecollection-require-image-folder-path">ImageCollection._require_image_folder_path</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._require_image_folder_path"><code class="docutils literal notranslate"><span class="pre">ImageCollection._require_image_folder_path()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-require-loaded-images">ImageCollection._require_loaded_images</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._require_loaded_images"><code class="docutils literal notranslate"><span class="pre">ImageCollection._require_loaded_images()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-record-processing-error">ImageCollection._record_processing_error</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._record_processing_error"><code class="docutils literal notranslate"><span class="pre">ImageCollection._record_processing_error()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-record-cell-error">ImageCollection._record_cell_error</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._record_cell_error"><code class="docutils literal notranslate"><span class="pre">ImageCollection._record_cell_error()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-record-stage-success">ImageCollection._record_stage_success</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._record_stage_success"><code class="docutils literal notranslate"><span class="pre">ImageCollection._record_stage_success()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-validate-phase-image-state">ImageCollection._validate_phase_image_state</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._validate_phase_image_state"><code class="docutils literal notranslate"><span class="pre">ImageCollection._validate_phase_image_state()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-normalize-channel-list">ImageCollection._normalize_channel_list</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._normalize_channel_list"><code class="docutils literal notranslate"><span class="pre">ImageCollection._normalize_channel_list()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-iter-processing-targets">ImageCollection._iter_processing_targets</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._iter_processing_targets"><code class="docutils literal notranslate"><span class="pre">ImageCollection._iter_processing_targets()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-get-mesh-dataframe-lookup">ImageCollection._get_mesh_dataframe_lookup</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._get_mesh_dataframe_lookup"><code class="docutils literal notranslate"><span class="pre">ImageCollection._get_mesh_dataframe_lookup()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-apply-curation-labels">ImageCollection._apply_curation_labels</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._apply_curation_labels"><code class="docutils literal notranslate"><span class="pre">ImageCollection._apply_curation_labels()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-atomic-write">ImageCollection._atomic_write</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._atomic_write"><code class="docutils literal notranslate"><span class="pre">ImageCollection._atomic_write()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-to-parquet">ImageCollection._to_parquet</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._to_parquet"><code class="docutils literal notranslate"><span class="pre">ImageCollection._to_parquet()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-to-pickle">ImageCollection._to_pickle</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._to_pickle"><code class="docutils literal notranslate"><span class="pre">ImageCollection._to_pickle()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#imagecollection-write-pickle-file">ImageCollection._write_pickle_file</a><ul>
+<li><a class="reference internal" href="#bactoscoop.imagecollection.ImageCollection._write_pickle_file"><code class="docutils literal notranslate"><span class="pre">ImageCollection._write_pickle_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

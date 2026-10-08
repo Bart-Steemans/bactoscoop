@@ -1,0 +1,50 @@
+Processing summaries and logging
+================================
+
+Check the processing summary before treating an exported table as complete.
+A file can be saved even when independent fields or individual measurements
+failed along the way.
+
+.. code-block:: python
+
+   from bactoscoop import ImageCollection, configure_bactoscoop_logging
+   configure_bactoscoop_logging("WARNING")
+   ic = ImageCollection("path/to/data", error_policy="continue",
+                        log_cell_errors=False)
+   # Run the workflow, then inspect:
+   summary = ic.processing_summary()
+   print(summary["status"], summary["error_count"], summary["cell_error_count"])
+
+Two error collections
+---------------------
+
+``processing_errors`` records item/stage errors such as missing channel fields
+or a whole feature pass that produces no rows. ``cell_errors`` records cell-level
+feature or object-detection failures. Each record includes stage, image name,
+channel, cell ID where available, error type, and message.
+
+With ``error_policy="continue"``, independent fields can continue. Required-stage
+setup failures can still raise immediately, and dependent work does not become
+valid merely because continuing was requested. ``error_policy="raise"`` raises
+the recorded error immediately, including cell errors.
+
+Summary status
+--------------
+
+* ``not_started``: no successful-stage record and no processing errors.
+* ``completed``: at least one stage recorded and no processing errors.
+* ``completed_with_errors``: one or more processing errors exist.
+
+The status does **not** certify that every intended analysis stage was run.
+Cell errors alone do not change ``completed`` to ``completed_with_errors``.
+Always inspect ``completed_stages`` and ``cell_error_count`` as well. Records
+accumulate within the collection; a summary is not a fresh per-call report.
+
+Logging levels
+--------------
+
+``configure_bactoscoop_logging`` updates the logger and ``BACTOSCOOP_LOG_LEVEL``.
+The default is INFO. WARNING reduces routine stage messages and disables the
+package's conditional tqdm bars. ``log_cell_errors=True`` prints each cell error;
+errors remain recorded even when that option is false. Some older print calls
+and external-library warnings can still appear independently of the logger.

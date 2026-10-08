@@ -1,0 +1,464 @@
+bactoscoop.signalcorrelation
+============================
+
+.. py:module:: bactoscoop.signalcorrelation
+
+Classes and public operations
+-----------------------------
+
+SignalCorrelation
+~~~~~~~~~~~~~~~~~
+
+.. py:class:: SignalCorrelation(df, channel1, channel2, feature, method_name, prepared_feature=None)
+
+   Select an implemented relationship between two channel-prefixed feature columns.
+
+   The feature must exist for both channels. calculate mutates the supplied DataFrame; prepared_feature can cache the numerical input arrays.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param channel1: First channel prefix for the matching feature.
+   :param channel2: Second channel prefix for the matching feature.
+   :param feature: Unprefixed shared feature name; corresponding channel-prefixed columns must exist.
+   :param method_name: Implemented correlation selector, such as pearson, manders, or ratio.
+   :param prepared_feature: Optional cached signal arrays and validity mask for a channel/feature pair.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.df``, ``self.channel1``, ``self.channel2``, ``self.feature``, ``self.method_name``, ``self.prepared_feature``, ``self.method``.
+
+   `View current source, line 16 <../source-code/signalcorrelation.html#signalcorrelation-16>`_.
+
+SignalCorrelation.get_method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.get_method()
+
+   Get method.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      methods[self.method_name]
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 35 <../source-code/signalcorrelation.html#signalcorrelation-35>`_.
+
+SignalCorrelation.validate_inputs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.validate_inputs()
+
+   Validate inputs.
+
+   :returns: None (no explicit return statement).
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 60 <../source-code/signalcorrelation.html#signalcorrelation-60>`_.
+
+SignalCorrelation.calculate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.calculate()
+
+   Calculate the selected signal relationship row by row.
+
+   Requires matching prefixed columns. Adds a function-name-suffixed column to df and returns that same DataFrame.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.df
+
+   **Assigned state:** ``self.df``.
+
+   `View current source, line 71 <../source-code/signalcorrelation.html#signalcorrelation-71>`_.
+
+SignalCorrelation.prepare_feature_pair
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.prepare_feature_pair(df, channel1, channel2, feature)
+
+   Prepare feature pair.
+
+   :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
+   :param channel1: First channel prefix for the matching feature.
+   :param channel2: Second channel prefix for the matching feature.
+   :param feature: Unprefixed shared feature name; corresponding channel-prefixed columns must exist.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      {'signals1': signals1, 'signals2': signals2, 'valid_mask': valid_mask}
+
+   `View current source, line 101 <../source-code/signalcorrelation.html#signalcorrelation-101>`_.
+
+SignalCorrelation.is_valid_signal
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.is_valid_signal(signal)
+
+   Is valid signal.
+
+   :param signal: Input ``signal`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      bool(signal_array.size and np.isfinite(signal_array).all())
+      False
+
+   `View current source, line 117 <../source-code/signalcorrelation.html#signalcorrelation-117>`_.
+
+SignalCorrelation.ratio
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.ratio(signal1, signal2)
+
+   Ratio.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      signal1 / signal2
+
+   `View current source, line 125 <../source-code/signalcorrelation.html#signalcorrelation-125>`_.
+
+SignalCorrelation.manders_overlap_coefficient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.manders_overlap_coefficient(signal1, signal2)
+
+   Manders overlap coefficient.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.sum(signal1 * signal2) / np.sqrt(np.sum(signal1 ** 2) * np.sum(signal2 ** 2))
+
+   `View current source, line 137 <../source-code/signalcorrelation.html#signalcorrelation-137>`_.
+
+SignalCorrelation.pearson_correlation_coefficient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.pearson_correlation_coefficient(signal1, signal2)
+
+   Pearson correlation coefficient.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      stats.pearsonr(signal1, signal2)[0]
+
+   `View current source, line 150 <../source-code/signalcorrelation.html#signalcorrelation-150>`_.
+
+SignalCorrelation.li_icq
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.li_icq(signal1, signal2)
+
+   Li icq.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      (np.sum(product) / len(signal1) - 0.5) * 2
+
+   `View current source, line 159 <../source-code/signalcorrelation.html#signalcorrelation-159>`_.
+
+SignalCorrelation.spearman_rank_correlation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.spearman_rank_correlation(signal1, signal2)
+
+   Spearman rank correlation.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      stats.spearmanr(signal1, signal2)[0]
+
+   `View current source, line 172 <../source-code/signalcorrelation.html#signalcorrelation-172>`_.
+
+SignalCorrelation.kendall_tau
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.kendall_tau(signal1, signal2)
+
+   Kendall tau.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      corr
+
+   `View current source, line 181 <../source-code/signalcorrelation.html#signalcorrelation-181>`_.
+
+SignalCorrelation.distance_correlation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.distance_correlation(signal1, signal2)
+
+   Biased sample distance correlation; undefined profiles return NaN.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      float(np.sqrt(np.clip(correlation_squared, 0, 1)))
+
+   `View current source, line 191 <../source-code/signalcorrelation.html#signalcorrelation-191>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Biased sample distance correlation; undefined profiles return NaN.
+
+   .. raw:: html
+
+      </details>
+
+SignalCorrelation.covariance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.covariance(signal1, signal2)
+
+   Covariance.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.cov(signal1, signal2)[0, 1]
+
+   `View current source, line 235 <../source-code/signalcorrelation.html#signalcorrelation-235>`_.
+
+SignalCorrelation.normalized_cross_correlation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.normalized_cross_correlation(signal1, signal2)
+
+   Normalized cross correlation.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.correlate(signal1 - np.mean(signal1), signal2 - np.mean(signal2))[0] / (len(signal1) * np.std(signal1) * np.std(signal2))
+
+   `View current source, line 244 <../source-code/signalcorrelation.html#signalcorrelation-244>`_.
+
+SignalCorrelation.entropy_difference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.entropy_difference(signal1, signal2)
+
+   Entropy difference.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.abs(entropy1 - entropy2)
+
+   `View current source, line 255 <../source-code/signalcorrelation.html#signalcorrelation-255>`_.
+
+SignalCorrelation.kurtosis_ratio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.kurtosis_ratio(signal1, signal2)
+
+   Kurtosis ratio.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.abs(kurtosis1 / kurtosis2) if kurtosis2 != 0 else np.nan
+
+   `View current source, line 266 <../source-code/signalcorrelation.html#signalcorrelation-266>`_.
+
+SignalCorrelation.skewness_product
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.skewness_product(signal1, signal2)
+
+   Skewness product.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      skew1 * skew2
+
+   `View current source, line 277 <../source-code/signalcorrelation.html#signalcorrelation-277>`_.
+
+SignalCorrelation.zero_crossings_difference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.zero_crossings_difference(signal1, signal2)
+
+   Zero crossings difference.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.abs(zero_crossings1 - zero_crossings2)
+
+   `View current source, line 288 <../source-code/signalcorrelation.html#signalcorrelation-288>`_.
+
+SignalCorrelation.fft_peak_ratio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.fft_peak_ratio(signal1, signal2)
+
+   Fft peak ratio.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      peak1 / peak2 if peak2 != 0 else np.nan
+
+   `View current source, line 299 <../source-code/signalcorrelation.html#signalcorrelation-299>`_.
+
+SignalCorrelation.fft_energy_ratio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.fft_energy_ratio(signal1, signal2)
+
+   Fft energy ratio.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      energy1 / energy2 if energy2 != 0 else np.nan
+
+   `View current source, line 312 <../source-code/signalcorrelation.html#signalcorrelation-312>`_.
+
+SignalCorrelation.histogram_intersection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.histogram_intersection(signal1, signal2, bins=10)
+
+   Intersect probability histograms using shared bins for both profiles.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param bins: Input ``bins`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      float(np.minimum(hist1 / count1, hist2 / count2).sum())
+
+   `View current source, line 330 <../source-code/signalcorrelation.html#signalcorrelation-330>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Intersect probability histograms using shared bins for both profiles.
+
+   .. raw:: html
+
+      </details>
+
+SignalCorrelation.cosine_similarity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: SignalCorrelation.cosine_similarity(signal1, signal2)
+
+   Cosine similarity.
+
+   :param signal1: Input ``signal1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param signal2: Input ``signal2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      np.nan
+      np.dot(signal1, signal2) / (np.linalg.norm(signal1) * np.linalg.norm(signal2))
+
+   `View current source, line 360 <../source-code/signalcorrelation.html#signalcorrelation-360>`_.

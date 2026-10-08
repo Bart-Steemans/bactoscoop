@@ -1,0 +1,51 @@
+Images, channels, and masks
+===========================
+
+Organize one 2D TIFF per field and channel in a single dataset folder. The
+example phase image is C1, but channel identifiers are configurable.
+
+.. code-block:: text
+
+   dataset/
+     sample_XY1_C1.tiff
+     sample_XY1_C2.tiff
+     sample_XY1_C3.tiff
+     sample_XY2_C1.tiff
+     sample_XY2_C2.tiff
+     sample_XY2_C3.tiff
+     masks/
+       sample_XY1_C1_cp_masks.tif
+       sample_XY2_C1_cp_masks.tif
+
+Field matching
+--------------
+
+The loaders use TIFF suffixes and natural sorting. The collection matches phase
+images, masks, and channels by field identity rather than trusting array position.
+The helper :py:func:`bactoscoop.utilities.image_field_key` removes the recognized
+channel/mask suffix. Duplicate, missing, or mismatched identities can produce
+errors. Use consistent names and one unambiguous TIFF per field and channel.
+
+Label masks
+-----------
+
+Masks must be 2D integer label images, with background 0 and cells labeled
+consecutively from 1 to N. Each matching channel and mask must have the same
+height and width as the phase image. Binary foreground masks containing many
+cells under label 1 do not encode distinct cells.
+
+Generate masks through Omnipose or place externally generated masks in
+``masks/`` using the matching naming convention. Inspect the overlays before
+meshing. Relabel nonconsecutive labels in a separate preprocessing copy if needed.
+The pipeline handles separate 2D images, not a raw multichannel stack or a 3D
+volume passed directly to these loaders.
+
+Calibration and registration
+----------------------------
+
+Pass the physical calibration into ``ImageCollection(..., px=...)``. ``px`` is
+µm per pixel and defaults to 0.065. Pixel coordinates in geometry arrays are
+not converted to µm; individual measurement functions apply the scale.
+Check that fluorescence channels are registered to phase contrast. Per-cell
+shift correction is a specific measurement operation, not a replacement for
+correct acquisition geometry. See :doc:`../workflow/alignment`.

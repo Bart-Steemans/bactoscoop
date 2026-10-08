@@ -1,0 +1,51 @@
+Merge tables and save results
+=============================
+
+Merge the feature families after completing the selected calculations.
+
+.. code-block:: python
+
+   import json
+   from pathlib import Path
+   table = ic.merge_dataframes(
+       include_metadata_tag=False, discard_morphological_nan=True,
+   )
+   ic.dataframe_to_parquet("analysis_features.parquet")
+   pickle_path = ic.dataframe_to_pkl("analysis_features.pkl")
+   Path(ic.image_folder_path, "processing_summary.json").write_text(
+       json.dumps(ic.processing_summary(), indent=2), encoding="utf-8",
+   )
+
+Column naming and merge behavior
+--------------------------------
+
+Stored table keys have the form ``<method>_<channel>_features``. The merge prefixes
+nonidentity columns with the channel unless it is ``None``. Morphology therefore
+exports ``cell_length``, whereas profiling can export ``C2_cell_length``.
+Channel names containing underscores are retained.
+
+The implementation concatenates tables and pivots on ``image_name``, ``cell_id``,
+and ``frame`` with ``aggfunc="first"``. Where families emit the same channel-prefixed
+column, the first nonmissing value wins; the method name is not part of the final
+column prefix. Rows or columns containing only missing values can disappear under
+pandas pivot behavior. ``discard_morphological_nan=True`` explicitly drops rows
+missing ``cell_area`` or ``cell_length`` and requires those columns to exist.
+
+File behavior
+-------------
+
+Feature and mesh export use temporary files and atomic replacement in the
+dataset directory. Output filenames must be simple filenames, not paths outside
+that folder. Existing files are replaced. ``dataframe_to_pkl`` returns the saved
+path; Parquet exporters return None.
+
+A ``.pkl`` name is used literally. A suffixless pickle name is a legacy tag:
+``dataframe_to_pkl("tag")`` writes ``<dataset>_tag.pkl``. Parquet names must end in
+``.parquet`` and use PyArrow with Zstandard compression and no dataframe index.
+Mesh Parquet converts contour, mesh, and midline arrays to nested numeric lists
+that ``batch_load_mesh`` can reload.
+
+Save the processing summary explicitly because exporting the feature table
+does not automatically save the error history or all experiment settings.
+Also record calibration, channel meanings, parameter choices, model identity,
+and package version for an analysis you intend to reproduce.

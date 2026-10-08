@@ -1,0 +1,264 @@
+bactoscoop.curation
+===================
+
+.. py:module:: bactoscoop.curation
+
+Classes and public operations
+-----------------------------
+
+Curation
+~~~~~~~~
+
+.. py:class:: Curation(svm_df)
+
+   Prepare phase/morphology features and predict retained/rejected cells using a named SVM.
+
+   Supply the svm feature DataFrame produced by the collection workflow; compiled_curation loads a model, prepares features, and returns labels.
+
+   :param svm_df: Input ``svm_df`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.svm_df``, ``self.features``, ``self.curated_df``, ``self.svm_model``.
+
+   `View current source, line 12 <../source-code/curation.html#curation-12>`_.
+
+Curation.compiled_curation
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.compiled_curation(path_to_model, cols)
+
+   Perform compiled cell curation using a trained SVM model.
+
+   :param path_to_model: Path to a serialized SVM carrying the ``feature_names_in_`` training-column schema.
+   :param cols: Legacy curation argument retained for compatibility; unused by the current curation preparation.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.curated_df
+
+   **Assigned state:** ``self.curated_df``.
+
+   `View current source, line 21 <../source-code/curation.html#curation-21>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Perform compiled cell curation using a trained SVM model.
+
+      This method curates the dataset by making predictions using a trained Support Vector Machine (SVM) model.
+      Cells that do not meet the criteria specified by the model are flagged for potential removal.
+
+      Parameters
+      ----------
+      path_to_model : str
+          The path to the trained SVM model file.
+
+      cols : int
+          The number of columns to exclude in the dataset during curation.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing the curated dataset.
+
+   .. raw:: html
+
+      </details>
+
+Curation.load_model
+~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.load_model(path_to_model)
+
+   Load a trained SVM model from a file.
+
+   :param path_to_model: Path to a serialized SVM carrying the ``feature_names_in_`` training-column schema.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.svm_model``.
+
+   `View current source, line 47 <../source-code/curation.html#curation-47>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Load a trained SVM model from a file.
+
+      This method loads a trained Support Vector Machine (SVM) model from a file located at the given path.
+
+      Parameters
+      ----------
+      path_to_model : str
+          The path to the trained SVM model file.
+
+   .. raw:: html
+
+      </details>
+
+Curation.prepare_dataframe
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.prepare_dataframe(cols)
+
+   Prepare the feature dataset for SVM curation.
+
+   :param cols: Legacy curation argument retained for compatibility; unused by the current curation preparation.
+
+   :returns: None (no explicit return statement).
+
+   **Assigned state:** ``self.cell_id_frame``, ``self.features``, ``self.features.select_dtypes(include=[np.number]).columns``, ``self.features.select_dtypes``, ``self.svm_df_nan``, ``self.svm_df``.
+
+   `View current source, line 62 <../source-code/curation.html#curation-62>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Prepare the feature dataset for SVM curation.
+
+      This method prepares the feature dataset for cell curation using a Support Vector Machine (SVM) model.
+      It extracts the relevant feature columns while ensuring that `cell_id` and `frame` are preserved.
+
+      Parameters
+      ----------
+      cols : int
+          Retained for backward compatibility; feature columns are selected
+          by name and this argument is currently unused.
+
+   .. raw:: html
+
+      </details>
+
+Curation.get_label_proportions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.get_label_proportions()
+
+   Calculate the proportions of labels in the curated dataset.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (proportion_label_1, proportion_label_0)
+
+   `View current source, line 110 <../source-code/curation.html#curation-110>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Calculate the proportions of labels in the curated dataset.
+
+      This method calculates and returns the proportions of label 1 and label 0 in the curated dataset.
+      It counts the occurrences of each label and divides them by the total number of samples in the dataset to compute the proportions.
+
+      Returns
+      -------
+      float
+          The proportion of label 1 in the curated dataset.
+      float
+          The proportion of label 0 in the curated dataset.
+
+   .. raw:: html
+
+      </details>
+
+Curation.make_predictions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.make_predictions()
+
+   Make predictions using the SVM model and reattach `cell_id` and `frame`.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      self.curated_df
+
+   **Assigned state:** ``self.curated_df``.
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 133 <../source-code/curation.html#curation-133>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Make predictions using the SVM model and reattach `cell_id` and `frame`.
+
+      Returns
+      -------
+      pd.DataFrame
+          A DataFrame containing the predicted labels with corresponding `cell_id` and `frame`.
+
+   .. raw:: html
+
+      </details>
+
+Curation.get_control
+~~~~~~~~~~~~~~~~~~~~
+
+.. py:method:: Curation.get_control(num_pos=5, num_neg=5)
+
+   Randomly select retained and rejected curation examples.
+
+   Returns two lists of (cell_id, frame) pairs, or (None, None) when either requested class is too small.
+
+   :param num_pos: The number of positive class cell IDs to retrieve. The default is 5.
+   :param num_neg: The number of negative class cell IDs to retrieve. The default is 5.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      (positive_cell_frames, negative_cell_frames)
+      (None, None)
+
+   `View current source, line 174 <../source-code/curation.html#curation-174>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Get control cell IDs for positive and negative classes.
+
+      This method retrieves cell IDs for positive and negative classes based on the curated dataset.
+      It randomly selects a specified number of positive and negative cell IDs and returns them as lists, along with the corresponding 'frame' values.
+
+      Parameters
+      ----------
+      num_pos : int, optional
+          The number of positive class cell IDs to retrieve. The default is 5.
+      num_neg : int, optional
+          The number of negative class cell IDs to retrieve. The default is 5.
+
+      Returns
+      -------
+      Tuple
+          Two lists containing tuples of ('frame', 'cell_id') for positive and negative class control cell IDs.
+          If there are not enough samples for one class, the corresponding list will be empty.
+
+   .. raw:: html
+
+      </details>

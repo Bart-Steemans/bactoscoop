@@ -1,0 +1,1152 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="bactoscoop.imagecollection" href="imagecollection.html"><link rel="prev" title="bactoscoop.features" href="features.html">
+        <link rel="prefetch" href="../_static/logo.png" as="image">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>bactoscoop.image - BactoScoop documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=0f55d1af" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --color-brand-primary: #16766c;
+  --color-brand-content: #12685f;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #78d8bc;
+  --color-brand-content: #78d8bc;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">BactoScoop documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">BactoScoop documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/gpu.html">CPU and GPU segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/quickstart.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/inputs.html">Images, channels, and masks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/outputs.html">Outputs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Analysis workflow</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/correlation.html">Signal correlation and similarity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/export.html">Merge tables and save results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/errors.html">Processing summaries and logging</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/three-channel.html">Three-channel walkthrough: DAPI and GFP-DnaN objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/five-channel.html">Five-channel walkthrough: membranes and multichannel profiles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/reuse.html">Reuse masks and saved meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/plotting.html">Plotting and visual quality control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parallel.html">Parallel processing of sample folders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/feature-dictionary.html">Feature dictionary</a><input aria-label="Toggle navigation of Feature dictionary" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-morphological.html">Morphological features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-profiling.html">Profiling features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-objects.html">Objects features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-membrane.html">Membrane features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/features-svm.html">Svm features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/parameters.html">Parameter reference</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="curation.html">bactoscoop.curation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features.html">bactoscoop.features</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">bactoscoop.image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imagecollection.html">bactoscoop.imagecollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging_utils.html">bactoscoop.logging_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="omni.html">bactoscoop.omni</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html">bactoscoop.plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signalcorrelation.html">bactoscoop.signalcorrelation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html">bactoscoop.utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/data-structures.html">Data structures and coordinate conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/project.html">Project information</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/image.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-bactoscoop.image">
+<span id="bactoscoop-image"></span><h1>bactoscoop.image<a class="headerlink" href="#module-bactoscoop.image" title="Link to this heading">¶</a></h1>
+<section id="classes-and-public-operations">
+<h2>Classes and public operations<a class="headerlink" href="#classes-and-public-operations" title="Link to this heading">¶</a></h2>
+<section id="image">
+<h3>Image<a class="headerlink" href="#image" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="bactoscoop.image.Image">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bactoscoop.image.</span></span><span class="sig-name descname"><span class="pre">Image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processed_mesh_dataframe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.065</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image" title="Link to this definition">¶</a></dt>
+<dd><p>Represent one microscopy field, its calibrated cell population, and channel caches.</p>
+<p>Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – Input <code class="docutils literal notranslate"><span class="pre">image</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>image_name</strong> – Input <code class="docutils literal notranslate"><span class="pre">image_name</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>frame</strong> – Input <code class="docutils literal notranslate"><span class="pre">frame</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>mask</strong> – Input <code class="docutils literal notranslate"><span class="pre">mask</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>processed_mesh_dataframe</strong> – Input <code class="docutils literal notranslate"><span class="pre">processed_mesh_dataframe</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>px</strong> – Micrometres per pixel. Geometry arrays remain in pixel coordinates.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mask</span></code>, <code class="docutils literal notranslate"><span class="pre">self.cells</span></code>, <code class="docutils literal notranslate"><span class="pre">self.px</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_name</span></code>, <code class="docutils literal notranslate"><span class="pre">self.frame</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channels</span></code>, <code class="docutils literal notranslate"><span class="pre">self.joined_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">self.processing_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">self.prefilter_summary</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh_dataframe</span></code>, <code class="docutils literal notranslate"><span class="pre">self.processed_mesh_dataframe</span></code>, <code class="docutils literal notranslate"><span class="pre">self.im_interp2d</span></code>, <code class="docutils literal notranslate"><span class="pre">self.chann_interp2d</span></code>, <code class="docutils literal notranslate"><span class="pre">self.bg_channels</span></code>, <code class="docutils literal notranslate"><span class="pre">self.inverted_image</span></code>, <code class="docutils literal notranslate"><span class="pre">self.feature_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.object_detection_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shift_errors</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-20">View current source, line 20</a>.</p>
+</dd></dl>
+
+</section>
+<section id="image-calculate-features">
+<h3>Image.calculate_features<a class="headerlink" href="#image-calculate-features" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.calculate_features">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">calculate_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_shifted_contours</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_signal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_mesh_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_contour_on_object_mesh_failure_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.calculate_features" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate features for cells based on the specified method and channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> – The method used to calculate features for cells. The methods are: ‘morphological’, ‘profiling’, ‘svm’, ‘objects’, ‘phase’. (To be expanded)</p></li>
+<li><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p></li>
+<li><p><strong>all_data</strong> – Feature-method-specific option; objects includes detailed per-object arrays when true.</p></li>
+<li><p><strong>use_shifted_contours</strong> – Select stored shifted contour, midline, and mesh geometry; the correction must already exist.</p></li>
+<li><p><strong>shift_signal</strong> – Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.</p></li>
+<li><p><strong>max_mesh_size</strong> – Maximum accepted mesh row count; cells above this limit are removed from the image cell population.</p></li>
+<li><p><strong>retain_contour_on_object_mesh_failure_channels</strong> – Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result_df</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.feature_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">self.cells</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.discard</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/image.html#image-76">View current source, line 76</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate features for cells based on the specified method and channel.
+
+This method calculates features for individual cells in the image based on the provided method
+and channel. It also allows for adding profiling data if required.
+
+Parameters
+----------
+method : str
+    The method used to calculate features for cells.
+    The methods are: 'morphological', 'profiling', 'svm', 'objects', 'phase'. (To be expanded)
+channel : str
+    The channel for which features are calculated.
+add_profiling_data : bool
+    Whether to include profiling data in the feature calculations.
+
+Returns
+-------
+pd.DataFrame
+    A DataFrame containing the calculated features for the cells.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-features-to-dataframe">
+<h3>Image.features_to_dataframe<a class="headerlink" href="#image-features-to-dataframe" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.features_to_dataframe">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">features_to_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.features_to_dataframe" title="Link to this definition">¶</a></dt>
+<dd><p>Convert cell features stored in a dictionary to a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method</strong> – The name of the method used for feature calculation.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">features_df</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/image.html#image-182">View current source, line 182</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Convert cell features stored in a dictionary to a pandas DataFrame.
+
+This method takes a dictionary of cell features, specified by the method name, and converts it into a pandas DataFrame.
+Additionally, it adds information features to the DataFrame.
+
+Parameters
+----------
+method : str
+    The name of the method used for feature calculation.
+
+Returns
+-------
+pd.DataFrame
+    A DataFrame containing cell features.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-dataframe-from-dict">
+<h3>Image.dataframe_from_dict<a class="headerlink" href="#image-dataframe-from-dict" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.dataframe_from_dict">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">dataframe_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.dataframe_from_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a feature dictionary to a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature_dictionary</strong> – The name of the feature dictionary to convert.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/image.html#image-205">View current source, line 205</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Convert a feature dictionary to a pandas DataFrame.
+
+This method takes a feature dictionary, which maps cell IDs to feature values, and converts it into a pandas DataFrame.
+
+Parameters
+----------
+feature_dictionary : str
+    The name of the feature dictionary to convert.
+
+Returns
+-------
+pd.DataFrame
+    A DataFrame containing cell features.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-add-info-feature-df">
+<h3>Image.add_info_feature_df<a class="headerlink" href="#image-add-info-feature-df" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.add_info_feature_df">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">add_info_feature_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.add_info_feature_df" title="Link to this definition">¶</a></dt>
+<dd><p>Add information columns to a feature DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataframe</strong> – The DataFrame to which information columns will be added.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/image.html#image-231">View current source, line 231</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add information columns to a feature DataFrame.
+
+This method adds information columns, including 'image_name', 'cell_id', and 'frame',
+to an existing DataFrame.
+
+Parameters
+----------
+dataframe : pd.DataFrame
+    The DataFrame to which information columns will be added.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-apply-neighbor-prefilter">
+<h3>Image.apply_neighbor_prefilter<a class="headerlink" href="#image-apply-neighbor-prefilter" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.apply_neighbor_prefilter">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">apply_neighbor_prefilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.apply_neighbor_prefilter" title="Link to this definition">¶</a></dt>
+<dd><p>Apply neighbor prefilter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_neighbors</strong> – Remove labels whose distinct touching-label count is greater than this limit.</p></li>
+<li><p><strong>connectivity</strong> – Touching-label neighborhood: 1/4 for edges, 2/8 including diagonals.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.processing_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">self.prefilter_summary</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/image.html#image-253">View current source, line 253</a>.</p>
+</dd></dl>
+
+</section>
+<section id="image-join-split-pipeline">
+<h3>Image.join_split_pipeline<a class="headerlink" href="#image-join-split-pipeline" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.join_split_pipeline">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">join_split_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">join_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_max_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.join_split_pipeline" title="Link to this definition">¶</a></dt>
+<dd><p>Perform a pipeline for joining and splitting cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>join_thresh</strong> – Maximum pole-to-pole joining distance in pixels.</p></li>
+<li><p><strong>split_thresh</strong> – Relative constriction threshold used by the splitting pipeline.</p></li>
+<li><p><strong>CD_width</strong> – Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+<li><p><strong>neighbor_filter_max_neighbors</strong> – Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
+<li><p><strong>neighbor_filter_connectivity</strong> – 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/image.html#image-283">View current source, line 283</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Perform a pipeline for joining and splitting cells.
+
+This method is used within the batch_mesh_process() method of ImageCollection. It involves joining cells based on
+a specified threshold, converting masks to mesh data, splitting cells based on a specified threshold,
+and creating cell objects.
+
+Parameters
+----------
+join_thresh : int, optional
+    The threshold for joining cells in pixels. (default is 4)
+split_thresh : float, optional
+    The threshold for splitting cells. (default is 0.3)
+
+Returns
+-------
+None
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-create-cell-object">
+<h3>Image.create_cell_object<a class="headerlink" href="#image-create-cell-object" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.create_cell_object">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">create_cell_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.create_cell_object" title="Link to this definition">¶</a></dt>
+<dd><p>Create Cell objects from mesh data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>verbose</strong> – Whether to print a message indicating the source of the Cell objects (processed or unprocessed meshes). (default is True)</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.cells</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-319">View current source, line 319</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create Cell objects from mesh data.
+
+This method creates Cell objects based on mesh data contained in a DataFrame. The Cell objects are
+initialized with contour, mesh, and midline data, and they are added to the list of cells in the Image object.
+
+Parameters
+----------
+verbose : bool, optional
+    Whether to print a message indicating the source of the Cell objects (processed or unprocessed meshes). (default is True)
+
+Returns
+-------
+None
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-add-cell">
+<h3>Image.add_cell<a class="headerlink" href="#image-add-cell" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.add_cell">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">add_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.add_cell" title="Link to this definition">¶</a></dt>
+<dd><p>Add a Cell object to the list of cells in the Image object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cell</strong> – Cell instance containing geometry and measurements.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/image.html#image-367">View current source, line 367</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add a Cell object to the list of cells in the Image object.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-get-inverted-image">
+<h3>Image.get_inverted_image<a class="headerlink" href="#image-get-inverted-image" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.get_inverted_image">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">get_inverted_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.get_inverted_image" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the inverted image for phase contrast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.inverted_image</span></code>, <code class="docutils literal notranslate"><span class="pre">self.im_interp2d</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-373">View current source, line 373</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate the inverted image for phase contrast.
+
+This method computes the inverted image for phase contrast imaging. It subtracts the maximum pixel value
+from the original image and does a background subtraction (bgr = mean(background intensity)) to obtain the inverted image.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-get-bg-channel">
+<h3>Image.get_bg_channel<a class="headerlink" href="#image-get-bg-channel" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.get_bg_channel">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">get_bg_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.get_bg_channel" title="Link to this definition">¶</a></dt>
+<dd><p>Get bg channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.bg_channels</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-386">View current source, line 386</a>.</p>
+</dd></dl>
+
+</section>
+<section id="image-get-inverted-interp2d">
+<h3>Image.get_inverted_interp2d<a class="headerlink" href="#image-get-inverted-interp2d" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.get_inverted_interp2d">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">get_inverted_interp2d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.get_inverted_interp2d" title="Link to this definition">¶</a></dt>
+<dd><p>Get inverted interp2d.</p>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">im_interp2d</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.im_interp2d</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-393">View current source, line 393</a>.</p>
+</dd></dl>
+
+</section>
+<section id="image-get-channel-interp2d">
+<h3>Image.get_channel_interp2d<a class="headerlink" href="#image-get-channel-interp2d" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.get_channel_interp2d">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">get_channel_interp2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.get_channel_interp2d" title="Link to this definition">¶</a></dt>
+<dd><p>Get channel interp2d.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>channel</strong> – Channel identifier for the selected signal, or None for phase/morphology where supported.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">chann_interp2d</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.chann_interp2d</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-400">View current source, line 400</a>.</p>
+</dd></dl>
+
+</section>
+<section id="image-channel-interp2d">
+<h3>Image.channel_interp2d<a class="headerlink" href="#image-channel-interp2d" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.channel_interp2d">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">channel_interp2d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.channel_interp2d" title="Link to this definition">¶</a></dt>
+<dd><p>Interpolate channel images using 2D spline interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><a class="reference external" href="../source-code/image.html#image-407">View current source, line 407</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Interpolate channel images using 2D spline interpolation.
+
+This method interpolates the channel images using 2D spline interpolation and stores the interpolated images
+in the 'chann_interp2d' dictionary.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-join-cells">
+<h3>Image.join_cells<a class="headerlink" href="#image-join-cells" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.join_cells">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">join_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.join_cells" title="Link to this definition">¶</a></dt>
+<dd><p>Join cells based on pole-to-pole distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thresh</strong> – The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no threshold is applied, and all cells will be considered for joining. (default is None)</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.joined_mask</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/image.html#image-417">View current source, line 417</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Join cells based on pole-to-pole distance.
+
+This method attempts to join adjacent cells within the image based on the distance between their poles. It identifies cell pairs
+with pole-to-pole distances below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
+'joined_mask' array.
+
+Parameters
+----------
+thresh : float, optional
+    The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no
+    threshold is applied, and all cells will be considered for joining. (default is None)
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-mask2mesh">
+<h3>Image.mask2mesh<a class="headerlink" href="#image-mask2mesh" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.mask2mesh">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">mask2mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.mask2mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Create meshes from cell masks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_dataframe</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-510">View current source, line 510</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create meshes from cell masks.
+
+This method processes cell masks to create corresponding meshes. It generates contours and skeletons for each cell in the mask,
+extends the skeleton, and calculates additional geometric properties, such as length and width. Based on these properties, it
+straightens the cell contour and creates a mesh representation. The resulting mesh data, including contour, mesh, and midline,
+is stored in a DataFrame and associated with the image frame.
+
+This method is based on the cell profile creation of the MOMIA package (doi: 10.1016/j.celrep.2021.110154)
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-split-cells">
+<h3>Image.split_cells<a class="headerlink" href="#image-split-cells" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.split_cells">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">split_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.split_cells" title="Link to this definition">¶</a></dt>
+<dd><p>Split cells based on a constriction degree threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thresh</strong> – The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split. The default is 0.3.</p></li>
+<li><p><strong>CD_width</strong> – Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.processed_mesh_dataframe</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-533">View current source, line 533</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Split cells based on a constriction degree threshold.
+
+This method separates cells within the image based on a given constriction degree threshold. It calculates the constriction degree
+for each cell and, if it exceeds the threshold, splits the cell into two separate cells. The new mesh data, including contour, mesh,
+and midline, is stored in a DataFrame and associated with the image frame.
+
+This method is based on the splitting algorithm in the Oufti software package (doi: 10.1111/mmi.13264).
+
+Parameters
+----------
+thresh : float, optional
+    The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split.
+    The default is 0.3.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-object-detection">
+<h3>Image.object_detection<a class="headerlink" href="#image-object-detection" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.object_detection">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">object_detection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">align</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_external_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.object_detection" title="Link to this definition">¶</a></dt>
+<dd><p>Detect subcellular objects within cell contours in specified channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channels</strong> – Requested channel identifiers; for correlation, channel pairs are generated from this sequence.</p></li>
+<li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
+<li><p><strong>align</strong> – Use the object-detection alignment path for the selected signal.</p></li>
+<li><p><strong>log_sigma</strong> – Laplacian-of-Gaussian sigma for signal-object detection.</p></li>
+<li><p><strong>kernel_width</strong> – Width of the square dilation kernel used for candidate object masks.</p></li>
+<li><p><strong>min_overlap_ratio</strong> – Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.</p></li>
+<li><p><strong>max_external_ratio</strong> – Maximum accepted outside-cell ratio under the utility implementation.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">detections_df</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.object_detection_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.object_meshdata</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-633">View current source, line 633</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Detect subcellular objects within cell contours in specified channels.
+
+This method performs object detection within the contours of cells for the specified channels. It uses a Laplacian of Gaussian (LoG)
+filter to detect subcellular objects and returns their contours. The detected objects are stored in a DataFrame, including the frame,
+cell ID, channel name, and object contours.
+
+Parameters
+----------
+channels : List of str, optional
+    The list of channel names for which to perform object detection.
+
+log_sigma : int, optional
+    The sigma parameter of the LoG filter used in object detection. Increasing this parameter may detect larger objects.
+    The default is 3.
+
+kernel_width : int, optional
+    The kernel width used for dilating object masks. Increasing this value results in larger masks.
+    The default is 4.
+
+min_overlap_ratio : float, optional
+    The minimum overlap ratio between detected objects and cell contours to keep the object. Objects with lower overlap are discarded.
+    The default is 0.01.
+
+max_external_ratio : float, optional
+    The maximum ratio an object is allowed to lie outside the cell contour. Objects exceeding this ratio are discarded.
+    The default is 0.1.
+
+Returns
+-------
+pd.DataFrame
+    A DataFrame containing information about the detected objects, including frame, cell ID, channel name, and object contours.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+<section id="image-shift-correction">
+<h3>Image.shift_correction<a class="headerlink" href="#image-shift-correction" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image.shift_correction">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">shift_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shifted_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_overlap_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_external_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_log_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_closing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal_closing_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_shift_correction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.shift_correction" title="Link to this definition">¶</a></dt>
+<dd><p>Shift correction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shifted_channel</strong> – Input <code class="docutils literal notranslate"><span class="pre">shifted_channel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>log_sigma</strong> – Laplacian-of-Gaussian sigma for signal-object detection.</p></li>
+<li><p><strong>kernel_width</strong> – Width of the square dilation kernel used for candidate object masks.</p></li>
+<li><p><strong>min_overlap_ratio</strong> – Minimum accepted overlap ratio under the utility implementation; inspect its denominator in source.</p></li>
+<li><p><strong>max_external_ratio</strong> – Maximum accepted outside-cell ratio under the utility implementation.</p></li>
+<li><p><strong>phase_log_sigma</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_log_sigma</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>phase_closing_level</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_closing_level</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>signal_closing_level</strong> – Input <code class="docutils literal notranslate"><span class="pre">signal_closing_level</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>max_shift_correction</strong> – Input <code class="docutils literal notranslate"><span class="pre">max_shift_correction</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="o">-</span> <span class="n">failed_attempts</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span>
+<span class="mf">0.0</span>
+</pre></div>
+</div>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.shift_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_contour</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_midline</span></code>.</p>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/image.html#image-754">View current source, line 754</a>.</p>
+</dd></dl>
+
+</section>
+<section id="cell">
+<h3>Cell<a class="headerlink" href="#cell" title="Link to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="bactoscoop.image.Cell">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bactoscoop.image.</span></span><span class="sig-name descname"><span class="pre">Cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Cell" title="Link to this definition">¶</a></dt>
+<dd><p>Store one cell contour, paired mesh, midline, identity, and feature dictionaries.</p>
+<p>The cell_id is local to a field; geometry arrays remain in pixel units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>contour</strong> – Boundary points in (row, column) pixel coordinates.</p></li>
+<li><p><strong>mesh</strong> – Paired-boundary geometry with four columns in pixel coordinates.</p></li>
+<li><p><strong>midline</strong> – Central-axis points in (row, column) pixel coordinates.</p></li>
+<li><p><strong>shape</strong> – Input <code class="docutils literal notranslate"><span class="pre">shape</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>cell_id</strong> – Cell identifier local to the selected image; check that it remains after curation/filtering.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None (no explicit return statement).</p>
+</dd>
+</dl>
+<p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.discard</span></code>, <code class="docutils literal notranslate"><span class="pre">self.contour</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.midline</span></code>, <code class="docutils literal notranslate"><span class="pre">self.cell_id</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_contour</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_midline</span></code>, <code class="docutils literal notranslate"><span class="pre">self.x1</span></code>, <code class="docutils literal notranslate"><span class="pre">self.y1</span></code>, <code class="docutils literal notranslate"><span class="pre">self.x2</span></code>, <code class="docutils literal notranslate"><span class="pre">self.y2</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profile_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.object_meshdata</span></code>, <code class="docutils literal notranslate"><span class="pre">self.morphological_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.phase_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.objects_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.svm_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profiling_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.signal_correlation_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profiling_data</span></code>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-815">View current source, line 815</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Class representing a single cell in an image.
+
+This class represents a single cell within an image, characterized by its contour, mesh, and midline data. It is identified by a unique cell ID.
+
+Attributes
+----------
+discard : bool
+    A flag to indicate whether the cell should be discarded during analysis.
+
+contour : ndarray
+    The contour data of the cell.
+
+mesh : ndarray
+    The mesh data (4xN).
+
+midline : ndarray
+    The midline data describing the cell's central axis (2xN).
+
+cell_id : int
+    A unique identifier for the cell.
+
+x1, y1, x2, y2 : ndarray
+    Arrays representing the coordinates of the cell's mesh.
+
+profile_mesh : None
+    Placeholder for profile mesh data.
+
+object_contours : dict
+    A dictionary to store detected subcellular object contours in different channels.
+
+morphological_features : dict
+    Dictionary to store morphological features of the cell.
+
+phase_features : dict
+    Dictionary to store phase contrast features of the cell.
+
+objects_features : dict
+    Dictionary to store features related to subcellular objects within the cell.
+
+svm_features : dict
+    Dictionary to store support vector machine (SVM) features.
+
+profiling_features : dict
+    Dictionary to store profiling features.
+
+profiling_data : dict
+    Dictionary to store data related to the profiling of the cell.
+</pre></div>
+</div>
+</details></dd></dl>
+
+</section>
+</section>
+<section id="internal-helpers">
+<h2>Internal helpers<a class="headerlink" href="#internal-helpers" title="Link to this heading">¶</a></h2>
+<section id="image-active-mask">
+<h3>Image._active_mask<a class="headerlink" href="#image-active-mask" title="Link to this heading">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="bactoscoop.image.Image._active_mask">
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">_active_mask</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image._active_mask" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>active mask.</p>
+</div></blockquote>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mask</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../source-code/image.html#image-250">View current source, line 250</a>.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="imagecollection.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">bactoscoop.imagecollection</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="features.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">bactoscoop.features</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023–2026, Bart Steemans
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">bactoscoop.image</a><ul>
+<li><a class="reference internal" href="#classes-and-public-operations">Classes and public operations</a><ul>
+<li><a class="reference internal" href="#image">Image</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-calculate-features">Image.calculate_features</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.calculate_features"><code class="docutils literal notranslate"><span class="pre">Image.calculate_features()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-features-to-dataframe">Image.features_to_dataframe</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.features_to_dataframe"><code class="docutils literal notranslate"><span class="pre">Image.features_to_dataframe()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-dataframe-from-dict">Image.dataframe_from_dict</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.dataframe_from_dict"><code class="docutils literal notranslate"><span class="pre">Image.dataframe_from_dict()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-add-info-feature-df">Image.add_info_feature_df</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.add_info_feature_df"><code class="docutils literal notranslate"><span class="pre">Image.add_info_feature_df()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-apply-neighbor-prefilter">Image.apply_neighbor_prefilter</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.apply_neighbor_prefilter"><code class="docutils literal notranslate"><span class="pre">Image.apply_neighbor_prefilter()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-join-split-pipeline">Image.join_split_pipeline</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.join_split_pipeline"><code class="docutils literal notranslate"><span class="pre">Image.join_split_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-create-cell-object">Image.create_cell_object</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.create_cell_object"><code class="docutils literal notranslate"><span class="pre">Image.create_cell_object()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-add-cell">Image.add_cell</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.add_cell"><code class="docutils literal notranslate"><span class="pre">Image.add_cell()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-get-inverted-image">Image.get_inverted_image</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.get_inverted_image"><code class="docutils literal notranslate"><span class="pre">Image.get_inverted_image()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-get-bg-channel">Image.get_bg_channel</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.get_bg_channel"><code class="docutils literal notranslate"><span class="pre">Image.get_bg_channel()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-get-inverted-interp2d">Image.get_inverted_interp2d</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.get_inverted_interp2d"><code class="docutils literal notranslate"><span class="pre">Image.get_inverted_interp2d()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-get-channel-interp2d">Image.get_channel_interp2d</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.get_channel_interp2d"><code class="docutils literal notranslate"><span class="pre">Image.get_channel_interp2d()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-channel-interp2d">Image.channel_interp2d</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.channel_interp2d"><code class="docutils literal notranslate"><span class="pre">Image.channel_interp2d()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-join-cells">Image.join_cells</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.join_cells"><code class="docutils literal notranslate"><span class="pre">Image.join_cells()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-mask2mesh">Image.mask2mesh</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.mask2mesh"><code class="docutils literal notranslate"><span class="pre">Image.mask2mesh()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-split-cells">Image.split_cells</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.split_cells"><code class="docutils literal notranslate"><span class="pre">Image.split_cells()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-object-detection">Image.object_detection</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.object_detection"><code class="docutils literal notranslate"><span class="pre">Image.object_detection()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-shift-correction">Image.shift_correction</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image.shift_correction"><code class="docutils literal notranslate"><span class="pre">Image.shift_correction()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cell">Cell</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Cell"><code class="docutils literal notranslate"><span class="pre">Cell</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#internal-helpers">Internal helpers</a><ul>
+<li><a class="reference internal" href="#image-active-mask">Image._active_mask</a><ul>
+<li><a class="reference internal" href="#bactoscoop.image.Image._active_mask"><code class="docutils literal notranslate"><span class="pre">Image._active_mask()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=b325b094"></script>
+    </body>
+</html>

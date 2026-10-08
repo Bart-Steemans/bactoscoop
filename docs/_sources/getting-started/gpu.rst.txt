@@ -1,0 +1,39 @@
+CPU and GPU segmentation
+========================
+
+The Omnipose wrapper calls ``cellpose_omni.core.use_gpu()`` to select GPU use.
+When a usable CUDA GPU is unavailable, the normal workflow uses the CPU.
+Other analysis stages use NumPy, SciPy, image processing, and plotting libraries;
+the segmentation GPU setting does not move the entire pipeline onto a GPU.
+
+Check the notebook environment
+------------------------------
+
+.. code-block:: python
+
+   import sys
+   import torch
+   print(sys.executable)
+   print(torch.__version__)
+   print("CUDA available:", torch.cuda.is_available())
+
+The wrapper prints ``GPU activated?`` when initialized. A first segmentation
+run can require a model download. Reusing masks does not require a segmentation
+model download.
+
+Optional acceleration
+---------------------
+
+Start with the CPU installation, then choose a compatible
+PyTorch build for the actual NVIDIA driver and GPU. Consult the official
+`PyTorch installer <https://pytorch.org/get-started/locally/>`_ and
+`Omnipose GPU guidance <https://omnipose.readthedocs.io/installation.html>`_.
+
+An optional Windows setup uses Python 3.10, an RTX A6000, PyTorch
+``2.7.1+cu118`` and torchvision ``0.22.1+cu118``. Select versions compatible
+with your own GPU and driver.
+Restart the notebook kernel after changing PyTorch.
+
+If CUDA is unavailable, check the interpreter, installed PyTorch build, and
+driver compatibility. A ``False`` CUDA check by itself does not prevent CPU
+segmentation. See :doc:`../workflow/segmentation` for the actual wrapper settings.

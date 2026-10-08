@@ -1,0 +1,1795 @@
+Objects features
+================
+
+**Prerequisites:** Detected contours for the channel; valid object meshes for mesh-dependent quantities.
+
+A failed cell calculation omits that family row and records the failure.
+Missing values in a merged table are not automatically zero. Numerical NaN can
+also arise within a returned measurement. The object retention option explicitly
+sets invalid mesh-dependent aggregates to NaN.
+
+cell_total_obj_rect_length
+--------------------------
+
+**Exported column:** ``<channel>_cell_total_obj_rect_length``
+
+**Meaning:** Total object rectangle length per cell.
+
+Calculation: Fit a minimum-area rectangle to each object contour with cv2.minAreaRect, then report either the summed major-axis lengths or the mean minor-axis widths.
+Explanation: These features describe object size in a simple rectangle-based way.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_rect_length(object_contours, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_rect_length`.
+
+`Source assignment, line 556 <../source-code/features.html#features-556>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_rect_width
+-----------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_rect_width``
+
+**Meaning:** Mean object rectangle width per cell.
+
+Calculation: Fit a minimum-area rectangle to each object contour with cv2.minAreaRect, then report either the summed major-axis lengths or the mean minor-axis widths.
+Explanation: These features describe object size in a simple rectangle-based way.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_rect_length(object_contours, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_rect_length`.
+
+`Source assignment, line 556 <../source-code/features.html#features-556>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_aspectratio
+------------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_aspectratio``
+
+**Meaning:** Mean object aspect ratio per cell.
+
+Calculation: For each object, compute rectangle length / rectangle width and then average across objects.
+Explanation: This tells you whether the detected objects are on average roundish or elongated.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_aspect_ratio(rectl, rectw)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_aspect_ratio`.
+
+`Source assignment, line 562 <../source-code/features.html#features-562>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_width_dt
+---------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_width_dt``
+
+**Meaning:** Mean object width from the distance transform.
+
+Calculation: Use a distance transform and object skeleton to estimate local object widths, then average across objects.
+Explanation: This is a width estimate derived from the object masks themselves rather than from fitted rectangles.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_avg_width(object_masks, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_avg_width`.
+
+`Source assignment, line 565 <../source-code/features.html#features-565>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+object_number
+-------------
+
+**Exported column:** ``<channel>_object_number``
+
+**Meaning:** Number of objects per cell.
+
+Calculation: Count the number of detected object contours in the cell.
+Explanation: This simply tells you how many separate objects were found inside that cell.
+
+**Units:** count. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   len(object_contours)
+
+`Source assignment, line 568 <../source-code/features.html#features-568>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_total_obj_area
+-------------------
+
+**Exported column:** ``<channel>_cell_total_obj_area``
+
+**Meaning:** Total object area per cell.
+
+Calculation: Sum the areas of all object contours.
+Explanation: This is the total projected 2D area occupied by objects inside the cell.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   total_obj_area
+
+`Source assignment, line 572 <../source-code/features.html#features-572>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+NC_ratio
+--------
+
+**Exported column:** ``<channel>_NC_ratio``
+
+**Meaning:** Nucleoid-to-cell area ratio.
+
+Calculation: cell\_total\_obj\_area / cell\_area.
+Explanation: This compares the total object area to the host cell area and is often used as a nucleoid-to-cell occupancy measure.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   total_obj_area / cell_area
+
+`Source assignment, line 573 <../source-code/features.html#features-573>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_mean_c
+-------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_mean_c``
+
+**Meaning:** Mean object curvature averaged per cell.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_curvature_characteristics(object_contours, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_curvature_characteristics`.
+
+`Source assignment, line 576 <../source-code/features.html#features-576>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_std_c
+------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_std_c``
+
+**Meaning:** Mean object curvature variability per cell.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_curvature_characteristics(object_contours, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_curvature_characteristics`.
+
+`Source assignment, line 576 <../source-code/features.html#features-576>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_perimeter
+----------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_perimeter``
+
+**Meaning:** Mean object perimeter per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_peri
+
+`Source assignment, line 597 <../source-code/features.html#features-597>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_circularity
+------------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_circularity``
+
+**Meaning:** Mean object circularity per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_cir
+
+`Source assignment, line 598 <../source-code/features.html#features-598>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_compactness
+------------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_compactness``
+
+**Meaning:** Mean object compactness per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_comp
+
+`Source assignment, line 599 <../source-code/features.html#features-599>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_sphericity
+-----------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_sphericity``
+
+**Meaning:** Mean object sphericity per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.
+
+**Units:** µm⁻¹ᐟ² under the implemented 2D formula. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_sph
+
+`Source assignment, line 600 <../source-code/features.html#features-600>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_convexity
+----------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_convexity``
+
+**Meaning:** Mean object convexity per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_convexity
+
+`Source assignment, line 610 <../source-code/features.html#features-610>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_eccentricity
+-------------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_eccentricity``
+
+**Meaning:** Mean object eccentricity per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_eccentricity
+
+`Source assignment, line 611 <../source-code/features.html#features-611>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_solidity
+---------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_solidity``
+
+**Meaning:** Mean object solidity per cell.
+
+Calculation: Compute the named shape descriptor for each object separately, then average the values across all objects in the cell.
+Explanation: This captures the typical shape of objects found in that cell rather than the properties of any one object alone.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_solidity
+
+`Source assignment, line 612 <../source-code/features.html#features-612>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_total_obj_volume_approx
+----------------------------
+
+**Exported column:** ``<channel>_cell_total_obj_volume_approx``
+
+**Meaning:** Approximate total object volume per cell.
+
+Calculation: For each object compute cell\_volume \* (object\_area / cell\_area)^(3/2), then sum the object volumes.
+Explanation: This is an approximate 3D object-volume estimate derived from 2D area occupancy.
+
+**Units:** µm³. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   total_volume
+
+`Source assignment, line 618 <../source-code/features.html#features-618>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_obj_contour_avg_bending_energy
+-----------------------------------
+
+**Exported column:** ``<channel>_cell_obj_contour_avg_bending_energy``
+
+**Meaning:** Mean object contour bending energy per cell.
+
+Calculation: sum(curvature^2) / line\_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.object_bending_energy(object_contours, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.object_bending_energy`.
+
+`Source assignment, line 620 <../source-code/features.html#features-620>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_interobject_distance
+-----------------------------
+
+**Exported column:** ``<channel>_cell_avg_interobject_distance``
+
+**Meaning:** Mean distance between objects within one cell.
+
+Calculation: Compute all pairwise centroid-to-centroid distances between objects and average them.
+Explanation: This measures how far apart the objects tend to be within one cell.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_interobject_distance(object_centroid_list, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_interobject_distance`.
+
+`Source assignment, line 732 <../source-code/features.html#features-732>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+avg_pole_obj_distance
+---------------------
+
+**Exported column:** ``<channel>_avg_pole_obj_distance``
+
+**Meaning:** Mean distance from poles to objects.
+
+Calculation: mean of the two smallest object-to-pole distances returned by get\_pole\_object\_distances. Inspect obj\_pole\_distances for all distances.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_pole_object_distances(cropped_msh, object_centroid_list, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_pole_object_distances`.
+
+`Source assignment, line 739 <../source-code/features.html#features-739>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+l
+-
+
+**Exported column:** ``<channel>_l``
+
+**Meaning:** Object position along the cell axis.
+
+Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.projection_on_midline(object_centroid_list, cropped_ml, cell_widthno, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.projection_on_midline`.
+
+`Source assignment, line 744 <../source-code/features.html#features-744>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+d
+-
+
+**Exported column:** ``<channel>_d``
+
+**Meaning:** Object lateral position relative to the midline.
+
+Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.projection_on_midline(object_centroid_list, cropped_ml, cell_widthno, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.projection_on_midline`.
+
+`Source assignment, line 744 <../source-code/features.html#features-744>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+l_norm
+------
+
+**Exported column:** ``<channel>_l_norm``
+
+**Meaning:** Normalized object position along the cell axis.
+
+Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.
+
+**Units:** Dimensionless. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.projection_on_midline(object_centroid_list, cropped_ml, cell_widthno, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.projection_on_midline`.
+
+`Source assignment, line 744 <../source-code/features.html#features-744>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+d_norm
+------
+
+**Exported column:** ``<channel>_d_norm``
+
+**Meaning:** Normalized object lateral position.
+
+Calculation: Project each object centroid onto the cell midline and report either the longitudinal coordinate or the signed lateral distance, in absolute or normalized form.
+Explanation: These features locate where objects sit within the geometry of the host cell.
+
+**Units:** Dimensionless. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.projection_on_midline(object_centroid_list, cropped_ml, cell_widthno, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.projection_on_midline`.
+
+`Source assignment, line 744 <../source-code/features.html#features-744>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+object_avg_center_distance
+--------------------------
+
+**Exported column:** ``<channel>_object_avg_center_distance``
+
+**Meaning:** Mean object offset from cell center.
+
+Calculation: mean(l\_norm) - 0.5. This is a signed offset of the mean longitudinal object position, not an average absolute distance.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_avg_distance_from_center(cell.objects_features['l_norm'])
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_avg_distance_from_center`.
+
+`Source assignment, line 752 <../source-code/features.html#features-752>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_dissimilarity
+----------------------
+
+**Exported column:** ``<channel>_glcm_obj_dissimilarity``
+
+**Meaning:** Object texture dissimilarity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) \* \|i-j\|) across gray-level pairs, averaged over the angles used by bactoscoop.
+Explanation: Dissimilarity increases when neighboring pixels tend to have different intensities and is lower when neighboring pixels are more alike.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_dissimilarity
+
+`Source assignment, line 765 <../source-code/features.html#features-765>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_correlation
+--------------------
+
+**Exported column:** ``<channel>_glcm_obj_correlation``
+
+**Meaning:** Object texture correlation (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute the Haralick correlation term, which measures the covariance of paired gray levels after normalization by their standard deviations.
+Explanation: Correlation is high when neighboring pixel intensities vary together in a predictable linear way and lower when that relationship is weak.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_correlation
+
+`Source assignment, line 766 <../source-code/features.html#features-766>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_homogeneity
+--------------------
+
+**Exported column:** ``<channel>_glcm_obj_homogeneity``
+
+**Meaning:** Object texture homogeneity (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) / (1 + (i-j)^2)) across gray-level pairs, averaged over angles.
+Explanation: Homogeneity is high when most co-occurrences lie near the diagonal of the GLCM, meaning neighboring pixels usually have similar intensities.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_homogeneity
+
+`Source assignment, line 767 <../source-code/features.html#features-767>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_energy
+---------------
+
+**Exported column:** ``<channel>_glcm_obj_energy``
+
+**Meaning:** Object texture energy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sqrt(sum(P(i,j)^2)), averaged over angles.
+Explanation: Energy is high when the texture is orderly and dominated by a limited number of recurring gray-level combinations, and lower when the texture is more diverse.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_energy
+
+`Source assignment, line 768 <../source-code/features.html#features-768>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_contrast
+-----------------
+
+**Exported column:** ``<channel>_glcm_obj_contrast``
+
+**Meaning:** Object texture contrast (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute sum(P(i,j) \* (i-j)^2) across gray-level pairs, averaged over angles.
+Explanation: Contrast emphasizes strong local intensity differences, so higher values indicate sharper intensity transitions or more pronounced texture variation.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_contrast
+
+`Source assignment, line 769 <../source-code/features.html#features-769>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+glcm_obj_shannon_entropy
+------------------------
+
+**Exported column:** ``<channel>_glcm_obj_shannon_entropy``
+
+**Meaning:** Object texture Shannon entropy (GLCM).
+
+Calculation: Build the gray-level co-occurrence matrix (GLCM) for the combined object-mask image and compute its Shannon entropy in base 2.
+Explanation: Shannon entropy increases when the texture is more complex or unpredictable and decreases when the co-occurrence pattern is more ordered and repetitive.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   glcm_object_entropy
+
+`Source assignment, line 770 <../source-code/features.html#features-770>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+objects_intensity_mean
+----------------------
+
+**Exported column:** ``<channel>_objects_intensity_mean``
+
+**Meaning:** Mean intensity of object pixels.
+
+Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.mean(object_intensity_values)
+
+`Source assignment, line 775 <../source-code/features.html#features-775>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+objects_intensity_std
+---------------------
+
+**Exported column:** ``<channel>_objects_intensity_std``
+
+**Meaning:** Standard deviation of object-pixel intensity.
+
+Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   np.std(object_intensity_values)
+
+`Source assignment, line 778 <../source-code/features.html#features-778>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+objects_kurtosis
+----------------
+
+**Exported column:** ``<channel>_objects_kurtosis``
+
+**Meaning:** Kurtosis of object-pixel intensity.
+
+Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_kurtosis(object_intensity_values)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_kurtosis`.
+
+`Source assignment, line 781 <../source-code/features.html#features-781>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+objects_skewness
+----------------
+
+**Exported column:** ``<channel>_objects_skewness``
+
+**Meaning:** Skewness of object-pixel intensity.
+
+Calculation: Compute the requested summary statistic from all signal pixels that belong to object masks in the cell.
+Explanation: This describes the overall intensity distribution inside the object compartment.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_skew(object_intensity_values)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_skew`.
+
+`Source assignment, line 784 <../source-code/features.html#features-784>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_total_obj_mesh_length
+--------------------------
+
+**Exported column:** ``<channel>_cell_total_obj_mesh_length``
+
+**Meaning:** Total object mesh length per cell.
+
+Calculation: Measure the length of each object mesh / midline and sum those lengths.
+Explanation: This gives the total longitudinal extent of all detected objects in the cell.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sum(obj_lengths)
+
+`Source assignment, line 679 <../source-code/features.html#features-679>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_width
+------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_width``
+
+**Meaning:** Mean object width from object meshes.
+
+Calculation: For each object mesh, compute the mean of the widest one-third of widths and then average across objects.
+Explanation: This gives a robust typical object width using the object meshes.
+
+**Units:** µm. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   avg_obj_width
+
+`Source assignment, line 680 <../source-code/features.html#features-680>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_width_variability
+------------------------------
+
+**Exported column:** ``<channel>_cell_avg_obj_width_variability``
+
+**Meaning:** Mean object width variability per cell.
+
+Calculation: For each object mesh, compute std(widths) / mean(widths) on the broadest half of widths, then average across objects.
+Explanation: This measures how uniformly wide the objects are along their length.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_width_variability(width_no)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_width_variability`.
+
+`Source assignment, line 681 <../source-code/features.html#features-681>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+object_avg_consDegree
+---------------------
+
+**Exported column:** ``<channel>_object_avg_consDegree``
+
+**Meaning:** Mean object constriction degree per cell.
+
+Calculation: For each object, apply the constriction routine to the width-weighted axial intensity profile and then average the constriction degree across objects.
+Explanation: This indicates whether objects tend to have an internal neck or narrowing.
+
+**Units:** Dimensionless. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.constr_degree(axial_intensity, obj_step_lengths, width_no)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.constr_degree`.
+
+`Source assignment, line 684 <../source-code/features.html#features-684>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_total_obj_volume
+---------------------
+
+**Exported column:** ``<channel>_cell_total_obj_volume``
+
+**Meaning:** Mesh-based total object volume per cell.
+
+Calculation: Estimate each object volume from its mesh by integrating pi\*(width/2)^2 along the object length, then sum the objects.
+Explanation: This is the mesh-based 3D volume estimate of all objects together.
+
+**Units:** µm³. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_nucleoid_volume(obj_x1, obj_y1, obj_x2, obj_y2, obj_step_lengths, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_nucleoid_volume`.
+
+`Source assignment, line 692 <../source-code/features.html#features-692>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_total_obj_surface_area
+---------------------------
+
+**Exported column:** ``<channel>_cell_total_obj_surface_area``
+
+**Meaning:** Aggregate object surface area per cell.
+
+Calculation: Compute 2\*pi\*(width/2)\*step\_length along each object mesh and aggregate the returned values.
+Explanation: This describes the object surface size, although the current utility returns the mean per-object surface area despite the feature name saying total.
+
+**Units:** µm². **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_surface_area(width_no, obj_step_lengths)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_surface_area`.
+
+`Source assignment, line 697 <../source-code/features.html#features-697>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_obj_SOV
+----------------
+
+**Exported column:** ``<channel>_cell_avg_obj_SOV``
+
+**Meaning:** Mean object surface-area-to-volume ratio per cell.
+
+Calculation: For each object compute surface\_area / volume and then average across objects.
+Explanation: This tells you how much surface each object has relative to its volume.
+
+**Units:** µm⁻¹. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_surface_area_over_volume(surface_area_list, object_volumes)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_surface_area_over_volume`.
+
+`Source assignment, line 700 <../source-code/features.html#features-700>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_obj_midline_avg_bending_energy
+-----------------------------------
+
+**Exported column:** ``<channel>_cell_obj_midline_avg_bending_energy``
+
+**Meaning:** Mean object midline bending energy per cell.
+
+Calculation: sum(curvature^2) / line\_length for the corresponding contour or midline.
+Explanation: Bending energy summarizes how much the shape bends overall; larger values indicate a more strongly curved line.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.object_bending_energy(object_midlines, px)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.object_bending_energy`.
+
+`Source assignment, line 705 <../source-code/features.html#features-705>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+cell_avg_midline_sinuosity
+--------------------------
+
+**Exported column:** ``<channel>_cell_avg_midline_sinuosity``
+
+**Meaning:** Mean object midline sinuosity per cell.
+
+Calculation: Compute midline\_length / pole-to-pole distance for each object and average across objects.
+Explanation: This indicates whether objects are usually straight or curved.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Scalar.
+
+**Availability:** emitted whenever this family calculation succeeds; ``all_data`` does not gate this key.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_object_sinuosity(object_midlines)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_object_sinuosity`.
+
+`Source assignment, line 709 <../source-code/features.html#features-709>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_areas
+---------
+
+**Exported column:** ``<channel>_obj_areas``
+
+**Meaning:** Individual object areas.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm². **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   area_list
+
+`Source assignment, line 789 <../source-code/features.html#features-789>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_aspect_ratios
+-----------------
+
+**Exported column:** ``<channel>_obj_aspect_ratios``
+
+**Meaning:** Individual object aspect ratios.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   aspect_r
+
+`Source assignment, line 790 <../source-code/features.html#features-790>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+max_obj_curvatures
+------------------
+
+**Exported column:** ``<channel>_max_obj_curvatures``
+
+**Meaning:** Maximum curvature of each object.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   max_c
+
+`Source assignment, line 791 <../source-code/features.html#features-791>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+min_obj_curvatures
+------------------
+
+**Exported column:** ``<channel>_min_obj_curvatures``
+
+**Meaning:** Minimum curvature of each object.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   min_c
+
+`Source assignment, line 792 <../source-code/features.html#features-792>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+mean_obj_curvatures
+-------------------
+
+**Exported column:** ``<channel>_mean_obj_curvatures``
+
+**Meaning:** Mean curvature of each object.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   mean_c
+
+`Source assignment, line 793 <../source-code/features.html#features-793>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+std_obj_curvatures
+------------------
+
+**Exported column:** ``<channel>_std_obj_curvatures``
+
+**Meaning:** Curvature standard deviation of each object.
+
+Calculation: Compute curvature as \|x'y'' - y'x''\| / (x'^2 + y'^2)^(3/2) along the relevant contour or midline, then report the requested summary statistic.
+Explanation: Curvature describes how strongly the line bends; higher values indicate sharper turns or tighter bends.
+
+**Units:** µm⁻¹. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   std_c
+
+`Source assignment, line 794 <../source-code/features.html#features-794>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_perimeters
+--------------
+
+**Exported column:** ``<channel>_obj_perimeters``
+
+**Meaning:** Individual object perimeters.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   perimeters
+
+`Source assignment, line 795 <../source-code/features.html#features-795>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_circularities
+-----------------
+
+**Exported column:** ``<channel>_obj_circularities``
+
+**Meaning:** Individual object circularities.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   circularities
+
+`Source assignment, line 796 <../source-code/features.html#features-796>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_compactnesses
+-----------------
+
+**Exported column:** ``<channel>_obj_compactnesses``
+
+**Meaning:** Individual object compactness values.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   compactnesses
+
+`Source assignment, line 797 <../source-code/features.html#features-797>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_sphericities
+----------------
+
+**Exported column:** ``<channel>_obj_sphericities``
+
+**Meaning:** Individual object sphericity values.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The implementation uses a 2D perimeter/area formula and carries µm^(-1/2); it is not standard dimensionless 3D sphericity.
+
+**Units:** µm⁻¹ᐟ² under the implemented 2D formula. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sphericities
+
+`Source assignment, line 798 <../source-code/features.html#features-798>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_convexities
+---------------
+
+**Exported column:** ``<channel>_obj_convexities``
+
+**Meaning:** Individual object convexities.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   convexity
+
+`Source assignment, line 799 <../source-code/features.html#features-799>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_eccentricities
+------------------
+
+**Exported column:** ``<channel>_obj_eccentricities``
+
+**Meaning:** Individual object eccentricities.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   eccentricity
+
+`Source assignment, line 800 <../source-code/features.html#features-800>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_solidities
+--------------
+
+**Exported column:** ``<channel>_obj_solidities``
+
+**Meaning:** Individual object solidities.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   solidity
+
+`Source assignment, line 801 <../source-code/features.html#features-801>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_volumes_approx
+------------------
+
+**Exported column:** ``<channel>_obj_volumes_approx``
+
+**Meaning:** Individual object volumes.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm³. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   approx_object_volumes
+
+`Source assignment, line 802 <../source-code/features.html#features-802>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_SOV
+-------
+
+**Exported column:** ``<channel>_obj_SOV``
+
+**Meaning:** Individual object surface-area-to-volume ratios.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm⁻¹. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sov_list
+
+`Source assignment, line 803 <../source-code/features.html#features-803>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_constriction_degrees
+------------------------
+
+**Exported column:** ``<channel>_obj_constriction_degrees``
+
+**Meaning:** Individual object constriction degrees.
+
+Calculation: Interpolate the relevant profile, identify the strongest local minimum in the central part of the profile, and report either the relative depth of that minimum or its normalized position along the cell.
+Explanation: These features measure whether there is a narrowing or dip in the signal and where that constriction occurs.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   constrDegree
+
+`Source assignment, line 804 <../source-code/features.html#features-804>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_relative_positions
+----------------------
+
+**Exported column:** ``<channel>_obj_relative_positions``
+
+**Meaning:** Relative constriction positions of individual objects.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   relPos
+
+`Source assignment, line 805 <../source-code/features.html#features-805>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_contour_bending_energies
+----------------------------
+
+**Exported column:** ``<channel>_obj_contour_bending_energies``
+
+**Meaning:** Individual object contour bending energies.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   contour_bending_energies
+
+`Source assignment, line 806 <../source-code/features.html#features-806>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_midline_bending_energies
+----------------------------
+
+**Exported column:** ``<channel>_obj_midline_bending_energies``
+
+**Meaning:** Individual object midline bending energies.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+The current helper sums sampled curvature squared and divides by physical line length. This is sampling-dependent and is not an arc-length integral.
+
+**Units:** µm⁻³ under the implemented sum(curvature²)/length. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   midline_bending_energies
+
+`Source assignment, line 809 <../source-code/features.html#features-809>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_interobject_distances
+-------------------------
+
+**Exported column:** ``<channel>_obj_interobject_distances``
+
+**Meaning:** Pairwise distances between objects.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   interobject_distances
+
+`Source assignment, line 812 <../source-code/features.html#features-812>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_midline_sinuosities
+-----------------------
+
+**Exported column:** ``<channel>_obj_midline_sinuosities``
+
+**Meaning:** Individual object midline sinuosities.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   sinuosity_list
+
+`Source assignment, line 815 <../source-code/features.html#features-815>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+min_2_distances_from_pole
+-------------------------
+
+**Exported column:** ``<channel>_min_2_distances_from_pole``
+
+**Meaning:** Two shortest pole-to-object distances.
+
+Calculation: Export the feature exactly as computed by bactoscoop for this feature family.
+Explanation: This row records that exported measurement in a form that can be interpreted alongside the other single-cell features.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   min2distances
+
+`Source assignment, line 816 <../source-code/features.html#features-816>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_pole_distances
+------------------
+
+**Exported column:** ``<channel>_obj_pole_distances``
+
+**Meaning:** Pole-to-object distances.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** µm. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   pole_distances
+
+`Source assignment, line 817 <../source-code/features.html#features-817>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_intensity_values
+--------------------
+
+**Exported column:** ``<channel>_obj_intensity_values``
+
+**Meaning:** All object-pixel intensity values.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   object_intensity_values
+
+`Source assignment, line 818 <../source-code/features.html#features-818>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_mean_intensities
+--------------------
+
+**Exported column:** ``<channel>_obj_mean_intensities``
+
+**Meaning:** Mean intensity of each object.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_objects_mean(object_intensities_list)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_objects_mean`.
+
+`Source assignment, line 819 <../source-code/features.html#features-819>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_std_intensities
+-------------------
+
+**Exported column:** ``<channel>_obj_std_intensities``
+
+**Meaning:** Intensity standard deviation of each object.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Image intensity units after the family-specific preprocessing. **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_objects_std(object_intensities_list)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_objects_std`.
+
+`Source assignment, line 822 <../source-code/features.html#features-822>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_kurtosis_intensities
+------------------------
+
+**Exported column:** ``<channel>_obj_kurtosis_intensities``
+
+**Meaning:** Intensity kurtosis of each object.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_objects_kurtosis(object_intensities_list)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_objects_kurtosis`.
+
+`Source assignment, line 825 <../source-code/features.html#features-825>`_; :py:meth:`bactoscoop.features.Features.objects`.
+
+obj_skewness_intensities
+------------------------
+
+**Exported column:** ``<channel>_obj_skewness_intensities``
+
+**Meaning:** Intensity skewness of each object.
+
+Calculation: Store the named metric as a per-object list rather than collapsing it to one cell-level average.
+Explanation: These entries keep object-by-object detail for downstream analysis when aggregated values would hide heterogeneity.
+
+**Units:** Dimensionless (GLCM descriptors use quantized intensity bins). **Value shape:** Array/list per cell (per object for detailed object outputs).
+
+**Availability:** only when ``all_data=True``.
+
+**Normalization:** No additional export-level normalization; the calculation below determines family-specific preprocessing.
+
+**Current assignment expression** (a tuple expression can produce several named outputs):
+
+.. code-block:: python
+
+   u.get_objects_skewness(object_intensities_list)
+
+**Calculation helpers:** :py:func:`bactoscoop.utilities.get_objects_skewness`.
+
+`Source assignment, line 828 <../source-code/features.html#features-828>`_; :py:meth:`bactoscoop.features.Features.objects`.

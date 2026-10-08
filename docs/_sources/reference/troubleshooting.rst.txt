@@ -1,0 +1,63 @@
+Troubleshooting
+===============
+
+Import or kernel problems
+-------------------------
+
+Check ``sys.executable`` in the notebook, then install the package in that
+interpreter's Python 3.10 environment. Use ``python -m pip check`` to inspect
+dependency conflicts. A documentation build uses a separate interpreter and
+does not need to import the segmentation stack.
+
+No images, unmatched masks, or missing channels
+-----------------------------------------------
+
+Check the dataset folder, TIFF extension, selected phase suffix, and field names.
+Compare image dimensions. Masks must be integer and consecutively labeled.
+Duplicate field identities are rejected. Missing channels are recorded rather
+than silently matched to another field. See :doc:`../getting-started/inputs`.
+
+Segmentation failure
+--------------------
+
+Check the returned boolean and ``processing_summary`` before making image objects.
+An existing mask on disk does not automatically rescue a failed segmentation
+in the same collection. Confirm model availability and CPU/GPU setup; restart
+with a fresh collection only when intentionally reusing verified masks.
+
+Unexpected geometry or too few cells
+------------------------------------
+
+Inspect masks, join/split settings, smoothing, and neighbor prefilter statistics.
+Check large-mesh filtering and SVM rejection counts. A saved table reflects
+retained cells, not necessarily every original label.
+
+SVM schema error
+----------------
+
+Use the matching supplied model or train a model on the named feature dataframe.
+The model must carry ``feature_names_in_`` and its order must match. Do not bypass
+the schema guard by guessing a column order.
+
+Missing object features
+-----------------------
+
+Check whether detection actually found contours for the cell and channel.
+Check object mesh errors and the retention option for contour-only measurements.
+Missing rows must not automatically be counted as zero objects. Review
+``cell_errors`` even when summary status says ``completed``.
+
+Export fails or contains unexpected columns
+-------------------------------------------
+
+Recalculate and merge in the intended order. ``reset=True`` discards prior tables;
+``reset=False`` replaces repeated pairs. A merge can lose entirely missing columns,
+and shared channel/feature names use the first nonmissing value. A filename must
+stay within the image folder, and a Parquet name must end in ``.parquet``.
+
+Plots cannot find a cell
+------------------------
+
+The selected cell may have been removed during processing or curation. Select
+from the current ``image.cells`` list and ensure the relevant channel/detections
+exist. Saved notebook cell IDs are illustrative, not stable for new settings.

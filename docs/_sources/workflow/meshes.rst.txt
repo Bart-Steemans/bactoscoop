@@ -1,0 +1,62 @@
+Contours, midlines, and meshes
+==============================
+
+BactoScoop reconstructs a cell coordinate system from each label mask so measurements
+can follow the cell's shape rather than a rectangular image crop.
+
+* A **mask** assigns an integer label to image pixels.
+* A **contour** is a subpixel boundary around one cell.
+* A **midline** follows the central axis through the cell.
+* A **mesh** pairs points on opposing boundaries along that axis.
+* A **profile mesh** supplies additional sampling coordinates for intensity
+  measurements across the cell width.
+
+Contours and midlines use ``(row, column)`` coordinates. Mesh rows hold two
+opposing points in four columns; the historical names ``x1, y1, x2, y2`` do not
+mean the geometry uses a Cartesian plotting convention. See
+:doc:`../reference/data-structures` before passing arrays to another library.
+
+Build cell geometry
+-------------------
+
+.. code-block:: python
+
+   ic.batch_process_mesh(
+       phase_channel="C1", join_thresh=4, split_thresh=0.5,
+       CD_width=False, smoothing=0.1, save_data=True,
+   )
+
+The method joins nearby poles, creates meshes, and then splits cells when the
+chosen constriction measure exceeds the threshold. ``join_thresh`` is a distance
+in pixels; ``split_thresh`` is a relative constriction threshold. The signature
+defaults to 0.35 for splitting, while the notebooks explicitly use 0.5.
+``CD_width`` chooses the width-based constriction path when true; otherwise the
+pipeline uses its phase-signal-based path. ``smoothing`` controls contour fitting.
+
+Inspect both the overlay and population after changing these settings. Joining
+and splitting change the analyzed cells and their identity; a processed cell
+need not map one-to-one to an original label.
+
+Optional neighbor filtering
+---------------------------
+
+``neighbor_filter_max_neighbors=None`` leaves the prefilter disabled. A numeric
+threshold removes labels with more than that number of touching distinct labels
+before expensive mesh construction. It is not a distance-based nearest-neighbor
+measurement. Connectivity 1 or 4 uses shared edges; 2 or 8 also counts diagonal
+contact. ``mesh_prefilter_stats`` records label counts and removal information.
+
+Filtering crowded cells changes the sampled population. Inspect both
+removal counts and representative fields before adopting it for a screen.
+
+Geometry-based estimates
+------------------------
+
+Length integrates distances between neighboring mesh midpoints. Body width
+averages the widest one-third of mesh widths. Projected area comes from the
+contour polygon. Volume integrates circular cross-sections with diameter equal
+to the mesh width; surface area sums a cylindrical lateral-area approximation.
+These depend on a rotational geometry assumption and do not measure a 3D volume
+directly. Details and units are in :doc:`../reference/feature-dictionary`.
+
+API: :py:meth:`bactoscoop.imagecollection.ImageCollection.batch_process_mesh`.

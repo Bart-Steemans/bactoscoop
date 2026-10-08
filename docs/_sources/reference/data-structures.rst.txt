@@ -1,0 +1,59 @@
+Data structures and coordinate conventions
+==========================================
+
+Collection, image, and cell
+---------------------------
+
+``ImageCollection`` holds a dataset path and calibration, loaded phase images,
+masks, channel dictionaries, image objects, geometry tables, feature tables,
+and processing records. ``Image`` holds a single field and its cells, channel
+data, background/interpolation caches, and stage-specific tables. ``Cell`` holds
+one cell's contour, midline, mesh, detected-object data, feature dictionaries,
+and discard state.
+
+.. list-table:: Geometry representation
+   :header-rows: 1
+
+   * - Object
+     - Shape / convention
+   * - Image and mask
+     - ``(height, width)``; array indexing is row then column.
+   * - Contour and midline
+     - ``(N, 2)``; points use ``(row, column)`` in pixel units.
+   * - Cell mesh
+     - ``(N, 4)``; two opposing boundary points per row.
+   * - Object geometry
+     - Lists of contours, meshes, and midlines per channel; failed meshes may be empty arrays.
+   * - Profile feature
+     - A one-dimensional array or list stored in a dataframe cell.
+
+The historical mesh attributes ``x1``, ``y1``, ``x2``, and ``y2`` are slices of
+the stored geometry. OpenCV drawing needs Cartesian x/y points, so the curated
+mask exporter explicitly reverses contour columns. Plot overlays also adapt
+the convention. Do not reverse arrays solely because an attribute says ``x``.
+
+Object dictionary
+-----------------
+
+``cell.object_meshdata[channel]`` contains detected ``object_contour``,
+``object_mesh``, and ``object_midline`` lists, with construction-error information
+where applicable. Their entries remain aligned even when a mesh fails.
+
+Feature dictionaries
+--------------------
+
+The methods populate ``morphological_features``, ``profiling_features``,
+``objects_features``, ``membrane_features``, and ``svm_features`` on cells.
+``profiling_data`` stores intermediate data, including widths used during
+morphology, and is not automatically another exported feature family.
+
+Collection tables
+-----------------
+
+``mesh_df_collection`` stores combined geometry. ``feature_dataframes`` holds
+separate family/channel tables. ``merged_features`` is created by merging;
+it is invalidated by later feature computation or image population recreation.
+Do not export an earlier merged table after changing the calculation state.
+
+``cell_id`` and ``frame`` are analysis identities. They are not lineage IDs or
+evidence that the package tracks cells through time.

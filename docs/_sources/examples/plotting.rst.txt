@@ -1,0 +1,49 @@
+Plotting and visual quality control
+===================================
+
+Use field views to understand the input and cell views to check the geometry
+behind measurements. The walkthrough figures are linked from
+:doc:`three-channel` and :doc:`five-channel`.
+
+.. code-block:: python
+
+   import bactoscoop.plot as bplt
+   field_ids = bplt.list_field_ids(ic.image_folder_path, phase_channel="C1")
+   fig = bplt.plot_field_channels(
+       ic.image_folder_path, field_ids[0],
+       {"C1": "Phase contrast", "C2": "DAPI", "C3": "GFP-DnaN"},
+   )
+   fig = bplt.plot_segmentation_review(ic.image_objects)
+   image = ic.image_objects[0]
+   cell_id = image.cells[0].cell_id
+   fig = bplt.plot_cell_gallery(image, cell_id, channel=None)
+
+Select a cell after the relevant stage
+--------------------------------------
+
+Curation and mesh filtering can remove a selected cell. Some field/cell choices
+in saved notebooks are example-specific. Use ``select_example_cell`` or
+``pick_representative_cell`` to inspect available cells and verify the return
+value against its :doc:`../api/plot` entry. ``pick_detected_cell`` chooses a cell
+with requested object detections when possible.
+
+Signals and detections
+----------------------
+
+.. code-block:: python
+
+   cell_id = bplt.pick_detected_cell(image, preferred_channels=("C3",))
+   fig = bplt.plot_signal_gallery(
+       image, cell_id, channel_labels={"C3": "GFP-DnaN"}, show_objects=True,
+   )
+   fig = bplt.plot_feature_overview(ic.merged_features, signal_column="C3_NC_ratio")
+
+Additional functions include histograms, feature scatter plots, morphology and
+signal summaries, normalized axial profiles, demographs, and pairwise metric
+heatmaps. See :doc:`../api/plot` for signatures and return shapes. Some functions
+display directly, while others return a figure or a collection of figures.
+In notebooks, explicitly display returned figures and close them after use
+when generating many plots.
+
+Distinguish display contrast from quantitative preprocessing: making a channel
+look brighter in a figure does not change its recorded feature values.
