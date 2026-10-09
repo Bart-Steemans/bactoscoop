@@ -5,9 +5,9 @@ Install BactoScoop into a dedicated **Python 3.10** environment. Conda and uv
 install the same package and dependencies. The public source repository is on
 `GitHub <https://github.com/Bart-Steemans/bactoscoop>`_.
 
-The PyPI commands require the release to be available on
-`PyPI <https://pypi.org/project/bactoscoop/>`_. Until then, use the tagged
-GitHub installation below.
+Install the latest stable release from
+`PyPI <https://pypi.org/project/bactoscoop/>`_ using either environment option below.
+This guide covers version **0.1.2**.
 
 Conda
 -----
@@ -18,7 +18,7 @@ In Anaconda Prompt or Anaconda PowerShell Prompt:
 
    conda create -n bactoscoop python=3.10 pip -y
    conda activate bactoscoop
-   python -m pip install bactoscoop==0.1.1
+   pip install bactoscoop
    python -m pip check
    python -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
    jupyter lab
@@ -31,7 +31,7 @@ After installing `uv <https://docs.astral.sh/uv/getting-started/installation/>`_
 .. code-block:: powershell
 
    uv venv --python 3.10 .venv
-   uv pip install --python .venv bactoscoop==0.1.1
+   uv pip install --python .venv bactoscoop
    uv pip check --python .venv
    .\.venv\Scripts\python.exe -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
    .\.venv\Scripts\jupyter.exe lab
@@ -42,15 +42,18 @@ uv downloads Python 3.10 when necessary. On macOS/Linux, use
 Choose a release or development source
 --------------------------------------
 
-Pin ``0.1.1`` to reproduce this release. To obtain the newest stable PyPI
-release, run ``python -m pip install --upgrade bactoscoop`` or
+The commands above install the latest stable release in a new environment.
+To update an existing installation, run
+``python -m pip install --upgrade bactoscoop`` or
 ``uv pip install --python .venv --upgrade bactoscoop``.
+For reproducibility, pin this release with
+``python -m pip install bactoscoop==0.1.2``.
 
 To install the corresponding tagged GitHub release, run:
 
 .. code-block:: powershell
 
-   python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.1"
+   python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"
 
 For uv, replace ``python -m pip install`` with
 ``uv pip install --python .venv``. Check the
@@ -75,7 +78,7 @@ Open the examples
 -----------------
 
 Download and extract the
-`release archive <https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.1.zip>`_
+`release archive <https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip>`_
 for its TIFFs, masks, SVM models, and notebooks; those assets are separate from
 the wheel. In JupyterLab, select the Python 3.10 analysis kernel and open a
 walkthrough under ``examples/``. Its first cell copies the input dataset into

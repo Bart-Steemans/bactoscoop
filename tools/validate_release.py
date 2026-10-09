@@ -48,7 +48,8 @@ def main():
         namespace = types.ModuleType('tests')
         namespace.__path__ = [str(tests_dir)]
         sys.modules['tests'] = namespace
-        for filename in ('test.py','test_publication_safeguards.py','test_release_fixes.py','test_neighbor_filter_benchmark.py'):
+        for test_file in sorted(tests_dir.glob('test*.py')):
+            filename = test_file.name
             spec = importlib.util.spec_from_file_location('tests.'+Path(filename).stem,tests_dir/filename)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)

@@ -502,7 +502,7 @@ dataframe : pd.DataFrame
 <h3>Image.join_split_pipeline<a class="headerlink" href="#image-join-split-pipeline" title="Link to this heading">¶</a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="bactoscoop.image.Image.join_split_pipeline">
-<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">join_split_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">join_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_max_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.join_split_pipeline" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">join_split_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">join_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_max_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_filter_connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_daughter_cell_mesh_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.join_split_pipeline" title="Link to this definition">¶</a></dt>
 <dd><p>Perform a pipeline for joining and splitting cells.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -513,6 +513,7 @@ dataframe : pd.DataFrame
 <li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
 <li><p><strong>neighbor_filter_max_neighbors</strong> – Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
 <li><p><strong>neighbor_filter_connectivity</strong> – 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
+<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -532,6 +533,9 @@ join_thresh : int, optional
     The threshold for joining cells in pixels. (default is 4)
 split_thresh : float, optional
     The threshold for splitting cells. (default is 0.3)
+max_daughter_cell_mesh_rows : int, optional
+    Maximum rebuilt daughter mesh rows (default 800, minimum 4).
+    Oversized resampling is rejected before its dense allocations.
 
 Returns
 -------
@@ -557,7 +561,7 @@ None
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.cells</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-319">View current source, line 319</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-329">View current source, line 329</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create Cell objects from mesh data.
 
 This method creates Cell objects based on mesh data contained in a DataFrame. The Cell objects are
@@ -590,7 +594,7 @@ None
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/image.html#image-367">View current source, line 367</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-377">View current source, line 377</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add a Cell object to the list of cells in the Image object.
 </pre></div>
 </div>
@@ -609,7 +613,7 @@ None
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.inverted_image</span></code>, <code class="docutils literal notranslate"><span class="pre">self.im_interp2d</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-373">View current source, line 373</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-383">View current source, line 383</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate the inverted image for phase contrast.
 
 This method computes the inverted image for phase contrast imaging. It subtracts the maximum pixel value
@@ -634,7 +638,7 @@ from the original image and does a background subtraction (bgr = mean(background
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.bg_channels</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-386">View current source, line 386</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-396">View current source, line 396</a>.</p>
 </dd></dl>
 
 </section>
@@ -649,7 +653,7 @@ from the original image and does a background subtraction (bgr = mean(background
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.im_interp2d</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-393">View current source, line 393</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-403">View current source, line 403</a>.</p>
 </dd></dl>
 
 </section>
@@ -669,7 +673,7 @@ from the original image and does a background subtraction (bgr = mean(background
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.chann_interp2d</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-400">View current source, line 400</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-410">View current source, line 410</a>.</p>
 </dd></dl>
 
 </section>
@@ -684,7 +688,7 @@ from the original image and does a background subtraction (bgr = mean(background
 <dd class="field-odd"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/image.html#image-407">View current source, line 407</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-417">View current source, line 417</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Interpolate channel images using 2D spline interpolation.
 
 This method interpolates the channel images using 2D spline interpolation and stores the interpolated images
@@ -713,7 +717,7 @@ in the 'chann_interp2d' dictionary.
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.joined_mask</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/image.html#image-417">View current source, line 417</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-427">View current source, line 427</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Join cells based on pole-to-pole distance.
 
 This method attempts to join adjacent cells within the image based on the distance between their poles. It identifies cell pairs
@@ -745,7 +749,7 @@ thresh : float, optional
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_dataframe</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-510">View current source, line 510</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-520">View current source, line 520</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create meshes from cell masks.
 
 This method processes cell masks to create corresponding meshes. It generates contours and skeletons for each cell in the mask,
@@ -763,13 +767,14 @@ This method is based on the cell profile creation of the MOMIA package (doi: 10.
 <h3>Image.split_cells<a class="headerlink" href="#image-split-cells" title="Link to this heading">¶</a></h3>
 <dl class="py method">
 <dt class="sig sig-object py" id="bactoscoop.image.Image.split_cells">
-<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">split_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.split_cells" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Image.</span></span><span class="sig-name descname"><span class="pre">split_cells</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CD_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_daughter_cell_mesh_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.image.Image.split_cells" title="Link to this definition">¶</a></dt>
 <dd><p>Split cells based on a constriction degree threshold.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>thresh</strong> – The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split. The default is 0.3.</p></li>
 <li><p><strong>CD_width</strong> – Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
+<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -777,7 +782,7 @@ This method is based on the cell profile creation of the MOMIA package (doi: 10.
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.processed_mesh_dataframe</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-533">View current source, line 533</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-543">View current source, line 543</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Split cells based on a constriction degree threshold.
 
 This method separates cells within the image based on a given constriction degree threshold. It calculates the constriction degree
@@ -791,6 +796,12 @@ Parameters
 thresh : float, optional
     The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split.
     The default is 0.3.
+
+max_daughter_cell_mesh_rows : int, optional
+    Maximum final mesh rows per daughter (default 800, minimum 4).
+    Reject oversized predicted row counts before reconstruction, then
+    require both final daughters to have 4..limit rows. If either fails,
+    neither daughter nor the parent enters the processed dataframe.
 </pre></div>
 </div>
 </details></dd></dl>
@@ -820,7 +831,7 @@ thresh : float, optional
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.object_detection_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.object_meshdata</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-633">View current source, line 633</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-657">View current source, line 657</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Detect subcellular objects within cell contours in specified channels.
 
 This method performs object detection within the contours of cells for the specified channels. It uses a Laplacian of Gaussian (LoG)
@@ -885,7 +896,7 @@ pd.DataFrame
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.shift_errors</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_contour</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">cell.shifted_midline</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/image.html#image-754">View current source, line 754</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-778">View current source, line 778</a>.</p>
 </dd></dl>
 
 </section>
@@ -911,7 +922,7 @@ pd.DataFrame
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.discard</span></code>, <code class="docutils literal notranslate"><span class="pre">self.contour</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.midline</span></code>, <code class="docutils literal notranslate"><span class="pre">self.cell_id</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_contour</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.shifted_midline</span></code>, <code class="docutils literal notranslate"><span class="pre">self.x1</span></code>, <code class="docutils literal notranslate"><span class="pre">self.y1</span></code>, <code class="docutils literal notranslate"><span class="pre">self.x2</span></code>, <code class="docutils literal notranslate"><span class="pre">self.y2</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profile_mesh</span></code>, <code class="docutils literal notranslate"><span class="pre">self.object_meshdata</span></code>, <code class="docutils literal notranslate"><span class="pre">self.morphological_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.phase_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.objects_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.svm_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profiling_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.signal_correlation_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.profiling_data</span></code>.</p>
-<p><a class="reference external" href="../source-code/image.html#image-815">View current source, line 815</a>.</p>
+<p><a class="reference external" href="../source-code/image.html#image-839">View current source, line 839</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Class representing a single cell in an image.
 
 This class represents a single cell within an image, characterized by its contour, mesh, and midline data. It is identified by a unique cell ID.
@@ -1015,7 +1026,7 @@ profiling_data : dict
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -1142,7 +1153,7 @@ profiling_data : dict
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

@@ -315,6 +315,7 @@ mean the geometry uses a Cartesian plotting convention. See
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ic</span><span class="o">.</span><span class="n">batch_process_mesh</span><span class="p">(</span>
     <span class="n">phase_channel</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">,</span> <span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">max_daughter_cell_mesh_rows</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -327,6 +328,27 @@ pipeline uses its phase-signal-based path. <code class="docutils literal notrans
 <p>Inspect both the overlay and population after changing these settings. Joining
 and splitting change the analyzed cells and their identity; a processed cell
 need not map one-to-one to an original label.</p>
+</section>
+<section id="daughter-mesh-row-limit">
+<h2>Daughter mesh row limit<a class="headerlink" href="#daughter-mesh-row-limit" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">max_daughter_cell_mesh_rows</span></code> limits the number of paired-boundary rows in
+each rebuilt daughter mesh during cell splitting. The default is <strong>800</strong>;
+provide an integer of at least <strong>4</strong>. It is a row count, not a physical length
+or a limit on the number of cells.</p>
+<p>Since <strong>0.1.2</strong>, oversized predicted resampling counts are rejected before
+contour reconstruction and dense allocations. After reconstruction, both
+daughter meshes must contain between 4 and the configured limit, inclusive.
+If either daughter fails reconstruction or falls outside this range, neither
+daughter nor the original parent enters the processed mesh dataframe.</p>
+<p>The setting passes through <code class="docutils literal notranslate"><span class="pre">ImageCollection.batch_process_mesh</span></code>,
+<code class="docutils literal notranslate"><span class="pre">Image.join_split_pipeline</span></code>, <code class="docutils literal notranslate"><span class="pre">Image.split_cells</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">utilities.split_mesh2mesh</span></code>. It does not limit unsplit parents and is separate
+from <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code>, which filters cells during feature calculation and
+curation.</p>
+<p>For datasets with longer daughter cells, increase the limit explicitly, for
+example <code class="docutils literal notranslate"><span class="pre">ic.batch_process_mesh(phase_channel=&quot;C1&quot;,</span> <span class="pre">max_daughter_cell_mesh_rows=1000)</span></code>.
+Higher limits allow larger reconstructions and increase their memory cost;
+inspect the resulting meshes and retained population after changing the limit.</p>
 </section>
 <section id="optional-neighbor-filtering">
 <h2>Optional neighbor filtering<a class="headerlink" href="#optional-neighbor-filtering" title="Link to this heading">¶</a></h2>
@@ -379,7 +401,7 @@ directly. Details and units are in <a class="reference internal" href="../refere
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -406,6 +428,7 @@ directly. Details and units are in <a class="reference internal" href="../refere
             <ul>
 <li><a class="reference internal" href="#">Contours, midlines, and meshes</a><ul>
 <li><a class="reference internal" href="#build-cell-geometry">Build cell geometry</a></li>
+<li><a class="reference internal" href="#daughter-mesh-row-limit">Daughter mesh row limit</a></li>
 <li><a class="reference internal" href="#optional-neighbor-filtering">Optional neighbor filtering</a></li>
 <li><a class="reference internal" href="#geometry-based-estimates">Geometry-based estimates</a></li>
 </ul>
@@ -419,7 +442,7 @@ directly. Details and units are in <a class="reference internal" href="../refere
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

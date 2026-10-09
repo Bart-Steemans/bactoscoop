@@ -410,7 +410,7 @@ ImageCollection.batch_detect_objects
 ImageCollection.batch_process_mesh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. py:method:: ImageCollection.batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+.. py:method:: ImageCollection.batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1, max_daughter_cell_mesh_rows=800)
 
    Join/split cells, construct geometry, collect mesh tables, and optionally save a pickle.
 
@@ -426,6 +426,7 @@ ImageCollection.batch_process_mesh
    :param smoothing: Smoothing passed to the contour/mesh fitting path.
    :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
    :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
 
    :returns: None (no explicit return statement).
 
@@ -465,6 +466,12 @@ ImageCollection.batch_process_mesh
       split_thresh : float, optional
           The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
 
+      max_daughter_cell_mesh_rows : int, optional
+          Maximum rebuilt daughter mesh rows (default 800, minimum 4).
+          Oversized resampling is rejected before allocation; both final
+          daughters must have 4..limit rows. This is separate from the feature
+          extraction max_mesh_size parameter and does not limit unsplit parents.
+
    .. raw:: html
 
       </details>
@@ -488,7 +495,7 @@ ImageCollection.batch_load_mesh
 
    **Explicitly raised exceptions:** ``FileNotFoundError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 780 <../source-code/imagecollection.html#imagecollection-780>`_.
+   `View current source, line 791 <../source-code/imagecollection.html#imagecollection-791>`_.
 
    .. raw:: html
 
@@ -530,7 +537,7 @@ ImageCollection.batch_mask2mesh
 
    **Assigned state:** ``self.mesh_df_collection``.
 
-   `View current source, line 820 <../source-code/imagecollection.html#imagecollection-820>`_.
+   `View current source, line 831 <../source-code/imagecollection.html#imagecollection-831>`_.
 
    .. raw:: html
 
@@ -580,7 +587,7 @@ ImageCollection.batch_shift_correction
 
    **Assigned state:** ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
 
-   `View current source, line 877 <../source-code/imagecollection.html#imagecollection-877>`_.
+   `View current source, line 888 <../source-code/imagecollection.html#imagecollection-888>`_.
 
 ImageCollection.batch_calculate_features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -609,7 +616,7 @@ ImageCollection.batch_calculate_features
 
    **Explicitly raised exceptions:** ``ValueError``, ``TypeError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 971 <../source-code/imagecollection.html#imagecollection-971>`_.
+   `View current source, line 982 <../source-code/imagecollection.html#imagecollection-982>`_.
 
    .. raw:: html
 
@@ -668,7 +675,7 @@ ImageCollection.batch_calculate_signal_correlation_features
 
       df
 
-   `View current source, line 1112 <../source-code/imagecollection.html#imagecollection-1112>`_.
+   `View current source, line 1123 <../source-code/imagecollection.html#imagecollection-1123>`_.
 
 ImageCollection.curate_dataset
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -688,7 +695,7 @@ ImageCollection.curate_dataset
 
    **Assigned state:** ``self.curated_df``, ``self.pos``, ``self.neg``.
 
-   `View current source, line 1224 <../source-code/imagecollection.html#imagecollection-1224>`_.
+   `View current source, line 1235 <../source-code/imagecollection.html#imagecollection-1235>`_.
 
    .. raw:: html
 
@@ -730,7 +737,7 @@ ImageCollection.add_meshdata_to_dataframe
 
    **Assigned state:** ``self.mesh_df_collection``.
 
-   `View current source, line 1290 <../source-code/imagecollection.html#imagecollection-1290>`_.
+   `View current source, line 1301 <../source-code/imagecollection.html#imagecollection-1301>`_.
 
 ImageCollection.export_curated_masks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -752,7 +759,7 @@ ImageCollection.export_curated_masks
 
    **Explicitly raised exceptions:** ``ValueError``, ``FileExistsError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1320 <../source-code/imagecollection.html#imagecollection-1320>`_.
+   `View current source, line 1331 <../source-code/imagecollection.html#imagecollection-1331>`_.
 
    .. raw:: html
 
@@ -806,7 +813,7 @@ ImageCollection.merge_dataframes
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1425 <../source-code/imagecollection.html#imagecollection-1425>`_.
+   `View current source, line 1436 <../source-code/imagecollection.html#imagecollection-1436>`_.
 
    .. raw:: html
 
@@ -849,7 +856,7 @@ ImageCollection.dataframe_to_pkl
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1493 <../source-code/imagecollection.html#imagecollection-1493>`_.
+   `View current source, line 1504 <../source-code/imagecollection.html#imagecollection-1504>`_.
 
    .. raw:: html
 
@@ -881,7 +888,7 @@ ImageCollection.meshdata_to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1510 <../source-code/imagecollection.html#imagecollection-1510>`_.
+   `View current source, line 1521 <../source-code/imagecollection.html#imagecollection-1521>`_.
 
    .. raw:: html
 
@@ -914,7 +921,7 @@ ImageCollection.dataframe_to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1522 <../source-code/imagecollection.html#imagecollection-1522>`_.
+   `View current source, line 1533 <../source-code/imagecollection.html#imagecollection-1533>`_.
 
    .. raw:: html
 
@@ -1113,7 +1120,7 @@ ImageCollection._apply_curation_labels
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1143 <../source-code/imagecollection.html#imagecollection-1143>`_.
+   `View current source, line 1154 <../source-code/imagecollection.html#imagecollection-1154>`_.
 
    .. raw:: html
 
@@ -1141,7 +1148,7 @@ ImageCollection._atomic_write
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1529 <../source-code/imagecollection.html#imagecollection-1529>`_.
+   `View current source, line 1540 <../source-code/imagecollection.html#imagecollection-1540>`_.
 
 ImageCollection._to_parquet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1158,7 +1165,7 @@ ImageCollection._to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1547 <../source-code/imagecollection.html#imagecollection-1547>`_.
+   `View current source, line 1558 <../source-code/imagecollection.html#imagecollection-1558>`_.
 
 ImageCollection._to_pickle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1172,7 +1179,7 @@ ImageCollection._to_pickle
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1565 <../source-code/imagecollection.html#imagecollection-1565>`_.
+   `View current source, line 1576 <../source-code/imagecollection.html#imagecollection-1576>`_.
 
    .. raw:: html
 
@@ -1198,4 +1205,4 @@ ImageCollection._write_pickle_file
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1576 <../source-code/imagecollection.html#imagecollection-1576>`_.
+   `View current source, line 1587 <../source-code/imagecollection.html#imagecollection-1587>`_.

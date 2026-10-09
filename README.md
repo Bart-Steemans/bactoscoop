@@ -18,7 +18,7 @@ Install [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/) if need
 ```powershell
 conda create -n bactoscoop python=3.10 pip -y
 conda activate bactoscoop
-python -m pip install bactoscoop==0.1.1
+pip install bactoscoop
 python -m pip check
 python -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
 jupyter lab
@@ -30,7 +30,7 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/), open Powe
 
 ```powershell
 uv venv --python 3.10 .venv
-uv pip install --python .venv bactoscoop==0.1.1
+uv pip install --python .venv bactoscoop
 uv pip check --python .venv
 .\.venv\Scripts\python.exe -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
 .\.venv\Scripts\jupyter.exe lab
@@ -40,15 +40,15 @@ uv can download Python 3.10 if needed. On macOS/Linux, use `.venv/bin/python` an
 
 ### Stable release, GitHub release, or development checkout
 
-The stable PyPI installation above pins the version for reproducibility. To upgrade to the newest stable PyPI release, use `python -m pip install --upgrade bactoscoop` (Conda) or `uv pip install --python .venv --upgrade bactoscoop` (uv).
+The commands above install the latest stable PyPI release in a new environment. To upgrade an existing installation, use `python -m pip install --upgrade bactoscoop` (Conda) or `uv pip install --python .venv --upgrade bactoscoop` (uv).
 
 The corresponding [GitHub release](https://github.com/Bart-Steemans/bactoscoop/releases/latest) can also be installed directly when Git is installed:
 
 ```powershell
-python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.1"
+python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"
 ```
 
-For uv, use `uv pip install --python .venv "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.1"`. Select the tag shown in Releases when a newer release is available. To work on the development code instead:
+For uv, use `uv pip install --python .venv "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"`. Select the tag shown in Releases when a newer release is available. To work on the development code instead:
 
 ```powershell
 git clone https://github.com/Bart-Steemans/bactoscoop.git
@@ -60,7 +60,7 @@ An editable development install follows changes in your checkout. It may differ 
 
 ## Run a walkthrough
 
-The wheel contains the Python package; the large TIFFs, masks, SVM models, and notebooks are supplied separately. Download and extract the [v0.1.1 example archive](https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.1.zip), or use the `examples/` folder in a cloned checkout.
+The wheel contains the Python package; the large TIFFs, masks, SVM models, and notebooks are supplied separately. Download and extract the [v0.1.2 example archive](https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip), or use the `examples/` folder in a cloned checkout.
 
 Open `examples/3_channel_example_walkthrough.ipynb` or `examples/5_channel_example_walkthrough.ipynb` in JupyterLab. Run cells from top to bottom. The first cell locates the downloaded examples and copies the selected dataset into a fresh folder under `~/bactoscoop_runs/`; the supplied images, masks, and saved reference outputs stay intact. If you open the notebook elsewhere, set the `BACTOSCOOP_EXAMPLES_DIR` environment variable to the downloaded `examples` folder before starting JupyterLab.
 

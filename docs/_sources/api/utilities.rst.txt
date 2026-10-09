@@ -1112,22 +1112,39 @@ get_width
 split_mesh2mesh
 ~~~~~~~~~~~~~~~
 
-.. py:function:: split_mesh2mesh(x1, y1, x2, y2)
+.. py:function:: split_mesh2mesh(x1, y1, x2, y2, max_daughter_cell_mesh_rows=800)
 
-   Split mesh2mesh.
+   Rebuild a daughter, rejecting oversized resampling before allocation.
 
    :param x1: Input ``x1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
 
    **Return expressions in source:**
 
    .. code-block:: python
 
       (result, contour, midline)
+      (np.empty((0, 4)), np.empty((0, 2)), np.empty((0, 2)))
 
-   `View current source, line 1442 <../source-code/utilities.html#utilities-1442>`_.
+   `View current source, line 1452 <../source-code/utilities.html#utilities-1452>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Rebuild a daughter, rejecting oversized resampling before allocation.
+
+      The limit applies to straightened rows here and to final daughter rows in
+      Image.split_cells. Pole extension can add rows, so the minimum stays there.
+
+   .. raw:: html
+
+      </details>
 
 get_profile_mesh
 ~~~~~~~~~~~~~~~~
@@ -1146,7 +1163,7 @@ get_profile_mesh
 
       profile_mesh
 
-   `View current source, line 1466 <../source-code/utilities.html#utilities-1466>`_.
+   `View current source, line 1493 <../source-code/utilities.html#utilities-1493>`_.
 
 expand_contour
 ~~~~~~~~~~~~~~
@@ -1164,7 +1181,7 @@ expand_contour
 
       contour - scale * dxy
 
-   `View current source, line 1483 <../source-code/utilities.html#utilities-1483>`_.
+   `View current source, line 1510 <../source-code/utilities.html#utilities-1510>`_.
 
    .. raw:: html
 
@@ -1197,7 +1214,7 @@ erode_contour
 
       contour + scale * dxy
 
-   `View current source, line 1502 <../source-code/utilities.html#utilities-1502>`_.
+   `View current source, line 1529 <../source-code/utilities.html#utilities-1529>`_.
 
    .. raw:: html
 
@@ -1230,7 +1247,7 @@ mean_background
 
       bgr
 
-   `View current source, line 1525 <../source-code/utilities.html#utilities-1525>`_.
+   `View current source, line 1552 <../source-code/utilities.html#utilities-1552>`_.
 
 median_background
 ~~~~~~~~~~~~~~~~~
@@ -1248,7 +1265,7 @@ median_background
 
       bgr
 
-   `View current source, line 1536 <../source-code/utilities.html#utilities-1536>`_.
+   `View current source, line 1563 <../source-code/utilities.html#utilities-1563>`_.
 
 poly_func
 ~~~~~~~~~
@@ -1271,7 +1288,7 @@ poly_func
 
       a + b * x + c * y + d * x ** 2 + e * x * y + f * y ** 2
 
-   `View current source, line 1547 <../source-code/utilities.html#utilities-1547>`_.
+   `View current source, line 1574 <../source-code/utilities.html#utilities-1574>`_.
 
 construct_bg_function
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1291,7 +1308,7 @@ construct_bg_function
 
       (bg_function, bg_matrix)
 
-   `View current source, line 1552 <../source-code/utilities.html#utilities-1552>`_.
+   `View current source, line 1579 <../source-code/utilities.html#utilities-1579>`_.
 
    .. raw:: html
 
@@ -1334,7 +1351,7 @@ get_step_length
 
       np.sqrt(dx ** 2 + dy ** 2) / 2 * px
 
-   `View current source, line 1611 <../source-code/utilities.html#utilities-1611>`_.
+   `View current source, line 1638 <../source-code/utilities.html#utilities-1638>`_.
 
 get_step_length_no_px
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1354,7 +1371,7 @@ get_step_length_no_px
 
       np.sqrt(dx ** 2 + dy ** 2) / 2
 
-   `View current source, line 1617 <../source-code/utilities.html#utilities-1617>`_.
+   `View current source, line 1644 <../source-code/utilities.html#utilities-1644>`_.
 
 get_length
 ~~~~~~~~~~
@@ -1371,7 +1388,7 @@ get_length
 
       np.sum(step_length)
 
-   `View current source, line 1623 <../source-code/utilities.html#utilities-1623>`_.
+   `View current source, line 1650 <../source-code/utilities.html#utilities-1650>`_.
 
 get_avg_width
 ~~~~~~~~~~~~~
@@ -1392,7 +1409,7 @@ get_avg_width
 
       (width * px, width_not_ordered * px)
 
-   `View current source, line 1627 <../source-code/utilities.html#utilities-1627>`_.
+   `View current source, line 1654 <../source-code/utilities.html#utilities-1654>`_.
 
 get_avg_width_no_px
 ~~~~~~~~~~~~~~~~~~~
@@ -1412,7 +1429,7 @@ get_avg_width_no_px
 
       (width, width_not_ordered)
 
-   `View current source, line 1636 <../source-code/utilities.html#utilities-1636>`_.
+   `View current source, line 1663 <../source-code/utilities.html#utilities-1663>`_.
 
 get_area
 ~~~~~~~~
@@ -1430,7 +1447,7 @@ get_area
 
       area * px * px
 
-   `View current source, line 1645 <../source-code/utilities.html#utilities-1645>`_.
+   `View current source, line 1672 <../source-code/utilities.html#utilities-1672>`_.
 
 get_volume
 ~~~~~~~~~~
@@ -1452,7 +1469,7 @@ get_volume
 
       volume * px * px
 
-   `View current source, line 1651 <../source-code/utilities.html#utilities-1651>`_.
+   `View current source, line 1678 <../source-code/utilities.html#utilities-1678>`_.
 
 get_surface_area
 ~~~~~~~~~~~~~~~~
@@ -1470,7 +1487,7 @@ get_surface_area
 
       total_surface_area
 
-   `View current source, line 1657 <../source-code/utilities.html#utilities-1657>`_.
+   `View current source, line 1684 <../source-code/utilities.html#utilities-1684>`_.
 
 get_surface_area_over_volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1488,7 +1505,7 @@ get_surface_area_over_volume
 
       sa / vol
 
-   `View current source, line 1664 <../source-code/utilities.html#utilities-1664>`_.
+   `View current source, line 1691 <../source-code/utilities.html#utilities-1691>`_.
 
 get_cell_perimeter_measurements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1507,7 +1524,7 @@ get_cell_perimeter_measurements
 
       (perimeter, circularity, compactness, sphericity)
 
-   `View current source, line 1668 <../source-code/utilities.html#utilities-1668>`_.
+   `View current source, line 1695 <../source-code/utilities.html#utilities-1695>`_.
 
 get_cell_width_variability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1524,7 +1541,7 @@ get_cell_width_variability
 
       width_var
 
-   `View current source, line 1680 <../source-code/utilities.html#utilities-1680>`_.
+   `View current source, line 1707 <../source-code/utilities.html#utilities-1707>`_.
 
 get_curvature_characteristics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1542,7 +1559,7 @@ get_curvature_characteristics
 
       (curvature, max_c, min_c, mean_c, std_c)
 
-   `View current source, line 1688 <../source-code/utilities.html#utilities-1688>`_.
+   `View current source, line 1715 <../source-code/utilities.html#utilities-1715>`_.
 
 get_total_phaco_intensity
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1561,7 +1578,7 @@ get_total_phaco_intensity
 
       (np.sum(values), np.max(values), np.mean(values))
 
-   `View current source, line 1701 <../source-code/utilities.html#utilities-1701>`_.
+   `View current source, line 1728 <../source-code/utilities.html#utilities-1728>`_.
 
 get_contour_intensity
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1579,7 +1596,7 @@ get_contour_intensity
 
       data
 
-   `View current source, line 1710 <../source-code/utilities.html#utilities-1710>`_.
+   `View current source, line 1737 <../source-code/utilities.html#utilities-1737>`_.
 
 find_signal_peaks
 ~~~~~~~~~~~~~~~~~
@@ -1597,7 +1614,7 @@ find_signal_peaks
 
       len(peaks)
 
-   `View current source, line 1715 <../source-code/utilities.html#utilities-1715>`_.
+   `View current source, line 1742 <../source-code/utilities.html#utilities-1742>`_.
 
 measure_contour_variability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1614,7 +1631,7 @@ measure_contour_variability
 
       contour_intensities_variability
 
-   `View current source, line 1720 <../source-code/utilities.html#utilities-1720>`_.
+   `View current source, line 1747 <../source-code/utilities.html#utilities-1747>`_.
 
 get_kurtosis
 ~~~~~~~~~~~~
@@ -1631,7 +1648,7 @@ get_kurtosis
 
       kurtosis(signal)
 
-   `View current source, line 1731 <../source-code/utilities.html#utilities-1731>`_.
+   `View current source, line 1758 <../source-code/utilities.html#utilities-1758>`_.
 
 get_skew
 ~~~~~~~~
@@ -1648,7 +1665,7 @@ get_skew
 
       skew(signal)
 
-   `View current source, line 1735 <../source-code/utilities.html#utilities-1735>`_.
+   `View current source, line 1762 <../source-code/utilities.html#utilities-1762>`_.
 
 sinuosity
 ~~~~~~~~~
@@ -1667,7 +1684,7 @@ sinuosity
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1739 <../source-code/utilities.html#utilities-1739>`_.
+   `View current source, line 1766 <../source-code/utilities.html#utilities-1766>`_.
 
 get_area_asymmetry
 ~~~~~~~~~~~~~~~~~~
@@ -1686,7 +1703,7 @@ get_area_asymmetry
       asymmetry_ratio
       1.0
 
-   `View current source, line 1753 <../source-code/utilities.html#utilities-1753>`_.
+   `View current source, line 1780 <../source-code/utilities.html#utilities-1780>`_.
 
 get_object_params
 ~~~~~~~~~~~~~~~~~
@@ -1704,7 +1721,7 @@ get_object_params
 
       (total_length, average_width)
 
-   `View current source, line 1774 <../source-code/utilities.html#utilities-1774>`_.
+   `View current source, line 1801 <../source-code/utilities.html#utilities-1801>`_.
 
 get_object_width_variability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1721,7 +1738,7 @@ get_object_width_variability
 
       (width_var_list, avg_width_var)
 
-   `View current source, line 1793 <../source-code/utilities.html#utilities-1793>`_.
+   `View current source, line 1820 <../source-code/utilities.html#utilities-1820>`_.
 
 get_mesh_coordinates
 ~~~~~~~~~~~~~~~~~~~~
@@ -1738,7 +1755,7 @@ get_mesh_coordinates
 
       (x1, y1, x2, y2)
 
-   `View current source, line 1806 <../source-code/utilities.html#utilities-1806>`_.
+   `View current source, line 1833 <../source-code/utilities.html#utilities-1833>`_.
 
 get_object_rect_length
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1756,7 +1773,7 @@ get_object_rect_length
 
       (rect_length_list, rect_width_list, total_rect_length, average_rect_width)
 
-   `View current source, line 1814 <../source-code/utilities.html#utilities-1814>`_.
+   `View current source, line 1841 <../source-code/utilities.html#utilities-1841>`_.
 
 get_additional_regionprops_features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1774,7 +1791,7 @@ get_additional_regionprops_features
 
       features
 
-   `View current source, line 1864 <../source-code/utilities.html#utilities-1864>`_.
+   `View current source, line 1891 <../source-code/utilities.html#utilities-1891>`_.
 
 get_object_avg_width
 ~~~~~~~~~~~~~~~~~~~~
@@ -1792,7 +1809,7 @@ get_object_avg_width
 
       (np.mean(nucleoid_avg_width_list), width_not_ordered_list)
 
-   `View current source, line 1917 <../source-code/utilities.html#utilities-1917>`_.
+   `View current source, line 1944 <../source-code/utilities.html#utilities-1944>`_.
 
 get_object_aspect_ratio
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1810,7 +1827,7 @@ get_object_aspect_ratio
 
       (aspect_ratio_list, avg_aspect_ratio)
 
-   `View current source, line 1940 <../source-code/utilities.html#utilities-1940>`_.
+   `View current source, line 1967 <../source-code/utilities.html#utilities-1967>`_.
 
 get_object_area
 ~~~~~~~~~~~~~~~
@@ -1828,7 +1845,7 @@ get_object_area
 
       (area_list, total_area)
 
-   `View current source, line 1952 <../source-code/utilities.html#utilities-1952>`_.
+   `View current source, line 1979 <../source-code/utilities.html#utilities-1979>`_.
 
 get_object_curvature_characteristics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1846,7 +1863,7 @@ get_object_curvature_characteristics
 
       (curvatures, max_c_list, min_c_list, mean_c_list, std_c_list, avg_mean_c, avg_std_c)
 
-   `View current source, line 1965 <../source-code/utilities.html#utilities-1965>`_.
+   `View current source, line 1992 <../source-code/utilities.html#utilities-1992>`_.
 
 get_object_perimeter_measurements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1865,7 +1882,7 @@ get_object_perimeter_measurements
 
       (perimeter_list, circularity_list, compactness_list, sphericity_list, avg_perimeter, avg_circularity, avg_compactness, avg_sphericity)
 
-   `View current source, line 1997 <../source-code/utilities.html#utilities-1997>`_.
+   `View current source, line 2024 <../source-code/utilities.html#utilities-2024>`_.
 
 get_cell_convexity
 ~~~~~~~~~~~~~~~~~~
@@ -1882,7 +1899,7 @@ get_cell_convexity
 
       (image_eccentricity, image_solidity, convexity)
 
-   `View current source, line 2030 <../source-code/utilities.html#utilities-2030>`_.
+   `View current source, line 2057 <../source-code/utilities.html#utilities-2057>`_.
 
 get_object_convexity
 ~~~~~~~~~~~~~~~~~~~~
@@ -1899,7 +1916,7 @@ get_object_convexity
 
       (convexity_list, eccentricity_list, solidity_list, avg_convexity, avg_eccentricity, avg_solidity)
 
-   `View current source, line 2045 <../source-code/utilities.html#utilities-2045>`_.
+   `View current source, line 2072 <../source-code/utilities.html#utilities-2072>`_.
 
 get_approx_nucleoid_volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1918,7 +1935,7 @@ get_approx_nucleoid_volume
 
       (nucleoid_volume_list, total_volume)
 
-   `View current source, line 2075 <../source-code/utilities.html#utilities-2075>`_.
+   `View current source, line 2102 <../source-code/utilities.html#utilities-2102>`_.
 
 get_nucleoid_width_variability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1935,7 +1952,7 @@ get_nucleoid_width_variability
 
       (width_var_list, avg_width_var)
 
-   `View current source, line 2089 <../source-code/utilities.html#utilities-2089>`_.
+   `View current source, line 2116 <../source-code/utilities.html#utilities-2116>`_.
 
 get_obj_mesh_coords
 ~~~~~~~~~~~~~~~~~~~
@@ -1952,7 +1969,7 @@ get_obj_mesh_coords
 
       (x1_list, y1_list, x2_list, y2_list)
 
-   `View current source, line 2106 <../source-code/utilities.html#utilities-2106>`_.
+   `View current source, line 2133 <../source-code/utilities.html#utilities-2133>`_.
 
 measure_along_objects_midline_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1972,7 +1989,7 @@ measure_along_objects_midline_interp2d
 
       prf_list
 
-   `View current source, line 2129 <../source-code/utilities.html#utilities-2129>`_.
+   `View current source, line 2156 <../source-code/utilities.html#utilities-2156>`_.
 
 constr_degree
 ~~~~~~~~~~~~~
@@ -1991,7 +2008,7 @@ constr_degree
 
       (constrDegree_list, relPos_list, constrDegree_abs_list, ctpos_list, avg_consDegree, avg_abs_consDegree)
 
-   `View current source, line 2181 <../source-code/utilities.html#utilities-2181>`_.
+   `View current source, line 2208 <../source-code/utilities.html#utilities-2208>`_.
 
 fill_nan_values
 ~~~~~~~~~~~~~~~
@@ -2007,7 +2024,7 @@ fill_nan_values
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2232 <../source-code/utilities.html#utilities-2232>`_.
+   `View current source, line 2259 <../source-code/utilities.html#utilities-2259>`_.
 
 get_minima
 ~~~~~~~~~~
@@ -2024,7 +2041,7 @@ get_minima
 
       np.concatenate(([False], (weighted_intensity.T[1:-1] < weighted_intensity.T[:-2]) & (weighted_intensity.T[1:-1] < weighted_intensity.T[2:]), [False]))
 
-   `View current source, line 2239 <../source-code/utilities.html#utilities-2239>`_.
+   `View current source, line 2266 <../source-code/utilities.html#utilities-2266>`_.
 
 identify_minima
 ~~~~~~~~~~~~~~~
@@ -2042,7 +2059,7 @@ identify_minima
 
       (index, dh, dhi, hgt)
 
-   `View current source, line 2250 <../source-code/utilities.html#utilities-2250>`_.
+   `View current source, line 2277 <../source-code/utilities.html#utilities-2277>`_.
 
 assign_values
 ~~~~~~~~~~~~~
@@ -2062,7 +2079,7 @@ assign_values
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2267 <../source-code/utilities.html#utilities-2267>`_.
+   `View current source, line 2294 <../source-code/utilities.html#utilities-2294>`_.
 
 get_obj_avg_width
 ~~~~~~~~~~~~~~~~~
@@ -2083,7 +2100,7 @@ get_obj_avg_width
 
       (width_list, width_not_ordered_list, average_width)
 
-   `View current source, line 2284 <../source-code/utilities.html#utilities-2284>`_.
+   `View current source, line 2311 <../source-code/utilities.html#utilities-2311>`_.
 
 get_nucleoid_volume
 ~~~~~~~~~~~~~~~~~~~
@@ -2105,7 +2122,7 @@ get_nucleoid_volume
 
       (nucleoid_volume_list, total_volume)
 
-   `View current source, line 2308 <../source-code/utilities.html#utilities-2308>`_.
+   `View current source, line 2335 <../source-code/utilities.html#utilities-2335>`_.
 
 get_object_step_length
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2126,7 +2143,7 @@ get_object_step_length
 
       (nuc_step_length_list, nuc_length_list)
 
-   `View current source, line 2322 <../source-code/utilities.html#utilities-2322>`_.
+   `View current source, line 2349 <../source-code/utilities.html#utilities-2349>`_.
 
 get_object_surface_area
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2144,7 +2161,7 @@ get_object_surface_area
 
       (sum_surface_area_list, total_surface_area)
 
-   `View current source, line 2345 <../source-code/utilities.html#utilities-2345>`_.
+   `View current source, line 2372 <../source-code/utilities.html#utilities-2372>`_.
 
 get_object_surface_area_over_volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2162,7 +2179,7 @@ get_object_surface_area_over_volume
 
       (ratio_list, avg_ratio)
 
-   `View current source, line 2369 <../source-code/utilities.html#utilities-2369>`_.
+   `View current source, line 2396 <../source-code/utilities.html#utilities-2396>`_.
 
 object_bending_energy
 ~~~~~~~~~~~~~~~~~~~~~
@@ -2180,7 +2197,7 @@ object_bending_energy
 
       (bending_energy_list, avg_bending_energy)
 
-   `View current source, line 2383 <../source-code/utilities.html#utilities-2383>`_.
+   `View current source, line 2410 <../source-code/utilities.html#utilities-2410>`_.
 
    .. raw:: html
 
@@ -2211,7 +2228,7 @@ bending_energy
 
       np.round(bending_energy, 5)
 
-   `View current source, line 2399 <../source-code/utilities.html#utilities-2399>`_.
+   `View current source, line 2426 <../source-code/utilities.html#utilities-2426>`_.
 
 midline_midpoint
 ~~~~~~~~~~~~~~~~
@@ -2228,7 +2245,7 @@ midline_midpoint
 
       middle_point
 
-   `View current source, line 2406 <../source-code/utilities.html#utilities-2406>`_.
+   `View current source, line 2433 <../source-code/utilities.html#utilities-2433>`_.
 
 get_object_midpoint
 ~~~~~~~~~~~~~~~~~~~
@@ -2245,7 +2262,7 @@ get_object_midpoint
 
       centroid_coordinates
 
-   `View current source, line 2412 <../source-code/utilities.html#utilities-2412>`_.
+   `View current source, line 2439 <../source-code/utilities.html#utilities-2439>`_.
 
 get_centroid
 ~~~~~~~~~~~~
@@ -2262,7 +2279,7 @@ get_centroid
 
       [centroids[0][0], centroids[1][0]]
 
-   `View current source, line 2420 <../source-code/utilities.html#utilities-2420>`_.
+   `View current source, line 2447 <../source-code/utilities.html#utilities-2447>`_.
 
 get_object_centroid
 ~~~~~~~~~~~~~~~~~~~
@@ -2279,7 +2296,7 @@ get_object_centroid
 
       centroid_list
 
-   `View current source, line 2429 <../source-code/utilities.html#utilities-2429>`_.
+   `View current source, line 2456 <../source-code/utilities.html#utilities-2456>`_.
 
 get_interobject_distance
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2298,7 +2315,7 @@ get_interobject_distance
       (average_distance, distances)
       (np.nan, np.nan)
 
-   `View current source, line 2440 <../source-code/utilities.html#utilities-2440>`_.
+   `View current source, line 2467 <../source-code/utilities.html#utilities-2467>`_.
 
 get_object_sinuosity
 ~~~~~~~~~~~~~~~~~~~~
@@ -2315,7 +2332,7 @@ get_object_sinuosity
 
       (sinuosity_list, avg_sinuosity)
 
-   `View current source, line 2453 <../source-code/utilities.html#utilities-2453>`_.
+   `View current source, line 2480 <../source-code/utilities.html#utilities-2480>`_.
 
 get_mesh_area
 ~~~~~~~~~~~~~
@@ -2333,7 +2350,7 @@ get_mesh_area
 
       mesh_area
 
-   `View current source, line 2465 <../source-code/utilities.html#utilities-2465>`_.
+   `View current source, line 2492 <../source-code/utilities.html#utilities-2492>`_.
 
 ratio_mesh_over_total_area
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2352,7 +2369,7 @@ ratio_mesh_over_total_area
 
       ratio_list
 
-   `View current source, line 2471 <../source-code/utilities.html#utilities-2471>`_.
+   `View current source, line 2498 <../source-code/utilities.html#utilities-2498>`_.
 
 get_shortest_pole_object_distances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2372,7 +2389,7 @@ get_shortest_pole_object_distances
       (average_distance, distances)
       (np.nan, np.nan)
 
-   `View current source, line 2480 <../source-code/utilities.html#utilities-2480>`_.
+   `View current source, line 2507 <../source-code/utilities.html#utilities-2507>`_.
 
 get_pole_coordinates
 ~~~~~~~~~~~~~~~~~~~~
@@ -2389,7 +2406,7 @@ get_pole_coordinates
 
       (pole1, pole2)
 
-   `View current source, line 2492 <../source-code/utilities.html#utilities-2492>`_.
+   `View current source, line 2519 <../source-code/utilities.html#utilities-2519>`_.
 
 get_pole_object_distances
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2409,7 +2426,7 @@ get_pole_object_distances
       (avg_distance, min_2_distances, distances)
       (np.nan, np.nan)
 
-   `View current source, line 2498 <../source-code/utilities.html#utilities-2498>`_.
+   `View current source, line 2525 <../source-code/utilities.html#utilities-2525>`_.
 
 angle_between_vector
 ~~~~~~~~~~~~~~~~~~~~
@@ -2427,7 +2444,7 @@ angle_between_vector
 
       np.arccos(np.dot(v1, v2) / (d1 * d2))
 
-   `View current source, line 2513 <../source-code/utilities.html#utilities-2513>`_.
+   `View current source, line 2540 <../source-code/utilities.html#utilities-2540>`_.
 
 projection_on_midline
 ~~~~~~~~~~~~~~~~~~~~~
@@ -2447,7 +2464,7 @@ projection_on_midline
 
       (l_list, dl_list, norm_l_list, norm_dl_list)
 
-   `View current source, line 2519 <../source-code/utilities.html#utilities-2519>`_.
+   `View current source, line 2546 <../source-code/utilities.html#utilities-2546>`_.
 
 get_avg_distance_from_center
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2466,7 +2483,7 @@ get_avg_distance_from_center
 
       avg_dist
 
-   `View current source, line 2578 <../source-code/utilities.html#utilities-2578>`_.
+   `View current source, line 2605 <../source-code/utilities.html#utilities-2605>`_.
 
 get_object_intensities
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2484,7 +2501,7 @@ get_object_intensities
 
       (combined_intensity_values, individual_intensity_values)
 
-   `View current source, line 2584 <../source-code/utilities.html#utilities-2584>`_.
+   `View current source, line 2611 <../source-code/utilities.html#utilities-2611>`_.
 
 get_objects_mean
 ~~~~~~~~~~~~~~~~
@@ -2501,7 +2518,7 @@ get_objects_mean
 
       means
 
-   `View current source, line 2598 <../source-code/utilities.html#utilities-2598>`_.
+   `View current source, line 2625 <../source-code/utilities.html#utilities-2625>`_.
 
 get_objects_std
 ~~~~~~~~~~~~~~~
@@ -2518,7 +2535,7 @@ get_objects_std
 
       stds
 
-   `View current source, line 2603 <../source-code/utilities.html#utilities-2603>`_.
+   `View current source, line 2630 <../source-code/utilities.html#utilities-2630>`_.
 
 get_objects_kurtosis
 ~~~~~~~~~~~~~~~~~~~~
@@ -2535,7 +2552,7 @@ get_objects_kurtosis
 
       kurtoses
 
-   `View current source, line 2608 <../source-code/utilities.html#utilities-2608>`_.
+   `View current source, line 2635 <../source-code/utilities.html#utilities-2635>`_.
 
 get_objects_skewness
 ~~~~~~~~~~~~~~~~~~~~
@@ -2552,7 +2569,7 @@ get_objects_skewness
 
       skewnesses
 
-   `View current source, line 2615 <../source-code/utilities.html#utilities-2615>`_.
+   `View current source, line 2642 <../source-code/utilities.html#utilities-2642>`_.
 
 get_variance
 ~~~~~~~~~~~~
@@ -2569,7 +2586,7 @@ get_variance
 
       np.var(data)
 
-   `View current source, line 2620 <../source-code/utilities.html#utilities-2620>`_.
+   `View current source, line 2647 <../source-code/utilities.html#utilities-2647>`_.
 
 measure_smoothened_intensity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2589,7 +2606,7 @@ measure_smoothened_intensity
 
       prf
 
-   `View current source, line 2625 <../source-code/utilities.html#utilities-2625>`_.
+   `View current source, line 2652 <../source-code/utilities.html#utilities-2652>`_.
 
 gaussian_smoothing
 ~~~~~~~~~~~~~~~~~~
@@ -2606,7 +2623,7 @@ gaussian_smoothing
 
       prf.flatten()
 
-   `View current source, line 2634 <../source-code/utilities.html#utilities-2634>`_.
+   `View current source, line 2661 <../source-code/utilities.html#utilities-2661>`_.
 
 measure_intensity_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2626,7 +2643,7 @@ measure_intensity_interp2d
 
       data
 
-   `View current source, line 2641 <../source-code/utilities.html#utilities-2641>`_.
+   `View current source, line 2668 <../source-code/utilities.html#utilities-2668>`_.
 
 normalize_per_cell
 ~~~~~~~~~~~~~~~~~~
@@ -2646,7 +2663,7 @@ normalize_per_cell
       normalized_profile
       np.zeros_like(profile)
 
-   `View current source, line 2657 <../source-code/utilities.html#utilities-2657>`_.
+   `View current source, line 2684 <../source-code/utilities.html#utilities-2684>`_.
 
    .. raw:: html
 
@@ -2682,7 +2699,7 @@ get_cumulative_step_length_midline
 
       cumulative_step_lengths
 
-   `View current source, line 2686 <../source-code/utilities.html#utilities-2686>`_.
+   `View current source, line 2713 <../source-code/utilities.html#utilities-2713>`_.
 
    .. raw:: html
 
@@ -2719,7 +2736,7 @@ linear_interpolation
 
       interpolated_values
 
-   `View current source, line 2713 <../source-code/utilities.html#utilities-2713>`_.
+   `View current source, line 2740 <../source-code/utilities.html#utilities-2740>`_.
 
 get_phase_mask
 ~~~~~~~~~~~~~~
@@ -2737,7 +2754,7 @@ get_phase_mask
 
       cropped_phase_mask
 
-   `View current source, line 2724 <../source-code/utilities.html#utilities-2724>`_.
+   `View current source, line 2751 <../source-code/utilities.html#utilities-2751>`_.
 
 closing_mask
 ~~~~~~~~~~~~
@@ -2755,7 +2772,7 @@ closing_mask
 
       mask_closed
 
-   `View current source, line 2738 <../source-code/utilities.html#utilities-2738>`_.
+   `View current source, line 2765 <../source-code/utilities.html#utilities-2765>`_.
 
 find_centroid_in_largest_mask
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2774,7 +2791,7 @@ find_centroid_in_largest_mask
       []
       [phase_centroid]
 
-   `View current source, line 2747 <../source-code/utilities.html#utilities-2747>`_.
+   `View current source, line 2774 <../source-code/utilities.html#utilities-2774>`_.
 
 align
 ~~~~~
@@ -2793,7 +2810,7 @@ align
 
       aligned_contour
 
-   `View current source, line 2769 <../source-code/utilities.html#utilities-2769>`_.
+   `View current source, line 2796 <../source-code/utilities.html#utilities-2796>`_.
 
 align_objects
 ~~~~~~~~~~~~~
@@ -2814,7 +2831,7 @@ align_objects
 
       (aligned_contour, aligned_midline, aligned_mesh)
 
-   `View current source, line 2793 <../source-code/utilities.html#utilities-2793>`_.
+   `View current source, line 2820 <../source-code/utilities.html#utilities-2820>`_.
 
 get_signal_mask
 ~~~~~~~~~~~~~~~
@@ -2835,7 +2852,7 @@ get_signal_mask
 
       (object_mask, cropped_img, x_offset, y_offset)
 
-   `View current source, line 2806 <../source-code/utilities.html#utilities-2806>`_.
+   `View current source, line 2833 <../source-code/utilities.html#utilities-2833>`_.
 
 shift_contour
 ~~~~~~~~~~~~~
@@ -2865,7 +2882,7 @@ shift_contour
       (aligned_contour, aligned_mesh, aligned_midline)
       (None, None, None)
 
-   `View current source, line 2828 <../source-code/utilities.html#utilities-2828>`_.
+   `View current source, line 2855 <../source-code/utilities.html#utilities-2855>`_.
 
    .. raw:: html
 
@@ -2917,7 +2934,7 @@ crop_signal_with_optional_shift
 
       (cropped_signal, cropped_mask, cropped_contour, x_offset, y_offset)
 
-   `View current source, line 2929 <../source-code/utilities.html#utilities-2929>`_.
+   `View current source, line 2956 <../source-code/utilities.html#utilities-2956>`_.
 
 change_contour_array_length
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2937,7 +2954,7 @@ change_contour_array_length
 
       adjust_eroded_contour
 
-   `View current source, line 2940 <../source-code/utilities.html#utilities-2940>`_.
+   `View current source, line 2967 <../source-code/utilities.html#utilities-2967>`_.
 
 normalized_intensity_by_image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2956,7 +2973,7 @@ normalized_intensity_by_image
       normalized_profile
       np.zeros_like(prof)
 
-   `View current source, line 2947 <../source-code/utilities.html#utilities-2947>`_.
+   `View current source, line 2974 <../source-code/utilities.html#utilities-2974>`_.
 
 get_homogeneity
 ~~~~~~~~~~~~~~~
@@ -2973,7 +2990,7 @@ get_homogeneity
 
       homogeneity
 
-   `View current source, line 2973 <../source-code/utilities.html#utilities-2973>`_.
+   `View current source, line 3000 <../source-code/utilities.html#utilities-3000>`_.
 
 set_bg_zero
 ~~~~~~~~~~~
@@ -2991,7 +3008,7 @@ set_bg_zero
 
       bg_zero_img
 
-   `View current source, line 2980 <../source-code/utilities.html#utilities-2980>`_.
+   `View current source, line 3007 <../source-code/utilities.html#utilities-3007>`_.
 
 rescale_image_255
 ~~~~~~~~~~~~~~~~~
@@ -3009,7 +3026,7 @@ rescale_image_255
 
       scaled_image
 
-   `View current source, line 2986 <../source-code/utilities.html#utilities-2986>`_.
+   `View current source, line 3013 <../source-code/utilities.html#utilities-3013>`_.
 
 create_co_occurrence_matrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3031,7 +3048,7 @@ create_co_occurrence_matrix
 
       co_occurrence_matrix
 
-   `View current source, line 3003 <../source-code/utilities.html#utilities-3003>`_.
+   `View current source, line 3030 <../source-code/utilities.html#utilities-3030>`_.
 
    .. raw:: html
 
@@ -3074,7 +3091,7 @@ get_glcm_feature_means
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 3045 <../source-code/utilities.html#utilities-3045>`_.
+   `View current source, line 3072 <../source-code/utilities.html#utilities-3072>`_.
 
    .. raw:: html
 
@@ -3110,7 +3127,7 @@ calculate_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3101 <../source-code/utilities.html#utilities-3101>`_.
+   `View current source, line 3128 <../source-code/utilities.html#utilities-3128>`_.
 
 align_contour_start
 ~~~~~~~~~~~~~~~~~~~
@@ -3128,7 +3145,7 @@ align_contour_start
 
       aligned_contour
 
-   `View current source, line 3120 <../source-code/utilities.html#utilities-3120>`_.
+   `View current source, line 3147 <../source-code/utilities.html#utilities-3147>`_.
 
    .. raw:: html
 
@@ -3174,7 +3191,7 @@ calculate_object_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3145 <../source-code/utilities.html#utilities-3145>`_.
+   `View current source, line 3172 <../source-code/utilities.html#utilities-3172>`_.
 
 calculate_contour_haralick_features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3194,7 +3211,7 @@ calculate_contour_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3166 <../source-code/utilities.html#utilities-3166>`_.
+   `View current source, line 3193 <../source-code/utilities.html#utilities-3193>`_.
 
 split_array
 ~~~~~~~~~~~
@@ -3211,7 +3228,7 @@ split_array
 
       (first_half, second_half)
 
-   `View current source, line 3185 <../source-code/utilities.html#utilities-3185>`_.
+   `View current source, line 3212 <../source-code/utilities.html#utilities-3212>`_.
 
 get_complemented_contour_intensity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3228,7 +3245,7 @@ get_complemented_contour_intensity
 
       complemented_contour_intensity_profile
 
-   `View current source, line 3192 <../source-code/utilities.html#utilities-3192>`_.
+   `View current source, line 3219 <../source-code/utilities.html#utilities-3219>`_.
 
 shift_image
 ~~~~~~~~~~~
@@ -3246,7 +3263,7 @@ shift_image
 
       offset_image.astype(np.uint16)
 
-   `View current source, line 3208 <../source-code/utilities.html#utilities-3208>`_.
+   `View current source, line 3235 <../source-code/utilities.html#utilities-3235>`_.
 
    .. raw:: html
 
@@ -3285,6 +3302,25 @@ _collect_touching_label_pairs
 
    `View current source, line 636 <../source-code/utilities.html#utilities-636>`_.
 
+_validate_max_daughter_cell_mesh_rows
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. py:function:: _validate_max_daughter_cell_mesh_rows(value)
+
+    validate max daughter cell mesh rows.
+
+   :param value: Input ``value`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+
+   **Return expressions in source:**
+
+   .. code-block:: python
+
+      int(value)
+
+   **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
+
+   `View current source, line 1442 <../source-code/utilities.html#utilities-1442>`_.
+
 _max_feret_diameter_px
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3301,7 +3337,7 @@ _max_feret_diameter_px
       maximum
       0.0
 
-   `View current source, line 1835 <../source-code/utilities.html#utilities-1835>`_.
+   `View current source, line 1862 <../source-code/utilities.html#utilities-1862>`_.
 
    .. raw:: html
 

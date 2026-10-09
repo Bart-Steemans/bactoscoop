@@ -51,7 +51,7 @@ intracellular objects. The five-channel example adds outer- and inner-membrane
 signals and RNA measurements. Both tutorials include real figures saved in the
 repository's notebooks, complete code, and explanations of the intermediate steps.
 
-This guide covers BactoScoop **0.1.1**. Start with the installation
+This guide covers BactoScoop **0.1.2**. Start with the installation
 guide and a walkthrough, then explore the analysis workflow and API reference.
 
 .. toctree::

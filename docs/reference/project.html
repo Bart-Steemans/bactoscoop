@@ -306,9 +306,17 @@ Please acknowledge the original tools appropriately in work based on their use.<
 </section>
 <section id="version-and-changelog">
 <h2>Version and changelog<a class="headerlink" href="#version-and-changelog" title="Link to this heading">¶</a></h2>
-<p>BactoScoop <strong>0.1.1</strong> supports <strong>Python 3.10</strong>. Install it from PyPI
+<p>BactoScoop <strong>0.1.2</strong> supports <strong>Python 3.10</strong>. Install it from PyPI
 or download a tagged release from GitHub. See the changelog below for release notes.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Release notes
+
+## 0.1.2
+
+- Reject oversized daughter meshes before contour reconstruction and dense allocations, avoiding excessive memory use during cell splitting.
+- Expose `max_daughter_cell_mesh_rows` through the mesh pipeline. The default remains 800; values must be integers of at least 4. Both rebuilt daughters must satisfy the final row limits.
+- Document the new parameter in the mesh workflow and API reference, separately from the feature extraction `max_mesh_size` setting.
+- Install the latest stable PyPI release by default in the README and installation guide; retain tagged GitHub installs for reproducibility.
+- Include daughter-mesh regression tests in release validation and update the MIT license copyright to 2026.
 
 ## 0.1.1
 
@@ -320,7 +328,7 @@ or download a tagged release from GitHub. See the changelog below for release no
 
 ## 0.1.0
 
-Initial packaging and documentation work. The uploaded 0.1.0 files were removed from PyPI; use 0.1.1.
+Initial packaging and documentation work. The uploaded 0.1.0 files were removed from PyPI; install the latest stable release instead.
 
 - Added installable wheel/source packaging and Conda/uv installation guides.
 - Added public documentation, automatic GitHub Pages builds, and notebook-to-documentation synchronization.
@@ -346,10 +354,10 @@ Initial packaging and documentation work. The uploaded 0.1.0 files were removed 
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
 <p>BactoScoop is distributed under the MIT license. The source license identifies
-copyright © 2023 Bart Steemans.</p>
+copyright © 2026 Bart Steemans.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>MIT License
 
-Copyright (c) 2023 Bart Steemans
+Copyright (c) 2026 Bart Steemans
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -402,7 +410,7 @@ require a network connection.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -444,7 +452,7 @@ require a network connection.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

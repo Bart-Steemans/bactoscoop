@@ -426,7 +426,7 @@ for prerequisites, returned values, side effects, and source evidence.</p>
 <section id="batch-process-mesh">
 <h2>batch_process_mesh<a class="headerlink" href="#batch-process-mesh" title="Link to this heading">¶</a></h2>
 <p><a class="reference internal" href="../api/imagecollection.html#bactoscoop.imagecollection.ImageCollection.batch_process_mesh" title="bactoscoop.imagecollection.ImageCollection.batch_process_mesh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bactoscoop.imagecollection.ImageCollection.batch_process_mesh()</span></code></a></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_process_mesh</span><span class="p">(</span><span class="n">pkl_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">phase_channel</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">neighbor_filter_max_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">neighbor_filter_connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_process_mesh</span><span class="p">(</span><span class="n">pkl_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">object_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">phase_channel</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">neighbor_filter_max_neighbors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">neighbor_filter_connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_daughter_cell_mesh_rows</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -440,6 +440,7 @@ for prerequisites, returned values, side effects, and source evidence.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">smoothing</span></code> — default <code class="docutils literal notranslate"><span class="pre">0.1</span></code>. Smoothing passed to the contour/mesh fitting path.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">neighbor_filter_max_neighbors</span></code> — default <code class="docutils literal notranslate"><span class="pre">None</span></code>. Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">neighbor_filter_connectivity</span></code> — default <code class="docutils literal notranslate"><span class="pre">1</span></code>. 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_daughter_cell_mesh_rows</span></code> — default <code class="docutils literal notranslate"><span class="pre">800</span></code>. Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
 </ul>
 </section>
 <section id="batch-load-mesh">
@@ -618,7 +619,7 @@ for prerequisites, returned values, side effects, and source evidence.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -679,7 +680,7 @@ for prerequisites, returned values, side effects, and source evidence.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

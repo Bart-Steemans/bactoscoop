@@ -227,7 +227,7 @@ Image.apply_neighbor_prefilter
 Image.join_split_pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. py:method:: Image.join_split_pipeline(join_thresh=4, split_thresh=0.3, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+.. py:method:: Image.join_split_pipeline(join_thresh=4, split_thresh=0.3, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1, max_daughter_cell_mesh_rows=800)
 
    Perform a pipeline for joining and splitting cells.
 
@@ -237,6 +237,7 @@ Image.join_split_pipeline
    :param smoothing: Smoothing passed to the contour/mesh fitting path.
    :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
    :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
 
    :returns: None (no explicit return statement).
 
@@ -260,6 +261,9 @@ Image.join_split_pipeline
           The threshold for joining cells in pixels. (default is 4)
       split_thresh : float, optional
           The threshold for splitting cells. (default is 0.3)
+      max_daughter_cell_mesh_rows : int, optional
+          Maximum rebuilt daughter mesh rows (default 800, minimum 4).
+          Oversized resampling is rejected before its dense allocations.
 
       Returns
       -------
@@ -286,7 +290,7 @@ Image.create_cell_object
 
    **Assigned state:** ``self.cells``.
 
-   `View current source, line 319 <../source-code/image.html#image-319>`_.
+   `View current source, line 329 <../source-code/image.html#image-329>`_.
 
    .. raw:: html
 
@@ -323,7 +327,7 @@ Image.add_cell
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 367 <../source-code/image.html#image-367>`_.
+   `View current source, line 377 <../source-code/image.html#image-377>`_.
 
    .. raw:: html
 
@@ -348,7 +352,7 @@ Image.get_inverted_image
 
    **Assigned state:** ``self.inverted_image``, ``self.im_interp2d``.
 
-   `View current source, line 373 <../source-code/image.html#image-373>`_.
+   `View current source, line 383 <../source-code/image.html#image-383>`_.
 
    .. raw:: html
 
@@ -378,7 +382,7 @@ Image.get_bg_channel
 
    **Assigned state:** ``self.bg_channels``.
 
-   `View current source, line 386 <../source-code/image.html#image-386>`_.
+   `View current source, line 396 <../source-code/image.html#image-396>`_.
 
 Image.get_inverted_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -395,7 +399,7 @@ Image.get_inverted_interp2d
 
    **Assigned state:** ``self.im_interp2d``.
 
-   `View current source, line 393 <../source-code/image.html#image-393>`_.
+   `View current source, line 403 <../source-code/image.html#image-403>`_.
 
 Image.get_channel_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -414,7 +418,7 @@ Image.get_channel_interp2d
 
    **Assigned state:** ``self.chann_interp2d``.
 
-   `View current source, line 400 <../source-code/image.html#image-400>`_.
+   `View current source, line 410 <../source-code/image.html#image-410>`_.
 
 Image.channel_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -425,7 +429,7 @@ Image.channel_interp2d
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 407 <../source-code/image.html#image-407>`_.
+   `View current source, line 417 <../source-code/image.html#image-417>`_.
 
    .. raw:: html
 
@@ -458,7 +462,7 @@ Image.join_cells
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 417 <../source-code/image.html#image-417>`_.
+   `View current source, line 427 <../source-code/image.html#image-427>`_.
 
    .. raw:: html
 
@@ -495,7 +499,7 @@ Image.mask2mesh
 
    **Assigned state:** ``self.mesh_dataframe``.
 
-   `View current source, line 510 <../source-code/image.html#image-510>`_.
+   `View current source, line 520 <../source-code/image.html#image-520>`_.
 
    .. raw:: html
 
@@ -519,18 +523,19 @@ Image.mask2mesh
 Image.split_cells
 ~~~~~~~~~~~~~~~~~
 
-.. py:method:: Image.split_cells(thresh=0.3, CD_width=False)
+.. py:method:: Image.split_cells(thresh=0.3, CD_width=False, max_daughter_cell_mesh_rows=800)
 
    Split cells based on a constriction degree threshold.
 
    :param thresh: The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split. The default is 0.3.
    :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
 
    :returns: None (no explicit return statement).
 
    **Assigned state:** ``self.processed_mesh_dataframe``.
 
-   `View current source, line 533 <../source-code/image.html#image-533>`_.
+   `View current source, line 543 <../source-code/image.html#image-543>`_.
 
    .. raw:: html
 
@@ -551,6 +556,12 @@ Image.split_cells
       thresh : float, optional
           The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split.
           The default is 0.3.
+
+      max_daughter_cell_mesh_rows : int, optional
+          Maximum final mesh rows per daughter (default 800, minimum 4).
+          Reject oversized predicted row counts before reconstruction, then
+          require both final daughters to have 4..limit rows. If either fails,
+          neither daughter nor the parent enters the processed dataframe.
 
    .. raw:: html
 
@@ -579,7 +590,7 @@ Image.object_detection
 
    **Assigned state:** ``self.object_detection_errors``, ``cell.object_meshdata``.
 
-   `View current source, line 633 <../source-code/image.html#image-633>`_.
+   `View current source, line 657 <../source-code/image.html#image-657>`_.
 
    .. raw:: html
 
@@ -651,7 +662,7 @@ Image.shift_correction
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 754 <../source-code/image.html#image-754>`_.
+   `View current source, line 778 <../source-code/image.html#image-778>`_.
 
 Cell
 ~~~~
@@ -672,7 +683,7 @@ Cell
 
    **Assigned state:** ``self.discard``, ``self.contour``, ``self.mesh``, ``self.midline``, ``self.cell_id``, ``self.shifted_contour``, ``self.shifted_mesh``, ``self.shifted_midline``, ``self.x1``, ``self.y1``, ``self.x2``, ``self.y2``, ``self.profile_mesh``, ``self.object_meshdata``, ``self.morphological_features``, ``self.phase_features``, ``self.objects_features``, ``self.svm_features``, ``self.profiling_features``, ``self.signal_correlation_features``, ``self.profiling_data``.
 
-   `View current source, line 815 <../source-code/image.html#image-815>`_.
+   `View current source, line 839 <../source-code/image.html#image-839>`_.
 
    .. raw:: html
 

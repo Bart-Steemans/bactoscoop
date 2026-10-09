@@ -1,6 +1,6 @@
 project = 'BactoScoop'
 author = 'Bart Steemans'
-copyright = '2023–2026, Bart Steemans'
+copyright = '2026, Bart Steemans'
 import sys
 from pathlib import Path
 import tomllib

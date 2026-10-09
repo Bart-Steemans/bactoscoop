@@ -24,6 +24,7 @@ Build cell geometry
    ic.batch_process_mesh(
        phase_channel="C1", join_thresh=4, split_thresh=0.5,
        CD_width=False, smoothing=0.1, save_data=True,
+       max_daughter_cell_mesh_rows=800,
    )
 
 The method joins nearby poles, creates meshes, and then splits cells when the
@@ -36,6 +37,31 @@ pipeline uses its phase-signal-based path. ``smoothing`` controls contour fittin
 Inspect both the overlay and population after changing these settings. Joining
 and splitting change the analyzed cells and their identity; a processed cell
 need not map one-to-one to an original label.
+
+Daughter mesh row limit
+-----------------------
+
+``max_daughter_cell_mesh_rows`` limits the number of paired-boundary rows in
+each rebuilt daughter mesh during cell splitting. The default is **800**;
+provide an integer of at least **4**. It is a row count, not a physical length
+or a limit on the number of cells.
+
+Since **0.1.2**, oversized predicted resampling counts are rejected before
+contour reconstruction and dense allocations. After reconstruction, both
+daughter meshes must contain between 4 and the configured limit, inclusive.
+If either daughter fails reconstruction or falls outside this range, neither
+daughter nor the original parent enters the processed mesh dataframe.
+
+The setting passes through ``ImageCollection.batch_process_mesh``,
+``Image.join_split_pipeline``, ``Image.split_cells``, and
+``utilities.split_mesh2mesh``. It does not limit unsplit parents and is separate
+from ``max_mesh_size``, which filters cells during feature calculation and
+curation.
+
+For datasets with longer daughter cells, increase the limit explicitly, for
+example ``ic.batch_process_mesh(phase_channel="C1", max_daughter_cell_mesh_rows=1000)``.
+Higher limits allow larger reconstructions and increase their memory cost;
+inspect the resulting meshes and retained population after changing the limit.
 
 Optional neighbor filtering
 ---------------------------

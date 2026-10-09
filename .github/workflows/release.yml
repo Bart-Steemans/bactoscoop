@@ -7,7 +7,7 @@ on:
         description: Exact version expected in the current source
         type: string
         required: true
-        default: '0.1.1'
+        default: '0.1.2'
       publish:
         description: Publish validated distributions to PyPI after owner approval
         type: boolean

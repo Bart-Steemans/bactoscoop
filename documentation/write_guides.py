@@ -116,9 +116,9 @@ Install BactoScoop into a dedicated **Python 3.10** environment. Conda and uv
 install the same package and dependencies. The public source repository is on
 `GitHub <https://github.com/Bart-Steemans/bactoscoop>`_.
 
-The PyPI commands require the release to be available on
-`PyPI <https://pypi.org/project/bactoscoop/>`_. Until then, use the tagged
-GitHub installation below.
+Install the latest stable release from
+`PyPI <https://pypi.org/project/bactoscoop/>`_ using either environment option below.
+This guide covers version **__BACTOSCOOP_VERSION__**.
 
 Conda
 -----
@@ -129,7 +129,7 @@ In Anaconda Prompt or Anaconda PowerShell Prompt:
 
    conda create -n bactoscoop python=3.10 pip -y
    conda activate bactoscoop
-   python -m pip install bactoscoop==__BACTOSCOOP_VERSION__
+   pip install bactoscoop
    python -m pip check
    python -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
    jupyter lab
@@ -142,7 +142,7 @@ After installing `uv <https://docs.astral.sh/uv/getting-started/installation/>`_
 .. code-block:: powershell
 
    uv venv --python 3.10 .venv
-   uv pip install --python .venv bactoscoop==__BACTOSCOOP_VERSION__
+   uv pip install --python .venv bactoscoop
    uv pip check --python .venv
    .\.venv\Scripts\python.exe -c "import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"
    .\.venv\Scripts\jupyter.exe lab
@@ -153,9 +153,12 @@ uv downloads Python 3.10 when necessary. On macOS/Linux, use
 Choose a release or development source
 --------------------------------------
 
-Pin ``__BACTOSCOOP_VERSION__`` to reproduce this release. To obtain the newest stable PyPI
-release, run ``python -m pip install --upgrade bactoscoop`` or
+The commands above install the latest stable release in a new environment.
+To update an existing installation, run
+``python -m pip install --upgrade bactoscoop`` or
 ``uv pip install --python .venv --upgrade bactoscoop``.
+For reproducibility, pin this release with
+``python -m pip install bactoscoop==__BACTOSCOOP_VERSION__``.
 
 To install the corresponding tagged GitHub release, run:
 
@@ -458,6 +461,7 @@ Build cell geometry
    ic.batch_process_mesh(
        phase_channel="C1", join_thresh=4, split_thresh=0.5,
        CD_width=False, smoothing=0.1, save_data=True,
+       max_daughter_cell_mesh_rows=800,
    )
 
 The method joins nearby poles, creates meshes, and then splits cells when the
@@ -470,6 +474,31 @@ pipeline uses its phase-signal-based path. ``smoothing`` controls contour fittin
 Inspect both the overlay and population after changing these settings. Joining
 and splitting change the analyzed cells and their identity; a processed cell
 need not map one-to-one to an original label.
+
+Daughter mesh row limit
+-----------------------
+
+``max_daughter_cell_mesh_rows`` limits the number of paired-boundary rows in
+each rebuilt daughter mesh during cell splitting. The default is **800**;
+provide an integer of at least **4**. It is a row count, not a physical length
+or a limit on the number of cells.
+
+Since **0.1.2**, oversized predicted resampling counts are rejected before
+contour reconstruction and dense allocations. After reconstruction, both
+daughter meshes must contain between 4 and the configured limit, inclusive.
+If either daughter fails reconstruction or falls outside this range, neither
+daughter nor the original parent enters the processed mesh dataframe.
+
+The setting passes through ``ImageCollection.batch_process_mesh``,
+``Image.join_split_pipeline``, ``Image.split_cells``, and
+``utilities.split_mesh2mesh``. It does not limit unsplit parents and is separate
+from ``max_mesh_size``, which filters cells during feature calculation and
+curation.
+
+For datasets with longer daughter cells, increase the limit explicitly, for
+example ``ic.batch_process_mesh(phase_channel="C1", max_daughter_cell_mesh_rows=1000)``.
+Higher limits allow larger reconstructions and increase their memory cost;
+inspect the resulting meshes and retained population after changing the limit.
 
 Optional neighbor filtering
 ---------------------------
@@ -1202,7 +1231,7 @@ License
 -------
 
 BactoScoop is distributed under the MIT license. The source license identifies
-copyright © 2023 Bart Steemans.
+copyright © 2026 Bart Steemans.
 
 .. literalinclude:: ../_downloads/LICENSE
    :language: text

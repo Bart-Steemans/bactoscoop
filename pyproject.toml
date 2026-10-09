@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bactoscoop"
-version = "0.1.1"
+version = "0.1.2"
 description = "Single-cell feature extraction from multichannel bacterial microscopy images"
 readme = "README.md"
 requires-python = ">=3.10,<3.11"

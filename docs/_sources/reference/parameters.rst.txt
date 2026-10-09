@@ -151,7 +151,7 @@ batch_process_mesh
 
 .. code-block:: python
 
-   batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1)
+   batch_process_mesh(pkl_name=None, object_list=None, save_data=True, phase_channel='', join_thresh=4, split_thresh=0.35, CD_width=False, smoothing=0.1, neighbor_filter_max_neighbors=None, neighbor_filter_connectivity=1, max_daughter_cell_mesh_rows=800)
 
 * ``pkl_name`` — default ``None``. Mesh input filename or pickle output name. For feature output, .pkl means exact filename; a suffixless name is a legacy tag.
 * ``object_list`` — default ``None``. Explicit image-object sequence to process; None selects collection targets.
@@ -163,6 +163,7 @@ batch_process_mesh
 * ``smoothing`` — default ``0.1``. Smoothing passed to the contour/mesh fitting path.
 * ``neighbor_filter_max_neighbors`` — default ``None``. Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
 * ``neighbor_filter_connectivity`` — default ``1``. 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
+* ``max_daughter_cell_mesh_rows`` — default ``800``. Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
 
 batch_load_mesh
 ---------------

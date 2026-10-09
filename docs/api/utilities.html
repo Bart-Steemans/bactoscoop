@@ -1582,8 +1582,8 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <h3>split_mesh2mesh<a class="headerlink" href="#split-mesh2mesh" title="Link to this heading">¶</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.utilities.split_mesh2mesh">
-<span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">split_mesh2mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.split_mesh2mesh" title="Link to this definition">¶</a></dt>
-<dd><p>Split mesh2mesh.</p>
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">split_mesh2mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_daughter_cell_mesh_rows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.split_mesh2mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Rebuild a daughter, rejecting oversized resampling before allocation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1591,15 +1591,23 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <li><p><strong>y1</strong> – Input <code class="docutils literal notranslate"><span class="pre">y1</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>x2</strong> – Input <code class="docutils literal notranslate"><span class="pre">x2</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>y2</strong> – Input <code class="docutils literal notranslate"><span class="pre">y2</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
 </ul>
 </dd>
 </dl>
 <p><strong>Return expressions in source:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">contour</span><span class="p">,</span> <span class="n">midline</span><span class="p">)</span>
+<span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1442">View current source, line 1442</a>.</p>
-</dd></dl>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1452">View current source, line 1452</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rebuild a daughter, rejecting oversized resampling before allocation.
+
+The limit applies to straightened rows here and to final daughter rows in
+Image.split_cells. Pole extension can add rows, so the minimum stays there.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="get-profile-mesh">
@@ -1621,7 +1629,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profile_mesh</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1466">View current source, line 1466</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1493">View current source, line 1493</a>.</p>
 </dd></dl>
 
 </section>
@@ -1643,7 +1651,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contour</span> <span class="o">-</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">dxy</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1483">View current source, line 1483</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1510">View current source, line 1510</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>enlarges contour
 :param contour:
 :param scale:
@@ -1671,7 +1679,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contour</span> <span class="o">+</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">dxy</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1502">View current source, line 1502</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1529">View current source, line 1529</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>shrinks contour
 :param contour:
 :param scale:
@@ -1699,7 +1707,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bgr</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1525">View current source, line 1525</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1552">View current source, line 1552</a>.</p>
 </dd></dl>
 
 </section>
@@ -1721,7 +1729,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bgr</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1536">View current source, line 1536</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1563">View current source, line 1563</a>.</p>
 </dd></dl>
 
 </section>
@@ -1748,7 +1756,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">e</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">f</span> <span class="o">*</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1547">View current source, line 1547</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1574">View current source, line 1574</a>.</p>
 </dd></dl>
 
 </section>
@@ -1772,7 +1780,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">bg_function</span><span class="p">,</span> <span class="n">bg_matrix</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1552">View current source, line 1552</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1579">View current source, line 1579</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Reconstructs the background of an image using 2D polynomial fitting.
 
 Parameters:
@@ -1810,7 +1818,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">px</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1611">View current source, line 1611</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1638">View current source, line 1638</a>.</p>
 </dd></dl>
 
 </section>
@@ -1834,7 +1842,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1617">View current source, line 1617</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1644">View current source, line 1644</a>.</p>
 </dd></dl>
 
 </section>
@@ -1853,7 +1861,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">step_length</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1623">View current source, line 1623</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1650">View current source, line 1650</a>.</p>
 </dd></dl>
 
 </section>
@@ -1878,7 +1886,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">px</span><span class="p">,</span> <span class="n">width_not_ordered</span> <span class="o">*</span> <span class="n">px</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1627">View current source, line 1627</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1654">View current source, line 1654</a>.</p>
 </dd></dl>
 
 </section>
@@ -1902,7 +1910,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width_not_ordered</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1636">View current source, line 1636</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1663">View current source, line 1663</a>.</p>
 </dd></dl>
 
 </section>
@@ -1924,7 +1932,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">area</span> <span class="o">*</span> <span class="n">px</span> <span class="o">*</span> <span class="n">px</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1645">View current source, line 1645</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1672">View current source, line 1672</a>.</p>
 </dd></dl>
 
 </section>
@@ -1950,7 +1958,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">volume</span> <span class="o">*</span> <span class="n">px</span> <span class="o">*</span> <span class="n">px</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1651">View current source, line 1651</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1678">View current source, line 1678</a>.</p>
 </dd></dl>
 
 </section>
@@ -1972,7 +1980,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_surface_area</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1657">View current source, line 1657</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1684">View current source, line 1684</a>.</p>
 </dd></dl>
 
 </section>
@@ -1994,7 +2002,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sa</span> <span class="o">/</span> <span class="n">vol</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1664">View current source, line 1664</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1691">View current source, line 1691</a>.</p>
 </dd></dl>
 
 </section>
@@ -2017,7 +2025,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">perimeter</span><span class="p">,</span> <span class="n">circularity</span><span class="p">,</span> <span class="n">compactness</span><span class="p">,</span> <span class="n">sphericity</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1668">View current source, line 1668</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1695">View current source, line 1695</a>.</p>
 </dd></dl>
 
 </section>
@@ -2036,7 +2044,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">width_var</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1680">View current source, line 1680</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1707">View current source, line 1707</a>.</p>
 </dd></dl>
 
 </section>
@@ -2058,7 +2066,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">curvature</span><span class="p">,</span> <span class="n">max_c</span><span class="p">,</span> <span class="n">min_c</span><span class="p">,</span> <span class="n">mean_c</span><span class="p">,</span> <span class="n">std_c</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1688">View current source, line 1688</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1715">View current source, line 1715</a>.</p>
 </dd></dl>
 
 </section>
@@ -2081,7 +2089,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1701">View current source, line 1701</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1728">View current source, line 1728</a>.</p>
 </dd></dl>
 
 </section>
@@ -2103,7 +2111,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1710">View current source, line 1710</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1737">View current source, line 1737</a>.</p>
 </dd></dl>
 
 </section>
@@ -2125,7 +2133,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1715">View current source, line 1715</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1742">View current source, line 1742</a>.</p>
 </dd></dl>
 
 </section>
@@ -2144,7 +2152,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">contour_intensities_variability</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1720">View current source, line 1720</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1747">View current source, line 1747</a>.</p>
 </dd></dl>
 
 </section>
@@ -2163,7 +2171,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kurtosis</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1731">View current source, line 1731</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1758">View current source, line 1758</a>.</p>
 </dd></dl>
 
 </section>
@@ -2182,7 +2190,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">skew</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1735">View current source, line 1735</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1762">View current source, line 1762</a>.</p>
 </dd></dl>
 
 </section>
@@ -2202,7 +2210,7 @@ Returns:
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1739">View current source, line 1739</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1766">View current source, line 1766</a>.</p>
 </dd></dl>
 
 </section>
@@ -2225,7 +2233,7 @@ Returns:
 <span class="mf">1.0</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1753">View current source, line 1753</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1780">View current source, line 1780</a>.</p>
 </dd></dl>
 
 </section>
@@ -2247,7 +2255,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">total_length</span><span class="p">,</span> <span class="n">average_width</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1774">View current source, line 1774</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1801">View current source, line 1801</a>.</p>
 </dd></dl>
 
 </section>
@@ -2266,7 +2274,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">width_var_list</span><span class="p">,</span> <span class="n">avg_width_var</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1793">View current source, line 1793</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1820">View current source, line 1820</a>.</p>
 </dd></dl>
 
 </section>
@@ -2285,7 +2293,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1806">View current source, line 1806</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1833">View current source, line 1833</a>.</p>
 </dd></dl>
 
 </section>
@@ -2307,7 +2315,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">rect_length_list</span><span class="p">,</span> <span class="n">rect_width_list</span><span class="p">,</span> <span class="n">total_rect_length</span><span class="p">,</span> <span class="n">average_rect_width</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1814">View current source, line 1814</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1841">View current source, line 1841</a>.</p>
 </dd></dl>
 
 </section>
@@ -2329,7 +2337,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">features</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1864">View current source, line 1864</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1891">View current source, line 1891</a>.</p>
 </dd></dl>
 
 </section>
@@ -2351,7 +2359,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nucleoid_avg_width_list</span><span class="p">),</span> <span class="n">width_not_ordered_list</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1917">View current source, line 1917</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1944">View current source, line 1944</a>.</p>
 </dd></dl>
 
 </section>
@@ -2373,7 +2381,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">aspect_ratio_list</span><span class="p">,</span> <span class="n">avg_aspect_ratio</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1940">View current source, line 1940</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1967">View current source, line 1967</a>.</p>
 </dd></dl>
 
 </section>
@@ -2395,7 +2403,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">area_list</span><span class="p">,</span> <span class="n">total_area</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1952">View current source, line 1952</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1979">View current source, line 1979</a>.</p>
 </dd></dl>
 
 </section>
@@ -2417,7 +2425,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">curvatures</span><span class="p">,</span> <span class="n">max_c_list</span><span class="p">,</span> <span class="n">min_c_list</span><span class="p">,</span> <span class="n">mean_c_list</span><span class="p">,</span> <span class="n">std_c_list</span><span class="p">,</span> <span class="n">avg_mean_c</span><span class="p">,</span> <span class="n">avg_std_c</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1965">View current source, line 1965</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1992">View current source, line 1992</a>.</p>
 </dd></dl>
 
 </section>
@@ -2440,7 +2448,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">perimeter_list</span><span class="p">,</span> <span class="n">circularity_list</span><span class="p">,</span> <span class="n">compactness_list</span><span class="p">,</span> <span class="n">sphericity_list</span><span class="p">,</span> <span class="n">avg_perimeter</span><span class="p">,</span> <span class="n">avg_circularity</span><span class="p">,</span> <span class="n">avg_compactness</span><span class="p">,</span> <span class="n">avg_sphericity</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1997">View current source, line 1997</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2024">View current source, line 2024</a>.</p>
 </dd></dl>
 
 </section>
@@ -2459,7 +2467,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">image_eccentricity</span><span class="p">,</span> <span class="n">image_solidity</span><span class="p">,</span> <span class="n">convexity</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2030">View current source, line 2030</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2057">View current source, line 2057</a>.</p>
 </dd></dl>
 
 </section>
@@ -2478,7 +2486,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">convexity_list</span><span class="p">,</span> <span class="n">eccentricity_list</span><span class="p">,</span> <span class="n">solidity_list</span><span class="p">,</span> <span class="n">avg_convexity</span><span class="p">,</span> <span class="n">avg_eccentricity</span><span class="p">,</span> <span class="n">avg_solidity</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2045">View current source, line 2045</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2072">View current source, line 2072</a>.</p>
 </dd></dl>
 
 </section>
@@ -2501,7 +2509,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">nucleoid_volume_list</span><span class="p">,</span> <span class="n">total_volume</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2075">View current source, line 2075</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2102">View current source, line 2102</a>.</p>
 </dd></dl>
 
 </section>
@@ -2520,7 +2528,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">width_var_list</span><span class="p">,</span> <span class="n">avg_width_var</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2089">View current source, line 2089</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2116">View current source, line 2116</a>.</p>
 </dd></dl>
 
 </section>
@@ -2539,7 +2547,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">x1_list</span><span class="p">,</span> <span class="n">y1_list</span><span class="p">,</span> <span class="n">x2_list</span><span class="p">,</span> <span class="n">y2_list</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2106">View current source, line 2106</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2133">View current source, line 2133</a>.</p>
 </dd></dl>
 
 </section>
@@ -2563,7 +2571,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prf_list</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2129">View current source, line 2129</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2156">View current source, line 2156</a>.</p>
 </dd></dl>
 
 </section>
@@ -2586,7 +2594,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">constrDegree_list</span><span class="p">,</span> <span class="n">relPos_list</span><span class="p">,</span> <span class="n">constrDegree_abs_list</span><span class="p">,</span> <span class="n">ctpos_list</span><span class="p">,</span> <span class="n">avg_consDegree</span><span class="p">,</span> <span class="n">avg_abs_consDegree</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2181">View current source, line 2181</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2208">View current source, line 2208</a>.</p>
 </dd></dl>
 
 </section>
@@ -2609,7 +2617,7 @@ Returns:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2232">View current source, line 2232</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2259">View current source, line 2259</a>.</p>
 </dd></dl>
 
 </section>
@@ -2628,7 +2636,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="kc">False</span><span class="p">],</span> <span class="p">(</span><span class="n">weighted_intensity</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">weighted_intensity</span><span class="o">.</span><span class="n">T</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">weighted_intensity</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">weighted_intensity</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">:]),</span> <span class="p">[</span><span class="kc">False</span><span class="p">]))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2239">View current source, line 2239</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2266">View current source, line 2266</a>.</p>
 </dd></dl>
 
 </section>
@@ -2650,7 +2658,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">dh</span><span class="p">,</span> <span class="n">dhi</span><span class="p">,</span> <span class="n">hgt</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2250">View current source, line 2250</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2277">View current source, line 2277</a>.</p>
 </dd></dl>
 
 </section>
@@ -2677,7 +2685,7 @@ Returns:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2267">View current source, line 2267</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2294">View current source, line 2294</a>.</p>
 </dd></dl>
 
 </section>
@@ -2702,7 +2710,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">width_list</span><span class="p">,</span> <span class="n">width_not_ordered_list</span><span class="p">,</span> <span class="n">average_width</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2284">View current source, line 2284</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2311">View current source, line 2311</a>.</p>
 </dd></dl>
 
 </section>
@@ -2728,7 +2736,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">nucleoid_volume_list</span><span class="p">,</span> <span class="n">total_volume</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2308">View current source, line 2308</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2335">View current source, line 2335</a>.</p>
 </dd></dl>
 
 </section>
@@ -2753,7 +2761,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">nuc_step_length_list</span><span class="p">,</span> <span class="n">nuc_length_list</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2322">View current source, line 2322</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2349">View current source, line 2349</a>.</p>
 </dd></dl>
 
 </section>
@@ -2775,7 +2783,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">sum_surface_area_list</span><span class="p">,</span> <span class="n">total_surface_area</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2345">View current source, line 2345</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2372">View current source, line 2372</a>.</p>
 </dd></dl>
 
 </section>
@@ -2797,7 +2805,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">ratio_list</span><span class="p">,</span> <span class="n">avg_ratio</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2369">View current source, line 2369</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2396">View current source, line 2396</a>.</p>
 </dd></dl>
 
 </section>
@@ -2819,7 +2827,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">bending_energy_list</span><span class="p">,</span> <span class="n">avg_bending_energy</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2383">View current source, line 2383</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2410">View current source, line 2410</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Simplification of the formula from https://doi.org/10.1016/j.comgeo.2013.09.001
 </pre></div>
 </div>
@@ -2845,7 +2853,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">bending_energy</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2399">View current source, line 2399</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2426">View current source, line 2426</a>.</p>
 </dd></dl>
 
 </section>
@@ -2864,7 +2872,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">middle_point</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2406">View current source, line 2406</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2433">View current source, line 2433</a>.</p>
 </dd></dl>
 
 </section>
@@ -2883,7 +2891,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">centroid_coordinates</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2412">View current source, line 2412</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2439">View current source, line 2439</a>.</p>
 </dd></dl>
 
 </section>
@@ -2902,7 +2910,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2420">View current source, line 2420</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2447">View current source, line 2447</a>.</p>
 </dd></dl>
 
 </section>
@@ -2921,7 +2929,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">centroid_list</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2429">View current source, line 2429</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2456">View current source, line 2456</a>.</p>
 </dd></dl>
 
 </section>
@@ -2944,7 +2952,7 @@ Returns:
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2440">View current source, line 2440</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2467">View current source, line 2467</a>.</p>
 </dd></dl>
 
 </section>
@@ -2963,7 +2971,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">sinuosity_list</span><span class="p">,</span> <span class="n">avg_sinuosity</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2453">View current source, line 2453</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2480">View current source, line 2480</a>.</p>
 </dd></dl>
 
 </section>
@@ -2985,7 +2993,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mesh_area</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2465">View current source, line 2465</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2492">View current source, line 2492</a>.</p>
 </dd></dl>
 
 </section>
@@ -3008,7 +3016,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ratio_list</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2471">View current source, line 2471</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2498">View current source, line 2498</a>.</p>
 </dd></dl>
 
 </section>
@@ -3032,7 +3040,7 @@ Returns:
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2480">View current source, line 2480</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2507">View current source, line 2507</a>.</p>
 </dd></dl>
 
 </section>
@@ -3051,7 +3059,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">pole1</span><span class="p">,</span> <span class="n">pole2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2492">View current source, line 2492</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2519">View current source, line 2519</a>.</p>
 </dd></dl>
 
 </section>
@@ -3075,7 +3083,7 @@ Returns:
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2498">View current source, line 2498</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2525">View current source, line 2525</a>.</p>
 </dd></dl>
 
 </section>
@@ -3097,7 +3105,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d1</span> <span class="o">*</span> <span class="n">d2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2513">View current source, line 2513</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2540">View current source, line 2540</a>.</p>
 </dd></dl>
 
 </section>
@@ -3121,7 +3129,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">l_list</span><span class="p">,</span> <span class="n">dl_list</span><span class="p">,</span> <span class="n">norm_l_list</span><span class="p">,</span> <span class="n">norm_dl_list</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2519">View current source, line 2519</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2546">View current source, line 2546</a>.</p>
 </dd></dl>
 
 </section>
@@ -3141,7 +3149,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_dist</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2578">View current source, line 2578</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2605">View current source, line 2605</a>.</p>
 </dd></dl>
 
 </section>
@@ -3163,7 +3171,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">combined_intensity_values</span><span class="p">,</span> <span class="n">individual_intensity_values</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2584">View current source, line 2584</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2611">View current source, line 2611</a>.</p>
 </dd></dl>
 
 </section>
@@ -3182,7 +3190,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2598">View current source, line 2598</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2625">View current source, line 2625</a>.</p>
 </dd></dl>
 
 </section>
@@ -3201,7 +3209,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stds</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2603">View current source, line 2603</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2630">View current source, line 2630</a>.</p>
 </dd></dl>
 
 </section>
@@ -3220,7 +3228,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kurtoses</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2608">View current source, line 2608</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2635">View current source, line 2635</a>.</p>
 </dd></dl>
 
 </section>
@@ -3239,7 +3247,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">skewnesses</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2615">View current source, line 2615</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2642">View current source, line 2642</a>.</p>
 </dd></dl>
 
 </section>
@@ -3258,7 +3266,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2620">View current source, line 2620</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2647">View current source, line 2647</a>.</p>
 </dd></dl>
 
 </section>
@@ -3282,7 +3290,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prf</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2625">View current source, line 2625</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2652">View current source, line 2652</a>.</p>
 </dd></dl>
 
 </section>
@@ -3301,7 +3309,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prf</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2634">View current source, line 2634</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2661">View current source, line 2661</a>.</p>
 </dd></dl>
 
 </section>
@@ -3325,7 +3333,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2641">View current source, line 2641</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2668">View current source, line 2668</a>.</p>
 </dd></dl>
 
 </section>
@@ -3346,7 +3354,7 @@ Returns:
 <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2657">View current source, line 2657</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2684">View current source, line 2684</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Normalize the values in a 1D profile using Min-Max scaling.
 
 Parameters:
@@ -3377,7 +3385,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cumulative_step_lengths</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2686">View current source, line 2686</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2713">View current source, line 2713</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate cumulative step lengths for each segment in the midline.
 
 Parameters:
@@ -3409,7 +3417,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpolated_values</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2713">View current source, line 2713</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2740">View current source, line 2740</a>.</p>
 </dd></dl>
 
 </section>
@@ -3431,7 +3439,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cropped_phase_mask</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2724">View current source, line 2724</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2751">View current source, line 2751</a>.</p>
 </dd></dl>
 
 </section>
@@ -3453,7 +3461,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mask_closed</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2738">View current source, line 2738</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2765">View current source, line 2765</a>.</p>
 </dd></dl>
 
 </section>
@@ -3476,7 +3484,7 @@ Returns:
 <span class="p">[</span><span class="n">phase_centroid</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2747">View current source, line 2747</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2774">View current source, line 2774</a>.</p>
 </dd></dl>
 
 </section>
@@ -3499,7 +3507,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aligned_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2769">View current source, line 2769</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2796">View current source, line 2796</a>.</p>
 </dd></dl>
 
 </section>
@@ -3524,7 +3532,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">aligned_contour</span><span class="p">,</span> <span class="n">aligned_midline</span><span class="p">,</span> <span class="n">aligned_mesh</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2793">View current source, line 2793</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2820">View current source, line 2820</a>.</p>
 </dd></dl>
 
 </section>
@@ -3549,7 +3557,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">object_mask</span><span class="p">,</span> <span class="n">cropped_img</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2806">View current source, line 2806</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2833">View current source, line 2833</a>.</p>
 </dd></dl>
 
 </section>
@@ -3583,7 +3591,7 @@ Returns:
 <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2828">View current source, line 2828</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2855">View current source, line 2855</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Aligns the contour, mesh, and midline based on the centroids of the phase and signal masks.
 
 Parameters:
@@ -3630,7 +3638,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">cropped_signal</span><span class="p">,</span> <span class="n">cropped_mask</span><span class="p">,</span> <span class="n">cropped_contour</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2929">View current source, line 2929</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2956">View current source, line 2956</a>.</p>
 </dd></dl>
 
 </section>
@@ -3654,7 +3662,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_eroded_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2940">View current source, line 2940</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2967">View current source, line 2967</a>.</p>
 </dd></dl>
 
 </section>
@@ -3677,7 +3685,7 @@ Returns:
 <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">prof</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2947">View current source, line 2947</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2974">View current source, line 2974</a>.</p>
 </dd></dl>
 
 </section>
@@ -3696,7 +3704,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">homogeneity</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2973">View current source, line 2973</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3000">View current source, line 3000</a>.</p>
 </dd></dl>
 
 </section>
@@ -3718,7 +3726,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bg_zero_img</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2980">View current source, line 2980</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3007">View current source, line 3007</a>.</p>
 </dd></dl>
 
 </section>
@@ -3740,7 +3748,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_image</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2986">View current source, line 2986</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3013">View current source, line 3013</a>.</p>
 </dd></dl>
 
 </section>
@@ -3766,7 +3774,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">co_occurrence_matrix</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3003">View current source, line 3003</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3030">View current source, line 3030</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create a co-occurrence matrix from a cropped image.
 
 Parameters:
@@ -3801,7 +3809,7 @@ Returns:
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3045">View current source, line 3045</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3072">View current source, line 3072</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compute the mean Haralick properties for a GLCM in one pass.
 
 The formulas mirror skimage.feature.graycoprops so callers keep the same
@@ -3832,7 +3840,7 @@ numerical behavior while avoiding repeated scans of the same matrix.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3101">View current source, line 3101</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3128">View current source, line 3128</a>.</p>
 </dd></dl>
 
 </section>
@@ -3854,7 +3862,7 @@ numerical behavior while avoiding repeated scans of the same matrix.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aligned_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3120">View current source, line 3120</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3147">View current source, line 3147</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rotates the eroded_contour so that its point closest to the first point
 of p2p_contour comes first.
 
@@ -3895,7 +3903,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3145">View current source, line 3145</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3172">View current source, line 3172</a>.</p>
 </dd></dl>
 
 </section>
@@ -3919,7 +3927,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3166">View current source, line 3166</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3193">View current source, line 3193</a>.</p>
 </dd></dl>
 
 </section>
@@ -3938,7 +3946,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">first_half</span><span class="p">,</span> <span class="n">second_half</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3185">View current source, line 3185</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3212">View current source, line 3212</a>.</p>
 </dd></dl>
 
 </section>
@@ -3957,7 +3965,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">complemented_contour_intensity_profile</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3192">View current source, line 3192</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3219">View current source, line 3219</a>.</p>
 </dd></dl>
 
 </section>
@@ -3979,7 +3987,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offset_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3208">View current source, line 3208</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3235">View current source, line 3235</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Correct XY drift between phase contrast image and fluorescent image(s).
 :param img: Input image
 :param shift: Subpixel XY drift
@@ -4017,6 +4025,28 @@ np.ndarray
 </dd></dl>
 
 </section>
+<section id="validate-max-daughter-cell-mesh-rows">
+<h3>_validate_max_daughter_cell_mesh_rows<a class="headerlink" href="#validate-max-daughter-cell-mesh-rows" title="Link to this heading">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="bactoscoop.utilities._validate_max_daughter_cell_mesh_rows">
+<span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">_validate_max_daughter_cell_mesh_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities._validate_max_daughter_cell_mesh_rows" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>validate max daughter cell mesh rows.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – Input <code class="docutils literal notranslate"><span class="pre">value</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p>
+</dd>
+</dl>
+<p><strong>Return expressions in source:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1442">View current source, line 1442</a>.</p>
+</dd></dl>
+
+</section>
 <section id="max-feret-diameter-px">
 <h3>_max_feret_diameter_px<a class="headerlink" href="#max-feret-diameter-px" title="Link to this heading">¶</a></h3>
 <dl class="py function">
@@ -4033,7 +4063,7 @@ np.ndarray
 <span class="mf">0.0</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-1835">View current source, line 1835</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-1862">View current source, line 1862</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Exact point-set diameter with bounded pairwise-distance memory.
 </pre></div>
 </div>
@@ -4072,7 +4102,7 @@ np.ndarray
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -4734,6 +4764,10 @@ np.ndarray
 <li><a class="reference internal" href="#bactoscoop.utilities._collect_touching_label_pairs"><code class="docutils literal notranslate"><span class="pre">_collect_touching_label_pairs()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#validate-max-daughter-cell-mesh-rows">_validate_max_daughter_cell_mesh_rows</a><ul>
+<li><a class="reference internal" href="#bactoscoop.utilities._validate_max_daughter_cell_mesh_rows"><code class="docutils literal notranslate"><span class="pre">_validate_max_daughter_cell_mesh_rows()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#max-feret-diameter-px">_max_feret_diameter_px</a><ul>
 <li><a class="reference internal" href="#bactoscoop.utilities._max_feret_diameter_px"><code class="docutils literal notranslate"><span class="pre">_max_feret_diameter_px()</span></code></a></li>
 </ul>
@@ -4751,7 +4785,7 @@ np.ndarray
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

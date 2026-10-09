@@ -70,6 +70,7 @@ PARAMETERS = {
 'shift_signal': 'Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.',
 'use_shifted_contours': 'Select stored shifted contour, midline, and mesh geometry; the correction must already exist.',
 'max_mesh_size': 'Maximum accepted mesh row count; cells above this limit are removed from the image cell population.',
+'max_daughter_cell_mesh_rows': 'Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.',
 'retain_contour_on_object_mesh_failure_channels': 'Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.',
 'retain_contour_on_object_mesh_failure': 'Per-cell objects option used by the collection retention-channel setting.',
 'join_thresh': 'Maximum pole-to-pole joining distance in pixels.',

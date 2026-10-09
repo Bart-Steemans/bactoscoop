@@ -299,15 +299,15 @@
 <p>Install BactoScoop into a dedicated <strong>Python 3.10</strong> environment. Conda and uv
 install the same package and dependencies. The public source repository is on
 <a class="reference external" href="https://github.com/Bart-Steemans/bactoscoop">GitHub</a>.</p>
-<p>The PyPI commands require the release to be available on
-<a class="reference external" href="https://pypi.org/project/bactoscoop/">PyPI</a>. Until then, use the tagged
-GitHub installation below.</p>
+<p>Install the latest stable release from
+<a class="reference external" href="https://pypi.org/project/bactoscoop/">PyPI</a> using either environment option below.
+This guide covers version <strong>0.1.2</strong>.</p>
 <section id="conda">
 <h2>Conda<a class="headerlink" href="#conda" title="Link to this heading">¶</a></h2>
 <p>In Anaconda Prompt or Anaconda PowerShell Prompt:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="n">-n</span> <span class="n">bactoscoop</span> <span class="n">python</span><span class="p">=</span><span class="n">3</span><span class="p">.</span><span class="n">10</span> <span class="n">pip</span> <span class="n">-y</span>
 <span class="n">conda</span> <span class="n">activate</span> <span class="n">bactoscoop</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">bactoscoop</span><span class="p">==</span><span class="n">0</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">bactoscoop</span>
 <span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">check</span>
 <span class="n">python</span> <span class="n">-c</span> <span class="s2">"import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"</span>
 <span class="n">jupyter</span> <span class="n">lab</span>
@@ -318,7 +318,7 @@ GitHub installation below.</p>
 <h2>uv<a class="headerlink" href="#uv" title="Link to this heading">¶</a></h2>
 <p>After installing <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">uv</span> <span class="n">venv</span> <span class="p">-</span><span class="n">-python</span> <span class="n">3</span><span class="p">.</span><span class="n">10</span> <span class="p">.</span><span class="n">venv</span>
-<span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-python</span> <span class="p">.</span><span class="n">venv</span> <span class="n">bactoscoop</span><span class="p">==</span><span class="n">0</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">1</span>
+<span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-python</span> <span class="p">.</span><span class="n">venv</span> <span class="n">bactoscoop</span>
 <span class="n">uv</span> <span class="n">pip</span> <span class="n">check</span> <span class="p">-</span><span class="n">-python</span> <span class="p">.</span><span class="n">venv</span>
 <span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-c</span> <span class="s2">"import bactoscoop; from importlib.metadata import version; print(version('bactoscoop'))"</span>
 <span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">jupyter</span><span class="p">.</span><span class="n">exe</span> <span class="n">lab</span>
@@ -329,11 +329,14 @@ GitHub installation below.</p>
 </section>
 <section id="choose-a-release-or-development-source">
 <h2>Choose a release or development source<a class="headerlink" href="#choose-a-release-or-development-source" title="Link to this heading">¶</a></h2>
-<p>Pin <code class="docutils literal notranslate"><span class="pre">0.1.1</span></code> to reproduce this release. To obtain the newest stable PyPI
-release, run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">bactoscoop</span></code> or
-<code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--python</span> <span class="pre">.venv</span> <span class="pre">--upgrade</span> <span class="pre">bactoscoop</span></code>.</p>
+<p>The commands above install the latest stable release in a new environment.
+To update an existing installation, run
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">bactoscoop</span></code> or
+<code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--python</span> <span class="pre">.venv</span> <span class="pre">--upgrade</span> <span class="pre">bactoscoop</span></code>.
+For reproducibility, pin this release with
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">bactoscoop==0.1.2</span></code>.</p>
 <p>To install the corresponding tagged GitHub release, run:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">"bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.1"</span>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">"bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"</span>
 </pre></div>
 </div>
 <p>For uv, replace <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span></code> with
@@ -373,7 +376,7 @@ export.</p>
 <section id="open-the-examples">
 <h2>Open the examples<a class="headerlink" href="#open-the-examples" title="Link to this heading">¶</a></h2>
 <p>Download and extract the
-<a class="reference external" href="https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.1.zip">release archive</a>
+<a class="reference external" href="https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip">release archive</a>
 for its TIFFs, masks, SVM models, and notebooks; those assets are separate from
 the wheel. In JupyterLab, select the Python 3.10 analysis kernel and open a
 walkthrough under <code class="docutils literal notranslate"><span class="pre">examples/</span></code>. Its first cell copies the input dataset into
@@ -413,7 +416,7 @@ set <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATIO
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2023–2026, Bart Steemans
+                Copyright &#169; 2026, Bart Steemans
             </div>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
@@ -455,7 +458,7 @@ set <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATIO
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+</div><script src="../_static/documentation_options.js?v=92734c54"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

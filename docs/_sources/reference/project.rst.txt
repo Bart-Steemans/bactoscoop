@@ -13,7 +13,7 @@ Please acknowledge the original tools appropriately in work based on their use.
 Version and changelog
 ---------------------
 
-BactoScoop **0.1.1** supports **Python 3.10**. Install it from PyPI
+BactoScoop **0.1.2** supports **Python 3.10**. Install it from PyPI
 or download a tagged release from GitHub. See the changelog below for release notes.
 
 .. literalinclude:: ../_downloads/CHANGELOG.md
@@ -35,7 +35,7 @@ License
 -------
 
 BactoScoop is distributed under the MIT license. The source license identifies
-copyright © 2023 Bart Steemans.
+copyright © 2026 Bart Steemans.
 
 .. literalinclude:: ../_downloads/LICENSE
    :language: text
