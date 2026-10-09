@@ -288,6 +288,7 @@ class Image:
         smoothing=0.1,
         neighbor_filter_max_neighbors=None,
         neighbor_filter_connectivity=1,
+        max_daughter_cell_mesh_rows=800,
     ):
         """
         Perform a pipeline for joining and splitting cells.
@@ -302,18 +303,27 @@ class Image:
             The threshold for joining cells in pixels. (default is 4)
         split_thresh : float, optional
             The threshold for splitting cells. (default is 0.3)
+        max_daughter_cell_mesh_rows : int, optional
+            Maximum rebuilt daughter mesh rows (default 800, minimum 4).
+            Oversized resampling is rejected before its dense allocations.
 
         Returns
         -------
         None
         """
+        max_daughter_cell_mesh_rows = u._validate_max_daughter_cell_mesh_rows(
+            max_daughter_cell_mesh_rows
+        )
         self.apply_neighbor_prefilter(
             max_neighbors=neighbor_filter_max_neighbors,
             connectivity=neighbor_filter_connectivity,
         )
         self.join_cells(join_thresh, smoothing)
         self.mask2mesh(smoothing)
-        self.split_cells(split_thresh, CD_width)
+        self.split_cells(
+            split_thresh, CD_width,
+            max_daughter_cell_mesh_rows=max_daughter_cell_mesh_rows,
+        )
         self.create_cell_object()
 
     def create_cell_object(self, verbose=True):
@@ -530,7 +540,7 @@ class Image:
         self.mesh_dataframe["frame"] = self.frame
         self.mesh_dataframe["image_name"] = self.image_name
 
-    def split_cells(self, thresh=0.3, CD_width=False):
+    def split_cells(self, thresh=0.3, CD_width=False, max_daughter_cell_mesh_rows=800):
         """
         Split cells based on a constriction degree threshold.
 
@@ -546,7 +556,16 @@ class Image:
             The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split.
             The default is 0.3.
 
+        max_daughter_cell_mesh_rows : int, optional
+            Maximum final mesh rows per daughter (default 800, minimum 4).
+            Reject oversized predicted row counts before reconstruction, then
+            require both final daughters to have 4..limit rows. If either fails,
+            neither daughter nor the parent enters the processed dataframe.
+
         """
+        max_daughter_cell_mesh_rows = u._validate_max_daughter_cell_mesh_rows(
+            max_daughter_cell_mesh_rows
+        )
         self.get_inverted_image()
         im_interp2d = u.interp2d(self.inverted_image)
 
@@ -599,15 +618,17 @@ class Image:
                     )
 
                     mesh1, contour1, midline1 = u.split_mesh2mesh(
-                        mesh1rec[:, 0], mesh1rec[:, 1], mesh1rec[:, 2], mesh1rec[:, 3]
+                        mesh1rec[:, 0], mesh1rec[:, 1], mesh1rec[:, 2], mesh1rec[:, 3],
+                        max_daughter_cell_mesh_rows=max_daughter_cell_mesh_rows,
                     )
                     mesh2, contour2, midline2 = u.split_mesh2mesh(
-                        mesh2rec[:, 0], mesh2rec[:, 1], mesh2rec[:, 2], mesh2rec[:, 3]
+                        mesh2rec[:, 0], mesh2rec[:, 1], mesh2rec[:, 2], mesh2rec[:, 3],
+                        max_daughter_cell_mesh_rows=max_daughter_cell_mesh_rows,
                     )
                 except Exception as e:
                     bactoscoop_logger.debug(f"{e}")
                     continue
-                if all(4 <= len(daughter) <= 800 for daughter in (mesh1, mesh2)):
+                if all(4 <= len(daughter) <= max_daughter_cell_mesh_rows for daughter in (mesh1, mesh2)):
                     new_meshes.append(mesh1)
                     new_meshes.append(mesh2)
 
@@ -617,7 +638,10 @@ class Image:
                     new_midlines.append(midline1)
                     new_midlines.append(midline2)
                 else:
-                    bactoscoop_logger.debug("Splitting resulted in a daughter mesh outside 4-800 rows")
+                    bactoscoop_logger.debug(
+                        "Splitting resulted in a daughter mesh outside 4-%s rows",
+                        max_daughter_cell_mesh_rows,
+                    )
 
             else:
 

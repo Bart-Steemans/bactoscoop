@@ -1439,21 +1439,48 @@ def get_width(x1, y1, x2, y2):
     return width_not_ordered
 
 
-def split_mesh2mesh(x1, y1, x2, y2):
+def _validate_max_daughter_cell_mesh_rows(value):
+    if (
+        isinstance(value, (bool, np.bool_))
+        or not isinstance(value, (int, np.integer))
+        or value < 4
+    ):
+        raise ValueError("max_daughter_cell_mesh_rows must be an integer >= 4")
+    return int(value)
+
+
+def split_mesh2mesh(x1, y1, x2, y2, max_daughter_cell_mesh_rows=800):
+    """Rebuild a daughter, rejecting oversized resampling before allocation.
+
+    The limit applies to straightened rows here and to final daughter rows in
+    Image.split_cells. Pole extension can add rows, so the minimum stays there.
+    """
+    max_daughter_cell_mesh_rows = _validate_max_daughter_cell_mesh_rows(
+        max_daughter_cell_mesh_rows
+    )
+
+    length = np.sum(get_step_length_no_px(x1, y1, x2, y2))
+    mesh_spacing_px = 0.5
+    # Use the same spacing/rounding as straighten_by_orthogonal_lines,
+    # before contour reconstruction or its dense resampling allocations.
+    predicted_rows = int(round(length / mesh_spacing_px)) if np.isfinite(length) else None
+    if predicted_rows is None or predicted_rows > max_daughter_cell_mesh_rows:
+        bactoscoop_logger.debug(
+            "Skipping daughter before reconstruction: predicted_rows=%s, max_rows=%s",
+            predicted_rows, max_daughter_cell_mesh_rows,
+        )
+        return np.empty((0, 4)), np.empty((0, 2)), np.empty((0, 2))
 
     contour = mesh2contour(x1, y1, x2, y2)
-
     try:
         width, widthno = get_avg_width_no_px(x1, y1, x2, y2)
-
-        length = np.sum(get_step_length_no_px(x1, y1, x2, y2))
 
         x = (x1 + x2) / 2
         y = (y1 + y2) / 2
         line = np.array([x, y]).T
         midline, pole1, pole2 = extend_skeleton(line[4:-4], contour)
         l1, l2, profile_mesh, midline = straighten_by_orthogonal_lines(
-            contour, midline, length, width, unit_micron=0.5
+            contour, midline, length, width, unit_micron=mesh_spacing_px
         )
         result, l1, l2 = add_poles(l1, l2, pole1, pole2)
     except Exception as e:

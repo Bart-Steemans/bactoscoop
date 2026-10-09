@@ -109,6 +109,7 @@ class TestNeighborPrefilterBatchProcessIntegration(unittest.TestCase):
             0.1,
             neighbor_filter_max_neighbors=3,
             neighbor_filter_connectivity=1,
+            max_daughter_cell_mesh_rows=800,
         )
         second.join_split_pipeline.assert_called_once_with(
             4,
@@ -117,6 +118,7 @@ class TestNeighborPrefilterBatchProcessIntegration(unittest.TestCase):
             0.1,
             neighbor_filter_max_neighbors=3,
             neighbor_filter_connectivity=1,
+            max_daughter_cell_mesh_rows=800,
         )
         self.assertEqual(len(ic.mesh_prefilter_stats), 2)
         self.assertListEqual(

@@ -697,6 +697,7 @@ class ImageCollection:
         smoothing=0.1,
         neighbor_filter_max_neighbors=None,
         neighbor_filter_connectivity=1,
+        max_daughter_cell_mesh_rows=800,
     ):
         """
         Process cellular meshes from segmented masks and store the data in Cell objects.
@@ -723,7 +724,16 @@ class ImageCollection:
         split_thresh : float, optional
             The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
 
+        max_daughter_cell_mesh_rows : int, optional
+            Maximum rebuilt daughter mesh rows (default 800, minimum 4).
+            Oversized resampling is rejected before allocation; both final
+            daughters must have 4..limit rows. This is separate from the feature
+            extraction max_mesh_size parameter and does not limit unsplit parents.
+
         """
+        max_daughter_cell_mesh_rows = u._validate_max_daughter_cell_mesh_rows(
+            max_daughter_cell_mesh_rows
+        )
         self.mesh_df_collection = pd.DataFrame()
         self.mesh_prefilter_stats = pd.DataFrame()
         object_list = self._iter_processing_targets(object_list, phase_channel)
@@ -740,6 +750,7 @@ class ImageCollection:
                     smoothing,
                     neighbor_filter_max_neighbors=neighbor_filter_max_neighbors,
                     neighbor_filter_connectivity=neighbor_filter_connectivity,
+                    max_daughter_cell_mesh_rows=max_daughter_cell_mesh_rows,
                 )
                 mesh_df = getattr(img_obj, "processed_mesh_dataframe", None)
                 if mesh_df is None:

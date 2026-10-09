@@ -18,9 +18,11 @@ from bactoscoop.signalcorrelation import SignalCorrelation
 
 class TestSplitDaughterBounds(unittest.TestCase):
     def test_both_daughters_must_be_within_bounds(self):
-        for sizes, accepted in (
-            ((4, 4), True), ((3, 4), False), ((4, 3), False),
-            ((801, 4), False), ((4, 801), False),
+        for sizes, limit, accepted in (
+            ((4, 4), 800, True), ((3, 4), 800, False), ((4, 3), 800, False),
+            ((801, 4), 800, False), ((4, 801), 800, False),
+            ((1000, 1000), 1000, True), ((1001, 4), 1000, False),
+            ((4, 1001), 1000, False),
         ):
             with self.subTest(sizes=sizes):
                 image = Image(np.zeros((30, 30)), "field_C1.tif", 0)
@@ -48,7 +50,9 @@ class TestSplitDaughterBounds(unittest.TestCase):
                 ), patch(
                     "bactoscoop.image.u.split_mesh2mesh", side_effect=daughters
                 ):
-                    image.split_cells(thresh=0.35, CD_width=True)
+                    image.split_cells(
+                        thresh=0.35, CD_width=True, max_daughter_cell_mesh_rows=limit,
+                    )
                 self.assertEqual(len(image.processed_mesh_dataframe), 2 if accepted else 0)
 
 
