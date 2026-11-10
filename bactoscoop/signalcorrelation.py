@@ -69,6 +69,12 @@ class SignalCorrelation:
             raise ValueError(f'The method "{self.method_name}" is not callable')
 
     def calculate(self):
+        """Add a between-channel measurement column and return the same DataFrame.
+
+        Measurements are calculated for each cell using the selected feature
+        and method. Invalid input pairs or undefined measurements yield NaN.
+        The supplied DataFrame is modified in place.
+        """
         prepared_feature = self.prepared_feature
         if prepared_feature is None:
             prepared_feature = self.prepare_feature_pair(

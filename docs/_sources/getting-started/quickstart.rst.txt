@@ -1,8 +1,9 @@
 Quick start
 ===========
 
-This example reuses the supplied three-channel masks, builds meshes, curates
-the cells, detects GFP-DnaN objects, and saves morphology and signal measurements.
+This example reuses the supplied three-channel masks, builds meshes, detects
+GFP-DnaN objects, and saves morphology and signal measurements. SVM curation
+and filtering of the resulting feature table are optional.
 The script first copies the dataset so that the original inputs and outputs
 remain available for comparison.
 
@@ -19,9 +20,13 @@ What to inspect
 ---------------
 
 Inspect the mask outlines before trusting the reconstructed meshes. After
-curation, compare the kept and rejected contours. Then inspect individual
+optional SVM curation, compare the kept and rejected contours. Then inspect individual
 object detections and check whether the merged table contains the expected
 channels. See :doc:`../examples/plotting` for the plotting functions.
+
+Individual cell measurements can fail while the rest of the analysis completes.
+The resulting table can therefore contain missing measurements. See
+:doc:`../workflow/errors` for how to inspect these failures when needed.
 
 This quick start intentionally uses the supplied SVM with its matching dataset.
 The same model need not classify cells correctly in a different experiment.

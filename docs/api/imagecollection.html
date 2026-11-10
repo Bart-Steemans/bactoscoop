@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -330,14 +330,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.processing_summary">
 <span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">processing_summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.processing_summary" title="Link to this definition">¶</a></dt>
-<dd><p>Report retained stage and cell error history.</p>
-<p>Returns a new summary dictionary. completed does not imply every stage ran, and cell errors alone do not change that status.</p>
+<dd><p>Return recorded stages and accumulated processing and cell errors.</p>
+<p>Returns a new summary dictionary. completed means at least one stage finished without recorded processing errors. Check completed_stages for the stages that ran and cell_error_count for individual cell failures; cell errors alone leave the status unchanged.</p>
 <p><strong>Return expressions in source:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'status'</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span> <span class="s1">'completed_stages'</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_stages</span><span class="p">),</span> <span class="s1">'error_count'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_errors</span><span class="p">),</span> <span class="s1">'errors'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_errors</span><span class="p">),</span> <span class="s1">'cell_error_count'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_errors</span><span class="p">),</span> <span class="s1">'cell_errors'</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_errors</span><span class="p">)}</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-135">View current source, line 135</a>.</p>
-<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return attempted-stage status and retained image/cell error records.
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return recorded stages and accumulated processing and cell errors.
+
+``completed`` means at least one stage finished and no processing
+errors were recorded. Inspect ``completed_stages`` to see which stages
+ran and ``cell_error_count`` for individual cell failures. Cell errors
+alone do not change the status. Returns a new summary dictionary.
 </pre></div>
 </div>
 </details></dd></dl>
@@ -356,7 +361,7 @@
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.masks</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mask_filenames</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-283">View current source, line 283</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-289">View current source, line 289</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Read masks from the ``/masks`` subfolder.
 
 Mutates ``self.masks`` and ``self.mask_filenames``.
@@ -382,7 +387,7 @@ Mutates ``self.masks`` and ``self.mask_filenames``.
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.phase_channel</span></code>, <code class="docutils literal notranslate"><span class="pre">self.images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.paths</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">type(e)</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-296">View current source, line 296</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-302">View current source, line 302</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads phase contrast images from the specified image folder path, based on the characters before the file-extension,
 and stores them in the 'self.images' array.
 
@@ -413,7 +418,7 @@ Mutates ``self.images``, ``self.image_filenames`` and ``self.paths``.
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.channel_list</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-322">View current source, line 322</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-328">View current source, line 328</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads channel images from the image folder path based on the specified characters before the file-extension and stores them in
 the 'self.channel_images' dictionary, where the channel name is used as the key.
 
@@ -445,7 +450,7 @@ Mutates ``self.channel_images``.
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.feature_dataframes</span></code>, <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.image_objects</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-369">View current source, line 369</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-375">View current source, line 375</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create ``Image`` objects from the loaded masks and phase images.
 
 Invalid collection-level setup raises immediately. Failures while creating
@@ -474,7 +479,7 @@ a single image object are logged and skipped so the rest of the batch can contin
 </dd>
 </dl>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-409">View current source, line 409</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-415">View current source, line 415</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method loads channel images based on the provided channel list and adds them to the individual image objects.
 
 Parameters
@@ -504,7 +509,7 @@ channel_list : List
 <span class="kc">None</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-496">View current source, line 496</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-502">View current source, line 502</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method returns the mesh dataframe associated with the specified image name.
 
 Parameters
@@ -538,7 +543,7 @@ image_name : str
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img_obj</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-512">View current source, line 512</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-518">View current source, line 518</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>This method creates a single Image object using the provided image, image name, index, mask, mesh dataframe, and pixel size (px).
 If mesh data is present, it also creates associated Cell objects.
 
@@ -584,7 +589,7 @@ The pixel size in micrometers.
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.segmentation_failed</span></code>, <code class="docutils literal notranslate"><span class="pre">self.masks</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mask_filenames</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-540">View current source, line 540</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-546">View current source, line 546</a>.</p>
 </dd></dl>
 
 </section>
@@ -614,7 +619,7 @@ The pixel size in micrometers.
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.object_detection_df</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-564">View current source, line 564</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-570">View current source, line 570</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Detect objects within the contour of the cell.
 
 Parameters
@@ -658,13 +663,13 @@ pd.DataFrame
 <li><p><strong>object_list</strong> – Explicit image-object sequence to process; None selects collection targets.</p></li>
 <li><p><strong>save_data</strong> – Write the combined mesh table when true.</p></li>
 <li><p><strong>phase_channel</strong> – TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
-<li><p><strong>join_thresh</strong> – Maximum pole-to-pole joining distance in pixels.</p></li>
+<li><p><strong>join_thresh</strong> – Join cell masks when their nearest poles are at most join_thresh pixels apart. For example, 4 means up to four pixels.</p></li>
 <li><p><strong>split_thresh</strong> – Relative constriction threshold used by the splitting pipeline.</p></li>
 <li><p><strong>CD_width</strong> – Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
 <li><p><strong>smoothing</strong> – Smoothing passed to the contour/mesh fitting path.</p></li>
 <li><p><strong>neighbor_filter_max_neighbors</strong> – Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
 <li><p><strong>neighbor_filter_connectivity</strong> – 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
-<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
+<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -673,11 +678,11 @@ pd.DataFrame
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>, <code class="docutils literal notranslate"><span class="pre">self.mesh_prefilter_stats</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-688">View current source, line 688</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-694">View current source, line 694</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Process cellular meshes from segmented masks and store the data in Cell objects.
 
 After segmentation, this method can process the resulting masks and create cellular meshes from them.
-It first joins cells with a pole-pole distance (px) below the 'join_thresh'.
+It first joins cells with a pole-pole distance (px) at or below 'join_thresh'.
 Subsequently, meshes of all cells are created and cells can be split again if the constriction degree exceeds the 'split_thresh'.
 The data is then stored in Cell objects and can be exported in a pickle file.
 
@@ -693,7 +698,8 @@ phase_channel : str, optional
     Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
 
 join_thresh : int, optional
-    The pole-pole distance threshold for joining cells. Cells with a distance below this threshold will have their masks joined. (default is 4)
+    Join cell masks when their nearest poles are at most join_thresh
+    pixels apart. For example, 4 means up to four pixels. (default is 4)
 
 split_thresh : float, optional
     The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
@@ -701,7 +707,9 @@ split_thresh : float, optional
 max_daughter_cell_mesh_rows : int, optional
     Maximum rebuilt daughter mesh rows (default 800, minimum 4).
     Oversized resampling is rejected before allocation; both final
-    daughters must have 4..limit rows. This is separate from the feature
+    daughters must have between 4 and max_daughter_cell_mesh_rows mesh
+    rows, inclusive. Each row pairs points on the two mesh sides.
+    This is separate from the feature
     extraction max_mesh_size parameter and does not limit unsplit parents.
 </pre></div>
 </div>
@@ -729,7 +737,7 @@ max_daughter_cell_mesh_rows : int, optional
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>, <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-791">View current source, line 791</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-800">View current source, line 800</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Load mesh data from a pickle-file and create image objects from the data.
 
 Parameters
@@ -768,7 +776,7 @@ phase_channel : str, optional
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-831">View current source, line 831</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-840">View current source, line 840</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create meshes from masks without the joining or splitting as in the batch_process_mesh method.
 
 Parameters
@@ -812,7 +820,7 @@ phase_channel : str, optional
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.channel_images</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_image_filenames</span></code>, <code class="docutils literal notranslate"><span class="pre">self.channel_images_by_field</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-888">View current source, line 888</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-897">View current source, line 897</a>.</p>
 </dd></dl>
 
 </section>
@@ -842,7 +850,7 @@ phase_channel : str, optional
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>, <code class="docutils literal notranslate"><span class="pre">self.feature_dataframes</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-982">View current source, line 982</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-991">View current source, line 991</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate features of all image objects for specified channels and methods.
 
 This method calculates features for all image objects based on the specified channel-method pairs. It takes a list of tuples, where each tuple contains channel names and the feature calculation method. The resulting feature dataframes are stored in a dictionary.
@@ -881,7 +889,7 @@ Dict
 <dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features">
 <span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">batch_calculate_signal_correlation_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_method_tuples</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.batch_calculate_signal_correlation_features" title="Link to this definition">¶</a></dt>
 <dd><p>Add selected between-channel measurements to the supplied dataframe.</p>
-<p>Requires both prefixed feature columns. Mutates and returns df; does not independently merge or validate an entire workflow.</p>
+<p>Requires both prefixed feature columns. Adds measurement columns to df and returns that same table. Invalid input pairs or undefined measurements yield NaN. Merge the feature tables before calling this method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -895,7 +903,7 @@ Dict
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1123">View current source, line 1123</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1132">View current source, line 1132</a>.</p>
 </dd></dl>
 
 </section>
@@ -904,8 +912,8 @@ Dict
 <dl class="py method">
 <dt class="sig sig-object py" id="bactoscoop.imagecollection.ImageCollection.curate_dataset">
 <span class="sig-prename descclassname"><span class="pre">ImageCollection.</span></span><span class="sig-name descname"><span class="pre">curate_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_curated_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.imagecollection.ImageCollection.curate_dataset" title="Link to this definition">¶</a></dt>
-<dd><p>Predict SVM quality labels and retain the accepted cell population.</p>
-<p>Requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.</p>
+<dd><p>Optionally predict SVM quality labels and retain accepted cells.</p>
+<p>Skip this method to extract features without an SVM; the resulting table can be filtered afterwards. When used, requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -920,12 +928,14 @@ Dict
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.curated_df</span></code>, <code class="docutils literal notranslate"><span class="pre">self.pos</span></code>, <code class="docutils literal notranslate"><span class="pre">self.neg</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1235">View current source, line 1235</a>.</p>
-<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Curate the dataset based on a trained support vector machine model.
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1244">View current source, line 1244</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Optionally curate the dataset with a trained support vector machine.
 
 This method calculates SVM features and uses a trained SVM model to classify cells based on these features.
-It curates the dataset by discarding cells that are classified as label 0 (non-interesting).
+It discards cells classified as label 0 (rejected) and retains label 1.
 Optionally, it can include positive and negative control cells.
+Skip this method to extract features without an SVM. The resulting
+feature table can be filtered using measured values afterwards.
 
 Parameters:
     path_to_model (str): Path to the trained SVM model.
@@ -956,7 +966,7 @@ Returns:
 </dd>
 </dl>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.mesh_df_collection</span></code>.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1301">View current source, line 1301</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1312">View current source, line 1312</a>.</p>
 </dd></dl>
 
 </section>
@@ -980,7 +990,7 @@ Returns:
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">FileExistsError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1331">View current source, line 1331</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1342">View current source, line 1342</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Write one label mask per image from the SVM-curated cell contours.
 
 This method is intended to be run after :meth:`curate_dataset`. It never
@@ -1026,7 +1036,7 @@ tuple[list[str], pandas.DataFrame]
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.merged_features</span></code>.</p>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1436">View current source, line 1436</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1447">View current source, line 1447</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Merge feature dataframes into a single dataframe.
 
 Merges multiple feature dataframes into a single dataframe, ensuring that columns are properly renamed
@@ -1060,7 +1070,7 @@ Returns:
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1504">View current source, line 1504</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1515">View current source, line 1515</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save merged features in the image folder and return the pickle path.
 
 A suffixless ``pkl_name`` is a legacy tag appended to the dataset name;
@@ -1086,7 +1096,7 @@ a name ending in ``.pkl`` is used as the exact filename.
 </dd>
 </dl>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1521">View current source, line 1521</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1532">View current source, line 1532</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save the current mesh dataframe as reloadable Parquet in the image folder.
 
 Geometry arrays become nested numeric lists in Parquet. Reload with
@@ -1113,7 +1123,7 @@ Requires the optional ``pyarrow`` package.
 </dd>
 </dl>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1533">View current source, line 1533</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1544">View current source, line 1544</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save merged features as Parquet in the image folder (requires pyarrow).
 </pre></div>
 </div>
@@ -1230,7 +1240,7 @@ Requires the optional ``pyarrow`` package.
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-152">View current source, line 152</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-158">View current source, line 158</a>.</p>
 </dd></dl>
 
 </section>
@@ -1247,7 +1257,7 @@ Requires the optional ``pyarrow`` package.
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-155">View current source, line 155</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-161">View current source, line 161</a>.</p>
 </dd></dl>
 
 </section>
@@ -1272,7 +1282,7 @@ Requires the optional ``pyarrow`` package.
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>, <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-240">View current source, line 240</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-246">View current source, line 246</a>.</p>
 </dd></dl>
 
 </section>
@@ -1299,7 +1309,7 @@ Requires the optional ``pyarrow`` package.
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-254">View current source, line 254</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-260">View current source, line 260</a>.</p>
 </dd></dl>
 
 </section>
@@ -1314,7 +1324,7 @@ Requires the optional ``pyarrow`` package.
 <span class="kc">None</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-266">View current source, line 266</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-272">View current source, line 272</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Build an image-name lookup from the current mesh dataframe.
 
 Do not retain this lookup across calls: callers can replace or mutate
@@ -1336,7 +1346,7 @@ meshes for newly loaded data.
 <dd class="field-odd"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1154">View current source, line 1154</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1163">View current source, line 1163</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Apply curation labels by stable image identity, with frame fallback.
 </pre></div>
 </div>
@@ -1363,7 +1373,7 @@ meshes for newly loaded data.
 </dd>
 </dl>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1540">View current source, line 1540</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1551">View current source, line 1551</a>.</p>
 </dd></dl>
 
 </section>
@@ -1388,7 +1398,7 @@ meshes for newly loaded data.
 </dd>
 </dl>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1558">View current source, line 1558</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1569">View current source, line 1569</a>.</p>
 </dd></dl>
 
 </section>
@@ -1409,7 +1419,7 @@ meshes for newly loaded data.
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1576">View current source, line 1576</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1587">View current source, line 1587</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Save data to a pkl file.
 </pre></div>
 </div>
@@ -1435,7 +1445,7 @@ meshes for newly loaded data.
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1587">View current source, line 1587</a>.</p>
+<p><a class="reference external" href="../source-code/imagecollection.html#imagecollection-1598">View current source, line 1598</a>.</p>
 </dd></dl>
 
 </section>

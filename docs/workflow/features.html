@@ -214,7 +214,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Feature extraction</a></li>
@@ -331,8 +331,10 @@ normalization within that profile; a constant profile becomes zeros. This
 normalization removes amplitude differences between cells and should not be
 interpreted as an absolute fluorescence measurement.</p>
 <p>Radial intensity distribution samples successive eroded contours and uses the
-cropped image intensity range for normalization. GLCM descriptors use quantized
-image intensities and the implementation’s background masking and matrix settings.
+cropped image intensity range for normalization. Haralick-style texture
+descriptors describe spatial relationships between gray levels using a gray-level
+co-occurrence matrix (GLCM). They use quantized intensities and the implementation’s
+background masking and matrix settings.
 They depend on acquisition and preprocessing as well as signal structure.</p>
 </section>
 <section id="optional-data-and-failure-behavior">
@@ -340,7 +342,8 @@ They depend on acquisition and preprocessing as well as signal structure.</p>
 <p><code class="docutils literal notranslate"><span class="pre">all_data</span></code> is method-specific. In the current source it gates detailed
 per-object arrays for <code class="docutils literal notranslate"><span class="pre">objects</span></code>; it does not suppress the profiling or membrane
 arrays. The <a class="reference internal" href="../reference/feature-dictionary.html"><span class="doc">Feature dictionary</span></a> identifies conditional outputs.</p>
-<p>Cells above <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code> are removed from the image’s cell list. A failure
+<p>Individual cell measurements can fail even when the overall analysis completes.
+Cells above <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code> are removed from the image’s cell list. A failure
 in an individual feature calculation sets its discard state for that pass and
 records a cell error; the corresponding feature row is omitted. Other feature
 families can still retain a row for that identity, so a merged table can contain
@@ -353,6 +356,24 @@ but recalculating an existing method/channel pair replaces that pair’s table.
 Every feature calculation invalidates the previously merged table. Merge again
 before export or downstream correlation calculations. The five-channel example
 uses two passes to apply C2 signal shifting separately from C3–C5 measurements.</p>
+</section>
+<section id="optional-filtering-after-extraction">
+<h2>Optional filtering after extraction<a class="headerlink" href="#optional-filtering-after-extraction" title="Link to this heading">¶</a></h2>
+<p>Filter the resulting table with or without SVM curation. Inspect images and
+feature histograms before choosing thresholds; the length limits below are
+illustrative, not universal acceptance criteria.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">merged_features</span>
+<span class="n">min_length_um</span><span class="p">,</span> <span class="n">max_length_um</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span>
+<span class="n">keep</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="s2">"cell_length"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="n">min_length_um</span><span class="p">,</span> <span class="n">max_length_um</span><span class="p">)</span>
+<span class="n">filtered_features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Retained </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_features</span><span class="p">)</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> cells"</span><span class="p">)</span>
+<span class="n">filtered_features</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s2">"filtered_features.parquet"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Keep the full table and save your selection separately. Collection exporters
+still save <code class="docutils literal notranslate"><span class="pre">ic.merged_features</span></code>; use the filtered table’s own export method
+to save the selection. Earlier exclusions, including SVM rejections, cannot be
+recovered from the resulting table.</p>
 </section>
 </section>
 
@@ -415,6 +436,7 @@ uses two passes to apply C2 signal shifting separately from C3–C5 measurements
 <li><a class="reference internal" href="#profiles-and-texture">Profiles and texture</a></li>
 <li><a class="reference internal" href="#optional-data-and-failure-behavior">Optional data and failure behavior</a></li>
 <li><a class="reference internal" href="#repeated-calculations">Repeated calculations</a></li>
+<li><a class="reference internal" href="#optional-filtering-after-extraction">Optional filtering after extraction</a></li>
 </ul>
 </li>
 </ul>

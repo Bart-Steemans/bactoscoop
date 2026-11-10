@@ -133,7 +133,13 @@ class ImageCollection:
         return record
 
     def processing_summary(self):
-        """Return attempted-stage status and retained image/cell error records."""
+        """Return recorded stages and accumulated processing and cell errors.
+
+        ``completed`` means at least one stage finished and no processing
+        errors were recorded. Inspect ``completed_stages`` to see which stages
+        ran and ``cell_error_count`` for individual cell failures. Cell errors
+        alone do not change the status. Returns a new summary dictionary.
+        """
         if self.processing_errors:
             status = "completed_with_errors"
         elif self.completed_stages:
@@ -703,7 +709,7 @@ class ImageCollection:
         Process cellular meshes from segmented masks and store the data in Cell objects.
 
         After segmentation, this method can process the resulting masks and create cellular meshes from them.
-        It first joins cells with a pole-pole distance (px) below the 'join_thresh'.
+        It first joins cells with a pole-pole distance (px) at or below 'join_thresh'.
         Subsequently, meshes of all cells are created and cells can be split again if the constriction degree exceeds the 'split_thresh'.
         The data is then stored in Cell objects and can be exported in a pickle file.
 
@@ -719,7 +725,8 @@ class ImageCollection:
             Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
 
         join_thresh : int, optional
-            The pole-pole distance threshold for joining cells. Cells with a distance below this threshold will have their masks joined. (default is 4)
+            Join cell masks when their nearest poles are at most join_thresh
+            pixels apart. For example, 4 means up to four pixels. (default is 4)
 
         split_thresh : float, optional
             The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
@@ -727,7 +734,9 @@ class ImageCollection:
         max_daughter_cell_mesh_rows : int, optional
             Maximum rebuilt daughter mesh rows (default 800, minimum 4).
             Oversized resampling is rejected before allocation; both final
-            daughters must have 4..limit rows. This is separate from the feature
+            daughters must have between 4 and max_daughter_cell_mesh_rows mesh
+            rows, inclusive. Each row pairs points on the two mesh sides.
+            This is separate from the feature
             extraction max_mesh_size parameter and does not limit unsplit parents.
 
         """
@@ -1236,11 +1245,13 @@ class ImageCollection:
         self, path_to_model, cols=4, control=False, save_curated_data=True
     ):
         """
-        Curate the dataset based on a trained support vector machine model.
+        Optionally curate the dataset with a trained support vector machine.
 
         This method calculates SVM features and uses a trained SVM model to classify cells based on these features.
-        It curates the dataset by discarding cells that are classified as label 0 (non-interesting).
+        It discards cells classified as label 0 (rejected) and retains label 1.
         Optionally, it can include positive and negative control cells.
+        Skip this method to extract features without an SVM. The resulting
+        feature table can be filtered using measured values afterwards.
 
         Parameters:
             path_to_model (str): Path to the trained SVM model.

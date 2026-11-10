@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -317,6 +317,18 @@ An existing mask on disk does not automatically rescue a failed segmentation
 in the same collection. Confirm model availability and CPU/GPU setup; restart
 with a fresh collection only when intentionally reusing verified masks.</p>
 </section>
+<section id="segmentation-succeeds-but-masks-cannot-be-saved">
+<h2>Segmentation succeeds but masks cannot be saved<a class="headerlink" href="#segmentation-succeeds-but-masks-cannot-be-saved" title="Link to this heading">¶</a></h2>
+<p>Omnipose 1.0.6 calls <code class="docutils literal notranslate"><span class="pre">tifffile.imsave</span></code>, which was removed in tifffile 2025.2.18.
+BactoScoop therefore requires <code class="docutils literal notranslate"><span class="pre">tifffile&gt;=2024.2.12,&lt;2025.2.18</span></code>. This affects
+mask saving on any platform, including macOS. In the analysis environment, run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m pip install "tifffile&gt;=2024.2.12,&lt;2025.2.18"</span>
+<span class="go">python -m pip check</span>
+</pre></div>
+</div>
+<p>Restart the notebook kernel and rerun segmentation in a fresh working copy.
+See the <a class="reference external" href="https://github.com/cgohlke/tifffile/blob/master/CHANGES.rst">tifffile release history</a>.</p>
+</section>
 <section id="unexpected-geometry-or-too-few-cells">
 <h2>Unexpected geometry or too few cells<a class="headerlink" href="#unexpected-geometry-or-too-few-cells" title="Link to this heading">¶</a></h2>
 <p>Inspect masks, join/split settings, smoothing, and neighbor prefilter statistics.
@@ -409,6 +421,7 @@ exist. Saved notebook cell IDs are illustrative, not stable for new settings.</p
 <li><a class="reference internal" href="#import-or-kernel-problems">Import or kernel problems</a></li>
 <li><a class="reference internal" href="#no-images-unmatched-masks-or-missing-channels">No images, unmatched masks, or missing channels</a></li>
 <li><a class="reference internal" href="#segmentation-failure">Segmentation failure</a></li>
+<li><a class="reference internal" href="#segmentation-succeeds-but-masks-cannot-be-saved">Segmentation succeeds but masks cannot be saved</a></li>
 <li><a class="reference internal" href="#unexpected-geometry-or-too-few-cells">Unexpected geometry or too few cells</a></li>
 <li><a class="reference internal" href="#svm-schema-error">SVM schema error</a></li>
 <li><a class="reference internal" href="#missing-object-features">Missing object features</a></li>

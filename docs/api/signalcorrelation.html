@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -303,8 +303,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="bactoscoop.signalcorrelation.SignalCorrelation">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bactoscoop.signalcorrelation.</span></span><span class="sig-name descname"><span class="pre">SignalCorrelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepared_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.signalcorrelation.SignalCorrelation" title="Link to this definition">¶</a></dt>
-<dd><p>Select an implemented relationship between two channel-prefixed feature columns.</p>
-<p>The feature must exist for both channels. calculate mutates the supplied DataFrame; prepared_feature can cache the numerical input arrays.</p>
+<dd><p>Compare the same feature between two channels for each cell.</p>
+<p>The feature must exist for both channels. calculate adds a measurement column to the supplied DataFrame and returns that same table. Invalid input pairs or undefined measurements yield NaN; prepared_feature optionally caches the input arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -361,15 +361,22 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="bactoscoop.signalcorrelation.SignalCorrelation.calculate">
 <span class="sig-prename descclassname"><span class="pre">SignalCorrelation.</span></span><span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.signalcorrelation.SignalCorrelation.calculate" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the selected signal relationship row by row.</p>
-<p>Requires matching prefixed columns. Adds a function-name-suffixed column to df and returns that same DataFrame.</p>
+<dd><p>Add a between-channel measurement column, one value per cell.</p>
+<p>Requires matching prefixed columns. Modifies the supplied DataFrame and returns that same DataFrame. Invalid input pairs or undefined measurements yield NaN.</p>
 <p><strong>Return expressions in source:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">df</span>
 </pre></div>
 </div>
 <p><strong>Assigned state:</strong> <code class="docutils literal notranslate"><span class="pre">self.df</span></code>.</p>
 <p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-71">View current source, line 71</a>.</p>
-</dd></dl>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add a between-channel measurement column and return the same DataFrame.
+
+Measurements are calculated for each cell using the selected feature
+and method. Invalid input pairs or undefined measurements yield NaN.
+The supplied DataFrame is modified in place.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="signalcorrelation-prepare-feature-pair">
@@ -392,7 +399,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">'signals1'</span><span class="p">:</span> <span class="n">signals1</span><span class="p">,</span> <span class="s1">'signals2'</span><span class="p">:</span> <span class="n">signals2</span><span class="p">,</span> <span class="s1">'valid_mask'</span><span class="p">:</span> <span class="n">valid_mask</span><span class="p">}</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-101">View current source, line 101</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-107">View current source, line 107</a>.</p>
 </dd></dl>
 
 </section>
@@ -412,7 +419,7 @@
 <span class="kc">False</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-117">View current source, line 117</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-123">View current source, line 123</a>.</p>
 </dd></dl>
 
 </section>
@@ -435,7 +442,7 @@
 <span class="n">signal1</span> <span class="o">/</span> <span class="n">signal2</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-125">View current source, line 125</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-131">View current source, line 131</a>.</p>
 </dd></dl>
 
 </section>
@@ -458,7 +465,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">signal1</span> <span class="o">*</span> <span class="n">signal2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">signal1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">signal2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-137">View current source, line 137</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-143">View current source, line 143</a>.</p>
 </dd></dl>
 
 </section>
@@ -481,7 +488,7 @@
 <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span> <span class="n">signal2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-150">View current source, line 150</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-156">View current source, line 156</a>.</p>
 </dd></dl>
 
 </section>
@@ -504,7 +511,7 @@
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">product</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">signal1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-159">View current source, line 159</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-165">View current source, line 165</a>.</p>
 </dd></dl>
 
 </section>
@@ -527,7 +534,7 @@
 <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span> <span class="n">signal2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-172">View current source, line 172</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-178">View current source, line 178</a>.</p>
 </dd></dl>
 
 </section>
@@ -550,7 +557,7 @@
 <span class="n">corr</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-181">View current source, line 181</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-187">View current source, line 187</a>.</p>
 </dd></dl>
 
 </section>
@@ -573,7 +580,7 @@
 <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">correlation_squared</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-191">View current source, line 191</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-197">View current source, line 197</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Biased sample distance correlation; undefined profiles return NaN.
 </pre></div>
 </div>
@@ -599,7 +606,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span> <span class="n">signal2</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-235">View current source, line 235</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-241">View current source, line 241</a>.</p>
 </dd></dl>
 
 </section>
@@ -622,7 +629,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">signal1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal1</span><span class="p">),</span> <span class="n">signal2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">signal2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">signal1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">signal2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-244">View current source, line 244</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-250">View current source, line 250</a>.</p>
 </dd></dl>
 
 </section>
@@ -645,7 +652,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">entropy1</span> <span class="o">-</span> <span class="n">entropy2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-255">View current source, line 255</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-261">View current source, line 261</a>.</p>
 </dd></dl>
 
 </section>
@@ -668,7 +675,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">kurtosis1</span> <span class="o">/</span> <span class="n">kurtosis2</span><span class="p">)</span> <span class="k">if</span> <span class="n">kurtosis2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-266">View current source, line 266</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-272">View current source, line 272</a>.</p>
 </dd></dl>
 
 </section>
@@ -691,7 +698,7 @@
 <span class="n">skew1</span> <span class="o">*</span> <span class="n">skew2</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-277">View current source, line 277</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-283">View current source, line 283</a>.</p>
 </dd></dl>
 
 </section>
@@ -714,7 +721,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">zero_crossings1</span> <span class="o">-</span> <span class="n">zero_crossings2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-288">View current source, line 288</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-294">View current source, line 294</a>.</p>
 </dd></dl>
 
 </section>
@@ -737,7 +744,7 @@
 <span class="n">peak1</span> <span class="o">/</span> <span class="n">peak2</span> <span class="k">if</span> <span class="n">peak2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-299">View current source, line 299</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-305">View current source, line 305</a>.</p>
 </dd></dl>
 
 </section>
@@ -760,7 +767,7 @@
 <span class="n">energy1</span> <span class="o">/</span> <span class="n">energy2</span> <span class="k">if</span> <span class="n">energy2</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-312">View current source, line 312</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-318">View current source, line 318</a>.</p>
 </dd></dl>
 
 </section>
@@ -784,7 +791,7 @@
 <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">hist1</span> <span class="o">/</span> <span class="n">count1</span><span class="p">,</span> <span class="n">hist2</span> <span class="o">/</span> <span class="n">count2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-330">View current source, line 330</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-336">View current source, line 336</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Intersect probability histograms using shared bins for both profiles.
 </pre></div>
 </div>
@@ -810,7 +817,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span> <span class="n">signal2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">signal1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">signal2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-360">View current source, line 360</a>.</p>
+<p><a class="reference external" href="../source-code/signalcorrelation.html#signalcorrelation-366">View current source, line 366</a>.</p>
 </dd></dl>
 
 </section>

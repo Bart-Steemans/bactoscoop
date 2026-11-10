@@ -35,9 +35,9 @@ ImageCollection.processing_summary
 
 .. py:method:: ImageCollection.processing_summary()
 
-   Report retained stage and cell error history.
+   Return recorded stages and accumulated processing and cell errors.
 
-   Returns a new summary dictionary. completed does not imply every stage ran, and cell errors alone do not change that status.
+   Returns a new summary dictionary. completed means at least one stage finished without recorded processing errors. Check completed_stages for the stages that ran and cell_error_count for individual cell failures; cell errors alone leave the status unchanged.
 
    **Return expressions in source:**
 
@@ -53,7 +53,12 @@ ImageCollection.processing_summary
 
    .. code-block:: text
 
-      Return attempted-stage status and retained image/cell error records.
+      Return recorded stages and accumulated processing and cell errors.
+
+      ``completed`` means at least one stage finished and no processing
+      errors were recorded. Inspect ``completed_stages`` to see which stages
+      ran and ``cell_error_count`` for individual cell failures. Cell errors
+      alone do not change the status. Returns a new summary dictionary.
 
    .. raw:: html
 
@@ -72,7 +77,7 @@ ImageCollection.load_masks
 
    **Assigned state:** ``self.masks``, ``self.mask_filenames``.
 
-   `View current source, line 283 <../source-code/imagecollection.html#imagecollection-283>`_.
+   `View current source, line 289 <../source-code/imagecollection.html#imagecollection-289>`_.
 
    .. raw:: html
 
@@ -105,7 +110,7 @@ ImageCollection.load_phase_images
 
    **Explicitly raised exceptions:** ``type(e)``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 296 <../source-code/imagecollection.html#imagecollection-296>`_.
+   `View current source, line 302 <../source-code/imagecollection.html#imagecollection-302>`_.
 
    .. raw:: html
 
@@ -142,7 +147,7 @@ ImageCollection.load_channel_images
 
    **Assigned state:** ``self.channel_list``, ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
 
-   `View current source, line 322 <../source-code/imagecollection.html#imagecollection-322>`_.
+   `View current source, line 328 <../source-code/imagecollection.html#imagecollection-328>`_.
 
    .. raw:: html
 
@@ -181,7 +186,7 @@ ImageCollection.create_image_objects
 
    **Explicitly raised exceptions:** ``RuntimeError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 369 <../source-code/imagecollection.html#imagecollection-369>`_.
+   `View current source, line 375 <../source-code/imagecollection.html#imagecollection-375>`_.
 
    .. raw:: html
 
@@ -213,7 +218,7 @@ ImageCollection.add_channels
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 409 <../source-code/imagecollection.html#imagecollection-409>`_.
+   `View current source, line 415 <../source-code/imagecollection.html#imagecollection-415>`_.
 
    .. raw:: html
 
@@ -250,7 +255,7 @@ ImageCollection.get_mesh_dataframe
       mesh_lookup.get(image_name)
       None
 
-   `View current source, line 496 <../source-code/imagecollection.html#imagecollection-496>`_.
+   `View current source, line 502 <../source-code/imagecollection.html#imagecollection-502>`_.
 
    .. raw:: html
 
@@ -289,7 +294,7 @@ ImageCollection.create_image_object
 
       img_obj
 
-   `View current source, line 512 <../source-code/imagecollection.html#imagecollection-512>`_.
+   `View current source, line 518 <../source-code/imagecollection.html#imagecollection-518>`_.
 
    .. raw:: html
 
@@ -342,7 +347,7 @@ ImageCollection.segment_images
 
    **Assigned state:** ``self.segmentation_failed``, ``self.masks``, ``self.mask_filenames``.
 
-   `View current source, line 540 <../source-code/imagecollection.html#imagecollection-540>`_.
+   `View current source, line 546 <../source-code/imagecollection.html#imagecollection-546>`_.
 
 ImageCollection.batch_detect_objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,7 +375,7 @@ ImageCollection.batch_detect_objects
 
    **Assigned state:** ``self.object_detection_df``, ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
 
-   `View current source, line 564 <../source-code/imagecollection.html#imagecollection-564>`_.
+   `View current source, line 570 <../source-code/imagecollection.html#imagecollection-570>`_.
 
    .. raw:: html
 
@@ -420,13 +425,13 @@ ImageCollection.batch_process_mesh
    :param object_list: Explicit image-object sequence to process; None selects collection targets.
    :param save_data: Write the combined mesh table when true.
    :param phase_channel: TIFF suffix identifying the phase images, such as "C1". An empty suffix is the signature default.
-   :param join_thresh: Maximum pole-to-pole joining distance in pixels.
+   :param join_thresh: Join cell masks when their nearest poles are at most join_thresh pixels apart. For example, 4 means up to four pixels.
    :param split_thresh: Relative constriction threshold used by the splitting pipeline.
    :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
    :param smoothing: Smoothing passed to the contour/mesh fitting path.
    :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
    :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
-   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.
 
    :returns: None (no explicit return statement).
 
@@ -434,7 +439,7 @@ ImageCollection.batch_process_mesh
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 688 <../source-code/imagecollection.html#imagecollection-688>`_.
+   `View current source, line 694 <../source-code/imagecollection.html#imagecollection-694>`_.
 
    .. raw:: html
 
@@ -445,7 +450,7 @@ ImageCollection.batch_process_mesh
       Process cellular meshes from segmented masks and store the data in Cell objects.
 
       After segmentation, this method can process the resulting masks and create cellular meshes from them.
-      It first joins cells with a pole-pole distance (px) below the 'join_thresh'.
+      It first joins cells with a pole-pole distance (px) at or below 'join_thresh'.
       Subsequently, meshes of all cells are created and cells can be split again if the constriction degree exceeds the 'split_thresh'.
       The data is then stored in Cell objects and can be exported in a pickle file.
 
@@ -461,7 +466,8 @@ ImageCollection.batch_process_mesh
           Characters before the file-extension (.tif, .tiff) that the algorithm looks for when using this function (e.g., "c1", "phase").
 
       join_thresh : int, optional
-          The pole-pole distance threshold for joining cells. Cells with a distance below this threshold will have their masks joined. (default is 4)
+          Join cell masks when their nearest poles are at most join_thresh
+          pixels apart. For example, 4 means up to four pixels. (default is 4)
 
       split_thresh : float, optional
           The constriction degree threshold for splitting cells. Cells with a constriction degree exceeding this threshold will be split. (default is 0.35)
@@ -469,7 +475,9 @@ ImageCollection.batch_process_mesh
       max_daughter_cell_mesh_rows : int, optional
           Maximum rebuilt daughter mesh rows (default 800, minimum 4).
           Oversized resampling is rejected before allocation; both final
-          daughters must have 4..limit rows. This is separate from the feature
+          daughters must have between 4 and max_daughter_cell_mesh_rows mesh
+          rows, inclusive. Each row pairs points on the two mesh sides.
+          This is separate from the feature
           extraction max_mesh_size parameter and does not limit unsplit parents.
 
    .. raw:: html
@@ -495,7 +503,7 @@ ImageCollection.batch_load_mesh
 
    **Explicitly raised exceptions:** ``FileNotFoundError``, ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 791 <../source-code/imagecollection.html#imagecollection-791>`_.
+   `View current source, line 800 <../source-code/imagecollection.html#imagecollection-800>`_.
 
    .. raw:: html
 
@@ -537,7 +545,7 @@ ImageCollection.batch_mask2mesh
 
    **Assigned state:** ``self.mesh_df_collection``.
 
-   `View current source, line 831 <../source-code/imagecollection.html#imagecollection-831>`_.
+   `View current source, line 840 <../source-code/imagecollection.html#imagecollection-840>`_.
 
    .. raw:: html
 
@@ -587,7 +595,7 @@ ImageCollection.batch_shift_correction
 
    **Assigned state:** ``self.channel_images``, ``self.channel_image_filenames``, ``self.channel_images_by_field``.
 
-   `View current source, line 888 <../source-code/imagecollection.html#imagecollection-888>`_.
+   `View current source, line 897 <../source-code/imagecollection.html#imagecollection-897>`_.
 
 ImageCollection.batch_calculate_features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -616,7 +624,7 @@ ImageCollection.batch_calculate_features
 
    **Explicitly raised exceptions:** ``ValueError``, ``TypeError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 982 <../source-code/imagecollection.html#imagecollection-982>`_.
+   `View current source, line 991 <../source-code/imagecollection.html#imagecollection-991>`_.
 
    .. raw:: html
 
@@ -663,7 +671,7 @@ ImageCollection.batch_calculate_signal_correlation_features
 
    Add selected between-channel measurements to the supplied dataframe.
 
-   Requires both prefixed feature columns. Mutates and returns df; does not independently merge or validate an entire workflow.
+   Requires both prefixed feature columns. Adds measurement columns to df and returns that same table. Invalid input pairs or undefined measurements yield NaN. Merge the feature tables before calling this method.
 
    :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
    :param channels: Requested channel identifiers; for correlation, channel pairs are generated from this sequence.
@@ -675,16 +683,16 @@ ImageCollection.batch_calculate_signal_correlation_features
 
       df
 
-   `View current source, line 1123 <../source-code/imagecollection.html#imagecollection-1123>`_.
+   `View current source, line 1132 <../source-code/imagecollection.html#imagecollection-1132>`_.
 
 ImageCollection.curate_dataset
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. py:method:: ImageCollection.curate_dataset(path_to_model, cols=4, control=False, save_curated_data=True)
 
-   Predict SVM quality labels and retain the accepted cell population.
+   Optionally predict SVM quality labels and retain accepted cells.
 
-   Requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.
+   Skip this method to extract features without an SVM; the resulting table can be filtered afterwards. When used, requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.
 
    :param path_to_model: Path to a serialized SVM carrying the ``feature_names_in_`` training-column schema.
    :param cols: Legacy curation argument retained for compatibility; unused by the current curation preparation.
@@ -695,7 +703,7 @@ ImageCollection.curate_dataset
 
    **Assigned state:** ``self.curated_df``, ``self.pos``, ``self.neg``.
 
-   `View current source, line 1235 <../source-code/imagecollection.html#imagecollection-1235>`_.
+   `View current source, line 1244 <../source-code/imagecollection.html#imagecollection-1244>`_.
 
    .. raw:: html
 
@@ -703,11 +711,13 @@ ImageCollection.curate_dataset
 
    .. code-block:: text
 
-      Curate the dataset based on a trained support vector machine model.
+      Optionally curate the dataset with a trained support vector machine.
 
       This method calculates SVM features and uses a trained SVM model to classify cells based on these features.
-      It curates the dataset by discarding cells that are classified as label 0 (non-interesting).
+      It discards cells classified as label 0 (rejected) and retains label 1.
       Optionally, it can include positive and negative control cells.
+      Skip this method to extract features without an SVM. The resulting
+      feature table can be filtered using measured values afterwards.
 
       Parameters:
           path_to_model (str): Path to the trained SVM model.
@@ -737,7 +747,7 @@ ImageCollection.add_meshdata_to_dataframe
 
    **Assigned state:** ``self.mesh_df_collection``.
 
-   `View current source, line 1301 <../source-code/imagecollection.html#imagecollection-1301>`_.
+   `View current source, line 1312 <../source-code/imagecollection.html#imagecollection-1312>`_.
 
 ImageCollection.export_curated_masks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -759,7 +769,7 @@ ImageCollection.export_curated_masks
 
    **Explicitly raised exceptions:** ``ValueError``, ``FileExistsError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1331 <../source-code/imagecollection.html#imagecollection-1331>`_.
+   `View current source, line 1342 <../source-code/imagecollection.html#imagecollection-1342>`_.
 
    .. raw:: html
 
@@ -813,7 +823,7 @@ ImageCollection.merge_dataframes
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1436 <../source-code/imagecollection.html#imagecollection-1436>`_.
+   `View current source, line 1447 <../source-code/imagecollection.html#imagecollection-1447>`_.
 
    .. raw:: html
 
@@ -856,7 +866,7 @@ ImageCollection.dataframe_to_pkl
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1504 <../source-code/imagecollection.html#imagecollection-1504>`_.
+   `View current source, line 1515 <../source-code/imagecollection.html#imagecollection-1515>`_.
 
    .. raw:: html
 
@@ -888,7 +898,7 @@ ImageCollection.meshdata_to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1521 <../source-code/imagecollection.html#imagecollection-1521>`_.
+   `View current source, line 1532 <../source-code/imagecollection.html#imagecollection-1532>`_.
 
    .. raw:: html
 
@@ -921,7 +931,7 @@ ImageCollection.dataframe_to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1533 <../source-code/imagecollection.html#imagecollection-1533>`_.
+   `View current source, line 1544 <../source-code/imagecollection.html#imagecollection-1544>`_.
 
    .. raw:: html
 
@@ -1018,7 +1028,7 @@ ImageCollection._record_stage_success
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 152 <../source-code/imagecollection.html#imagecollection-152>`_.
+   `View current source, line 158 <../source-code/imagecollection.html#imagecollection-158>`_.
 
 ImageCollection._validate_phase_image_state
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1035,7 +1045,7 @@ ImageCollection._validate_phase_image_state
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 155 <../source-code/imagecollection.html#imagecollection-155>`_.
+   `View current source, line 161 <../source-code/imagecollection.html#imagecollection-161>`_.
 
 ImageCollection._normalize_channel_list
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1055,7 +1065,7 @@ ImageCollection._normalize_channel_list
 
    **Explicitly raised exceptions:** ``ValueError``, ``TypeError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 240 <../source-code/imagecollection.html#imagecollection-240>`_.
+   `View current source, line 246 <../source-code/imagecollection.html#imagecollection-246>`_.
 
 ImageCollection._iter_processing_targets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1077,7 +1087,7 @@ ImageCollection._iter_processing_targets
 
    **Explicitly raised exceptions:** ``TypeError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 254 <../source-code/imagecollection.html#imagecollection-254>`_.
+   `View current source, line 260 <../source-code/imagecollection.html#imagecollection-260>`_.
 
 ImageCollection._get_mesh_dataframe_lookup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1093,7 +1103,7 @@ ImageCollection._get_mesh_dataframe_lookup
       {image_name: group.reset_index(drop=True) for image_name, group in self.mesh_df_collection.groupby('image_name', sort=False)}
       None
 
-   `View current source, line 266 <../source-code/imagecollection.html#imagecollection-266>`_.
+   `View current source, line 272 <../source-code/imagecollection.html#imagecollection-272>`_.
 
    .. raw:: html
 
@@ -1120,7 +1130,7 @@ ImageCollection._apply_curation_labels
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1154 <../source-code/imagecollection.html#imagecollection-1154>`_.
+   `View current source, line 1163 <../source-code/imagecollection.html#imagecollection-1163>`_.
 
    .. raw:: html
 
@@ -1148,7 +1158,7 @@ ImageCollection._atomic_write
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1540 <../source-code/imagecollection.html#imagecollection-1540>`_.
+   `View current source, line 1551 <../source-code/imagecollection.html#imagecollection-1551>`_.
 
 ImageCollection._to_parquet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1165,7 +1175,7 @@ ImageCollection._to_parquet
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 1558 <../source-code/imagecollection.html#imagecollection-1558>`_.
+   `View current source, line 1569 <../source-code/imagecollection.html#imagecollection-1569>`_.
 
 ImageCollection._to_pickle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1179,7 +1189,7 @@ ImageCollection._to_pickle
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1576 <../source-code/imagecollection.html#imagecollection-1576>`_.
+   `View current source, line 1587 <../source-code/imagecollection.html#imagecollection-1587>`_.
 
    .. raw:: html
 
@@ -1205,4 +1215,4 @@ ImageCollection._write_pickle_file
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 1587 <../source-code/imagecollection.html#imagecollection-1587>`_.
+   `View current source, line 1598 <../source-code/imagecollection.html#imagecollection-1598>`_.

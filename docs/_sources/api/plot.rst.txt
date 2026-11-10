@@ -496,7 +496,7 @@ plot_contour
    :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
-   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Scale-bar line width in points; lw means line width.
    :param window_px: Cell plot window extent in pixels.
    :param save_svg_path: Input ``save_svg_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
 
@@ -541,12 +541,12 @@ plot_cell_contour_gallery
    :param phase_cmap: Input ``phase_cmap`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param channel_cmap: Input ``channel_cmap`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param contour_color: Input ``contour_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
-   :param contour_lw: Input ``contour_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param contour_lw: Contour line width in points; lw means line width.
    :param add_scalebar: Input ``add_scalebar`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
-   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Scale-bar line width in points; lw means line width.
    :param title: Input ``title`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param figsize_per_panel: Input ``figsize_per_panel`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param save_path: Input ``save_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -861,7 +861,7 @@ plot_object_contours
    :param scalebar_um: Input ``scalebar_um`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param um_per_px: Input ``um_per_px`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param scalebar_color: Input ``scalebar_color`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
-   :param scalebar_lw: Input ``scalebar_lw`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
+   :param scalebar_lw: Scale-bar line width in points; lw means line width.
    :param window_px: Cell plot window extent in pixels.
    :param save_svg_path: Input ``save_svg_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param save_tiff_path: Input ``save_tiff_path`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -902,7 +902,9 @@ plot_mesh_scientific
 
 .. py:function:: plot_mesh_scientific(cell_id, image, crop_size=300, verbose=False)
 
-   Plot mesh scientific.
+   Display phase contrast with the cell contour, mesh, and midline.
+
+   The legacy suffix scientific describes this plotting style, not a different mesh calculation. crop_size is in pixels.
 
    :param cell_id: Cell identifier local to the selected image; check that it remains after curation/filtering.
    :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -917,6 +919,21 @@ plot_mesh_scientific
 
    `View current source, line 1987 <../source-code/plot.html#plot-1987>`_.
 
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Display a phase-image crop with the cell contour, mesh, and midline.
+
+      The legacy suffix ``scientific`` names this plotting style; it does not
+      select a different mesh calculation. ``crop_size`` is in pixels.
+
+   .. raw:: html
+
+      </details>
+
 plot_width
 ~~~~~~~~~~
 
@@ -930,7 +947,7 @@ plot_width
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2037 <../source-code/plot.html#plot-2037>`_.
+   `View current source, line 2042 <../source-code/plot.html#plot-2042>`_.
 
 plot_signal_profile
 ~~~~~~~~~~~~~~~~~~~
@@ -944,7 +961,7 @@ plot_signal_profile
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2138 <../source-code/plot.html#plot-2138>`_.
+   `View current source, line 2143 <../source-code/plot.html#plot-2143>`_.
 
 plot_demograph_rotated
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -963,7 +980,7 @@ plot_demograph_rotated
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2171 <../source-code/plot.html#plot-2171>`_.
+   `View current source, line 2176 <../source-code/plot.html#plot-2176>`_.
 
 list_field_ids
 ~~~~~~~~~~~~~~
@@ -981,7 +998,7 @@ list_field_ids
 
       sorted({path.stem.rsplit('_', 1)[0] for path in dataset_dir.glob(f'*_{phase_channel}.tiff')})
 
-   `View current source, line 2225 <../source-code/plot.html#plot-2225>`_.
+   `View current source, line 2230 <../source-code/plot.html#plot-2230>`_.
 
 plot_multichannel_overview
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1001,7 +1018,7 @@ plot_multichannel_overview
 
       fig
 
-   `View current source, line 2235 <../source-code/plot.html#plot-2235>`_.
+   `View current source, line 2240 <../source-code/plot.html#plot-2240>`_.
 
    .. raw:: html
 
@@ -1033,7 +1050,7 @@ plot_mesh_overlay
 
       None
 
-   `View current source, line 2244 <../source-code/plot.html#plot-2244>`_.
+   `View current source, line 2249 <../source-code/plot.html#plot-2249>`_.
 
 pick_detected_cell
 ~~~~~~~~~~~~~~~~~~
@@ -1053,7 +1070,7 @@ pick_detected_cell
       pick_representative_cell([image_object])[1]
       (item[2] >= 60, distance / max(item[3], 1), -abs(item[3] - median_length), item[2])
 
-   `View current source, line 2283 <../source-code/plot.html#plot-2283>`_.
+   `View current source, line 2288 <../source-code/plot.html#plot-2288>`_.
 
    .. raw:: html
 
@@ -1078,7 +1095,7 @@ plot_morphology_summary
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2315 <../source-code/plot.html#plot-2315>`_.
+   `View current source, line 2320 <../source-code/plot.html#plot-2320>`_.
 
 plot_signal_summary
 ~~~~~~~~~~~~~~~~~~~
@@ -1091,7 +1108,7 @@ plot_signal_summary
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 2356 <../source-code/plot.html#plot-2356>`_.
+   `View current source, line 2361 <../source-code/plot.html#plot-2361>`_.
 
 plot_pairwise_metric_heatmap
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1110,7 +1127,7 @@ plot_pairwise_metric_heatmap
 
       None
 
-   `View current source, line 2410 <../source-code/plot.html#plot-2410>`_.
+   `View current source, line 2415 <../source-code/plot.html#plot-2415>`_.
 
 Internal helpers
 ----------------

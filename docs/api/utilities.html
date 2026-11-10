@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -1591,7 +1591,7 @@ Channel suffixes such as ``C1``/``C2`` and mask suffixes such as
 <li><p><strong>y1</strong> – Input <code class="docutils literal notranslate"><span class="pre">y1</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>x2</strong> – Input <code class="docutils literal notranslate"><span class="pre">x2</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>y2</strong> – Input <code class="docutils literal notranslate"><span class="pre">y2</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
-<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
+<li><p><strong>max_daughter_cell_mesh_rows</strong> – Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.</p></li>
 </ul>
 </dd>
 </dl>
@@ -3002,7 +3002,8 @@ Returns:
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.utilities.ratio_mesh_over_total_area">
 <span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">ratio_mesh_over_total_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width_no</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">areas</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.ratio_mesh_over_total_area" title="Link to this definition">¶</a></dt>
-<dd><p>Ratio mesh over total area.</p>
+<dd><p>Compare detected-object mesh area with the same object’s contour area.</p>
+<p>Mesh area sums segment length times width. areas contains the corresponding contour polygon areas in matching units. Returns one dimensionless ratio per object; values near one indicate agreement. This is a mesh-quality check, not an object-to-cell area fraction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3017,7 +3018,16 @@ Returns:
 </pre></div>
 </div>
 <p><a class="reference external" href="../source-code/utilities.html#utilities-2498">View current source, line 2498</a>.</p>
-</dd></dl>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compare each detected object's mesh area with its contour area.
+
+Mesh area is the sum of segment length times segment width. ``areas``
+contains the corresponding object-contour polygon areas, in matching
+units. Return one dimensionless ratio per object. A ratio near one means
+that the mesh represents approximately the same area as the contour.
+This is a mesh-quality check, not an object-to-cell area fraction.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="get-shortest-pole-object-distances">
@@ -3040,7 +3050,7 @@ Returns:
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2507">View current source, line 2507</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2515">View current source, line 2515</a>.</p>
 </dd></dl>
 
 </section>
@@ -3059,7 +3069,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">pole1</span><span class="p">,</span> <span class="n">pole2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2519">View current source, line 2519</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2527">View current source, line 2527</a>.</p>
 </dd></dl>
 
 </section>
@@ -3083,7 +3093,7 @@ Returns:
 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2525">View current source, line 2525</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2533">View current source, line 2533</a>.</p>
 </dd></dl>
 
 </section>
@@ -3105,7 +3115,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d1</span> <span class="o">*</span> <span class="n">d2</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2540">View current source, line 2540</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2548">View current source, line 2548</a>.</p>
 </dd></dl>
 
 </section>
@@ -3129,7 +3139,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">l_list</span><span class="p">,</span> <span class="n">dl_list</span><span class="p">,</span> <span class="n">norm_l_list</span><span class="p">,</span> <span class="n">norm_dl_list</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2546">View current source, line 2546</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2554">View current source, line 2554</a>.</p>
 </dd></dl>
 
 </section>
@@ -3149,7 +3159,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">avg_dist</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2605">View current source, line 2605</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2613">View current source, line 2613</a>.</p>
 </dd></dl>
 
 </section>
@@ -3171,7 +3181,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">combined_intensity_values</span><span class="p">,</span> <span class="n">individual_intensity_values</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2611">View current source, line 2611</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2619">View current source, line 2619</a>.</p>
 </dd></dl>
 
 </section>
@@ -3190,7 +3200,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">means</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2625">View current source, line 2625</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2633">View current source, line 2633</a>.</p>
 </dd></dl>
 
 </section>
@@ -3209,7 +3219,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stds</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2630">View current source, line 2630</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2638">View current source, line 2638</a>.</p>
 </dd></dl>
 
 </section>
@@ -3228,7 +3238,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">kurtoses</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2635">View current source, line 2635</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2643">View current source, line 2643</a>.</p>
 </dd></dl>
 
 </section>
@@ -3247,7 +3257,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">skewnesses</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2642">View current source, line 2642</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2650">View current source, line 2650</a>.</p>
 </dd></dl>
 
 </section>
@@ -3266,7 +3276,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2647">View current source, line 2647</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2655">View current source, line 2655</a>.</p>
 </dd></dl>
 
 </section>
@@ -3290,7 +3300,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prf</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2652">View current source, line 2652</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2660">View current source, line 2660</a>.</p>
 </dd></dl>
 
 </section>
@@ -3309,7 +3319,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prf</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2661">View current source, line 2661</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2669">View current source, line 2669</a>.</p>
 </dd></dl>
 
 </section>
@@ -3333,7 +3343,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2668">View current source, line 2668</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2676">View current source, line 2676</a>.</p>
 </dd></dl>
 
 </section>
@@ -3354,7 +3364,7 @@ Returns:
 <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2684">View current source, line 2684</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2692">View current source, line 2692</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Normalize the values in a 1D profile using Min-Max scaling.
 
 Parameters:
@@ -3385,7 +3395,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cumulative_step_lengths</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2713">View current source, line 2713</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2721">View current source, line 2721</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Calculate cumulative step lengths for each segment in the midline.
 
 Parameters:
@@ -3417,7 +3427,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpolated_values</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2740">View current source, line 2740</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2748">View current source, line 2748</a>.</p>
 </dd></dl>
 
 </section>
@@ -3439,7 +3449,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cropped_phase_mask</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2751">View current source, line 2751</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2759">View current source, line 2759</a>.</p>
 </dd></dl>
 
 </section>
@@ -3461,7 +3471,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mask_closed</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2765">View current source, line 2765</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2773">View current source, line 2773</a>.</p>
 </dd></dl>
 
 </section>
@@ -3484,7 +3494,7 @@ Returns:
 <span class="p">[</span><span class="n">phase_centroid</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2774">View current source, line 2774</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2782">View current source, line 2782</a>.</p>
 </dd></dl>
 
 </section>
@@ -3507,7 +3517,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aligned_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2796">View current source, line 2796</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2804">View current source, line 2804</a>.</p>
 </dd></dl>
 
 </section>
@@ -3532,7 +3542,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">aligned_contour</span><span class="p">,</span> <span class="n">aligned_midline</span><span class="p">,</span> <span class="n">aligned_mesh</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2820">View current source, line 2820</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2828">View current source, line 2828</a>.</p>
 </dd></dl>
 
 </section>
@@ -3557,7 +3567,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">object_mask</span><span class="p">,</span> <span class="n">cropped_img</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2833">View current source, line 2833</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2841">View current source, line 2841</a>.</p>
 </dd></dl>
 
 </section>
@@ -3591,7 +3601,7 @@ Returns:
 <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2855">View current source, line 2855</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2863">View current source, line 2863</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Aligns the contour, mesh, and midline based on the centroids of the phase and signal masks.
 
 Parameters:
@@ -3638,7 +3648,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">cropped_signal</span><span class="p">,</span> <span class="n">cropped_mask</span><span class="p">,</span> <span class="n">cropped_contour</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">,</span> <span class="n">y_offset</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2956">View current source, line 2956</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2964">View current source, line 2964</a>.</p>
 </dd></dl>
 
 </section>
@@ -3662,7 +3672,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adjust_eroded_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2967">View current source, line 2967</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2975">View current source, line 2975</a>.</p>
 </dd></dl>
 
 </section>
@@ -3685,7 +3695,7 @@ Returns:
 <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">prof</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-2974">View current source, line 2974</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-2982">View current source, line 2982</a>.</p>
 </dd></dl>
 
 </section>
@@ -3704,7 +3714,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">homogeneity</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3000">View current source, line 3000</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3008">View current source, line 3008</a>.</p>
 </dd></dl>
 
 </section>
@@ -3726,7 +3736,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bg_zero_img</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3007">View current source, line 3007</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3015">View current source, line 3015</a>.</p>
 </dd></dl>
 
 </section>
@@ -3748,7 +3758,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_image</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3013">View current source, line 3013</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3021">View current source, line 3021</a>.</p>
 </dd></dl>
 
 </section>
@@ -3774,7 +3784,7 @@ Returns:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">co_occurrence_matrix</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3030">View current source, line 3030</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3038">View current source, line 3038</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Create a co-occurrence matrix from a cropped image.
 
 Parameters:
@@ -3809,7 +3819,7 @@ Returns:
 </pre></div>
 </div>
 <p><strong>Explicitly raised exceptions:</strong> <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Errors from called functions can also propagate or be recorded.</p>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3072">View current source, line 3072</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3080">View current source, line 3080</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Compute the mean Haralick properties for a GLCM in one pass.
 
 The formulas mirror skimage.feature.graycoprops so callers keep the same
@@ -3824,7 +3834,8 @@ numerical behavior while avoiding repeated scans of the same matrix.
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.utilities.calculate_haralick_features">
 <span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">calculate_haralick_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropped_img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">2,</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.calculate_haralick_features" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate haralick features.</p>
+<dd><p>Measure intensity texture inside the cell contour using a gray-level co-occurrence matrix (GLCM).</p>
+<p>Haralick-style measurements describe spatial relationships between gray levels. Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy, in that order. Intensities are rescaled to 8-bit and pairs involving zero are excluded. Uses four fixed directions and 256 gray levels; legacy angles and levels arguments do not change those settings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3840,8 +3851,23 @@ numerical behavior while avoiding repeated scans of the same matrix.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3128">View current source, line 3128</a>.</p>
-</dd></dl>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3136">View current source, line 3136</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Measure intensity texture within the supplied cell contour.
+
+Haralick-style texture measurements describe spatial relationships between
+gray levels using a gray-level co-occurrence matrix (GLCM). Intensities
+outside the contour are set to zero, the image is rescaled to 8-bit, and
+pairs involving zero are excluded. Return dissimilarity, correlation,
+homogeneity, energy, contrast, and entropy, in that order. The first five
+measurements are averaged over distances and directions. Entropy is
+calculated from the GLCM array values by the shared helper.
+
+``distances`` gives pixel-pair separations. The current implementation
+uses four fixed directions and 256 gray levels, regardless of the legacy
+``angles`` and ``levels`` arguments.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="align-contour-start">
@@ -3862,7 +3888,7 @@ numerical behavior while avoiding repeated scans of the same matrix.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aligned_contour</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3147">View current source, line 3147</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3169">View current source, line 3169</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Rotates the eroded_contour so that its point closest to the first point
 of p2p_contour comes first.
 
@@ -3887,7 +3913,8 @@ np.ndarray
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.utilities.calculate_object_haralick_features">
 <span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">calculate_object_haralick_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cropped_img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">2,</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.calculate_object_haralick_features" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate object haralick features.</p>
+<dd><p>Measure intensity texture in the combined detected-object regions using a GLCM.</p>
+<p>Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Uses the combined object masks, rather than the full cell region. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3903,8 +3930,17 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3172">View current source, line 3172</a>.</p>
-</dd></dl>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3194">View current source, line 3194</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Measure intensity texture in the combined detected-object regions.
+
+Multiply the cropped image by the combined object masks and rescale to
+8-bit. Return dissimilarity, correlation, homogeneity, energy, contrast,
+and entropy from the GLCM, using the same preprocessing and fixed direction
+and gray-level settings as calculate_haralick_features. These describe
+intensity texture rather than object shape or number.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="calculate-contour-haralick-features">
@@ -3912,7 +3948,8 @@ np.ndarray
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.utilities.calculate_contour_haralick_features">
 <span class="sig-prename descclassname"><span class="pre">bactoscoop.utilities.</span></span><span class="sig-name descname"><span class="pre">calculate_contour_haralick_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contour_intensities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4,</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">2,</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">np.pi</span> <span class="pre">/</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.utilities.calculate_contour_haralick_features" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate contour haralick features.</p>
+<dd><p>Measure intensity variation in the contour-intensity profile using a GLCM.</p>
+<p>Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Describes signal variation around the contour rather than its shape. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3927,8 +3964,17 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">get_glcm_feature_means</span><span class="p">(</span><span class="n">glcm</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3193">View current source, line 3193</a>.</p>
-</dd></dl>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3223">View current source, line 3223</a>.</p>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Measure intensity texture in the sampled contour-intensity profile.
+
+Rescale the profile to 8-bit and return dissimilarity, correlation,
+homogeneity, energy, contrast, and entropy from its GLCM. These describe
+variation in intensity around the contour, rather than its geometric
+shape. Preprocessing and fixed direction and gray-level settings match
+calculate_haralick_features.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="split-array">
@@ -3946,7 +3992,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">first_half</span><span class="p">,</span> <span class="n">second_half</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3212">View current source, line 3212</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3250">View current source, line 3250</a>.</p>
 </dd></dl>
 
 </section>
@@ -3965,7 +4011,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">complemented_contour_intensity_profile</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3219">View current source, line 3219</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3257">View current source, line 3257</a>.</p>
 </dd></dl>
 
 </section>
@@ -3987,7 +4033,7 @@ np.ndarray
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offset_image</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/utilities.html#utilities-3235">View current source, line 3235</a>.</p>
+<p><a class="reference external" href="../source-code/utilities.html#utilities-3273">View current source, line 3273</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Correct XY drift between phase contrast image and fluorescent image(s).
 :param img: Input image
 :param shift: Subpixel XY drift

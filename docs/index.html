@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/features.html">Feature extraction</a></li>
@@ -301,7 +301,8 @@
 <p>I developed BactoScoop to connect bacterial cell morphology with measurements
 from multiple fluorescence channels. The workflow starts with microscopy images
 and labeled cell masks, reconstructs a coordinate system for each cell, and
-extracts measurements into a per-cell table after geometry review and curation.</p>
+extracts measurements into a per-cell table after geometry review. SVM curation
+is optional; you can also filter cells using the resulting measurements.</p>
 <p>Follow the guides to run that workflow, inspect intermediate results, and
 understand the measurements before using them in an analysis.
 Start with <a class="reference internal" href="getting-started/installation.html"><span class="doc">Installation</span></a> and <a class="reference internal" href="getting-started/quickstart.html"><span class="doc">Quick start</span></a>,
@@ -309,7 +310,7 @@ or follow the <a class="reference internal" href="examples/three-channel.html"><
 <a class="reference internal image-reference" href="_images/logo.png"><img alt="BactoScoop logo" class="align-center" src="_images/logo.png" style="width: 280px;" />
 </a>
 <div class="workflow" aria-label="Analysis workflow">
-<span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
+<span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Optional SVM curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
 </div></section>
 <section id="what-bactoscoop-measures">
 <h2>What BactoScoop measures<a class="headerlink" href="#what-bactoscoop-measures" title="Link to this heading">¶</a></h2>
@@ -329,12 +330,11 @@ Biological conclusions require experimental controls and an appropriate
 analysis of the resulting tables. BactoScoop’s current image workflow is 2D;
 volume is estimated from a 2D mesh, rather than measured from a 3D acquisition.</p>
 </section>
-<section id="two-ways-to-learn">
-<h2>Two ways to learn<a class="headerlink" href="#two-ways-to-learn" title="Link to this heading">¶</a></h2>
-<p>The three-channel example uses phase contrast, DAPI, and GFP-DnaN to inspect
-intracellular objects. The five-channel example adds outer- and inner-membrane
-signals and RNA measurements. Both tutorials include real figures saved in the
-repository’s notebooks, complete code, and explanations of the intermediate steps.</p>
+<section id="learn-bactoscoop">
+<h2>Learn BactoScoop<a class="headerlink" href="#learn-bactoscoop" title="Link to this heading">¶</a></h2>
+<p>Follow the three-channel walkthrough for intracellular objects, or the
+five-channel walkthrough for membrane measurements and multichannel profiles.
+Both notebooks include code, saved figures, and explanations of each step.</p>
 <p>This guide covers BactoScoop <strong>0.1.2</strong>. Start with the installation
 guide and a walkthrough, then explore the analysis workflow and API reference.</p>
 <div class="toctree-wrapper compound">
@@ -352,7 +352,7 @@ guide and a walkthrough, then explore the analysis workflow and API reference.</
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="workflow/features.html">Feature extraction</a></li>
@@ -432,7 +432,7 @@ guide and a walkthrough, then explore the analysis workflow and API reference.</
 <li><a class="reference internal" href="#">BactoScoop</a><ul>
 <li><a class="reference internal" href="#single-cell-measurements-from-multichannel-bacterial-microscopy">Single-cell measurements from multichannel bacterial microscopy</a></li>
 <li><a class="reference internal" href="#what-bactoscoop-measures">What BactoScoop measures</a></li>
-<li><a class="reference internal" href="#two-ways-to-learn">Two ways to learn</a><ul>
+<li><a class="reference internal" href="#learn-bactoscoop">Learn BactoScoop</a><ul>
 </ul>
 </li>
 </ul>

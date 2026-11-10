@@ -22,3 +22,10 @@ in :doc:`data-structures`; correlation columns are in :doc:`../workflow/correlat
 Array-valued columns remain arrays/lists within one cell row. They are not
 separate rows per object. For missing-value interpretation, see :doc:`../workflow/features`
 and :doc:`../workflow/objects`.
+
+Naming and texture terms
+------------------------
+
+* ``axial`` refers to sampling along the cell midline; mesh profiles average across the width. Morphological ``_axial`` constriction features use the inverse-phase profile.
+* ``NC_ratio`` is summed detected-object contour area divided by cell contour area. It is an area fraction; object detection still depends on signal quality and settings.
+* Haralick-style texture features summarize spatial relationships between gray levels using a gray-level co-occurrence matrix (GLCM). Contrast and dissimilarity describe local intensity differences; homogeneity favours similar pairs, energy describes matrix concentration, and correlation describes paired intensity covariation. Cell, object, and membrane families use different image/profile representations.

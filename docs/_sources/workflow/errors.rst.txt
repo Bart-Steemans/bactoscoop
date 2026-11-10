@@ -15,8 +15,8 @@ failed along the way.
    summary = ic.processing_summary()
    print(summary["status"], summary["error_count"], summary["cell_error_count"])
 
-Two error collections
----------------------
+Processing errors and cell errors
+---------------------------------
 
 ``processing_errors`` records item/stage errors such as missing channel fields
 or a whole feature pass that produces no rows. ``cell_errors`` records cell-level
@@ -35,10 +35,10 @@ Summary status
 * ``completed``: at least one stage recorded and no processing errors.
 * ``completed_with_errors``: one or more processing errors exist.
 
-The status does **not** certify that every intended analysis stage was run.
-Cell errors alone do not change ``completed`` to ``completed_with_errors``.
-Always inspect ``completed_stages`` and ``cell_error_count`` as well. Records
-accumulate within the collection; a summary is not a fresh per-call report.
+Check ``completed_stages`` to see which stages ran and ``cell_error_count`` for
+individual cell failures. ``completed`` means at least one stage finished
+without recorded processing errors. Cell errors alone leave that status
+unchanged. Records accumulate within the collection.
 
 Logging levels
 --------------

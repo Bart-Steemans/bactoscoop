@@ -67,7 +67,7 @@ class Image:
         self.chann_interp2d = {}  # Cached interpolators of background-corrected channels
         self.bg_channels = (
             {}
-        )  # Dictionary of the 2D interpolations of the different color channels
+        )  # Background-subtracted channel images, clipped at zero
         self.inverted_image = None  # Placeholder for the inverted phase contrast image
         self.feature_errors = []
         self.object_detection_errors = []
@@ -300,7 +300,8 @@ class Image:
         Parameters
         ----------
         join_thresh : int, optional
-            The threshold for joining cells in pixels. (default is 4)
+            Join cell masks when their nearest poles are at most join_thresh
+            pixels apart. (default is 4)
         split_thresh : float, optional
             The threshold for splitting cells. (default is 0.3)
         max_daughter_cell_mesh_rows : int, optional
@@ -394,6 +395,13 @@ class Image:
         self.im_interp2d = None
 
     def get_bg_channel(self, channel):
+        """Cache a background-subtracted image for the requested channel.
+
+        Fit the background to pixels outside the segmentation labels, subtract
+        it from the original channel image, and clip negative values to zero.
+        The corrected image is stored in ``bg_channels[channel]``; the original
+        image in ``channels[channel]`` is unchanged. Returns None.
+        """
         _, bg_matrix = u.construct_bg_function(
             self.channels[channel], self.mask
         )
@@ -429,13 +437,13 @@ class Image:
         Join cells based on pole-to-pole distance.
 
         This method attempts to join adjacent cells within the image based on the distance between their poles. It identifies cell pairs
-        with pole-to-pole distances below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
+        with pole-to-pole distances at or below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
         'joined_mask' array.
 
         Parameters
         ----------
         thresh : float, optional
-            The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no
+            The distance threshold for joining cells. Cells with pole-to-pole distances at or below this value will be merged. If None, no
             threshold is applied, and all cells will be considered for joining. (default is None)
 
         """
@@ -559,7 +567,8 @@ class Image:
         max_daughter_cell_mesh_rows : int, optional
             Maximum final mesh rows per daughter (default 800, minimum 4).
             Reject oversized predicted row counts before reconstruction, then
-            require both final daughters to have 4..limit rows. If either fails,
+            require both final daughters to have between 4 and
+            max_daughter_cell_mesh_rows mesh rows, inclusive. If either fails,
             neither daughter nor the parent enters the processed dataframe.
 
         """

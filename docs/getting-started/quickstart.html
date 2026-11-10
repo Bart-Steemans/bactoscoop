@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -296,12 +296,13 @@
         <article role="main" id="furo-main-content">
           <section id="quick-start">
 <h1>Quick start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h1>
-<p>This example reuses the supplied three-channel masks, builds meshes, curates
-the cells, detects GFP-DnaN objects, and saves morphology and signal measurements.
+<p>This example reuses the supplied three-channel masks, builds meshes, detects
+GFP-DnaN objects, and saves morphology and signal measurements. SVM curation
+and filtering of the resulting feature table are optional.
 The script first copies the dataset so that the original inputs and outputs
 remain available for comparison.</p>
 <p>Run this in the BactoScoop environment, or in its Jupyter kernel:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Three-channel analysis from downloaded examples, with supplied masks."""</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Three-channel analysis with supplied masks and optional SVM curation."""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -319,7 +320,10 @@ remain available for comparison.</p>
 <span class="n">ic</span> <span class="o">=</span> <span class="n">bactoscoop</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="p">),</span><span class="n">px</span><span class="o">=</span><span class="mf">0.065</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">create_image_objects</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">batch_process_mesh</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="s1">'C1'</span><span class="p">,</span><span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ic</span><span class="o">.</span><span class="n">curate_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">/</span><span class="s1">'DnaN_Timecourse.pkl'</span><span class="p">),</span><span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Optional: skip this step to extract features without an SVM model.</span>
+<span class="n">run_curation</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">run_curation</span><span class="p">:</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">curate_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">destination</span><span class="o">/</span><span class="s1">'DnaN_Timecourse.pkl'</span><span class="p">),</span><span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">batch_detect_objects</span><span class="p">(</span><span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s1">'C3'</span><span class="p">],</span><span class="n">reset_channels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">align</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">log_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">kernel_width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">min_overlap_ratio</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span><span class="n">max_external_ratio</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">load_channel_images</span><span class="p">([</span><span class="s1">'C2'</span><span class="p">])</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">add_channels</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,[</span><span class="s1">'C2'</span><span class="p">],</span><span class="n">load_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -327,6 +331,16 @@ remain available for comparison.</p>
 <span class="n">table</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">merge_dataframes</span><span class="p">(</span><span class="n">discard_morphological_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">dataframe_to_parquet</span><span class="p">()</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">dataframe_to_pkl</span><span class="p">()</span>
+
+<span class="c1"># Optional filtering after extraction; choose limits for your data.</span>
+<span class="n">apply_feature_filter</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">min_length_um</span><span class="p">,</span> <span class="n">max_length_um</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span>
+<span class="k">if</span> <span class="n">apply_feature_filter</span><span class="p">:</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s1">'cell_length'</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="n">min_length_um</span><span class="p">,</span> <span class="n">max_length_um</span><span class="p">)</span>
+    <span class="n">filtered</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">filtered</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">destination</span><span class="o">/</span><span class="s1">'3_channel_example_filtered_features.parquet'</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Feature-table selection: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span><span class="si">}</span><span class="s1"> cells'</span><span class="p">)</span>
+
 <span class="p">(</span><span class="n">destination</span><span class="o">/</span><span class="s1">'processing_summary.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">processing_summary</span><span class="p">(),</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)</span><span class="si">}</span><span class="s1"> retained rows; outputs in </span><span class="si">{</span><span class="n">destination</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
@@ -337,12 +351,15 @@ microscope’s µm/pixel calibration for your own images.</p>
 <section id="what-to-inspect">
 <h2>What to inspect<a class="headerlink" href="#what-to-inspect" title="Link to this heading">¶</a></h2>
 <p>Inspect the mask outlines before trusting the reconstructed meshes. After
-curation, compare the kept and rejected contours. Then inspect individual
+optional SVM curation, compare the kept and rejected contours. Then inspect individual
 object detections and check whether the merged table contains the expected
 channels. See <a class="reference internal" href="../examples/plotting.html"><span class="doc">Plotting and visual quality control</span></a> for the plotting functions.</p>
+<p>Individual cell measurements can fail while the rest of the analysis completes.
+The resulting table can therefore contain missing measurements. See
+<a class="reference internal" href="../workflow/errors.html"><span class="doc">Processing summaries and logging</span></a> for how to inspect these failures when needed.</p>
 <p>This quick start intentionally uses the supplied SVM with its matching dataset.
 The same model need not classify cells correctly in a different experiment.
-Review <a class="reference internal" href="../workflow/curation.html"><span class="doc">SVM curation</span></a> before applying it to other images.</p>
+Review <a class="reference internal" href="../workflow/curation.html"><span class="doc">Optional SVM curation</span></a> before applying it to other images.</p>
 </section>
 <section id="expected-files">
 <h2>Expected files<a class="headerlink" href="#expected-files" title="Link to this heading">¶</a></h2>

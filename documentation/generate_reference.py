@@ -70,10 +70,10 @@ PARAMETERS = {
 'shift_signal': 'Enable the method-specific optional signal cropping/shift path; this is not a universal object-coordinate shift.',
 'use_shifted_contours': 'Select stored shifted contour, midline, and mesh geometry; the correction must already exist.',
 'max_mesh_size': 'Maximum accepted mesh row count; cells above this limit are removed from the image cell population.',
-'max_daughter_cell_mesh_rows': 'Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.',
+'max_daughter_cell_mesh_rows': 'Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.',
 'retain_contour_on_object_mesh_failure_channels': 'Channels whose object rows keep contour measurements and NaN mesh aggregates when object geometry fails.',
 'retain_contour_on_object_mesh_failure': 'Per-cell objects option used by the collection retention-channel setting.',
-'join_thresh': 'Maximum pole-to-pole joining distance in pixels.',
+'join_thresh': 'Join cell masks when their nearest poles are at most join_thresh pixels apart. For example, 4 means up to four pixels.',
 'split_thresh': 'Relative constriction threshold used by the splitting pipeline.',
 'CD_width': 'Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.',
 'smoothing': 'Smoothing passed to the contour/mesh fitting path.',
@@ -119,6 +119,8 @@ PARAMETERS = {
 'channel_labels': 'Mapping from channel identifiers to human-readable signal labels.',
 'crop_size': 'Displayed crop extent in pixels.',
 'window_px': 'Cell plot window extent in pixels.',
+'contour_lw': 'Contour line width in points; lw means line width.',
+'scalebar_lw': 'Scale-bar line width in points; lw means line width.',
 'show': 'Display generated plots when true; check the documented return expression for figures.',
 'contour': 'Boundary points in (row, column) pixel coordinates.',
 'midline': 'Central-axis points in (row, column) pixel coordinates.',
@@ -131,8 +133,8 @@ PARAMETERS = {
 OVERRIDES = {
 'ImageCollection': ('Create a dataset collection with physical calibration and explicit error handling.', 'Use this as the public entry point; load fields/masks or reload geometry before dependent analysis.'),
 'Curation': ('Prepare phase/morphology features and predict retained/rejected cells using a named SVM.', 'Supply the svm feature DataFrame produced by the collection workflow; compiled_curation loads a model, prepares features, and returns labels.'),
-'SignalCorrelation': ('Select an implemented relationship between two channel-prefixed feature columns.', 'The feature must exist for both channels. calculate mutates the supplied DataFrame; prepared_feature can cache the numerical input arrays.'),
-'Image': ('Represent one microscopy field, its calibrated cell population, and channel caches.', 'Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates.'),
+'SignalCorrelation': ('Compare the same feature between two channels for each cell.', 'The feature must exist for both channels. calculate adds a measurement column to the supplied DataFrame and returns that same table. Invalid input pairs or undefined measurements yield NaN; prepared_feature optionally caches the input arrays.'),
+'Image': ('Represent one microscopy field, its calibrated cell population, and channel caches.', 'Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates. channels stores original channel images; bg_channels stores background-subtracted images clipped at zero; chann_interp2d stores interpolators of those corrected images.'),
 'Cell': ('Store one cell contour, paired mesh, midline, identity, and feature dictionaries.', 'The cell_id is local to a field; geometry arrays remain in pixel units.'),
 'Features': ('Calculate per-cell geometry and signal feature families for an image.', 'Collection and Image methods coordinate the required loading, filtering, feature error recording, and table construction.'),
 'load_masks': ('Read label TIFFs from the dataset masks subfolder.', 'Requires a dataset path; modifies masks and mask filenames; returns None.'),
@@ -144,17 +146,23 @@ OVERRIDES = {
 'batch_load_mesh': ('Load saved pickle or mesh Parquet and reconstruct image objects.', 'Requires the matching phase images/masks and compatible geometry columns. Recreates population and clears feature state; returns None.'),
 'batch_detect_objects': ('Replace requested-channel detections and collect object contours/geometry.', 'Requires image objects with cells. Loads channels, changes cell.object_meshdata and object_detection_df; returns the combined detection DataFrame.'),
 'batch_calculate_features': ('Calculate selected feature families for the current cell population.', 'Requires image objects and loaded signals/detections as appropriate. Replaces selected tables, may remove large cells, clears merged_features; returns the feature_dataframes dictionary.'),
-'batch_calculate_signal_correlation_features': ('Add selected between-channel measurements to the supplied dataframe.', 'Requires both prefixed feature columns. Mutates and returns df; does not independently merge or validate an entire workflow.'),
-'curate_dataset': ('Predict SVM quality labels and retain the accepted cell population.', 'Requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.'),
+'batch_calculate_signal_correlation_features': ('Add selected between-channel measurements to the supplied dataframe.', 'Requires both prefixed feature columns. Adds measurement columns to df and returns that same table. Invalid input pairs or undefined measurements yield NaN. Merge the feature tables before calling this method.'),
+'curate_dataset': ('Optionally predict SVM quality labels and retain accepted cells.', 'Skip this method to extract features without an SVM; the resulting table can be filtered afterwards. When used, requires cells and a compatible named SVM schema. Resets feature tables, updates curated_df and mesh_df_collection, optionally saves geometry; returns None.'),
 'export_curated_masks': ('Rasterize retained contours and record overlap with original segmentation labels.', 'Requires image objects with original masks. Writes TIFFs and a provenance CSV; returns (list of mask paths, provenance DataFrame).'),
 'merge_dataframes': ('Merge family/channel tables by image_name, cell_id, and frame.', 'Requires feature tables; channel prefixes are added and a first-value pivot is used. Modifies and returns merged_features.'),
 'dataframe_to_pkl': ('Save merged features as a pickle in the image folder.', 'Requires merged_features; uses atomic replacement and returns the saved path.'),
 'dataframe_to_parquet': ('Save merged features as compressed Parquet in the image folder.', 'Requires merged_features and PyArrow; replaces the target atomically and returns None.'),
 'meshdata_to_parquet': ('Save reloadable nested geometry to compressed Parquet.', 'Requires nonempty mesh_df_collection; writes within the image folder and returns None.'),
-'processing_summary': ('Report retained stage and cell error history.', 'Returns a new summary dictionary. completed does not imply every stage ran, and cell errors alone do not change that status.'),
+'processing_summary': ('Return recorded stages and accumulated processing and cell errors.', 'Returns a new summary dictionary. completed means at least one stage finished without recorded processing errors. Check completed_stages for the stages that ran and cell_error_count for individual cell failures; cell errors alone leave the status unchanged.'),
 'colocalization': ('Incomplete preliminary colocalization implementation.', 'Prepares channel crops but does not complete a measurement; do not use as an analysis feature family.'),
 'get_control': ('Randomly select retained and rejected curation examples.', 'Returns two lists of (cell_id, frame) pairs, or (None, None) when either requested class is too small.'),
-'calculate': ('Calculate the selected signal relationship row by row.', 'Requires matching prefixed columns. Adds a function-name-suffixed column to df and returns that same DataFrame.'),
+'calculate': ('Add a between-channel measurement column, one value per cell.', 'Requires matching prefixed columns. Modifies the supplied DataFrame and returns that same DataFrame. Invalid input pairs or undefined measurements yield NaN.'),
+'get_bg_channel': ('Cache a background-subtracted channel image.', 'Fits the background outside segmentation labels, subtracts it, and clips negative values to zero. Stores the result in bg_channels[channel]; the original channel stays unchanged. Returns None.'),
+'ratio_mesh_over_total_area': ('Compare detected-object mesh area with the same object\'s contour area.', 'Mesh area sums segment length times width. areas contains the corresponding contour polygon areas in matching units. Returns one dimensionless ratio per object; values near one indicate agreement. This is a mesh-quality check, not an object-to-cell area fraction.'),
+'plot_mesh_scientific': ('Display phase contrast with the cell contour, mesh, and midline.', 'The legacy suffix scientific describes this plotting style, not a different mesh calculation. crop_size is in pixels.'),
+'calculate_haralick_features': ('Measure intensity texture inside the cell contour using a gray-level co-occurrence matrix (GLCM).', 'Haralick-style measurements describe spatial relationships between gray levels. Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy, in that order. Intensities are rescaled to 8-bit and pairs involving zero are excluded. Uses four fixed directions and 256 gray levels; legacy angles and levels arguments do not change those settings.'),
+'calculate_object_haralick_features': ('Measure intensity texture in the combined detected-object regions using a GLCM.', 'Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Uses the combined object masks, rather than the full cell region. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.'),
+'calculate_contour_haralick_features': ('Measure intensity variation in the contour-intensity profile using a GLCM.', 'Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Describes signal variation around the contour rather than its shape. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.'),
 'normalize_per_cell': ('Min–max normalize a profile within one cell.', 'Returns an array scaled to [0, 1]; a constant profile returns zeros.'),
 'get_avg_distance_from_center': ('Subtract 0.5 from the mean normalized longitudinal object position.', 'Returns a signed mean position offset, not the mean absolute distance from the center.'),
 }
@@ -305,6 +313,16 @@ def feature_pages():
         '.. toctree::\n   :maxdepth: 1\n\n')
     intro += ''.join(f'   features-{c}\n' for c in categories)
     intro += '\nArray-valued columns remain arrays/lists within one cell row. They are not\nseparate rows per object. For missing-value interpretation, see :doc:`../workflow/features`\nand :doc:`../workflow/objects`.\n'
+    intro += ('\nNaming and texture terms\n------------------------\n\n'
+        '* ``axial`` refers to sampling along the cell midline; mesh profiles average across the width. '
+        'Morphological ``_axial`` constriction features use the inverse-phase profile.\n'
+        '* ``NC_ratio`` is summed detected-object contour area divided by cell contour area. '
+        'It is an area fraction; object detection still depends on signal quality and settings.\n'
+        '* Haralick-style texture features summarize spatial relationships between gray levels '
+        'using a gray-level co-occurrence matrix (GLCM). Contrast and dissimilarity describe '
+        'local intensity differences; homogeneity favours similar pairs, energy describes '
+        'matrix concentration, and correlation describes paired intensity covariation. '
+        'Cell, object, and membrane families use different image/profile representations.\n')
     write('reference/feature-dictionary',intro)
     records = []
     for category in categories:
@@ -420,6 +438,9 @@ def tutorial_pages():
     for n in DATA['notebooks']:
         slug = 'three-channel' if '3_channel' in n['file'] else 'five-channel'
         dataset = '3_channel_example' if slug=='three-channel' else '5_channel_example'
+        # Retire figures removed from a notebook, such as superseded summaries.
+        for stale in (SOURCE / '_static/figures').glob(f'{slug}-*.png'):
+            stale.unlink()
         path = PACKAGE / n['file']
         notebook = json.loads(path.read_text(encoding='utf-8'))
         markdown = [f'This walkthrough follows the original `{n["file"].replace(chr(92), "/")}` notebook. '
@@ -437,6 +458,7 @@ def tutorial_pages():
                 # Preserve the author's notebook prose rather than imposing first person.
                 content = content.replace('[README](../README.md)','[installation guide](../getting-started/installation.rst)')
                 content = content.replace('(3_channel_example_walkthrough.ipynb)','(three-channel.md)')
+                content = content.replace('(5_channel_example_walkthrough.ipynb)','(five-channel.md)')
                 markdown.append(content.strip()+'\n')
             elif cell['cell_type']=='code':
                 content = adapt_code(content,dataset)

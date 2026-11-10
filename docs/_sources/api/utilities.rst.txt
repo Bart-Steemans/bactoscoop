@@ -1120,7 +1120,7 @@ split_mesh2mesh
    :param y1: Input ``y1`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param x2: Input ``x2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param y2: Input ``y2`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
-   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.
 
    **Return expressions in source:**
 
@@ -2357,7 +2357,9 @@ ratio_mesh_over_total_area
 
 .. py:function:: ratio_mesh_over_total_area(step_length, width_no, areas)
 
-   Ratio mesh over total area.
+   Compare detected-object mesh area with the same object's contour area.
+
+   Mesh area sums segment length times width. areas contains the corresponding contour polygon areas in matching units. Returns one dimensionless ratio per object; values near one indicate agreement. This is a mesh-quality check, not an object-to-cell area fraction.
 
    :param step_length: Input ``step_length`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param width_no: Input ``width_no`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -2370,6 +2372,24 @@ ratio_mesh_over_total_area
       ratio_list
 
    `View current source, line 2498 <../source-code/utilities.html#utilities-2498>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Compare each detected object's mesh area with its contour area.
+
+      Mesh area is the sum of segment length times segment width. ``areas``
+      contains the corresponding object-contour polygon areas, in matching
+      units. Return one dimensionless ratio per object. A ratio near one means
+      that the mesh represents approximately the same area as the contour.
+      This is a mesh-quality check, not an object-to-cell area fraction.
+
+   .. raw:: html
+
+      </details>
 
 get_shortest_pole_object_distances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2389,7 +2409,7 @@ get_shortest_pole_object_distances
       (average_distance, distances)
       (np.nan, np.nan)
 
-   `View current source, line 2507 <../source-code/utilities.html#utilities-2507>`_.
+   `View current source, line 2515 <../source-code/utilities.html#utilities-2515>`_.
 
 get_pole_coordinates
 ~~~~~~~~~~~~~~~~~~~~
@@ -2406,7 +2426,7 @@ get_pole_coordinates
 
       (pole1, pole2)
 
-   `View current source, line 2519 <../source-code/utilities.html#utilities-2519>`_.
+   `View current source, line 2527 <../source-code/utilities.html#utilities-2527>`_.
 
 get_pole_object_distances
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2426,7 +2446,7 @@ get_pole_object_distances
       (avg_distance, min_2_distances, distances)
       (np.nan, np.nan)
 
-   `View current source, line 2525 <../source-code/utilities.html#utilities-2525>`_.
+   `View current source, line 2533 <../source-code/utilities.html#utilities-2533>`_.
 
 angle_between_vector
 ~~~~~~~~~~~~~~~~~~~~
@@ -2444,7 +2464,7 @@ angle_between_vector
 
       np.arccos(np.dot(v1, v2) / (d1 * d2))
 
-   `View current source, line 2540 <../source-code/utilities.html#utilities-2540>`_.
+   `View current source, line 2548 <../source-code/utilities.html#utilities-2548>`_.
 
 projection_on_midline
 ~~~~~~~~~~~~~~~~~~~~~
@@ -2464,7 +2484,7 @@ projection_on_midline
 
       (l_list, dl_list, norm_l_list, norm_dl_list)
 
-   `View current source, line 2546 <../source-code/utilities.html#utilities-2546>`_.
+   `View current source, line 2554 <../source-code/utilities.html#utilities-2554>`_.
 
 get_avg_distance_from_center
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2483,7 +2503,7 @@ get_avg_distance_from_center
 
       avg_dist
 
-   `View current source, line 2605 <../source-code/utilities.html#utilities-2605>`_.
+   `View current source, line 2613 <../source-code/utilities.html#utilities-2613>`_.
 
 get_object_intensities
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -2501,7 +2521,7 @@ get_object_intensities
 
       (combined_intensity_values, individual_intensity_values)
 
-   `View current source, line 2611 <../source-code/utilities.html#utilities-2611>`_.
+   `View current source, line 2619 <../source-code/utilities.html#utilities-2619>`_.
 
 get_objects_mean
 ~~~~~~~~~~~~~~~~
@@ -2518,7 +2538,7 @@ get_objects_mean
 
       means
 
-   `View current source, line 2625 <../source-code/utilities.html#utilities-2625>`_.
+   `View current source, line 2633 <../source-code/utilities.html#utilities-2633>`_.
 
 get_objects_std
 ~~~~~~~~~~~~~~~
@@ -2535,7 +2555,7 @@ get_objects_std
 
       stds
 
-   `View current source, line 2630 <../source-code/utilities.html#utilities-2630>`_.
+   `View current source, line 2638 <../source-code/utilities.html#utilities-2638>`_.
 
 get_objects_kurtosis
 ~~~~~~~~~~~~~~~~~~~~
@@ -2552,7 +2572,7 @@ get_objects_kurtosis
 
       kurtoses
 
-   `View current source, line 2635 <../source-code/utilities.html#utilities-2635>`_.
+   `View current source, line 2643 <../source-code/utilities.html#utilities-2643>`_.
 
 get_objects_skewness
 ~~~~~~~~~~~~~~~~~~~~
@@ -2569,7 +2589,7 @@ get_objects_skewness
 
       skewnesses
 
-   `View current source, line 2642 <../source-code/utilities.html#utilities-2642>`_.
+   `View current source, line 2650 <../source-code/utilities.html#utilities-2650>`_.
 
 get_variance
 ~~~~~~~~~~~~
@@ -2586,7 +2606,7 @@ get_variance
 
       np.var(data)
 
-   `View current source, line 2647 <../source-code/utilities.html#utilities-2647>`_.
+   `View current source, line 2655 <../source-code/utilities.html#utilities-2655>`_.
 
 measure_smoothened_intensity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2606,7 +2626,7 @@ measure_smoothened_intensity
 
       prf
 
-   `View current source, line 2652 <../source-code/utilities.html#utilities-2652>`_.
+   `View current source, line 2660 <../source-code/utilities.html#utilities-2660>`_.
 
 gaussian_smoothing
 ~~~~~~~~~~~~~~~~~~
@@ -2623,7 +2643,7 @@ gaussian_smoothing
 
       prf.flatten()
 
-   `View current source, line 2661 <../source-code/utilities.html#utilities-2661>`_.
+   `View current source, line 2669 <../source-code/utilities.html#utilities-2669>`_.
 
 measure_intensity_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2643,7 +2663,7 @@ measure_intensity_interp2d
 
       data
 
-   `View current source, line 2668 <../source-code/utilities.html#utilities-2668>`_.
+   `View current source, line 2676 <../source-code/utilities.html#utilities-2676>`_.
 
 normalize_per_cell
 ~~~~~~~~~~~~~~~~~~
@@ -2663,7 +2683,7 @@ normalize_per_cell
       normalized_profile
       np.zeros_like(profile)
 
-   `View current source, line 2684 <../source-code/utilities.html#utilities-2684>`_.
+   `View current source, line 2692 <../source-code/utilities.html#utilities-2692>`_.
 
    .. raw:: html
 
@@ -2699,7 +2719,7 @@ get_cumulative_step_length_midline
 
       cumulative_step_lengths
 
-   `View current source, line 2713 <../source-code/utilities.html#utilities-2713>`_.
+   `View current source, line 2721 <../source-code/utilities.html#utilities-2721>`_.
 
    .. raw:: html
 
@@ -2736,7 +2756,7 @@ linear_interpolation
 
       interpolated_values
 
-   `View current source, line 2740 <../source-code/utilities.html#utilities-2740>`_.
+   `View current source, line 2748 <../source-code/utilities.html#utilities-2748>`_.
 
 get_phase_mask
 ~~~~~~~~~~~~~~
@@ -2754,7 +2774,7 @@ get_phase_mask
 
       cropped_phase_mask
 
-   `View current source, line 2751 <../source-code/utilities.html#utilities-2751>`_.
+   `View current source, line 2759 <../source-code/utilities.html#utilities-2759>`_.
 
 closing_mask
 ~~~~~~~~~~~~
@@ -2772,7 +2792,7 @@ closing_mask
 
       mask_closed
 
-   `View current source, line 2765 <../source-code/utilities.html#utilities-2765>`_.
+   `View current source, line 2773 <../source-code/utilities.html#utilities-2773>`_.
 
 find_centroid_in_largest_mask
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2791,7 +2811,7 @@ find_centroid_in_largest_mask
       []
       [phase_centroid]
 
-   `View current source, line 2774 <../source-code/utilities.html#utilities-2774>`_.
+   `View current source, line 2782 <../source-code/utilities.html#utilities-2782>`_.
 
 align
 ~~~~~
@@ -2810,7 +2830,7 @@ align
 
       aligned_contour
 
-   `View current source, line 2796 <../source-code/utilities.html#utilities-2796>`_.
+   `View current source, line 2804 <../source-code/utilities.html#utilities-2804>`_.
 
 align_objects
 ~~~~~~~~~~~~~
@@ -2831,7 +2851,7 @@ align_objects
 
       (aligned_contour, aligned_midline, aligned_mesh)
 
-   `View current source, line 2820 <../source-code/utilities.html#utilities-2820>`_.
+   `View current source, line 2828 <../source-code/utilities.html#utilities-2828>`_.
 
 get_signal_mask
 ~~~~~~~~~~~~~~~
@@ -2852,7 +2872,7 @@ get_signal_mask
 
       (object_mask, cropped_img, x_offset, y_offset)
 
-   `View current source, line 2833 <../source-code/utilities.html#utilities-2833>`_.
+   `View current source, line 2841 <../source-code/utilities.html#utilities-2841>`_.
 
 shift_contour
 ~~~~~~~~~~~~~
@@ -2882,7 +2902,7 @@ shift_contour
       (aligned_contour, aligned_mesh, aligned_midline)
       (None, None, None)
 
-   `View current source, line 2855 <../source-code/utilities.html#utilities-2855>`_.
+   `View current source, line 2863 <../source-code/utilities.html#utilities-2863>`_.
 
    .. raw:: html
 
@@ -2934,7 +2954,7 @@ crop_signal_with_optional_shift
 
       (cropped_signal, cropped_mask, cropped_contour, x_offset, y_offset)
 
-   `View current source, line 2956 <../source-code/utilities.html#utilities-2956>`_.
+   `View current source, line 2964 <../source-code/utilities.html#utilities-2964>`_.
 
 change_contour_array_length
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2954,7 +2974,7 @@ change_contour_array_length
 
       adjust_eroded_contour
 
-   `View current source, line 2967 <../source-code/utilities.html#utilities-2967>`_.
+   `View current source, line 2975 <../source-code/utilities.html#utilities-2975>`_.
 
 normalized_intensity_by_image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2973,7 +2993,7 @@ normalized_intensity_by_image
       normalized_profile
       np.zeros_like(prof)
 
-   `View current source, line 2974 <../source-code/utilities.html#utilities-2974>`_.
+   `View current source, line 2982 <../source-code/utilities.html#utilities-2982>`_.
 
 get_homogeneity
 ~~~~~~~~~~~~~~~
@@ -2990,7 +3010,7 @@ get_homogeneity
 
       homogeneity
 
-   `View current source, line 3000 <../source-code/utilities.html#utilities-3000>`_.
+   `View current source, line 3008 <../source-code/utilities.html#utilities-3008>`_.
 
 set_bg_zero
 ~~~~~~~~~~~
@@ -3008,7 +3028,7 @@ set_bg_zero
 
       bg_zero_img
 
-   `View current source, line 3007 <../source-code/utilities.html#utilities-3007>`_.
+   `View current source, line 3015 <../source-code/utilities.html#utilities-3015>`_.
 
 rescale_image_255
 ~~~~~~~~~~~~~~~~~
@@ -3026,7 +3046,7 @@ rescale_image_255
 
       scaled_image
 
-   `View current source, line 3013 <../source-code/utilities.html#utilities-3013>`_.
+   `View current source, line 3021 <../source-code/utilities.html#utilities-3021>`_.
 
 create_co_occurrence_matrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3048,7 +3068,7 @@ create_co_occurrence_matrix
 
       co_occurrence_matrix
 
-   `View current source, line 3030 <../source-code/utilities.html#utilities-3030>`_.
+   `View current source, line 3038 <../source-code/utilities.html#utilities-3038>`_.
 
    .. raw:: html
 
@@ -3091,7 +3111,7 @@ get_glcm_feature_means
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 3072 <../source-code/utilities.html#utilities-3072>`_.
+   `View current source, line 3080 <../source-code/utilities.html#utilities-3080>`_.
 
    .. raw:: html
 
@@ -3113,7 +3133,9 @@ calculate_haralick_features
 
 .. py:function:: calculate_haralick_features(contour, cropped_img, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
 
-   Calculate haralick features.
+   Measure intensity texture inside the cell contour using a gray-level co-occurrence matrix (GLCM).
+
+   Haralick-style measurements describe spatial relationships between gray levels. Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy, in that order. Intensities are rescaled to 8-bit and pairs involving zero are excluded. Uses four fixed directions and 256 gray levels; legacy angles and levels arguments do not change those settings.
 
    :param contour: Boundary points in (row, column) pixel coordinates.
    :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -3127,7 +3149,31 @@ calculate_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3128 <../source-code/utilities.html#utilities-3128>`_.
+   `View current source, line 3136 <../source-code/utilities.html#utilities-3136>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Measure intensity texture within the supplied cell contour.
+
+      Haralick-style texture measurements describe spatial relationships between
+      gray levels using a gray-level co-occurrence matrix (GLCM). Intensities
+      outside the contour are set to zero, the image is rescaled to 8-bit, and
+      pairs involving zero are excluded. Return dissimilarity, correlation,
+      homogeneity, energy, contrast, and entropy, in that order. The first five
+      measurements are averaged over distances and directions. Entropy is
+      calculated from the GLCM array values by the shared helper.
+
+      ``distances`` gives pixel-pair separations. The current implementation
+      uses four fixed directions and 256 gray levels, regardless of the legacy
+      ``angles`` and ``levels`` arguments.
+
+   .. raw:: html
+
+      </details>
 
 align_contour_start
 ~~~~~~~~~~~~~~~~~~~
@@ -3145,7 +3191,7 @@ align_contour_start
 
       aligned_contour
 
-   `View current source, line 3147 <../source-code/utilities.html#utilities-3147>`_.
+   `View current source, line 3169 <../source-code/utilities.html#utilities-3169>`_.
 
    .. raw:: html
 
@@ -3177,7 +3223,9 @@ calculate_object_haralick_features
 
 .. py:function:: calculate_object_haralick_features(object_masks, cropped_img, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
 
-   Calculate object haralick features.
+   Measure intensity texture in the combined detected-object regions using a GLCM.
+
+   Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Uses the combined object masks, rather than the full cell region. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.
 
    :param object_masks: Input ``object_masks`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param cropped_img: Input ``cropped_img`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -3191,14 +3239,34 @@ calculate_object_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3172 <../source-code/utilities.html#utilities-3172>`_.
+   `View current source, line 3194 <../source-code/utilities.html#utilities-3194>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Measure intensity texture in the combined detected-object regions.
+
+      Multiply the cropped image by the combined object masks and rescale to
+      8-bit. Return dissimilarity, correlation, homogeneity, energy, contrast,
+      and entropy from the GLCM, using the same preprocessing and fixed direction
+      and gray-level settings as calculate_haralick_features. These describe
+      intensity texture rather than object shape or number.
+
+   .. raw:: html
+
+      </details>
 
 calculate_contour_haralick_features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. py:function:: calculate_contour_haralick_features(contour_intensities, distances=[2], angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4], levels=256)
 
-   Calculate contour haralick features.
+   Measure intensity variation in the contour-intensity profile using a GLCM.
+
+   Returns dissimilarity, correlation, homogeneity, energy, contrast, and entropy. Describes signal variation around the contour rather than its shape. Rescaling, zero exclusion, and fixed direction and gray-level settings match calculate_haralick_features.
 
    :param contour_intensities: Input ``contour_intensities`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param distances: Input ``distances`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -3211,7 +3279,25 @@ calculate_contour_haralick_features
 
       get_glcm_feature_means(glcm)
 
-   `View current source, line 3193 <../source-code/utilities.html#utilities-3193>`_.
+   `View current source, line 3223 <../source-code/utilities.html#utilities-3223>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Measure intensity texture in the sampled contour-intensity profile.
+
+      Rescale the profile to 8-bit and return dissimilarity, correlation,
+      homogeneity, energy, contrast, and entropy from its GLCM. These describe
+      variation in intensity around the contour, rather than its geometric
+      shape. Preprocessing and fixed direction and gray-level settings match
+      calculate_haralick_features.
+
+   .. raw:: html
+
+      </details>
 
 split_array
 ~~~~~~~~~~~
@@ -3228,7 +3314,7 @@ split_array
 
       (first_half, second_half)
 
-   `View current source, line 3212 <../source-code/utilities.html#utilities-3212>`_.
+   `View current source, line 3250 <../source-code/utilities.html#utilities-3250>`_.
 
 get_complemented_contour_intensity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3245,7 +3331,7 @@ get_complemented_contour_intensity
 
       complemented_contour_intensity_profile
 
-   `View current source, line 3219 <../source-code/utilities.html#utilities-3219>`_.
+   `View current source, line 3257 <../source-code/utilities.html#utilities-3257>`_.
 
 shift_image
 ~~~~~~~~~~~
@@ -3263,7 +3349,7 @@ shift_image
 
       offset_image.astype(np.uint16)
 
-   `View current source, line 3235 <../source-code/utilities.html#utilities-3235>`_.
+   `View current source, line 3273 <../source-code/utilities.html#utilities-3273>`_.
 
    .. raw:: html
 

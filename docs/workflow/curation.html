@@ -7,7 +7,7 @@
         <link rel="prefetch" href="../_static/logo.png" as="image">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
-        <title>SVM curation - BactoScoop documentation</title>
+        <title>Optional SVM curation - BactoScoop documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -214,7 +214,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">SVM curation</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Feature extraction</a></li>
@@ -294,11 +294,19 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="svm-curation">
-<h1>SVM curation<a class="headerlink" href="#svm-curation" title="Link to this heading">¶</a></h1>
-<p>Use a trained support vector machine to remove cells whose geometry or phase
+          <section id="optional-svm-curation">
+<h1>Optional SVM curation<a class="headerlink" href="#optional-svm-curation" title="Link to this heading">¶</a></h1>
+<p>Optionally use a trained support vector machine to remove cells whose geometry or phase
 measurements resemble the rejected class in the model’s training data. Curation
-is a quality-control stage; the model’s labels are not biological cell states.</p>
+is a quality-control stage; the model’s labels are not biological cell states.
+Skip <code class="docutils literal notranslate"><span class="pre">curate_dataset</span></code> to continue without a classifier or model file. The
+walkthroughs provide a <code class="docutils literal notranslate"><span class="pre">RUN_CURATION</span></code> switch beside this step.
+To switch curation off after applying it, reload the uncurated meshes and
+repeat detection and extraction; changing the switch alone does not restore cells.</p>
+<p>You can also filter the merged feature table afterwards using cell length,
+width, area, or other measurements. This can be used with or without SVM
+curation. Cells removed before extraction have no later measurements; filtering
+the table cannot recover them. See <a class="reference internal" href="features.html"><span class="doc">Feature extraction</span></a> for a short example.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bactoscoop.plot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bplt</span>
 <span class="n">before</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">snapshot_cell_contours</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
 <span class="n">ic</span><span class="o">.</span><span class="n">curate_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">model_path</span><span class="p">),</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_curated_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -404,7 +412,7 @@ than assuming a curated label equals the old cell ID.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">SVM curation</a><ul>
+<li><a class="reference internal" href="#">Optional SVM curation</a><ul>
 <li><a class="reference internal" href="#model-and-dataset-pairing">Model and dataset pairing</a></li>
 <li><a class="reference internal" href="#state-and-controls">State and controls</a></li>
 <li><a class="reference internal" href="#export-curated-masks">Export curated masks</a></li>

@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -325,9 +325,29 @@ with requested object detections when possible.</p>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_signal_gallery</span><span class="p">(</span>
     <span class="n">image</span><span class="p">,</span> <span class="n">cell_id</span><span class="p">,</span> <span class="n">channel_labels</span><span class="o">=</span><span class="p">{</span><span class="s2">"C3"</span><span class="p">:</span> <span class="s2">"GFP-DnaN"</span><span class="p">},</span> <span class="n">show_objects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_feature_overview</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">merged_features</span><span class="p">,</span> <span class="n">signal_column</span><span class="o">=</span><span class="s2">"C3_NC_ratio"</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="feature-histograms">
+<h2>Feature histograms<a class="headerlink" href="#feature-histograms" title="Link to this heading">¶</a></h2>
+<p>Start with interpretable measurements: cell length, width, projected area, and
+an object count. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">merged_features</span><span class="p">[</span><span class="s2">"cell_length"</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Cell length (µm)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Cells"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The walkthroughs show four such histograms, with integer bins for object counts.
+Missing values are omitted, rather than interpreted as zero.</p>
+</section>
+<section id="plotting-names">
+<h2>Plotting names<a class="headerlink" href="#plotting-names" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">contour_lw</span></code> and <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> specify line width in points.
+<code class="docutils literal notranslate"><span class="pre">axial</span></code> means along the cell midline. The legacy name <code class="docutils literal notranslate"><span class="pre">plot_mesh_scientific</span></code>
+selects a phase-image plot with contour, mesh, and midline overlays; it does not
+select a different mesh calculation.</p>
 <p>Additional functions include histograms, feature scatter plots, morphology and
 signal summaries, normalized axial profiles, demographs, and pairwise metric
 heatmaps. See <a class="reference internal" href="../api/plot.html"><span class="doc">bactoscoop.plot</span></a> for signatures and return shapes. Some functions
@@ -396,6 +416,8 @@ look brighter in a figure does not change its recorded feature values.</p>
 <li><a class="reference internal" href="#">Plotting and visual quality control</a><ul>
 <li><a class="reference internal" href="#select-a-cell-after-the-relevant-stage">Select a cell after the relevant stage</a></li>
 <li><a class="reference internal" href="#signals-and-detections">Signals and detections</a></li>
+<li><a class="reference internal" href="#feature-histograms">Feature histograms</a></li>
+<li><a class="reference internal" href="#plotting-names">Plotting names</a></li>
 </ul>
 </li>
 </ul>

@@ -1,4 +1,4 @@
-"""Three-channel analysis from downloaded examples, with supplied masks."""
+"""Three-channel analysis with supplied masks and optional SVM curation."""
 from datetime import datetime
 import json
 import os
@@ -16,7 +16,10 @@ shutil.copytree(source,destination)
 ic = bactoscoop.ImageCollection(str(destination),px=0.065)
 ic.create_image_objects(phase_channel='C1')
 ic.batch_process_mesh(phase_channel='C1',join_thresh=4,split_thresh=0.5,CD_width=False,smoothing=0.1,save_data=True)
-ic.curate_dataset(str(destination/'DnaN_Timecourse.pkl'),control=False)
+# Optional: skip this step to extract features without an SVM model.
+run_curation = True
+if run_curation:
+    ic.curate_dataset(str(destination/'DnaN_Timecourse.pkl'),control=False)
 ic.batch_detect_objects(channels=['C3'],reset_channels=True,align=False,smoothing=0.1,log_sigma=3,kernel_width=3,min_overlap_ratio=0.001,max_external_ratio=0.3)
 ic.load_channel_images(['C2'])
 ic.add_channels(ic.image_objects,['C2'],load_data=False)
@@ -24,5 +27,15 @@ ic.batch_calculate_features([([None],'morphological'),(['C2','C3'],'profiling'),
 table = ic.merge_dataframes(discard_morphological_nan=True)
 ic.dataframe_to_parquet()
 ic.dataframe_to_pkl()
+
+# Optional filtering after extraction; choose limits for your data.
+apply_feature_filter = False
+min_length_um, max_length_um = 1.0, 10.0
+if apply_feature_filter:
+    keep = table['cell_length'].between(min_length_um, max_length_um)
+    filtered = table.loc[keep].copy()
+    filtered.to_parquet(destination/'3_channel_example_filtered_features.parquet',index=False)
+    print(f'Feature-table selection: {len(table)} to {len(filtered)} cells')
+
 (destination/'processing_summary.json').write_text(json.dumps(ic.processing_summary(),indent=2),encoding='utf-8')
 print(f'{len(table)} retained rows; outputs in {destination}')

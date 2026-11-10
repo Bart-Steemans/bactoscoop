@@ -25,6 +25,21 @@ An existing mask on disk does not automatically rescue a failed segmentation
 in the same collection. Confirm model availability and CPU/GPU setup; restart
 with a fresh collection only when intentionally reusing verified masks.
 
+Segmentation succeeds but masks cannot be saved
+-----------------------------------------------
+
+Omnipose 1.0.6 calls ``tifffile.imsave``, which was removed in tifffile 2025.2.18.
+BactoScoop therefore requires ``tifffile>=2024.2.12,<2025.2.18``. This affects
+mask saving on any platform, including macOS. In the analysis environment, run:
+
+.. code-block:: console
+
+   python -m pip install "tifffile>=2024.2.12,<2025.2.18"
+   python -m pip check
+
+Restart the notebook kernel and rerun segmentation in a fresh working copy.
+See the `tifffile release history <https://github.com/cgohlke/tifffile/blob/master/CHANGES.rst>`_.
+
 Unexpected geometry or too few cells
 ------------------------------------
 

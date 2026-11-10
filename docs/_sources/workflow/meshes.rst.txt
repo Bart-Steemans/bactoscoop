@@ -27,9 +27,10 @@ Build cell geometry
        max_daughter_cell_mesh_rows=800,
    )
 
-The method joins nearby poles, creates meshes, and then splits cells when the
-chosen constriction measure exceeds the threshold. ``join_thresh`` is a distance
-in pixels; ``split_thresh`` is a relative constriction threshold. The signature
+The method joins cell masks when their nearest poles are at most
+``join_thresh`` pixels apart, creates meshes, and then splits cells when the
+chosen constriction measure exceeds ``split_thresh``. For example,
+``join_thresh=4`` means up to four pixels. The signature
 defaults to 0.35 for splitting, while the notebooks explicitly use 0.5.
 ``CD_width`` chooses the width-based constriction path when true; otherwise the
 pipeline uses its phase-signal-based path. ``smoothing`` controls contour fitting.

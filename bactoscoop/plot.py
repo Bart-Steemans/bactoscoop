@@ -1985,6 +1985,11 @@ def plot_object_contours(
 
 
 def plot_mesh_scientific(cell_id, image, crop_size=300, verbose=False):
+    """Display a phase-image crop with the cell contour, mesh, and midline.
+
+    The legacy suffix ``scientific`` names this plotting style; it does not
+    select a different mesh calculation. ``crop_size`` is in pixels.
+    """
 
     cellobj = next((cell for cell in image.cells if cell.cell_id == cell_id), None)
 

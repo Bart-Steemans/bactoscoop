@@ -11,9 +11,9 @@ SignalCorrelation
 
 .. py:class:: SignalCorrelation(df, channel1, channel2, feature, method_name, prepared_feature=None)
 
-   Select an implemented relationship between two channel-prefixed feature columns.
+   Compare the same feature between two channels for each cell.
 
-   The feature must exist for both channels. calculate mutates the supplied DataFrame; prepared_feature can cache the numerical input arrays.
+   The feature must exist for both channels. calculate adds a measurement column to the supplied DataFrame and returns that same table. Invalid input pairs or undefined measurements yield NaN; prepared_feature optionally caches the input arrays.
 
    :param df: DataFrame to inspect, transform, or augment. Correlation mutates it in place and returns it.
    :param channel1: First channel prefix for the matching feature.
@@ -63,9 +63,9 @@ SignalCorrelation.calculate
 
 .. py:method:: SignalCorrelation.calculate()
 
-   Calculate the selected signal relationship row by row.
+   Add a between-channel measurement column, one value per cell.
 
-   Requires matching prefixed columns. Adds a function-name-suffixed column to df and returns that same DataFrame.
+   Requires matching prefixed columns. Modifies the supplied DataFrame and returns that same DataFrame. Invalid input pairs or undefined measurements yield NaN.
 
    **Return expressions in source:**
 
@@ -76,6 +76,22 @@ SignalCorrelation.calculate
    **Assigned state:** ``self.df``.
 
    `View current source, line 71 <../source-code/signalcorrelation.html#signalcorrelation-71>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Add a between-channel measurement column and return the same DataFrame.
+
+      Measurements are calculated for each cell using the selected feature
+      and method. Invalid input pairs or undefined measurements yield NaN.
+      The supplied DataFrame is modified in place.
+
+   .. raw:: html
+
+      </details>
 
 SignalCorrelation.prepare_feature_pair
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +111,7 @@ SignalCorrelation.prepare_feature_pair
 
       {'signals1': signals1, 'signals2': signals2, 'valid_mask': valid_mask}
 
-   `View current source, line 101 <../source-code/signalcorrelation.html#signalcorrelation-101>`_.
+   `View current source, line 107 <../source-code/signalcorrelation.html#signalcorrelation-107>`_.
 
 SignalCorrelation.is_valid_signal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +129,7 @@ SignalCorrelation.is_valid_signal
       bool(signal_array.size and np.isfinite(signal_array).all())
       False
 
-   `View current source, line 117 <../source-code/signalcorrelation.html#signalcorrelation-117>`_.
+   `View current source, line 123 <../source-code/signalcorrelation.html#signalcorrelation-123>`_.
 
 SignalCorrelation.ratio
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +148,7 @@ SignalCorrelation.ratio
       np.nan
       signal1 / signal2
 
-   `View current source, line 125 <../source-code/signalcorrelation.html#signalcorrelation-125>`_.
+   `View current source, line 131 <../source-code/signalcorrelation.html#signalcorrelation-131>`_.
 
 SignalCorrelation.manders_overlap_coefficient
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,7 +167,7 @@ SignalCorrelation.manders_overlap_coefficient
       np.nan
       np.sum(signal1 * signal2) / np.sqrt(np.sum(signal1 ** 2) * np.sum(signal2 ** 2))
 
-   `View current source, line 137 <../source-code/signalcorrelation.html#signalcorrelation-137>`_.
+   `View current source, line 143 <../source-code/signalcorrelation.html#signalcorrelation-143>`_.
 
 SignalCorrelation.pearson_correlation_coefficient
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +186,7 @@ SignalCorrelation.pearson_correlation_coefficient
       np.nan
       stats.pearsonr(signal1, signal2)[0]
 
-   `View current source, line 150 <../source-code/signalcorrelation.html#signalcorrelation-150>`_.
+   `View current source, line 156 <../source-code/signalcorrelation.html#signalcorrelation-156>`_.
 
 SignalCorrelation.li_icq
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +205,7 @@ SignalCorrelation.li_icq
       np.nan
       (np.sum(product) / len(signal1) - 0.5) * 2
 
-   `View current source, line 159 <../source-code/signalcorrelation.html#signalcorrelation-159>`_.
+   `View current source, line 165 <../source-code/signalcorrelation.html#signalcorrelation-165>`_.
 
 SignalCorrelation.spearman_rank_correlation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -208,7 +224,7 @@ SignalCorrelation.spearman_rank_correlation
       np.nan
       stats.spearmanr(signal1, signal2)[0]
 
-   `View current source, line 172 <../source-code/signalcorrelation.html#signalcorrelation-172>`_.
+   `View current source, line 178 <../source-code/signalcorrelation.html#signalcorrelation-178>`_.
 
 SignalCorrelation.kendall_tau
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +243,7 @@ SignalCorrelation.kendall_tau
       np.nan
       corr
 
-   `View current source, line 181 <../source-code/signalcorrelation.html#signalcorrelation-181>`_.
+   `View current source, line 187 <../source-code/signalcorrelation.html#signalcorrelation-187>`_.
 
 SignalCorrelation.distance_correlation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -246,7 +262,7 @@ SignalCorrelation.distance_correlation
       np.nan
       float(np.sqrt(np.clip(correlation_squared, 0, 1)))
 
-   `View current source, line 191 <../source-code/signalcorrelation.html#signalcorrelation-191>`_.
+   `View current source, line 197 <../source-code/signalcorrelation.html#signalcorrelation-197>`_.
 
    .. raw:: html
 
@@ -277,7 +293,7 @@ SignalCorrelation.covariance
       np.nan
       np.cov(signal1, signal2)[0, 1]
 
-   `View current source, line 235 <../source-code/signalcorrelation.html#signalcorrelation-235>`_.
+   `View current source, line 241 <../source-code/signalcorrelation.html#signalcorrelation-241>`_.
 
 SignalCorrelation.normalized_cross_correlation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -296,7 +312,7 @@ SignalCorrelation.normalized_cross_correlation
       np.nan
       np.correlate(signal1 - np.mean(signal1), signal2 - np.mean(signal2))[0] / (len(signal1) * np.std(signal1) * np.std(signal2))
 
-   `View current source, line 244 <../source-code/signalcorrelation.html#signalcorrelation-244>`_.
+   `View current source, line 250 <../source-code/signalcorrelation.html#signalcorrelation-250>`_.
 
 SignalCorrelation.entropy_difference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -315,7 +331,7 @@ SignalCorrelation.entropy_difference
       np.nan
       np.abs(entropy1 - entropy2)
 
-   `View current source, line 255 <../source-code/signalcorrelation.html#signalcorrelation-255>`_.
+   `View current source, line 261 <../source-code/signalcorrelation.html#signalcorrelation-261>`_.
 
 SignalCorrelation.kurtosis_ratio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -334,7 +350,7 @@ SignalCorrelation.kurtosis_ratio
       np.nan
       np.abs(kurtosis1 / kurtosis2) if kurtosis2 != 0 else np.nan
 
-   `View current source, line 266 <../source-code/signalcorrelation.html#signalcorrelation-266>`_.
+   `View current source, line 272 <../source-code/signalcorrelation.html#signalcorrelation-272>`_.
 
 SignalCorrelation.skewness_product
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -353,7 +369,7 @@ SignalCorrelation.skewness_product
       np.nan
       skew1 * skew2
 
-   `View current source, line 277 <../source-code/signalcorrelation.html#signalcorrelation-277>`_.
+   `View current source, line 283 <../source-code/signalcorrelation.html#signalcorrelation-283>`_.
 
 SignalCorrelation.zero_crossings_difference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -372,7 +388,7 @@ SignalCorrelation.zero_crossings_difference
       np.nan
       np.abs(zero_crossings1 - zero_crossings2)
 
-   `View current source, line 288 <../source-code/signalcorrelation.html#signalcorrelation-288>`_.
+   `View current source, line 294 <../source-code/signalcorrelation.html#signalcorrelation-294>`_.
 
 SignalCorrelation.fft_peak_ratio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -391,7 +407,7 @@ SignalCorrelation.fft_peak_ratio
       np.nan
       peak1 / peak2 if peak2 != 0 else np.nan
 
-   `View current source, line 299 <../source-code/signalcorrelation.html#signalcorrelation-299>`_.
+   `View current source, line 305 <../source-code/signalcorrelation.html#signalcorrelation-305>`_.
 
 SignalCorrelation.fft_energy_ratio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -410,7 +426,7 @@ SignalCorrelation.fft_energy_ratio
       np.nan
       energy1 / energy2 if energy2 != 0 else np.nan
 
-   `View current source, line 312 <../source-code/signalcorrelation.html#signalcorrelation-312>`_.
+   `View current source, line 318 <../source-code/signalcorrelation.html#signalcorrelation-318>`_.
 
 SignalCorrelation.histogram_intersection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -430,7 +446,7 @@ SignalCorrelation.histogram_intersection
       np.nan
       float(np.minimum(hist1 / count1, hist2 / count2).sum())
 
-   `View current source, line 330 <../source-code/signalcorrelation.html#signalcorrelation-330>`_.
+   `View current source, line 336 <../source-code/signalcorrelation.html#signalcorrelation-336>`_.
 
    .. raw:: html
 
@@ -461,4 +477,4 @@ SignalCorrelation.cosine_similarity
       np.nan
       np.dot(signal1, signal2) / (np.linalg.norm(signal1) * np.linalg.norm(signal2))
 
-   `View current source, line 360 <../source-code/signalcorrelation.html#signalcorrelation-360>`_.
+   `View current source, line 366 <../source-code/signalcorrelation.html#signalcorrelation-366>`_.

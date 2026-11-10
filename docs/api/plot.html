@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -712,7 +712,7 @@ A linear regression line and Pearson correlation can be shown.
 <li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
-<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Scale-bar line width in points; lw means line width.</p></li>
 <li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
 <li><p><strong>save_svg_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_svg_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 </ul>
@@ -752,12 +752,12 @@ window_px : int or None
 <li><p><strong>phase_cmap</strong> – Input <code class="docutils literal notranslate"><span class="pre">phase_cmap</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>channel_cmap</strong> – Input <code class="docutils literal notranslate"><span class="pre">channel_cmap</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>contour_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">contour_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
-<li><p><strong>contour_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">contour_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>contour_lw</strong> – Contour line width in points; lw means line width.</p></li>
 <li><p><strong>add_scalebar</strong> – Input <code class="docutils literal notranslate"><span class="pre">add_scalebar</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
-<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Scale-bar line width in points; lw means line width.</p></li>
 <li><p><strong>title</strong> – Input <code class="docutils literal notranslate"><span class="pre">title</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>figsize_per_panel</strong> – Input <code class="docutils literal notranslate"><span class="pre">figsize_per_panel</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>save_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
@@ -1067,7 +1067,7 @@ None
 <li><p><strong>scalebar_um</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_um</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>um_per_px</strong> – Input <code class="docutils literal notranslate"><span class="pre">um_per_px</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>scalebar_color</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_color</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
-<li><p><strong>scalebar_lw</strong> – Input <code class="docutils literal notranslate"><span class="pre">scalebar_lw</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
+<li><p><strong>scalebar_lw</strong> – Scale-bar line width in points; lw means line width.</p></li>
 <li><p><strong>window_px</strong> – Cell plot window extent in pixels.</p></li>
 <li><p><strong>save_svg_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_svg_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
 <li><p><strong>save_tiff_path</strong> – Input <code class="docutils literal notranslate"><span class="pre">save_tiff_path</span></code> consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.</p></li>
@@ -1101,7 +1101,8 @@ Added:
 <dl class="py function">
 <dt class="sig sig-object py" id="bactoscoop.plot.plot_mesh_scientific">
 <span class="sig-prename descclassname"><span class="pre">bactoscoop.plot.</span></span><span class="sig-name descname"><span class="pre">plot_mesh_scientific</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bactoscoop.plot.plot_mesh_scientific" title="Link to this definition">¶</a></dt>
-<dd><p>Plot mesh scientific.</p>
+<dd><p>Display phase contrast with the cell contour, mesh, and midline.</p>
+<p>The legacy suffix scientific describes this plotting style, not a different mesh calculation. crop_size is in pixels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1117,7 +1118,13 @@ Added:
 </pre></div>
 </div>
 <p><a class="reference external" href="../source-code/plot.html#plot-1987">View current source, line 1987</a>.</p>
-</dd></dl>
+<details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Display a phase-image crop with the cell contour, mesh, and midline.
+
+The legacy suffix ``scientific`` names this plotting style; it does not
+select a different mesh calculation. ``crop_size`` is in pixels.
+</pre></div>
+</div>
+</details></dd></dl>
 
 </section>
 <section id="plot-width">
@@ -1138,7 +1145,7 @@ Added:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/plot.html#plot-2037">View current source, line 2037</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2042">View current source, line 2042</a>.</p>
 </dd></dl>
 
 </section>
@@ -1159,7 +1166,7 @@ Added:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/plot.html#plot-2138">View current source, line 2138</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2143">View current source, line 2143</a>.</p>
 </dd></dl>
 
 </section>
@@ -1185,7 +1192,7 @@ Added:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/plot.html#plot-2171">View current source, line 2171</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2176">View current source, line 2176</a>.</p>
 </dd></dl>
 
 </section>
@@ -1207,7 +1214,7 @@ Added:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">({</span><span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'_'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">dataset_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">'*_</span><span class="si">{</span><span class="n">phase_channel</span><span class="si">}</span><span class="s1">.tiff'</span><span class="p">)})</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/plot.html#plot-2225">View current source, line 2225</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2230">View current source, line 2230</a>.</p>
 </dd></dl>
 
 </section>
@@ -1231,7 +1238,7 @@ Added:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/plot.html#plot-2235">View current source, line 2235</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2240">View current source, line 2240</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Return aligned display crops for each channel in a field of view.
 </pre></div>
 </div>
@@ -1258,7 +1265,7 @@ Added:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/plot.html#plot-2244">View current source, line 2244</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2249">View current source, line 2249</a>.</p>
 </dd></dl>
 
 </section>
@@ -1282,7 +1289,7 @@ Added:
 <span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">,</span> <span class="n">distance</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">median_length</span><span class="p">),</span> <span class="n">item</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/plot.html#plot-2283">View current source, line 2283</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2288">View current source, line 2288</a>.</p>
 <details><summary>Original docstring (legacy wording may differ from the current signature)</summary><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Choose an interior, isolated cell with a detected object when possible.
 </pre></div>
 </div>
@@ -1303,7 +1310,7 @@ Added:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/plot.html#plot-2315">View current source, line 2315</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2320">View current source, line 2320</a>.</p>
 </dd></dl>
 
 </section>
@@ -1321,7 +1328,7 @@ Added:
 <dd class="field-even"><p>None (no explicit return statement).</p>
 </dd>
 </dl>
-<p><a class="reference external" href="../source-code/plot.html#plot-2356">View current source, line 2356</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2361">View current source, line 2361</a>.</p>
 </dd></dl>
 
 </section>
@@ -1344,7 +1351,7 @@ Added:
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="../source-code/plot.html#plot-2410">View current source, line 2410</a>.</p>
+<p><a class="reference external" href="../source-code/plot.html#plot-2415">View current source, line 2415</a>.</p>
 </dd></dl>
 
 </section>

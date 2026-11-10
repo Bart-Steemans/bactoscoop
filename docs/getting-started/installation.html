@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -356,7 +356,7 @@ for newer tags. A development checkout uses an editable install:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">scipy&gt;=1.11.4,&lt;1.12</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">setuptools&gt;=77.0.3,&lt;81</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pandas&gt;=2.1.3,&lt;3</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tifffile&gt;=2024.2.12</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tifffile&gt;=2024.2.12,&lt;2025.2.18</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">natsort&gt;=8.4</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">shapely&gt;=2.0.1</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scikit-image&gt;=0.22</span></code></p></li>
@@ -370,8 +370,9 @@ for newer tags. A development checkout uses an editable install:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">jupyterlab&gt;=4</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ipykernel&gt;=6</span></code></p></li>
 </ul>
-<p>Omnipose is pinned to 1.0.6 and NumPy remains below 2. PyArrow supplies Parquet
-export.</p>
+<p>Omnipose is pinned to 1.0.6 and NumPy remains below 2. Tifffile is constrained to
+<code class="docutils literal notranslate"><span class="pre">&gt;=2024.2.12,&lt;2025.2.18</span></code> because Omnipose uses the removed <code class="docutils literal notranslate"><span class="pre">imsave</span></code> function
+to save masks. PyArrow supplies Parquet export.</p>
 </section>
 <section id="open-the-examples">
 <h2>Open the examples<a class="headerlink" href="#open-the-examples" title="Link to this heading">¶</a></h2>
@@ -379,9 +380,11 @@ export.</p>
 <a class="reference external" href="https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip">release archive</a>
 for its TIFFs, masks, SVM models, and notebooks; those assets are separate from
 the wheel. In JupyterLab, select the Python 3.10 analysis kernel and open a
-walkthrough under <code class="docutils literal notranslate"><span class="pre">examples/</span></code>. Its first cell copies the input dataset into
+walkthrough under <code class="docutils literal notranslate"><span class="pre">examples/</span></code>. Its setup cell copies the input dataset into
 a fresh folder under <code class="docutils literal notranslate"><span class="pre">~/bactoscoop_runs/</span></code>. Supplied masks are reused by default;
-set <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATION=True</span></code> to run fresh Omnipose inference.</p>
+set <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATION=True</span></code> in the segmentation cell to run fresh Omnipose
+inference. SVM curation is optional: set <code class="docutils literal notranslate"><span class="pre">RUN_CURATION=False</span></code> in its cell to
+skip it. Both walkthroughs also show optional filtering of the resulting table.</p>
 <p>See <a class="reference internal" href="quickstart.html"><span class="doc">Quick start</span></a> and the <a class="reference internal" href="../examples/three-channel.html"><span class="doc">Three-channel walkthrough: DAPI and GFP-DnaN objects</span></a> and
 <a class="reference internal" href="../examples/five-channel.html"><span class="doc">Five-channel walkthrough: membranes and multichannel profiles</span></a> walkthroughs.</p>
 </section>

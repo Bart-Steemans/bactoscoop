@@ -40,8 +40,10 @@ normalization removes amplitude differences between cells and should not be
 interpreted as an absolute fluorescence measurement.
 
 Radial intensity distribution samples successive eroded contours and uses the
-cropped image intensity range for normalization. GLCM descriptors use quantized
-image intensities and the implementation's background masking and matrix settings.
+cropped image intensity range for normalization. Haralick-style texture
+descriptors describe spatial relationships between gray levels using a gray-level
+co-occurrence matrix (GLCM). They use quantized intensities and the implementation's
+background masking and matrix settings.
 They depend on acquisition and preprocessing as well as signal structure.
 
 Optional data and failure behavior
@@ -51,6 +53,7 @@ Optional data and failure behavior
 per-object arrays for ``objects``; it does not suppress the profiling or membrane
 arrays. The :doc:`../reference/feature-dictionary` identifies conditional outputs.
 
+Individual cell measurements can fail even when the overall analysis completes.
 Cells above ``max_mesh_size`` are removed from the image's cell list. A failure
 in an individual feature calculation sets its discard state for that pass and
 records a cell error; the corresponding feature row is omitted. Other feature
@@ -65,3 +68,24 @@ but recalculating an existing method/channel pair replaces that pair's table.
 Every feature calculation invalidates the previously merged table. Merge again
 before export or downstream correlation calculations. The five-channel example
 uses two passes to apply C2 signal shifting separately from C3–C5 measurements.
+
+Optional filtering after extraction
+-----------------------------------
+
+Filter the resulting table with or without SVM curation. Inspect images and
+feature histograms before choosing thresholds; the length limits below are
+illustrative, not universal acceptance criteria.
+
+.. code-block:: python
+
+   features = ic.merged_features
+   min_length_um, max_length_um = 1.0, 10.0
+   keep = features["cell_length"].between(min_length_um, max_length_um)
+   filtered_features = features.loc[keep].copy()
+   print(f"Retained {len(filtered_features)} of {len(features)} cells")
+   filtered_features.to_parquet("filtered_features.parquet", index=False)
+
+Keep the full table and save your selection separately. Collection exporters
+still save ``ic.merged_features``; use the filtered table's own export method
+to save the selection. Earlier exclusions, including SVM rejections, cannot be
+recovered from the resulting table.

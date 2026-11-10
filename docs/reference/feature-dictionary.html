@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -289,7 +289,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
@@ -315,6 +315,14 @@ in <a class="reference internal" href="data-structures.html"><span class="doc">D
 <p>Array-valued columns remain arrays/lists within one cell row. They are not
 separate rows per object. For missing-value interpretation, see <a class="reference internal" href="../workflow/features.html"><span class="doc">Feature extraction</span></a>
 and <a class="reference internal" href="../workflow/objects.html"><span class="doc">Intracellular object detection</span></a>.</p>
+<section id="naming-and-texture-terms">
+<h2>Naming and texture terms<a class="headerlink" href="#naming-and-texture-terms" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">axial</span></code> refers to sampling along the cell midline; mesh profiles average across the width. Morphological <code class="docutils literal notranslate"><span class="pre">_axial</span></code> constriction features use the inverse-phase profile.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NC_ratio</span></code> is summed detected-object contour area divided by cell contour area. It is an area fraction; object detection still depends on signal quality and settings.</p></li>
+<li><p>Haralick-style texture features summarize spatial relationships between gray levels using a gray-level co-occurrence matrix (GLCM). Contrast and dissimilarity describe local intensity differences; homogeneity favours similar pairs, energy describes matrix concentration, and correlation describes paired intensity covariation. Cell, object, and membrane families use different image/profile representations.</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -359,8 +367,27 @@ and <a class="reference internal" href="../workflow/objects.html"><span class="d
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
-      
+    <aside class="toc-drawer">
+
+
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Feature dictionary</a><ul>
+<li><a class="reference internal" href="#naming-and-texture-terms">Naming and texture terms</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

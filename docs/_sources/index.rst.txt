@@ -7,7 +7,8 @@ Single-cell measurements from multichannel bacterial microscopy
 I developed BactoScoop to connect bacterial cell morphology with measurements
 from multiple fluorescence channels. The workflow starts with microscopy images
 and labeled cell masks, reconstructs a coordinate system for each cell, and
-extracts measurements into a per-cell table after geometry review and curation.
+extracts measurements into a per-cell table after geometry review. SVM curation
+is optional; you can also filter cells using the resulting measurements.
 
 Follow the guides to run that workflow, inspect intermediate results, and
 understand the measurements before using them in an analysis.
@@ -22,7 +23,7 @@ or follow the :doc:`examples/three-channel` and :doc:`examples/five-channel` tut
 .. raw:: html
 
    <div class="workflow" aria-label="Analysis workflow">
-   <span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
+   <span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Optional SVM curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
    </div>
 
 What BactoScoop measures
@@ -43,13 +44,12 @@ Biological conclusions require experimental controls and an appropriate
 analysis of the resulting tables. BactoScoop's current image workflow is 2D;
 volume is estimated from a 2D mesh, rather than measured from a 3D acquisition.
 
-Two ways to learn
------------------
+Learn BactoScoop
+----------------
 
-The three-channel example uses phase contrast, DAPI, and GFP-DnaN to inspect
-intracellular objects. The five-channel example adds outer- and inner-membrane
-signals and RNA measurements. Both tutorials include real figures saved in the
-repository's notebooks, complete code, and explanations of the intermediate steps.
+Follow the three-channel walkthrough for intracellular objects, or the
+five-channel walkthrough for membrane measurements and multichannel profiles.
+Both notebooks include code, saved figures, and explanations of each step.
 
 This guide covers BactoScoop **0.1.2**. Start with the installation
 guide and a walkthrough, then explore the analysis workflow and API reference.

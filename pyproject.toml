@@ -25,7 +25,8 @@ dependencies = [
     # Omnipose still imports pkg_resources, removed by newer setuptools.
     "setuptools>=77.0.3,<81",
     "pandas>=2.1.3,<3",
-    "tifffile>=2024.2.12",
+    # Omnipose 1.0.6 saves masks with imsave, removed in tifffile 2025.2.18.
+    "tifffile>=2024.2.12,<2025.2.18",
     "natsort>=8.4",
     "shapely>=2.0.1",
     "scikit-image>=0.22",

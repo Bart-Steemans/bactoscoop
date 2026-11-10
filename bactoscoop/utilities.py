@@ -2496,6 +2496,14 @@ def get_mesh_area(width_no, step_length):
 
 
 def ratio_mesh_over_total_area(step_length, width_no, areas):
+    """Compare each detected object's mesh area with its contour area.
+
+    Mesh area is the sum of segment length times segment width. ``areas``
+    contains the corresponding object-contour polygon areas, in matching
+    units. Return one dimensionless ratio per object. A ratio near one means
+    that the mesh represents approximately the same area as the contour.
+    This is a mesh-quality check, not an object-to-cell area fraction.
+    """
     ratio_list = []
     for step_length, width_no, area in zip(step_length, width_no, areas):
         mesh_area = get_mesh_area(width_no, step_length)
@@ -3132,6 +3140,20 @@ def calculate_haralick_features(
     angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4],
     levels=256,
 ):
+    """Measure intensity texture within the supplied cell contour.
+
+    Haralick-style texture measurements describe spatial relationships between
+    gray levels using a gray-level co-occurrence matrix (GLCM). Intensities
+    outside the contour are set to zero, the image is rescaled to 8-bit, and
+    pairs involving zero are excluded. Return dissimilarity, correlation,
+    homogeneity, energy, contrast, and entropy, in that order. The first five
+    measurements are averaged over distances and directions. Entropy is
+    calculated from the GLCM array values by the shared helper.
+
+    ``distances`` gives pixel-pair separations. The current implementation
+    uses four fixed directions and 256 gray levels, regardless of the legacy
+    ``angles`` and ``levels`` arguments.
+    """
     bg_zero_img = set_bg_zero(contour, cropped_img)
     bg_zero_img_rescaled = rescale_image_255(bg_zero_img, max_value=255)
     glcm = create_co_occurrence_matrix(
@@ -3176,6 +3198,14 @@ def calculate_object_haralick_features(
     angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4],
     levels=256,
 ):
+    """Measure intensity texture in the combined detected-object regions.
+
+    Multiply the cropped image by the combined object masks and rescale to
+    8-bit. Return dissimilarity, correlation, homogeneity, energy, contrast,
+    and entropy from the GLCM, using the same preprocessing and fixed direction
+    and gray-level settings as calculate_haralick_features. These describe
+    intensity texture rather than object shape or number.
+    """
     combined_mask = np.sum(object_masks, axis=0)
     bg_zero_img = cropped_img * combined_mask
     bg_zero_img_rescaled = rescale_image_255(bg_zero_img, max_value=255)
@@ -3196,6 +3226,14 @@ def calculate_contour_haralick_features(
     angles=[0, np.pi / 4, np.pi / 2, 3 * np.pi / 4],
     levels=256,
 ):
+    """Measure intensity texture in the sampled contour-intensity profile.
+
+    Rescale the profile to 8-bit and return dissimilarity, correlation,
+    homogeneity, energy, contrast, and entropy from its GLCM. These describe
+    variation in intensity around the contour, rather than its geometric
+    shape. Preprocessing and fixed direction and gray-level settings match
+    calculate_haralick_features.
+    """
     rescaled_contour_intensities = rescale_image_255(contour_intensities, max_value=255)
     glcm = create_co_occurrence_matrix(
         rescaled_contour_intensities,

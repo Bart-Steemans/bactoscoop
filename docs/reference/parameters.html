@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -434,13 +434,13 @@ for prerequisites, returned values, side effects, and source evidence.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">object_list</span></code> — default <code class="docutils literal notranslate"><span class="pre">None</span></code>. Explicit image-object sequence to process; None selects collection targets.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">save_data</span></code> — default <code class="docutils literal notranslate"><span class="pre">True</span></code>. Write the combined mesh table when true.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">phase_channel</span></code> — default <code class="docutils literal notranslate"><span class="pre">''</span></code>. TIFF suffix identifying the phase images, such as “C1”. An empty suffix is the signature default.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">join_thresh</span></code> — default <code class="docutils literal notranslate"><span class="pre">4</span></code>. Maximum pole-to-pole joining distance in pixels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">join_thresh</span></code> — default <code class="docutils literal notranslate"><span class="pre">4</span></code>. Join cell masks when their nearest poles are at most join_thresh pixels apart. For example, 4 means up to four pixels.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">split_thresh</span></code> — default <code class="docutils literal notranslate"><span class="pre">0.35</span></code>. Relative constriction threshold used by the splitting pipeline.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CD_width</span></code> — default <code class="docutils literal notranslate"><span class="pre">False</span></code>. Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">smoothing</span></code> — default <code class="docutils literal notranslate"><span class="pre">0.1</span></code>. Smoothing passed to the contour/mesh fitting path.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">neighbor_filter_max_neighbors</span></code> — default <code class="docutils literal notranslate"><span class="pre">None</span></code>. Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">neighbor_filter_connectivity</span></code> — default <code class="docutils literal notranslate"><span class="pre">1</span></code>. 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_daughter_cell_mesh_rows</span></code> — default <code class="docutils literal notranslate"><span class="pre">800</span></code>. Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_daughter_cell_mesh_rows</span></code> — default <code class="docutils literal notranslate"><span class="pre">800</span></code>. Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer &gt;= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.</p></li>
 </ul>
 </section>
 <section id="batch-load-mesh">

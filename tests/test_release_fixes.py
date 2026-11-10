@@ -16,6 +16,28 @@ from bactoscoop.imagecollection import ImageCollection
 from bactoscoop.signalcorrelation import SignalCorrelation
 
 
+class TestOmniposeMaskSaving(unittest.TestCase):
+    def test_real_omnipose_writer_preserves_mask_labels(self):
+        """Exercise the upstream TIFF writer, not a mock of save_masks."""
+        from bactoscoop.omni import Omnipose
+
+        mask = np.zeros((32, 32), dtype=np.uint16)
+        mask[2:10, 3:12] = 1
+        mask[15:28, 18:25] = 2
+        with TemporaryDirectory() as directory:
+            omni = Omnipose.__new__(Omnipose)
+            omni.selected_imgs = [np.zeros_like(mask)]
+            omni.selected_files = [str(Path(directory) / "field_C1.tiff")]
+            omni.masks = [mask]
+            omni.flows = [None]
+            omni.save_masks()
+            path = Path(directory) / "masks" / "field_C1_cp_masks.tif"
+            self.assertTrue(path.is_file())
+            saved = tifffile.imread(path)
+            self.assertTrue(np.issubdtype(saved.dtype, np.integer))
+            np.testing.assert_array_equal(saved, mask)
+
+
 class TestSplitDaughterBounds(unittest.TestCase):
     def test_both_daughters_must_be_within_bounds(self):
         for sizes, limit, accepted in (

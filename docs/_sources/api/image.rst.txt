@@ -13,7 +13,7 @@ Image
 
    Represent one microscopy field, its calibrated cell population, and channel caches.
 
-   Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates.
+   Cell geometry and detections are attached during the collection workflow. Array geometry uses row/column pixel coordinates. channels stores original channel images; bg_channels stores background-subtracted images clipped at zero; chann_interp2d stores interpolators of those corrected images.
 
    :param image: Input ``image`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
    :param image_name: Input ``image_name`` consumed by this implementation; its exact use is visible in the linked source below. No maintained parameter description is present in the original docstring.
@@ -231,13 +231,13 @@ Image.join_split_pipeline
 
    Perform a pipeline for joining and splitting cells.
 
-   :param join_thresh: Maximum pole-to-pole joining distance in pixels.
+   :param join_thresh: Join cell masks when their nearest poles are at most join_thresh pixels apart. For example, 4 means up to four pixels.
    :param split_thresh: Relative constriction threshold used by the splitting pipeline.
    :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
    :param smoothing: Smoothing passed to the contour/mesh fitting path.
    :param neighbor_filter_max_neighbors: Maximum number of touching distinct labels allowed before meshing; None disables the prefilter.
    :param neighbor_filter_connectivity: 1 or 4 for edge contact; 2 or 8 for edge and diagonal contact.
-   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.
 
    :returns: None (no explicit return statement).
 
@@ -258,7 +258,8 @@ Image.join_split_pipeline
       Parameters
       ----------
       join_thresh : int, optional
-          The threshold for joining cells in pixels. (default is 4)
+          Join cell masks when their nearest poles are at most join_thresh
+          pixels apart. (default is 4)
       split_thresh : float, optional
           The threshold for splitting cells. (default is 0.3)
       max_daughter_cell_mesh_rows : int, optional
@@ -290,7 +291,7 @@ Image.create_cell_object
 
    **Assigned state:** ``self.cells``.
 
-   `View current source, line 329 <../source-code/image.html#image-329>`_.
+   `View current source, line 330 <../source-code/image.html#image-330>`_.
 
    .. raw:: html
 
@@ -327,7 +328,7 @@ Image.add_cell
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 377 <../source-code/image.html#image-377>`_.
+   `View current source, line 378 <../source-code/image.html#image-378>`_.
 
    .. raw:: html
 
@@ -352,7 +353,7 @@ Image.get_inverted_image
 
    **Assigned state:** ``self.inverted_image``, ``self.im_interp2d``.
 
-   `View current source, line 383 <../source-code/image.html#image-383>`_.
+   `View current source, line 384 <../source-code/image.html#image-384>`_.
 
    .. raw:: html
 
@@ -374,7 +375,9 @@ Image.get_bg_channel
 
 .. py:method:: Image.get_bg_channel(channel)
 
-   Get bg channel.
+   Cache a background-subtracted channel image.
+
+   Fits the background outside segmentation labels, subtracts it, and clips negative values to zero. Stores the result in bg_channels[channel]; the original channel stays unchanged. Returns None.
 
    :param channel: Channel identifier for the selected signal, or None for phase/morphology where supported.
 
@@ -382,7 +385,24 @@ Image.get_bg_channel
 
    **Assigned state:** ``self.bg_channels``.
 
-   `View current source, line 396 <../source-code/image.html#image-396>`_.
+   `View current source, line 397 <../source-code/image.html#image-397>`_.
+
+   .. raw:: html
+
+      <details><summary>Original docstring (legacy wording may differ from the current signature)</summary>
+
+   .. code-block:: text
+
+      Cache a background-subtracted image for the requested channel.
+
+      Fit the background to pixels outside the segmentation labels, subtract
+      it from the original channel image, and clip negative values to zero.
+      The corrected image is stored in ``bg_channels[channel]``; the original
+      image in ``channels[channel]`` is unchanged. Returns None.
+
+   .. raw:: html
+
+      </details>
 
 Image.get_inverted_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -399,7 +419,7 @@ Image.get_inverted_interp2d
 
    **Assigned state:** ``self.im_interp2d``.
 
-   `View current source, line 403 <../source-code/image.html#image-403>`_.
+   `View current source, line 411 <../source-code/image.html#image-411>`_.
 
 Image.get_channel_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -418,7 +438,7 @@ Image.get_channel_interp2d
 
    **Assigned state:** ``self.chann_interp2d``.
 
-   `View current source, line 410 <../source-code/image.html#image-410>`_.
+   `View current source, line 418 <../source-code/image.html#image-418>`_.
 
 Image.channel_interp2d
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -429,7 +449,7 @@ Image.channel_interp2d
 
    :returns: None (no explicit return statement).
 
-   `View current source, line 417 <../source-code/image.html#image-417>`_.
+   `View current source, line 425 <../source-code/image.html#image-425>`_.
 
    .. raw:: html
 
@@ -453,7 +473,7 @@ Image.join_cells
 
    Join cells based on pole-to-pole distance.
 
-   :param thresh: The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no threshold is applied, and all cells will be considered for joining. (default is None)
+   :param thresh: The distance threshold for joining cells. Cells with pole-to-pole distances at or below this value will be merged. If None, no threshold is applied, and all cells will be considered for joining. (default is None)
    :param smoothing: Smoothing passed to the contour/mesh fitting path.
 
    :returns: None (no explicit return statement).
@@ -462,7 +482,7 @@ Image.join_cells
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 427 <../source-code/image.html#image-427>`_.
+   `View current source, line 435 <../source-code/image.html#image-435>`_.
 
    .. raw:: html
 
@@ -473,13 +493,13 @@ Image.join_cells
       Join cells based on pole-to-pole distance.
 
       This method attempts to join adjacent cells within the image based on the distance between their poles. It identifies cell pairs
-      with pole-to-pole distances below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
+      with pole-to-pole distances at or below a specified threshold and merges them into a single cell. The joined cell IDs are updated in the
       'joined_mask' array.
 
       Parameters
       ----------
       thresh : float, optional
-          The distance threshold for joining cells. Cells with pole-to-pole distances below this value will be merged. If None, no
+          The distance threshold for joining cells. Cells with pole-to-pole distances at or below this value will be merged. If None, no
           threshold is applied, and all cells will be considered for joining. (default is None)
 
    .. raw:: html
@@ -499,7 +519,7 @@ Image.mask2mesh
 
    **Assigned state:** ``self.mesh_dataframe``.
 
-   `View current source, line 520 <../source-code/image.html#image-520>`_.
+   `View current source, line 528 <../source-code/image.html#image-528>`_.
 
    .. raw:: html
 
@@ -529,13 +549,13 @@ Image.split_cells
 
    :param thresh: The constriction degree threshold for splitting cells. Cells with a constriction degree greater than this threshold will be split. The default is 0.3.
    :param CD_width: Use the width-based constriction path when true; otherwise use the pipeline phase-signal path.
-   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Rejects oversized predicted counts before reconstruction; both final daughters must have 4..limit rows. Does not limit unsplit parents and is separate from feature extraction max_mesh_size.
+   :param max_daughter_cell_mesh_rows: Maximum rebuilt mesh rows per daughter during cell splitting (default 800; integer >= 4). Both final daughters must contain between 4 and this limit, inclusive. Each row pairs boundary points on the two mesh sides. Separate from feature extraction max_mesh_size; unsplit parents are unaffected.
 
    :returns: None (no explicit return statement).
 
    **Assigned state:** ``self.processed_mesh_dataframe``.
 
-   `View current source, line 543 <../source-code/image.html#image-543>`_.
+   `View current source, line 551 <../source-code/image.html#image-551>`_.
 
    .. raw:: html
 
@@ -560,7 +580,8 @@ Image.split_cells
       max_daughter_cell_mesh_rows : int, optional
           Maximum final mesh rows per daughter (default 800, minimum 4).
           Reject oversized predicted row counts before reconstruction, then
-          require both final daughters to have 4..limit rows. If either fails,
+          require both final daughters to have between 4 and
+          max_daughter_cell_mesh_rows mesh rows, inclusive. If either fails,
           neither daughter nor the parent enters the processed dataframe.
 
    .. raw:: html
@@ -590,7 +611,7 @@ Image.object_detection
 
    **Assigned state:** ``self.object_detection_errors``, ``cell.object_meshdata``.
 
-   `View current source, line 657 <../source-code/image.html#image-657>`_.
+   `View current source, line 666 <../source-code/image.html#image-666>`_.
 
    .. raw:: html
 
@@ -662,7 +683,7 @@ Image.shift_correction
 
    **Explicitly raised exceptions:** ``ValueError``. Errors from called functions can also propagate or be recorded.
 
-   `View current source, line 778 <../source-code/image.html#image-778>`_.
+   `View current source, line 787 <../source-code/image.html#image-787>`_.
 
 Cell
 ~~~~
@@ -683,7 +704,7 @@ Cell
 
    **Assigned state:** ``self.discard``, ``self.contour``, ``self.mesh``, ``self.midline``, ``self.cell_id``, ``self.shifted_contour``, ``self.shifted_mesh``, ``self.shifted_midline``, ``self.x1``, ``self.y1``, ``self.x2``, ``self.y2``, ``self.profile_mesh``, ``self.object_meshdata``, ``self.morphological_features``, ``self.phase_features``, ``self.objects_features``, ``self.svm_features``, ``self.profiling_features``, ``self.signal_correlation_features``, ``self.profiling_data``.
 
-   `View current source, line 839 <../source-code/image.html#image-839>`_.
+   `View current source, line 848 <../source-code/image.html#image-848>`_.
 
    .. raw:: html
 

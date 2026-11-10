@@ -1,9 +1,18 @@
-SVM curation
-============
+Optional SVM curation
+=====================
 
-Use a trained support vector machine to remove cells whose geometry or phase
+Optionally use a trained support vector machine to remove cells whose geometry or phase
 measurements resemble the rejected class in the model's training data. Curation
 is a quality-control stage; the model's labels are not biological cell states.
+Skip ``curate_dataset`` to continue without a classifier or model file. The
+walkthroughs provide a ``RUN_CURATION`` switch beside this step.
+To switch curation off after applying it, reload the uncurated meshes and
+repeat detection and extraction; changing the switch alone does not restore cells.
+
+You can also filter the merged feature table afterwards using cell length,
+width, area, or other measurements. This can be used with or without SVM
+curation. Cells removed before extraction have no later measurements; filtering
+the table cannot recover them. See :doc:`features` for a short example.
 
 .. code-block:: python
 

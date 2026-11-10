@@ -36,7 +36,31 @@ Signals and detections
    fig = bplt.plot_signal_gallery(
        image, cell_id, channel_labels={"C3": "GFP-DnaN"}, show_objects=True,
    )
-   fig = bplt.plot_feature_overview(ic.merged_features, signal_column="C3_NC_ratio")
+
+Feature histograms
+------------------
+
+Start with interpretable measurements: cell length, width, projected area, and
+an object count. For example:
+
+.. code-block:: python
+
+   import matplotlib.pyplot as plt
+   values = ic.merged_features["cell_length"].dropna()
+   fig, ax = plt.subplots()
+   ax.hist(values, bins=25, edgecolor="white")
+   ax.set(xlabel="Cell length (µm)", ylabel="Cells")
+
+The walkthroughs show four such histograms, with integer bins for object counts.
+Missing values are omitted, rather than interpreted as zero.
+
+Plotting names
+--------------
+
+``contour_lw`` and ``scalebar_lw`` specify line width in points.
+``axial`` means along the cell midline. The legacy name ``plot_mesh_scientific``
+selects a phase-image plot with contour, mesh, and midline overlays; it does not
+select a different mesh calculation.
 
 Additional functions include histograms, feature scatter plots, morphology and
 signal summaries, normalized axial profiles, demographs, and pairwise metric

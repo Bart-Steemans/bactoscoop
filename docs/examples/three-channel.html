@@ -214,7 +214,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/segmentation.html">Segmentation and mask review</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/meshes.html">Contours, midlines, and meshes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">SVM curation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workflow/curation.html">Optional SVM curation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/alignment.html">Channel alignment and shift correction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/objects.html">Intracellular object detection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../workflow/features.html">Feature extraction</a></li>
@@ -297,58 +297,64 @@
           <p>This walkthrough follows the original <code class="docutils literal notranslate"><span class="pre">examples/3_channel_example_walkthrough.ipynb</span></code> notebook. Download the <a class="reference download internal" download="" href="../_downloads/09a85fdeebfaa5054c2ff8d0314d3cbe/three-channel.ipynb"><span class="xref download myst">notebook</span></a> or <a class="reference download internal" download="" href="../_downloads/6b8046e1303a85fe7f61e73d7ef135f5/three-channel.py"><span class="xref download myst">Python script</span></a>. The figures show saved results from this example dataset. Run the notebook to reproduce the analysis.</p>
 <section id="three-channel-walkthrough-dapi-and-gfp-dnan-objects">
 <h1>Three-channel walkthrough: DAPI and GFP-DnaN objects<a class="headerlink" href="#three-channel-walkthrough-dapi-and-gfp-dnan-objects" title="Link to this heading">¶</a></h1>
-<p>Each field contains phase contrast (<code class="docutils literal notranslate"><span class="pre">C1</span></code>), DAPI (<code class="docutils literal notranslate"><span class="pre">C2</span></code>, DNA/nucleoid), and GFP-DnaN (<code class="docutils literal notranslate"><span class="pre">C3</span></code>, replication-associated puncta). We segment cells, inspect masks and meshes, curate with the supplied SVM, detect C3 objects without channel alignment, and extract per-cell features.</p>
-<p>Run the cells from top to bottom. All images, masks, models, and outputs stay in the <strong>three-channel example folder</strong>. Set <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code> in the first code cell if you moved that folder. The supplied masks let you set <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATION</span> <span class="pre">=</span> <span class="pre">False</span></code>; masks from other tools also work when the background is 0 and distinct cells are labeled consecutively 1 through N. Omnipose uses a GPU when available and otherwise runs on CPU. See the <a class="reference internal" href="../getting-started/installation.html"><span class="std std-doc">installation guide</span></a> for installation.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<p>Each field contains phase contrast (<code class="docutils literal notranslate"><span class="pre">C1</span></code>), DAPI (<code class="docutils literal notranslate"><span class="pre">C2</span></code>, DNA/nucleoid), and
+GFP-DnaN (<code class="docutils literal notranslate"><span class="pre">C3</span></code>, replication-associated puncta). We inspect masks and meshes,
+detect intracellular objects, and extract one feature-table row per cell.</p>
+<p>Run the cells from top to bottom. Supplied masks are reused by default;
+fresh segmentation and SVM curation are optional. You can also filter the
+resulting feature table afterwards, without using an SVM.</p>
+<p>The setup copies the dataset from <code class="docutils literal notranslate"><span class="pre">SOURCE_DIR</span></code> to a fresh <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code> under
+<code class="docutils literal notranslate"><span class="pre">~/bactoscoop_runs/</span></code>. All new masks, meshes, and tables are written to that
+working copy. Change settings in the cell that uses them. See the
+<a class="reference internal" href="../getting-started/installation.html"><span class="std std-doc">installation guide</span></a> for installation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 
-<span class="c1"># Import BactoScoop</span>
-<span class="c1"># Import the package installed in this notebook kernel.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">bactoscoop</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">bactoscoop.plot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">bplt</span>
 
-<span class="c1"># Point to the folder containing C1-C3 TIFFs, masks/, and the SVM model.</span>
-<span class="c1"># Locate the downloaded examples; keep the supplied inputs unchanged.</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-
-<span class="n">EXAMPLES_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"BACTOSCOOP_EXAMPLES_DIR"</span><span class="p">)</span>
-<span class="n">candidates</span> <span class="o">=</span> <span class="p">([</span><span class="n">Path</span><span class="p">(</span><span class="n">EXAMPLES_DIR</span><span class="p">)]</span> <span class="k">if</span> <span class="n">EXAMPLES_DIR</span> <span class="k">else</span>
-              <span class="p">[</span><span class="n">candidate</span> <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span>
-               <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"examples"</span><span class="p">,</span> <span class="n">base</span><span class="p">)])</span>
-<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span> <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">candidates</span>
-                   <span class="k">if</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set SOURCE_DIR to your extracted 3_channel_example folder if it is elsewhere.</span>
+<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="k">if</span> <span class="n">SOURCE_DIR</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">"Open this notebook from the downloaded examples folder, "</span>
-                            <span class="s2">"or set BACTOSCOOP_EXAMPLES_DIR to that folder."</span><span class="p">)</span>
-<span class="n">RUN_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"bactoscoop_runs"</span> <span class="o">/</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S_</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span>
+    <span class="n">examples_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"BACTOSCOOP_EXAMPLES_DIR"</span><span class="p">)</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="p">([</span><span class="n">Path</span><span class="p">(</span><span class="n">examples_dir</span><span class="p">)]</span> <span class="k">if</span> <span class="n">examples_dir</span> <span class="k">else</span>
+                  <span class="p">[</span><span class="n">folder</span> <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span>
+                   <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"examples"</span><span class="p">,</span> <span class="n">base</span><span class="p">)])</span>
+    <span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span> <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">candidates</span>
+                       <span class="k">if</span> <span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span><span class="p">)</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">SOURCE_DIR</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">"Set SOURCE_DIR to the extracted 3_channel_example folder."</span><span class="p">)</span>
+<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">RUN_DIR</span> <span class="o">=</span> <span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"bactoscoop_runs"</span> <span class="o">/</span>
+           <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S_</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span> <span class="o">/</span> <span class="s2">"3_channel_example"</span><span class="p">)</span>
 <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">,</span> <span class="n">RUN_DIR</span><span class="p">)</span>
-<span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="n">RUN_DIR</span> <span class="o">/</span> <span class="s2">"DnaN_Timecourse.pkl"</span>
-<span class="n">RUN_SEGMENTATION</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Reuse supplied masks; set True for fresh Omnipose inference.</span>
-<span class="n">PIXEL_SIZE_UM</span> <span class="o">=</span> <span class="mf">0.065</span>  <span class="c1"># Replace with your microscope calibration.</span>
-<span class="n">PHASE_CHANNEL</span><span class="p">,</span> <span class="n">DAPI</span><span class="p">,</span> <span class="n">GFP_DNAN</span> <span class="o">=</span> <span class="s2">"C1"</span><span class="p">,</span> <span class="s2">"C2"</span><span class="p">,</span> <span class="s2">"C3"</span>
-<span class="n">CHANNEL_LABELS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"C1"</span><span class="p">:</span> <span class="s2">"Phase contrast"</span><span class="p">,</span> <span class="s2">"C2"</span><span class="p">:</span> <span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">:</span> <span class="s2">"GFP-DnaN"</span><span class="p">}</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">RUN_DIR</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Example folder not found: </span><span class="si">{</span><span class="n">RUN_DIR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">MODEL_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-    <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SVM model not found: </span><span class="si">{</span><span class="n">MODEL_PATH</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="p">(</span><span class="n">RUN_DIR</span> <span class="o">/</span> <span class="s2">"masks"</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">PHASE_CHANNEL</span> <span class="o">=</span> <span class="s2">"C1"</span>
+<span class="n">CHANNEL_LABELS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'C1'</span><span class="p">:</span> <span class="s1">'Phase contrast'</span><span class="p">,</span> <span class="s1">'C2'</span><span class="p">:</span> <span class="s1">'DAPI'</span><span class="p">,</span> <span class="s1">'C3'</span><span class="p">:</span> <span class="s1">'GFP-DnaN'</span><span class="p">}</span>
 <span class="n">FIELD_IDS</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">list_field_ids</span><span class="p">(</span><span class="n">RUN_DIR</span><span class="p">,</span> <span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Source dataset:"</span><span class="p">,</span> <span class="n">SOURCE_DIR</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Working copy and outputs:"</span><span class="p">,</span> <span class="n">RUN_DIR</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Fields:"</span><span class="p">,</span> <span class="n">FIELD_IDS</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Image and output folder:"</span><span class="p">,</span> <span class="n">RUN_DIR</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"CUDA available:"</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> <span class="s2">"(CPU is used when False)"</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="inspect-the-input-channels">
 <h2>1. Inspect the input channels<a class="headerlink" href="#inspect-the-input-channels" title="Link to this heading">¶</a></h2>
-<p>The field name is the shared part of each filename before <code class="docutils literal notranslate"><span class="pre">_C1</span></code>, <code class="docutils literal notranslate"><span class="pre">_C2</span></code>, or <code class="docutils literal notranslate"><span class="pre">_C3</span></code>. Display contrast is adjusted for the overview; measurements use the original image values. DAPI is cyan and GFP-DnaN is green.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_multichannel_overview</span><span class="p">(</span><span class="n">RUN_DIR</span><span class="p">,</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">CHANNEL_LABELS</span><span class="p">,</span> <span class="p">)</span>
+<p>A field is identified by the shared filename before <code class="docutils literal notranslate"><span class="pre">_C1</span></code>, <code class="docutils literal notranslate"><span class="pre">_C2</span></code>, and so on.
+Display contrast is adjusted per panel; measurements use the original image
+values. Choose a field and crop size below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">OVERVIEW_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">OVERVIEW_CROP_PX</span> <span class="o">=</span> <span class="mi">650</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_field_channels</span><span class="p">(</span>
+    <span class="n">RUN_DIR</span><span class="p">,</span> <span class="n">OVERVIEW_FIELD</span><span class="p">,</span> <span class="n">CHANNEL_LABELS</span><span class="p">,</span> <span class="n">crop_size</span><span class="o">=</span><span class="n">OVERVIEW_CROP_PX</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
@@ -360,26 +366,40 @@
 </figcaption>
 </figure>
 </section>
-<section id="segment-and-review">
-<h2>2. Segment and review<a class="headerlink" href="#segment-and-review" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATION=True</span></code> segments the C1 phase images with Omnipose. <code class="docutils literal notranslate"><span class="pre">mask_thresh</span></code> adjusts the mask boundary and <code class="docutils literal notranslate"><span class="pre">minsize</span></code> removes small segments. If you set the flag to <code class="docutils literal notranslate"><span class="pre">False</span></code>, the supplied masks in <code class="docutils literal notranslate"><span class="pre">masks/</span></code> are loaded instead. The review compares phase with mask outlines in the same crop. Change the field, label, center, or crop size in the review cell to inspect another region; a 700-pixel crop shows many cells, while about 150-250 pixels is useful for a close check.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span> <span class="o">=</span> <span class="n">bactoscoop</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">RUN_DIR</span><span class="p">),</span> <span class="n">px</span><span class="o">=</span><span class="n">PIXEL_SIZE_UM</span><span class="p">)</span>
-<span class="n">collection</span><span class="o">.</span><span class="n">load_phase_images</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
+<section id="load-masks-or-run-segmentation">
+<h2>2. Load masks or run segmentation<a class="headerlink" href="#load-masks-or-run-segmentation" title="Link to this heading">¶</a></h2>
+<p>Set the pixel size to your microscope calibration in micrometres per pixel.
+Leave <code class="docutils literal notranslate"><span class="pre">RUN_SEGMENTATION=False</span></code> to load the supplied masks. Set it to <code class="docutils literal notranslate"><span class="pre">True</span></code>
+to run Omnipose on C1; segmentation uses a GPU when available, otherwise CPU.
+<code class="docutils literal notranslate"><span class="pre">mask_thresh</span></code> adjusts mask boundaries and <code class="docutils literal notranslate"><span class="pre">minsize</span></code> removes small segments.
+Other tools’ masks also work: use same-size 2D integer TIFFs with background
+0 and consecutive cell labels 1 through N.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PIXEL_SIZE_UM</span> <span class="o">=</span> <span class="mf">0.065</span>
+<span class="n">RUN_SEGMENTATION</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">ic</span> <span class="o">=</span> <span class="n">bactoscoop</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">RUN_DIR</span><span class="p">),</span> <span class="n">px</span><span class="o">=</span><span class="n">PIXEL_SIZE_UM</span><span class="p">)</span>
+<span class="n">ic</span><span class="o">.</span><span class="n">load_phase_images</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">RUN_SEGMENTATION</span><span class="p">:</span>
-    <span class="n">ok</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">segment_images</span><span class="p">(</span>
-        <span class="n">mask_thresh</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">images</span><span class="p">)),</span>
+    <span class="n">ok</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">segment_images</span><span class="p">(</span>
+        <span class="n">mask_thresh</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">images</span><span class="p">)),</span>
         <span class="n">model_name</span><span class="o">=</span><span class="s2">"bact_phase_omni"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">processing_summary</span><span class="p">())</span>
-<span class="n">collection</span><span class="o">.</span><span class="n">create_image_objects</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
-
-<span class="c1"># Change these values and rerun this cell to inspect another field or label.</span>
-<span class="n">SEGMENTATION_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">SEGMENTATION_LABEL</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Integer mask label, or None for a central cell.</span>
-<span class="n">SEGMENTATION_CENTER</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Optional (row, column), used when label is None.</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">processing_summary</span><span class="p">())</span>
+<span class="n">ic</span><span class="o">.</span><span class="n">create_image_objects</span><span class="p">(</span><span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="review-the-masks">
+<h3>Review the masks<a class="headerlink" href="#review-the-masks" title="Link to this heading">¶</a></h3>
+<p>Rerun only the next cell to inspect another field, label, or crop. A
+700-pixel crop shows several cells; around 150–250 pixels gives a closer
+view. Both panels show the same crop, with mask outlines added on the right.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SEGMENTATION_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">SEGMENTATION_LABEL</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Set an integer label to centre on that cell.</span>
+<span class="n">SEGMENTATION_CENTER</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Optional (row, column) when label is None.</span>
 <span class="n">SEGMENTATION_CROP_PX</span> <span class="o">=</span> <span class="mi">700</span>
-<span class="n">review_image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">image</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span>
+
+<span class="n">review_image</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">image</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span>
                     <span class="k">if</span> <span class="n">image</span><span class="o">.</span><span class="n">image_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"_"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">SEGMENTATION_FIELD</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_segmentation_review</span><span class="p">(</span>
     <span class="p">[</span><span class="n">review_image</span><span class="p">],</span> <span class="n">crop_size</span><span class="o">=</span><span class="n">SEGMENTATION_CROP_PX</span><span class="p">,</span>
@@ -390,102 +410,130 @@
 </pre></div>
 </div>
 <figure class="align-default" id="id2">
-<img alt="2. Segment and review" src="../_images/three-channel-02.png" />
+<img alt="Review the masks" src="../_images/three-channel-02.png" />
 <figcaption>
-<p><span class="caption-text"><strong>2. Segment and review</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+<p><span class="caption-text"><strong>Review the masks</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
+</section>
 <section id="build-and-inspect-meshes">
 <h2>3. Build and inspect meshes<a class="headerlink" href="#build-and-inspect-meshes" title="Link to this heading">¶</a></h2>
-<p>The mask becomes a cell contour, paired mesh sides, and a midline. <code class="docutils literal notranslate"><span class="pre">join_thresh</span></code> joins nearby poles in pixels; <code class="docutils literal notranslate"><span class="pre">split_thresh</span></code> controls splitting at constrictions; <code class="docutils literal notranslate"><span class="pre">smoothing</span></code> adjusts contour smoothness; <code class="docutils literal notranslate"><span class="pre">CD_width</span></code> selects the width-based constriction measure. <code class="docutils literal notranslate"><span class="pre">save_data=True</span></code> writes <code class="docutils literal notranslate"><span class="pre">3_channel_example_meshdata.pkl</span></code> in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code>. Inspect the mesh on the phase image before loading fluorescence channels.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span><span class="o">.</span><span class="n">batch_process_mesh</span><span class="p">(</span>
-    <span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">,</span> <span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Cells with meshes:"</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">))</span>
+<p>Each mask becomes a contour, paired mesh sides, and a midline. Join cell
+masks when their nearest poles are at most <code class="docutils literal notranslate"><span class="pre">join_thresh</span></code> pixels apart.
+<code class="docutils literal notranslate"><span class="pre">split_thresh</span></code> controls splitting at constrictions; <code class="docutils literal notranslate"><span class="pre">smoothing</span></code> controls
+contour smoothing; <code class="docutils literal notranslate"><span class="pre">CD_width=True</span></code> uses width to assess constriction.</p>
+<p>The default builds and saves <code class="docutils literal notranslate"><span class="pre">3_channel_example_meshdata.pkl</span></code> in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code>.
+Set <code class="docutils literal notranslate"><span class="pre">LOAD_SAVED_MESHES=True</span></code> to load the file currently in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code> instead.
+To resume an earlier analysis, set <code class="docutils literal notranslate"><span class="pre">SOURCE_DIR</span></code> to that run’s folder before setup.
+Only reload meshes that match the current images and masks.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LOAD_SAVED_MESHES</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">if</span> <span class="n">LOAD_SAVED_MESHES</span><span class="p">:</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">batch_load_mesh</span><span class="p">(</span><span class="s2">"3_channel_example_meshdata.pkl"</span><span class="p">,</span> <span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">batch_process_mesh</span><span class="p">(</span>
+        <span class="n">phase_channel</span><span class="o">=</span><span class="n">PHASE_CHANNEL</span><span class="p">,</span> <span class="n">join_thresh</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">split_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">CD_width</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">save_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Cells with meshes:"</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">))</span>
 </pre></div>
 </div>
-<section id="optional-load-saved-meshes-on-a-later-run">
-<h3>Optional: load saved meshes on a later run<a class="headerlink" href="#optional-load-saved-meshes-on-a-later-run" title="Link to this heading">¶</a></h3>
-<p>If you already made meshes, skip the mesh-construction cell and run <code class="docutils literal notranslate"><span class="pre">collection.batch_load_mesh(&quot;3_channel_example_meshdata.pkl&quot;,</span> <span class="pre">phase_channel=PHASE_CHANNEL)</span></code> here. Keep the next inspection step.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment on a later run after skipping mesh construction:</span>
-<span class="c1"># collection.batch_load_mesh("3_channel_example_meshdata.pkl", phase_channel=PHASE_CHANNEL)</span>
-</pre></div>
-</div>
-</section>
-<section id="choose-a-cell-to-inspect">
-<h3>Choose a cell to inspect<a class="headerlink" href="#choose-a-cell-to-inspect" title="Link to this heading">¶</a></h3>
-<p>Set the field name and cell ID <strong>in the code cell below</strong>, then rerun it. The figure shows phase, contour, mesh, and midline; fluorescence is shown after object detection.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MESH_FIELD</span> <span class="o">=</span> <span class="s2">"TL4_SGL711_M9glu_12H_XY5"</span>
+<section id="inspect-the-cell-coordinate-system">
+<h3>Inspect the cell coordinate system<a class="headerlink" href="#inspect-the-cell-coordinate-system" title="Link to this heading">¶</a></h3>
+<p>Choose a field and cell ID directly below. Set the ID to <code class="docutils literal notranslate"><span class="pre">None</span></code> for an
+automatically selected representative cell. The plot shows phase contrast,
+the contour, mesh, and midline.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MESH_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">MESH_CELL_ID</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">mesh_image</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">select_example_cell</span><span class="p">(</span>
-    <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,</span> <span class="n">field_id</span><span class="o">=</span><span class="n">MESH_FIELD</span><span class="p">,</span> <span class="n">cell_id</span><span class="o">=</span><span class="n">MESH_CELL_ID</span><span class="p">,</span>
+<span class="n">MESH_WINDOW_PX</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">mesh_image</span><span class="p">,</span> <span class="n">mesh_cell_id</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">select_example_cell</span><span class="p">(</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,</span> <span class="n">field_id</span><span class="o">=</span><span class="n">MESH_FIELD</span><span class="p">,</span> <span class="n">cell_id</span><span class="o">=</span><span class="n">MESH_CELL_ID</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_cell_gallery</span><span class="p">(</span><span class="n">mesh_image</span><span class="p">,</span> <span class="n">MESH_CELL_ID</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_cell_gallery</span><span class="p">(</span>
+    <span class="n">mesh_image</span><span class="p">,</span> <span class="n">mesh_cell_id</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">window_px</span><span class="o">=</span><span class="n">MESH_WINDOW_PX</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id3">
-<img alt="Choose a cell to inspect" src="../_images/three-channel-03.png" />
+<img alt="Inspect the cell coordinate system" src="../_images/three-channel-03.png" />
 <figcaption>
-<p><span class="caption-text"><strong>Choose a cell to inspect</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+<p><span class="caption-text"><strong>Inspect the cell coordinate system</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 </section>
-<section id="curate-with-the-supplied-svm">
-<h2>4. Curate with the supplied SVM<a class="headerlink" href="#curate-with-the-supplied-svm" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">DnaN_Timecourse.pkl</span></code> is the model provided with this example. It uses morphology features to reject unsuitable meshes. Green outlines are retained and red outlines are rejected. <code class="docutils literal notranslate"><span class="pre">save_curated_data=True</span></code> writes <code class="docutils literal notranslate"><span class="pre">3_channel_example_curated_meshdata.pkl</span></code> in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code>. Inspect the result before applying this model to other acquisitions; only load pickle files you trust.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#collection.batch_load_mesh("3_channel_example_meshdata.pkl", phase_channel=PHASE_CHANNEL)</span>
-<span class="n">before</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">snapshot_cell_contours</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
-<span class="n">before_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
-<span class="n">collection</span><span class="o">.</span><span class="n">curate_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">MODEL_PATH</span><span class="p">),</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_curated_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">after_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SVM curation: </span><span class="si">{</span><span class="n">before_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">after_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> cells"</span><span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_curation_review</span><span class="p">(</span><span class="n">before</span><span class="p">,</span> <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span>
-<span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<section id="optional-curate-meshes-with-an-svm">
+<h2>4. Optional: curate meshes with an SVM<a class="headerlink" href="#optional-curate-meshes-with-an-svm" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">RUN_CURATION=True</span></code> applies the example’s <code class="docutils literal notranslate"><span class="pre">DnaN_Timecourse.pkl</span></code> model. Green contours
+are retained and red contours are rejected. This changes the cell population
+before feature extraction and saves <code class="docutils literal notranslate"><span class="pre">3_channel_example_curated_meshdata.pkl</span></code>.</p>
+<p>Set the switch to <code class="docutils literal notranslate"><span class="pre">False</span></code> to continue without an SVM or model file. You can
+filter the feature table in step 8 instead. Cells rejected here will not
+receive later measurements. Inspect predictions before applying the supplied
+model to other data, and only load trusted pickle files. To switch curation off
+after applying it, rerun from step 3 to restore the uncurated meshes first.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RUN_CURATION</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="n">RUN_DIR</span> <span class="o">/</span> <span class="s2">"DnaN_Timecourse.pkl"</span>
+
+<span class="k">if</span> <span class="n">RUN_CURATION</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">MODEL_PATH</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">MODEL_PATH</span><span class="p">)</span>
+    <span class="n">before_contours</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">snapshot_cell_contours</span><span class="p">(</span><span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
+    <span class="n">before_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">curate_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">MODEL_PATH</span><span class="p">),</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_curated_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">after_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">cells</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SVM curation: </span><span class="si">{</span><span class="n">before_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">after_count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> cells"</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_curation_review</span><span class="p">(</span><span class="n">before_contours</span><span class="p">,</span> <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"SVM curation skipped; continuing with all reconstructed cells."</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default" id="id4">
-<img alt="4. Curate with the supplied SVM" src="../_images/three-channel-04.png" />
+<img alt="4. Optional: curate meshes with an SVM" src="../_images/three-channel-04.png" />
 <figcaption>
-<p><span class="caption-text"><strong>4. Curate with the supplied SVM</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+<p><span class="caption-text"><strong>4. Optional: curate meshes with an SVM</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
-<section id="detect-gfp-dnan-objects">
-<h2>5. Detect GFP-DnaN objects<a class="headerlink" href="#detect-gfp-dnan-objects" title="Link to this heading">¶</a></h2>
-<p>Object detection loads C3 and finds puncta inside curated cells. <code class="docutils literal notranslate"><span class="pre">align=False</span></code> leaves C3 in its original coordinates. Tune <code class="docutils literal notranslate"><span class="pre">smoothing</span></code>, <code class="docutils literal notranslate"><span class="pre">log_sigma</span></code>, <code class="docutils literal notranslate"><span class="pre">kernel_width</span></code>, and overlap limits for your images. The detected contours are stored on cells and later contribute to object features.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">detections</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">batch_detect_objects</span><span class="p">(</span>
-    <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="n">DAPI</span><span class="p">,</span><span class="n">GFP_DNAN</span><span class="p">],</span> <span class="n">reset_channels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<section id="detect-and-review-objects">
+<h2>5. Detect and review objects<a class="headerlink" href="#detect-and-review-objects" title="Link to this heading">¶</a></h2>
+<p>Detect DAPI regions in C2 and GFP-DnaN puncta in C3. Both channels stay in
+their original coordinates (<code class="docutils literal notranslate"><span class="pre">align=False</span></code>). We use the C3 detections for
+object features in step 6; C2 is also used for intensity profiles.
+<code class="docutils literal notranslate"><span class="pre">log_sigma</span></code> controls image filtering, <code class="docutils literal notranslate"><span class="pre">kernel_width</span></code> affects candidate-object
+dilation, and the overlap limits control which candidates are accepted.
+The count below sums individual contours, rather than cell/channel rows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">detections</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">batch_detect_objects</span><span class="p">(</span>
+    <span class="n">channels</span><span class="o">=</span><span class="p">[</span><span class="s2">"C2"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">],</span> <span class="n">reset_channels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">log_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">kernel_width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">min_overlap_ratio</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">max_external_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Detected C3 objects:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">))</span>
-<span class="n">collection</span><span class="o">.</span><span class="n">add_channels</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,</span> <span class="p">[</span><span class="n">DAPI</span><span class="p">,</span> <span class="n">GFP_DNAN</span><span class="p">])</span>
+<span class="n">object_counts</span> <span class="o">=</span> <span class="p">(</span><span class="n">detections</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">object_count</span><span class="o">=</span><span class="n">detections</span><span class="p">[</span><span class="s2">"object_contours"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+                 <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"channel"</span><span class="p">)[</span><span class="s2">"object_count"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Detected objects per channel:"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">object_counts</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="inspect-a-detected-cell">
 <h3>Inspect a detected cell<a class="headerlink" href="#inspect-a-detected-cell" title="Link to this heading">¶</a></h3>
-<p>Choose a curated field and cell ID directly below. The DAPI panel is cyan, GFP-DnaN is green, and the object outline shows what the detector found. If your chosen cell was removed by curation, pick an ID that remains in the green curation outlines.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">OBJECT_FIELD</span> <span class="o">=</span> <span class="s2">"TL4_SGL711_M9glu_12H_XY5"</span>
-<span class="n">OBJECT_CELL_ID</span> <span class="o">=</span> <span class="mi">62</span>
-<span class="n">object_image</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">select_example_cell</span><span class="p">(</span>
-    <span class="n">collection</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,</span> <span class="n">field_id</span><span class="o">=</span><span class="n">OBJECT_FIELD</span><span class="p">,</span> <span class="n">cell_id</span><span class="o">=</span><span class="n">OBJECT_CELL_ID</span><span class="p">,</span>
+<p>Select the field, cell, and crop below. If curation removed a chosen cell,
+select a retained ID or set it to <code class="docutils literal notranslate"><span class="pre">None</span></code>. The outlines show detected signal
+regions. Rerunning this plot does not repeat detection.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">OBJECT_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">OBJECT_CELL_ID</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">OBJECT_WINDOW_PX</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">object_image</span><span class="p">,</span> <span class="n">object_cell_id</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">select_example_cell</span><span class="p">(</span>
+    <span class="n">ic</span><span class="o">.</span><span class="n">image_objects</span><span class="p">,</span> <span class="n">field_id</span><span class="o">=</span><span class="n">OBJECT_FIELD</span><span class="p">,</span> <span class="n">cell_id</span><span class="o">=</span><span class="n">OBJECT_CELL_ID</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_cell_gallery</span><span class="p">(</span>
-    <span class="n">object_image</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">DAPI</span><span class="p">,</span> <span class="n">channel_label</span><span class="o">=</span><span class="s2">"DAPI"</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
 <span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_signal_gallery</span><span class="p">(</span>
-    <span class="n">object_image</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>
-    <span class="n">channel_labels</span><span class="o">=</span><span class="p">{</span><span class="n">DAPI</span><span class="p">:</span> <span class="s2">"DAPI"</span><span class="p">,</span> <span class="n">GFP_DNAN</span><span class="p">:</span> <span class="s2">"GFP-DnaN"</span><span class="p">},</span>
-    <span class="n">show_objects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">object_image</span><span class="p">,</span> <span class="n">object_cell_id</span><span class="p">,</span>
+    <span class="n">channel_labels</span><span class="o">=</span><span class="p">{</span><span class="s2">"C2"</span><span class="p">:</span> <span class="s2">"DAPI"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">:</span> <span class="s2">"GFP-DnaN"</span><span class="p">},</span>
+    <span class="n">window_px</span><span class="o">=</span><span class="n">OBJECT_WINDOW_PX</span><span class="p">,</span> <span class="n">show_objects</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
@@ -497,63 +545,103 @@
 <p><span class="caption-text"><strong>Inspect a detected cell</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
-<figure class="align-default" id="id6">
-<img alt="Inspect a detected cell" src="../_images/three-channel-06.png" />
-<figcaption>
-<p><span class="caption-text"><strong>Inspect a detected cell</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
-</figcaption>
-</figure>
 </section>
 </section>
 <section id="extract-features">
 <h2>6. Extract features<a class="headerlink" href="#extract-features" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">channel_method_pairs</span></code> assigns feature methods to channels. <code class="docutils literal notranslate"><span class="pre">morphological</span></code> measures cell geometry from the mesh; <code class="docutils literal notranslate"><span class="pre">profiling</span></code> measures each channel along the cell; <code class="docutils literal notranslate"><span class="pre">objects</span></code> summarizes C3 puncta. <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code> excludes unusually large meshes. We compare the <strong>relative</strong> C3 object area fraction (<code class="docutils literal notranslate"><span class="pre">C3_NC_ratio</span></code>) with cell volume, avoiding an absolute fluorescence intensity comparison.</p>
+<p><code class="docutils literal notranslate"><span class="pre">channel_method_pairs</span></code> assigns feature methods to channels. <code class="docutils literal notranslate"><span class="pre">morphological</span></code>
+measures cell geometry, <code class="docutils literal notranslate"><span class="pre">profiling</span></code> measures channel intensity profiles, and
+<code class="docutils literal notranslate"><span class="pre">objects</span></code> summarizes C3 puncta. <code class="docutils literal notranslate"><span class="pre">max_mesh_size</span></code> excludes cells with more than
+that many mesh rows. The merged table has one row per cell, with channel
+prefixes such as <code class="docutils literal notranslate"><span class="pre">C3_</span></code> on signal features.</p>
+<p><code class="docutils literal notranslate"><span class="pre">C3_NC_ratio</span></code> is the summed area of detected C3 objects divided by cell area.
+It is a within-cell area fraction, but detection still depends on signal
+quality and the chosen detection parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">channel_method_pairs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">([</span><span class="kc">None</span><span class="p">],</span> <span class="s2">"morphological"</span><span class="p">),</span>
-    <span class="p">([</span><span class="n">DAPI</span><span class="p">],</span> <span class="s2">"profiling"</span><span class="p">),</span>
-    <span class="p">([</span><span class="n">GFP_DNAN</span><span class="p">],</span> <span class="s2">"profiling"</span><span class="p">),</span>
-    <span class="p">([</span><span class="n">GFP_DNAN</span><span class="p">],</span> <span class="s2">"objects"</span><span class="p">),</span>
+    <span class="p">([</span><span class="s2">"C2"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">],</span> <span class="s2">"profiling"</span><span class="p">),</span>
+    <span class="p">([</span><span class="s2">"C3"</span><span class="p">],</span> <span class="s2">"objects"</span><span class="p">),</span>
 <span class="p">]</span>
-<span class="n">collection</span><span class="o">.</span><span class="n">batch_calculate_features</span><span class="p">(</span>
-    <span class="n">channel_method_pairs</span><span class="p">,</span> <span class="n">all_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_mesh_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+<span class="n">ic</span><span class="o">.</span><span class="n">batch_calculate_features</span><span class="p">(</span>
+    <span class="n">channel_method_pairs</span><span class="p">,</span> <span class="n">all_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_mesh_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">features</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">merge_dataframes</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> cells x </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">features</span><span class="p">[[</span><span class="s2">"image_name"</span><span class="p">,</span> <span class="s2">"cell_id"</span><span class="p">,</span> <span class="s2">"cell_volume"</span><span class="p">,</span> <span class="s2">"C3_NC_ratio"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">merge_dataframes</span><span class="p">(</span><span class="n">discard_morphological_nan</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> cells × </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2"> columns"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">features</span><span class="p">[[</span><span class="s2">"image_name"</span><span class="p">,</span> <span class="s2">"cell_id"</span><span class="p">,</span> <span class="s2">"cell_length"</span><span class="p">,</span> <span class="s2">"cell_width"</span><span class="p">,</span> <span class="s2">"cell_area"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
-<section id="inspect-relative-measurements">
-<h2>7. Inspect relative measurements<a class="headerlink" href="#inspect-relative-measurements" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">C3_NC_ratio</span></code> is the detected C3 object area divided by cell area. This comparison uses a within-cell fraction, so it does not require raw brightness to be comparable between fields.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">valid</span> <span class="o">=</span> <span class="n">features</span><span class="p">[[</span><span class="s2">"cell_volume"</span><span class="p">,</span> <span class="s2">"C3_NC_ratio"</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">cell_volume</span><span class="p">,</span> <span class="n">valid</span><span class="o">.</span><span class="n">C3_NC_ratio</span><span class="p">,</span>
-           <span class="n">s</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#31A85E"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Cell volume (um^3)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"C3 object area / cell area"</span><span class="p">,</span>
-       <span class="n">title</span><span class="o">=</span><span class="s2">"GFP-DnaN object fraction vs cell volume"</span><span class="p">)</span>
+<section id="inspect-feature-distributions">
+<h2>7. Inspect feature distributions<a class="headerlink" href="#inspect-feature-distributions" title="Link to this heading">¶</a></h2>
+<p>Start with cell length, width, projected area, and detected-object count.
+These histograms show the measurements and their spread in this dataset;
+they are not universal acceptance ranges. Missing values are omitted from
+each plot and should not be interpreted as zero objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaxNLocator</span>
+
+<span class="n">HISTOGRAM_BINS</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">plot_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">"cell_length"</span><span class="p">,</span> <span class="s2">"Cell length (µm)"</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"cell_width"</span><span class="p">,</span> <span class="s2">"Cell width (µm)"</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"cell_area"</span><span class="p">,</span> <span class="s2">"Cell area (µm²)"</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"C3_object_number"</span><span class="p">,</span> <span class="s2">"GFP-DnaN objects per cell"</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">plot_features</span><span class="p">):</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="p">([</span><span class="n">i</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"object_number"</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">values</span><span class="o">.</span><span class="n">empty</span> <span class="k">else</span> <span class="n">HISTOGRAM_BINS</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#278C9E"</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Cells"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"object_number"</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="n">integer</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">display</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </pre></div>
 </div>
-<figure class="align-default" id="id7">
-<img alt="7. Inspect relative measurements" src="../_images/three-channel-07.png" />
+<figure class="align-default" id="id6">
+<img alt="7. Inspect feature distributions" src="../_images/three-channel-06.png" />
 <figcaption>
-<p><span class="caption-text"><strong>7. Inspect relative measurements</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+<p><span class="caption-text"><strong>7. Inspect feature distributions</strong>. Saved notebook output from <code class="docutils literal notranslate"><span class="pre">3_channel_example</span></code>; display settings are illustrative.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
-<section id="save-features-and-audit">
-<h2>8. Save features and audit<a class="headerlink" href="#save-features-and-audit" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">dataframe_to_parquet()</span></code> writes <code class="docutils literal notranslate"><span class="pre">3_channel_example_features.parquet</span></code>; <code class="docutils literal notranslate"><span class="pre">dataframe_to_pkl()</span></code> writes <code class="docutils literal notranslate"><span class="pre">3_channel_example_features.pkl</span></code>. Both go in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code> and contain one row per retained cell. A <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> argument gives the exact pickle filename; a suffix without <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> becomes a tag. Check <code class="docutils literal notranslate"><span class="pre">processing_summary()</span></code> for image and cell errors.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span><span class="o">.</span><span class="n">dataframe_to_parquet</span><span class="p">()</span>
-<span class="n">pickle_path</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">dataframe_to_pkl</span><span class="p">()</span>
+<section id="optional-filter-the-resulting-table">
+<h2>8. Optional: filter the resulting table<a class="headerlink" href="#optional-filter-the-resulting-table" title="Link to this heading">¶</a></h2>
+<p>You can select cells using their measured features, whether or not you ran
+SVM curation. The length limits below are illustrative: inspect your images
+and histograms before choosing limits for your data. The original <code class="docutils literal notranslate"><span class="pre">features</span></code>
+table stays available; this step creates a separate <code class="docutils literal notranslate"><span class="pre">filtered_features</span></code>
+table. Earlier exclusions cannot be recovered from this table.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">APPLY_FEATURE_FILTER</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">MIN_CELL_LENGTH_UM</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">MAX_CELL_LENGTH_UM</span> <span class="o">=</span> <span class="mf">10.0</span>
+
+<span class="k">if</span> <span class="n">APPLY_FEATURE_FILTER</span><span class="p">:</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="s2">"cell_length"</span><span class="p">]</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="n">MIN_CELL_LENGTH_UM</span><span class="p">,</span> <span class="n">MAX_CELL_LENGTH_UM</span><span class="p">)</span>
+    <span class="n">filtered_features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">filtered_features</span> <span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Feature-table selection: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_features</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> cells"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="save-features">
+<h2>9. Save features<a class="headerlink" href="#save-features" title="Link to this heading">¶</a></h2>
+<p>Save the full merged table as <code class="docutils literal notranslate"><span class="pre">3_channel_example_features.parquet</span></code> and
+<code class="docutils literal notranslate"><span class="pre">3_channel_example_features.pkl</span></code> in <code class="docutils literal notranslate"><span class="pre">RUN_DIR</span></code>. When feature filtering is enabled,
+save that selection separately as <code class="docutils literal notranslate"><span class="pre">3_channel_example_filtered_features.parquet</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ic</span><span class="o">.</span><span class="n">dataframe_to_parquet</span><span class="p">()</span>
+<span class="n">pickle_path</span> <span class="o">=</span> <span class="n">ic</span><span class="o">.</span><span class="n">dataframe_to_pkl</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">APPLY_FEATURE_FILTER</span><span class="p">:</span>
+    <span class="n">filtered_features</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span>
+        <span class="n">RUN_DIR</span> <span class="o">/</span> <span class="s2">"3_channel_example_filtered_features.parquet"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
 <span class="n">saved</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">RUN_DIR</span> <span class="o">/</span> <span class="s2">"3_channel_example_features.parquet"</span><span class="p">)</span>
-<span class="n">summary</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">processing_summary</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Saved Parquet and pickle:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">saved</span><span class="p">),</span> <span class="s2">"rows;"</span><span class="p">,</span> <span class="n">pickle_path</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Image errors:"</span><span class="p">,</span> <span class="n">summary</span><span class="p">[</span><span class="s2">"error_count"</span><span class="p">],</span>
-      <span class="s2">"Cell errors:"</span><span class="p">,</span> <span class="n">summary</span><span class="p">[</span><span class="s2">"cell_error_count"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Saved full table:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">saved</span><span class="p">),</span> <span class="s2">"rows"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Outputs:"</span><span class="p">,</span> <span class="n">RUN_DIR</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -615,20 +703,23 @@
             <ul>
 <li><a class="reference internal" href="#">Three-channel walkthrough: DAPI and GFP-DnaN objects</a><ul>
 <li><a class="reference internal" href="#inspect-the-input-channels">1. Inspect the input channels</a></li>
-<li><a class="reference internal" href="#segment-and-review">2. Segment and review</a></li>
-<li><a class="reference internal" href="#build-and-inspect-meshes">3. Build and inspect meshes</a><ul>
-<li><a class="reference internal" href="#optional-load-saved-meshes-on-a-later-run">Optional: load saved meshes on a later run</a></li>
-<li><a class="reference internal" href="#choose-a-cell-to-inspect">Choose a cell to inspect</a></li>
+<li><a class="reference internal" href="#load-masks-or-run-segmentation">2. Load masks or run segmentation</a><ul>
+<li><a class="reference internal" href="#review-the-masks">Review the masks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#curate-with-the-supplied-svm">4. Curate with the supplied SVM</a></li>
-<li><a class="reference internal" href="#detect-gfp-dnan-objects">5. Detect GFP-DnaN objects</a><ul>
+<li><a class="reference internal" href="#build-and-inspect-meshes">3. Build and inspect meshes</a><ul>
+<li><a class="reference internal" href="#inspect-the-cell-coordinate-system">Inspect the cell coordinate system</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-curate-meshes-with-an-svm">4. Optional: curate meshes with an SVM</a></li>
+<li><a class="reference internal" href="#detect-and-review-objects">5. Detect and review objects</a><ul>
 <li><a class="reference internal" href="#inspect-a-detected-cell">Inspect a detected cell</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#extract-features">6. Extract features</a></li>
-<li><a class="reference internal" href="#inspect-relative-measurements">7. Inspect relative measurements</a></li>
-<li><a class="reference internal" href="#save-features-and-audit">8. Save features and audit</a></li>
+<li><a class="reference internal" href="#inspect-feature-distributions">7. Inspect feature distributions</a></li>
+<li><a class="reference internal" href="#optional-filter-the-resulting-table">8. Optional: filter the resulting table</a></li>
+<li><a class="reference internal" href="#save-features">9. Save features</a></li>
 </ul>
 </li>
 </ul>

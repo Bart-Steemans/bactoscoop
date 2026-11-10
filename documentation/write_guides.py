@@ -16,7 +16,8 @@ Single-cell measurements from multichannel bacterial microscopy
 I developed BactoScoop to connect bacterial cell morphology with measurements
 from multiple fluorescence channels. The workflow starts with microscopy images
 and labeled cell masks, reconstructs a coordinate system for each cell, and
-extracts measurements into a per-cell table after geometry review and curation.
+extracts measurements into a per-cell table after geometry review. SVM curation
+is optional; you can also filter cells using the resulting measurements.
 
 Follow the guides to run that workflow, inspect intermediate results, and
 understand the measurements before using them in an analysis.
@@ -31,7 +32,7 @@ or follow the :doc:`examples/three-channel` and :doc:`examples/five-channel` tut
 .. raw:: html
 
    <div class="workflow" aria-label="Analysis workflow">
-   <span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
+   <span>Images</span><b>→</b><span>Masks</span><b>→</b><span>Meshes</span><b>→</b><span>Optional SVM curation</span><b>→</b><span>Objects &amp; signals</span><b>→</b><span>Feature tables</span>
    </div>
 
 What BactoScoop measures
@@ -52,13 +53,12 @@ Biological conclusions require experimental controls and an appropriate
 analysis of the resulting tables. BactoScoop's current image workflow is 2D;
 volume is estimated from a 2D mesh, rather than measured from a 3D acquisition.
 
-Two ways to learn
+Learn BactoScoop
 -----------------
 
-The three-channel example uses phase contrast, DAPI, and GFP-DnaN to inspect
-intracellular objects. The five-channel example adds outer- and inner-membrane
-signals and RNA measurements. Both tutorials include real figures saved in the
-repository's notebooks, complete code, and explanations of the intermediate steps.
+Follow the three-channel walkthrough for intracellular objects, or the
+five-channel walkthrough for membrane measurements and multichannel profiles.
+Both notebooks include code, saved figures, and explanations of each step.
 
 This guide covers BactoScoop **__BACTOSCOOP_VERSION__**. Start with the installation
 guide and a walkthrough, then explore the analysis workflow and API reference.
@@ -182,8 +182,9 @@ Dependencies
 
 .. include:: ../generated/dependencies.rst
 
-Omnipose is pinned to 1.0.6 and NumPy remains below 2. PyArrow supplies Parquet
-export.
+Omnipose is pinned to 1.0.6 and NumPy remains below 2. Tifffile is constrained to
+``>=2024.2.12,<2025.2.18`` because Omnipose uses the removed ``imsave`` function
+to save masks. PyArrow supplies Parquet export.
 
 Open the examples
 -----------------
@@ -192,9 +193,11 @@ Download and extract the
 `release archive <https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v__BACTOSCOOP_VERSION__.zip>`_
 for its TIFFs, masks, SVM models, and notebooks; those assets are separate from
 the wheel. In JupyterLab, select the Python 3.10 analysis kernel and open a
-walkthrough under ``examples/``. Its first cell copies the input dataset into
+walkthrough under ``examples/``. Its setup cell copies the input dataset into
 a fresh folder under ``~/bactoscoop_runs/``. Supplied masks are reused by default;
-set ``RUN_SEGMENTATION=True`` to run fresh Omnipose inference.
+set ``RUN_SEGMENTATION=True`` in the segmentation cell to run fresh Omnipose
+inference. SVM curation is optional: set ``RUN_CURATION=False`` in its cell to
+skip it. Both walkthroughs also show optional filtering of the resulting table.
 
 See :doc:`quickstart` and the :doc:`../examples/three-channel` and
 :doc:`../examples/five-channel` walkthroughs.
@@ -244,8 +247,9 @@ segmentation. See :doc:`../workflow/segmentation` for the actual wrapper setting
 Quick start
 ===========
 
-This example reuses the supplied three-channel masks, builds meshes, curates
-the cells, detects GFP-DnaN objects, and saves morphology and signal measurements.
+This example reuses the supplied three-channel masks, builds meshes, detects
+GFP-DnaN objects, and saves morphology and signal measurements. SVM curation
+and filtering of the resulting feature table are optional.
 The script first copies the dataset so that the original inputs and outputs
 remain available for comparison.
 
@@ -262,9 +266,13 @@ What to inspect
 ---------------
 
 Inspect the mask outlines before trusting the reconstructed meshes. After
-curation, compare the kept and rejected contours. Then inspect individual
+optional SVM curation, compare the kept and rejected contours. Then inspect individual
 object detections and check whether the merged table contains the expected
 channels. See :doc:`../examples/plotting` for the plotting functions.
+
+Individual cell measurements can fail while the rest of the analysis completes.
+The resulting table can therefore contain missing measurements. See
+:doc:`../workflow/errors` for how to inspect these failures when needed.
 
 This quick start intentionally uses the supplied SVM with its matching dataset.
 The same model need not classify cells correctly in a different experiment.
@@ -464,9 +472,10 @@ Build cell geometry
        max_daughter_cell_mesh_rows=800,
    )
 
-The method joins nearby poles, creates meshes, and then splits cells when the
-chosen constriction measure exceeds the threshold. ``join_thresh`` is a distance
-in pixels; ``split_thresh`` is a relative constriction threshold. The signature
+The method joins cell masks when their nearest poles are at most
+``join_thresh`` pixels apart, creates meshes, and then splits cells when the
+chosen constriction measure exceeds ``split_thresh``. For example,
+``join_thresh=4`` means up to four pixels. The signature
 defaults to 0.35 for splitting, while the notebooks explicitly use 0.5.
 ``CD_width`` chooses the width-based constriction path when true; otherwise the
 pipeline uses its phase-signal-based path. ``smoothing`` controls contour fitting.
@@ -525,12 +534,21 @@ directly. Details and units are in :doc:`../reference/feature-dictionary`.
 API: :py:meth:`bactoscoop.imagecollection.ImageCollection.batch_process_mesh`.
 ''',
 'workflow/curation': r'''
-SVM curation
-============
+Optional SVM curation
+====================
 
-Use a trained support vector machine to remove cells whose geometry or phase
+Optionally use a trained support vector machine to remove cells whose geometry or phase
 measurements resemble the rejected class in the model's training data. Curation
 is a quality-control stage; the model's labels are not biological cell states.
+Skip ``curate_dataset`` to continue without a classifier or model file. The
+walkthroughs provide a ``RUN_CURATION`` switch beside this step.
+To switch curation off after applying it, reload the uncurated meshes and
+repeat detection and extraction; changing the switch alone does not restore cells.
+
+You can also filter the merged feature table afterwards using cell length,
+width, area, or other measurements. This can be used with or without SVM
+curation. Cells removed before extraction have no later measurements; filtering
+the table cannot recover them. See :doc:`features` for a short example.
 
 .. code-block:: python
 
@@ -738,8 +756,10 @@ normalization removes amplitude differences between cells and should not be
 interpreted as an absolute fluorescence measurement.
 
 Radial intensity distribution samples successive eroded contours and uses the
-cropped image intensity range for normalization. GLCM descriptors use quantized
-image intensities and the implementation's background masking and matrix settings.
+cropped image intensity range for normalization. Haralick-style texture
+descriptors describe spatial relationships between gray levels using a gray-level
+co-occurrence matrix (GLCM). They use quantized intensities and the implementation's
+background masking and matrix settings.
 They depend on acquisition and preprocessing as well as signal structure.
 
 Optional data and failure behavior
@@ -749,6 +769,7 @@ Optional data and failure behavior
 per-object arrays for ``objects``; it does not suppress the profiling or membrane
 arrays. The :doc:`../reference/feature-dictionary` identifies conditional outputs.
 
+Individual cell measurements can fail even when the overall analysis completes.
 Cells above ``max_mesh_size`` are removed from the image's cell list. A failure
 in an individual feature calculation sets its discard state for that pass and
 records a cell error; the corresponding feature row is omitted. Other feature
@@ -763,6 +784,27 @@ but recalculating an existing method/channel pair replaces that pair's table.
 Every feature calculation invalidates the previously merged table. Merge again
 before export or downstream correlation calculations. The five-channel example
 uses two passes to apply C2 signal shifting separately from C3–C5 measurements.
+
+Optional filtering after extraction
+-----------------------------------
+
+Filter the resulting table with or without SVM curation. Inspect images and
+feature histograms before choosing thresholds; the length limits below are
+illustrative, not universal acceptance criteria.
+
+.. code-block:: python
+
+   features = ic.merged_features
+   min_length_um, max_length_um = 1.0, 10.0
+   keep = features["cell_length"].between(min_length_um, max_length_um)
+   filtered_features = features.loc[keep].copy()
+   print(f"Retained {len(filtered_features)} of {len(features)} cells")
+   filtered_features.to_parquet("filtered_features.parquet", index=False)
+
+Keep the full table and save your selection separately. Collection exporters
+still save ``ic.merged_features``; use the filtered table's own export method
+to save the selection. Earlier exclusions, including SVM rejections, cannot be
+recovered from the resulting table.
 ''',
 'workflow/correlation': r'''
 Signal correlation and similarity
@@ -880,7 +922,7 @@ failed along the way.
    summary = ic.processing_summary()
    print(summary["status"], summary["error_count"], summary["cell_error_count"])
 
-Two error collections
+Processing errors and cell errors
 ---------------------
 
 ``processing_errors`` records item/stage errors such as missing channel fields
@@ -900,10 +942,10 @@ Summary status
 * ``completed``: at least one stage recorded and no processing errors.
 * ``completed_with_errors``: one or more processing errors exist.
 
-The status does **not** certify that every intended analysis stage was run.
-Cell errors alone do not change ``completed`` to ``completed_with_errors``.
-Always inspect ``completed_stages`` and ``cell_error_count`` as well. Records
-accumulate within the collection; a summary is not a fresh per-call report.
+Check ``completed_stages`` to see which stages ran and ``cell_error_count`` for
+individual cell failures. ``completed`` means at least one stage finished
+without recorded processing errors. Cell errors alone leave that status
+unchanged. Records accumulate within the collection.
 
 Logging levels
 --------------
@@ -1000,7 +1042,31 @@ Signals and detections
    fig = bplt.plot_signal_gallery(
        image, cell_id, channel_labels={"C3": "GFP-DnaN"}, show_objects=True,
    )
-   fig = bplt.plot_feature_overview(ic.merged_features, signal_column="C3_NC_ratio")
+
+Feature histograms
+------------------
+
+Start with interpretable measurements: cell length, width, projected area, and
+an object count. For example:
+
+.. code-block:: python
+
+   import matplotlib.pyplot as plt
+   values = ic.merged_features["cell_length"].dropna()
+   fig, ax = plt.subplots()
+   ax.hist(values, bins=25, edgecolor="white")
+   ax.set(xlabel="Cell length (µm)", ylabel="Cells")
+
+The walkthroughs show four such histograms, with integer bins for object counts.
+Missing values are omitted, rather than interpreted as zero.
+
+Plotting names
+--------------
+
+``contour_lw`` and ``scalebar_lw`` specify line width in points.
+``axial`` means along the cell midline. The legacy name ``plot_mesh_scientific``
+selects a phase-image plot with contour, mesh, and midline overlays; it does not
+select a different mesh calculation.
 
 Additional functions include histograms, feature scatter plots, morphology and
 signal summaries, normalized axial profiles, demographs, and pairwise metric
@@ -1155,6 +1221,21 @@ Check the returned boolean and ``processing_summary`` before making image object
 An existing mask on disk does not automatically rescue a failed segmentation
 in the same collection. Confirm model availability and CPU/GPU setup; restart
 with a fresh collection only when intentionally reusing verified masks.
+
+Segmentation succeeds but masks cannot be saved
+----------------------------------------------
+
+Omnipose 1.0.6 calls ``tifffile.imsave``, which was removed in tifffile 2025.2.18.
+BactoScoop therefore requires ``tifffile>=2024.2.12,<2025.2.18``. This affects
+mask saving on any platform, including macOS. In the analysis environment, run:
+
+.. code-block:: console
+
+   python -m pip install "tifffile>=2024.2.12,<2025.2.18"
+   python -m pip check
+
+Restart the notebook kernel and rerun segmentation in a fresh working copy.
+See the `tifffile release history <https://github.com/cgohlke/tifffile/blob/master/CHANGES.rst>`_.
 
 Unexpected geometry or too few cells
 -----------------------------------

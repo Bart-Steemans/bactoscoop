@@ -2,12 +2,12 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/Bart-Steemans/bactoscoop/main/BactoScoop%20Logo.png" alt="BactoScoop logo" width="310"></p>
 
-**BactoScoop enables reproducible high-throughput image-based profiling of individual bacterial cells.** It takes multichannel microscopy images from individual fields through segmentation, cell mesh construction, quality curation, object detection, and feature extraction. The result is a per-cell table that connects morphology with membrane, nucleoid, and other fluorescence measurements. Each stage can be inspected, and saved masks, meshes, and feature tables make an analysis easier to review and repeat.
+**BactoScoop enables reproducible high-throughput image-based profiling of individual bacterial cells.** It takes multichannel microscopy images from individual fields through segmentation, cell mesh construction, optional SVM curation, object detection, and feature extraction. The result is a per-cell table that connects morphology with membrane, nucleoid, and other fluorescence measurements. Cells can also be filtered using those measurements afterwards. Saved masks, meshes, and feature tables make an analysis easier to review and repeat.
 [**Read the documentation**](https://bart-steemans.github.io/bactoscoop/) · [Three-channel walkthrough](https://bart-steemans.github.io/bactoscoop/examples/three-channel.html) · [Five-channel walkthrough](https://bart-steemans.github.io/bactoscoop/examples/five-channel.html)
 
 ## Install BactoScoop
 
-BactoScoop requires **Python 3.10**. Choose either Conda or uv; both install the same package and its dependencies. The segmentation stack includes Omnipose 1.0.6 and NumPy below 2.
+BactoScoop requires **Python 3.10**. Choose either Conda or uv; both install the same package and its dependencies. The segmentation stack includes Omnipose 1.0.6, NumPy below 2, and `tifffile>=2024.2.12,<2025.2.18` for compatible mask saving.
 
 Install BactoScoop from [PyPI](https://pypi.org/project/bactoscoop/) using either environment option below. A tagged GitHub installation is also available.
 
@@ -62,9 +62,11 @@ An editable development install follows changes in your checkout. It may differ 
 
 The wheel contains the Python package; the large TIFFs, masks, SVM models, and notebooks are supplied separately. Download and extract the [v0.1.2 example archive](https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip), or use the `examples/` folder in a cloned checkout.
 
-Open `examples/3_channel_example_walkthrough.ipynb` or `examples/5_channel_example_walkthrough.ipynb` in JupyterLab. Run cells from top to bottom. The first cell locates the downloaded examples and copies the selected dataset into a fresh folder under `~/bactoscoop_runs/`; the supplied images, masks, and saved reference outputs stay intact. If you open the notebook elsewhere, set the `BACTOSCOOP_EXAMPLES_DIR` environment variable to the downloaded `examples` folder before starting JupyterLab.
+Open `examples/3_channel_example_walkthrough.ipynb` or `examples/5_channel_example_walkthrough.ipynb` in JupyterLab. Run cells from top to bottom. The setup copies the selected dataset from `SOURCE_DIR` into a fresh `RUN_DIR` under `~/bactoscoop_runs/`. If the examples are elsewhere, set `SOURCE_DIR` directly in the setup cell. The `BACTOSCOOP_EXAMPLES_DIR` environment variable is also supported.
 
-The examples reuse the supplied masks by default. Set `RUN_SEGMENTATION = True` for fresh Omnipose inference; the first inference may download model weights. Set `PIXEL_SIZE_UM` to your microscope calibration. The first cell prints the working output folder. Meshes, curated meshes, and feature tables are saved there. The example-specific SVM models are copied with their datasets; inspect their predictions before using those models on different images.
+The examples reuse the supplied masks by default. Set `RUN_SEGMENTATION = True` in the segmentation cell for fresh Omnipose inference; the first inference may download model weights. Set `PIXEL_SIZE_UM` in that cell to your microscope calibration. The setup prints the working output folder, where meshes and feature tables are saved.
+
+**SVM curation is optional.** Set `RUN_CURATION = False` in the curation cell to continue without a model. Inspect the example models' predictions before using them on different images. Both notebooks show simple feature histograms and optional filtering of the resulting table, with or without SVM curation. Save filtered selections separately to keep the full table available.
 
 ## Segmentation on CPU or GPU
 
