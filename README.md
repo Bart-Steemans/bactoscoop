@@ -1,9 +1,9 @@
 # BactoScoop
 
-<p align="center"><img src="https://raw.githubusercontent.com/Bart-Steemans/bactoscoop/main/BactoScoop%20Logo.png" alt="BactoScoop logo" width="310"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Govers-Lab/bactoscoop/main/BactoScoop%20Logo.png" alt="BactoScoop logo" width="310"></p>
 
 **BactoScoop enables reproducible high-throughput image-based profiling of individual bacterial cells.** It takes multichannel microscopy images from individual fields through segmentation, cell mesh construction, optional SVM curation, object detection, and feature extraction. The result is a per-cell table that connects morphology with membrane, nucleoid, and other fluorescence measurements. Cells can also be filtered using those measurements afterwards. Saved masks, meshes, and feature tables make an analysis easier to review and repeat.
-[**Read the documentation**](https://bart-steemans.github.io/bactoscoop/) · [Three-channel walkthrough](https://bart-steemans.github.io/bactoscoop/examples/three-channel.html) · [Five-channel walkthrough](https://bart-steemans.github.io/bactoscoop/examples/five-channel.html)
+[**Read the documentation**](https://govers-lab.github.io/bactoscoop/) · [Three-channel walkthrough](https://govers-lab.github.io/bactoscoop/examples/three-channel.html) · [Five-channel walkthrough](https://govers-lab.github.io/bactoscoop/examples/five-channel.html)
 
 ## Install BactoScoop
 
@@ -42,16 +42,16 @@ uv can download Python 3.10 if needed. On macOS/Linux, use `.venv/bin/python` an
 
 The commands above install the latest stable PyPI release in a new environment. To upgrade an existing installation, use `python -m pip install --upgrade bactoscoop` (Conda) or `uv pip install --python .venv --upgrade bactoscoop` (uv).
 
-The corresponding [GitHub release](https://github.com/Bart-Steemans/bactoscoop/releases/latest) can also be installed directly when Git is installed:
+The corresponding [GitHub release](https://github.com/Govers-Lab/bactoscoop/releases/latest) can also be installed directly when Git is installed:
 
 ```powershell
-python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"
+python -m pip install "bactoscoop @ git+https://github.com/Govers-Lab/bactoscoop.git@v0.1.2"
 ```
 
-For uv, use `uv pip install --python .venv "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v0.1.2"`. Select the tag shown in Releases when a newer release is available. To work on the development code instead:
+For uv, use `uv pip install --python .venv "bactoscoop @ git+https://github.com/Govers-Lab/bactoscoop.git@v0.1.2"`. Select the tag shown in Releases when a newer release is available. To work on the development code instead:
 
 ```powershell
-git clone https://github.com/Bart-Steemans/bactoscoop.git
+git clone https://github.com/Govers-Lab/bactoscoop.git
 cd bactoscoop
 python -m pip install -e .
 ```
@@ -60,7 +60,7 @@ An editable development install follows changes in your checkout. It may differ 
 
 ## Run a walkthrough
 
-The wheel contains the Python package; the large TIFFs, masks, SVM models, and notebooks are supplied separately. Download and extract the [v0.1.2 example archive](https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v0.1.2.zip), or use the `examples/` folder in a cloned checkout.
+The wheel contains the Python package; the large TIFFs, masks, SVM models, and notebooks are supplied separately. Download and extract the [v0.1.2 example archive](https://github.com/Govers-Lab/bactoscoop/archive/refs/tags/v0.1.2.zip), or use the `examples/` folder in a cloned checkout.
 
 Open `examples/3_channel_example_walkthrough.ipynb` or `examples/5_channel_example_walkthrough.ipynb` in JupyterLab. Run cells from top to bottom. The setup copies the selected dataset from `SOURCE_DIR` into a fresh `RUN_DIR` under `~/bactoscoop_runs/`. If the examples are elsewhere, set `SOURCE_DIR` directly in the setup cell. The `BACTOSCOOP_EXAMPLES_DIR` environment variable is also supported.
 
@@ -123,8 +123,8 @@ Channels and masks for one field must have the same height and width. BactoScoop
 
 | Walkthrough | Channels | Main example |
 | --- | --- | --- |
-| [Three-channel](https://github.com/Bart-Steemans/bactoscoop/blob/main/examples/3_channel_example_walkthrough.ipynb) | `C1` phase; `C2` DAPI, showing DNA/nucleoid morphology; `C3` GFP-DnaN, showing replication-associated puncta. | Detect intracellular objects such as the nucleoid and DnaN foci and extract morphology and object related features. The supplied SVM is `DnaN_Timecourse.pkl`. |
-| [Five-channel](https://github.com/Bart-Steemans/bactoscoop/blob/main/examples/5_channel_example_walkthrough.ipynb) | `C1` phase; `C2` outer membrane; `C3` inner membrane; `C4` RNA; `C5` DAPI/nucleoid. | This tutorial performs BactoScoop on a 5 channel set and includes additional extraction of membrane features. The supplied SVM is `keio_collection_stationary.pkl`. |
+| [Three-channel](https://github.com/Govers-Lab/bactoscoop/blob/main/examples/3_channel_example_walkthrough.ipynb) | `C1` phase; `C2` DAPI, showing DNA/nucleoid morphology; `C3` GFP-DnaN, showing replication-associated puncta. | Detect intracellular objects such as the nucleoid and DnaN foci and extract morphology and object related features. The supplied SVM is `DnaN_Timecourse.pkl`. |
+| [Five-channel](https://github.com/Govers-Lab/bactoscoop/blob/main/examples/5_channel_example_walkthrough.ipynb) | `C1` phase; `C2` outer membrane; `C3` inner membrane; `C4` RNA; `C5` DAPI/nucleoid. | This tutorial performs BactoScoop on a 5 channel set and includes additional extraction of membrane features. The supplied SVM is `keio_collection_stationary.pkl`. |
 
 An example script of how we used BactoScoop to screen thousands of bacterial samples is also available in the example folder (named "BactoScoop Parallel Processing.py").
 

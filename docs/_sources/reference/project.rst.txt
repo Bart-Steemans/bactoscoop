@@ -24,11 +24,11 @@ Project links
 
 Find the documentation, public source, releases, and issue tracker here:
 
-* `Documentation <https://bart-steemans.github.io/bactoscoop/>`_
-* `Releases <https://github.com/Bart-Steemans/bactoscoop/releases>`_
+* `Documentation <https://govers-lab.github.io/bactoscoop/>`_
+* `Releases <https://github.com/Govers-Lab/bactoscoop/releases>`_
 * `PyPI <https://pypi.org/project/bactoscoop/>`_
-* `Repository <https://github.com/Bart-Steemans/bactoscoop>`_
-* `Issue tracker <https://github.com/Bart-Steemans/bactoscoop/issues>`_
+* `Repository <https://github.com/Govers-Lab/bactoscoop>`_
+* `Issue tracker <https://github.com/Govers-Lab/bactoscoop/issues>`_
 * `Omnipose documentation <https://omnipose.readthedocs.io/>`_
 
 License

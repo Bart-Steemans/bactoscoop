@@ -309,9 +309,8 @@ working copy. Change settings in the cell that uses them. See the
 <a class="reference internal" href="../getting-started/installation.html"><span class="std std-doc">installation guide</span></a> for installation.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
@@ -351,7 +350,7 @@ working copy. Change settings in the cell that uses them. See the
 Display contrast is adjusted per panel; measurements use the original image
 values. Choose a field and crop size below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">OVERVIEW_FIELD</span> <span class="o">=</span> <span class="n">FIELD_IDS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">OVERVIEW_CROP_PX</span> <span class="o">=</span> <span class="mi">650</span>
+<span class="n">OVERVIEW_CROP_PX</span> <span class="o">=</span> <span class="mi">1500</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">bplt</span><span class="o">.</span><span class="n">plot_field_channels</span><span class="p">(</span>
     <span class="n">RUN_DIR</span><span class="p">,</span> <span class="n">OVERVIEW_FIELD</span><span class="p">,</span> <span class="n">CHANNEL_LABELS</span><span class="p">,</span> <span class="n">crop_size</span><span class="o">=</span><span class="n">OVERVIEW_CROP_PX</span><span class="p">,</span>
 <span class="p">)</span>

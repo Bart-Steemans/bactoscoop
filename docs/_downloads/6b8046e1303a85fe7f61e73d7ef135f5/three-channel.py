@@ -1,8 +1,7 @@
 from datetime import datetime
 from pathlib import Path
-import os
+import os, sys
 import shutil
-
 import matplotlib.pyplot as plt
 import pandas as pd
 from IPython.display import display
@@ -34,7 +33,7 @@ print("Working copy and outputs:", RUN_DIR)
 print("Fields:", FIELD_IDS)
 
 OVERVIEW_FIELD = FIELD_IDS[0]
-OVERVIEW_CROP_PX = 650
+OVERVIEW_CROP_PX = 1500
 fig = bplt.plot_field_channels(
     RUN_DIR, OVERVIEW_FIELD, CHANNEL_LABELS, crop_size=OVERVIEW_CROP_PX,
 )

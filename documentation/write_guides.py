@@ -114,7 +114,7 @@ Installation
 
 Install BactoScoop into a dedicated **Python 3.10** environment. Conda and uv
 install the same package and dependencies. The public source repository is on
-`GitHub <https://github.com/Bart-Steemans/bactoscoop>`_.
+`GitHub <https://github.com/Govers-Lab/bactoscoop>`_.
 
 Install the latest stable release from
 `PyPI <https://pypi.org/project/bactoscoop/>`_ using either environment option below.
@@ -164,16 +164,16 @@ To install the corresponding tagged GitHub release, run:
 
 .. code-block:: powershell
 
-   python -m pip install "bactoscoop @ git+https://github.com/Bart-Steemans/bactoscoop.git@v__BACTOSCOOP_VERSION__"
+   python -m pip install "bactoscoop @ git+https://github.com/Govers-Lab/bactoscoop.git@v__BACTOSCOOP_VERSION__"
 
 For uv, replace ``python -m pip install`` with
 ``uv pip install --python .venv``. Check the
-`latest GitHub release <https://github.com/Bart-Steemans/bactoscoop/releases/latest>`_
+`latest GitHub release <https://github.com/Govers-Lab/bactoscoop/releases/latest>`_
 for newer tags. A development checkout uses an editable install:
 
 .. code-block:: powershell
 
-   git clone https://github.com/Bart-Steemans/bactoscoop.git
+   git clone https://github.com/Govers-Lab/bactoscoop.git
    cd bactoscoop
    python -m pip install -e .
 
@@ -190,7 +190,7 @@ Open the examples
 -----------------
 
 Download and extract the
-`release archive <https://github.com/Bart-Steemans/bactoscoop/archive/refs/tags/v__BACTOSCOOP_VERSION__.zip>`_
+`release archive <https://github.com/Govers-Lab/bactoscoop/archive/refs/tags/v__BACTOSCOOP_VERSION__.zip>`_
 for its TIFFs, masks, SVM models, and notebooks; those assets are separate from
 the wheel. In JupyterLab, select the Python 3.10 analysis kernel and open a
 walkthrough under ``examples/``. Its setup cell copies the input dataset into
@@ -1301,11 +1301,11 @@ Project links
 
 Find the documentation, public source, releases, and issue tracker here:
 
-* `Documentation <https://bart-steemans.github.io/bactoscoop/>`_
-* `Releases <https://github.com/Bart-Steemans/bactoscoop/releases>`_
+* `Documentation <https://govers-lab.github.io/bactoscoop/>`_
+* `Releases <https://github.com/Govers-Lab/bactoscoop/releases>`_
 * `PyPI <https://pypi.org/project/bactoscoop/>`_
-* `Repository <https://github.com/Bart-Steemans/bactoscoop>`_
-* `Issue tracker <https://github.com/Bart-Steemans/bactoscoop/issues>`_
+* `Repository <https://github.com/Govers-Lab/bactoscoop>`_
+* `Issue tracker <https://github.com/Govers-Lab/bactoscoop/issues>`_
 * `Omnipose documentation <https://omnipose.readthedocs.io/>`_
 
 License

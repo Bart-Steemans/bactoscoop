@@ -45,11 +45,11 @@ dependencies = [
 dev = ["pytest>=8", "build>=1"]
 
 [project.urls]
-Documentation = "https://bart-steemans.github.io/bactoscoop/"
-Changelog = "https://github.com/Bart-Steemans/bactoscoop/releases"
-Homepage = "https://github.com/Bart-Steemans/bactoscoop"
-Repository = "https://github.com/Bart-Steemans/bactoscoop"
-Issues = "https://github.com/Bart-Steemans/bactoscoop/issues"
+Documentation = "https://govers-lab.github.io/bactoscoop/"
+Changelog = "https://github.com/Govers-Lab/bactoscoop/releases"
+Homepage = "https://github.com/Govers-Lab/bactoscoop"
+Repository = "https://github.com/Govers-Lab/bactoscoop"
+Issues = "https://github.com/Govers-Lab/bactoscoop/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
